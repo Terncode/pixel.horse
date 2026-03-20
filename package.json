@@ -40,11 +40,6 @@
     "test-ts": "node --max-old-space-size=8192 ./node_modules/mocha/bin/mocha \"src/ts/tests/**/*.spec.ts\" -r ts-node/register -R progress --exit",
     "test-ts-watch": "npm run test -- --watch --watch-extensions ts",
     "test-inspect": "mocha \"src/scripts/tests/**/*.spec.js\" -R progress --inspect --exit --watch",
-    "check-filters": "node src/scripts/experiments/checkFilters.js",
-    "check-names": "node src/scripts/experiments/checkNames.js",
-    "check-links": "node src/scripts/experiments/checkLinks.js",
-    "check-messages": "node src/scripts/experiments/checkValidMessages.js",
-    "check-cms": "node src/scripts/experiments/checkCms.js",
     "update-angular": "npm update @angular/common @angular/compiler @angular/core @angular/forms @angular/platform-browser @angular/platform-browser-dynamic @angular/router @angular/animations @angular/compiler-cli @angular/platform-server @angular/cdk --save",
     "latest-angular": "npm i @angular/common@latest @angular/compiler@latest @angular/core@latest @angular/forms@latest @angular/platform-browser@latest @angular/platform-browser-dynamic@latest @angular/router@latest @angular/animations@latest @angular/compiler-cli@latest @angular/platform-server@latest @angular/cdk@latest --save",
     "update-fontawesome": "npm update @fortawesome/fontawesome-svg-core @fortawesome/free-brands-svg-icons @fortawesome/free-solid-svg-icons @fortawesome/angular-fontawesome --save"
