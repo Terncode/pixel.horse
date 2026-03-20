@@ -3,7 +3,7 @@ import { use, authenticate, AuthenticateOptions } from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { remove } from 'lodash';
 import { MINUTE } from '../../common/constants';
-import { fromNow, hasFlag, includes } from '../../common/utils';
+import { fromNow, hasFlag, includes, uniqById } from '../../common/utils';
 import { BannedMuted, Settings, ServerConfig, AccountFlags, ServerLiveSettings } from '../../common/adminInterfaces';
 import { Account, IAccount, Origin, IOrigin } from '../db';
 import { limit, auth as authRequest, wrap } from '../requestUtils';
@@ -290,6 +290,65 @@ export function authRoutes(
 	}));
 
 	if (mockLogin) {
+		app.get('/mocks', wrap(server, async () => {
+			const accounts: IAccount[] = [];
+
+			const mostUsed = await Account.find({
+				$or: [
+					{ roles: { $exists: false } },
+					{ roles: { $size: 0 } }
+				],
+				_id: { $nin: accounts.map(acc => acc._id) }
+			}).sort({ lastVisit: -1 }).limit(5);
+
+			accounts.push(...mostUsed);
+
+			const superAdminAccount = await Account.findOne({ roles: { $in: ['superadmin'] } }).sort({ lastVisit: -1 });
+			if (superAdminAccount) {
+				accounts.push(superAdminAccount);
+			}
+
+			const adminAccount = await Account.findOne({ roles: { $in: ['admin'], $nin: ['superadmin'] } })
+				.sort({ lastVisit: -1 });
+			if (adminAccount) {
+				accounts.push(adminAccount);
+			}
+			const modAccount = await Account.findOne({ roles: { $in: ['mod'], $nin: ['superadmin', 'admin'] } })
+				.sort({ lastVisit: -1 });
+			if (modAccount) {
+				accounts.push(modAccount);
+			}
+
+			const devAccount = await Account.findOne({ roles: { $in: ['dev'], $nin: ['superadmin', 'admin', 'mod'] } })
+				.sort({ lastVisit: -1 });
+			if (devAccount) {
+				accounts.push(devAccount);
+			}
+			const emptyRoleAccount = await Account.findOne({
+				$or: [
+					{ roles: { $exists: false } },
+					{ roles: { $size: 0 } }
+				],
+				_id: { $nin: accounts.map(acc => acc._id) }
+			}).sort({ lastVisit: -1 });
+			if (emptyRoleAccount) {
+				accounts.push(emptyRoleAccount);
+			}
+
+           	return uniqById(accounts, acc => acc._id.toString()).map(a => [a!._id, `${a!.name} ${a!.roles.length ? `(${a!.roles.join(' ')})`: ''}`]);
+		}));
+
+		app.post('/create-account', wrap(server, async (data) => {
+			const accountCount = await Account.countDocuments();
+			
+			const account = await Account.create({
+				name: data.body.name,
+				roles: accountCount === 0 ? ['superadmin'] : undefined
+			});
+			system(account._id.toString(), `Created account by mock login}`);
+			return [account._id.toString(), account.name];
+		}));
+
 		use(new LocalStrategy((login, _pass, done) => Account.findById(login, done)));
 		app.get('/local', authenticate('local', { successRedirect: '/', failureRedirect: '/failed-login' }));
 	}
