@@ -28,7 +28,7 @@ import {
 	updateEntityOptions, canBoopEntity, findPlayersThetCanBeSitOn, updateEntityState, updateEntityExpression,
 	sendAction, pushUpdateEntityToClient, fixPosition, isHoldingGrapes
 } from './entityUtils';
-import { replaceEmojis } from '../client/emoji';
+import { replaceEmojis } from '../common/emoji';
 import { expression, parseExpression } from '../common/expressionUtils';
 import {
 	canBoopOrKiss, isPonySitting, isPonyStanding, getBoopRect, canStand, isPonyFlying, setPonyState, canSit,

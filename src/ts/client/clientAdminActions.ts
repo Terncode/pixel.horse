@@ -1,16 +1,10 @@
-import { Method } from 'ag-sockets/dist/browser';
 import { AdminModel } from '../components/services/adminModel';
-import { ModelTypes } from '../common/adminInterfaces';
 import { ModelSubscriber } from '../components/services/modelSubscriber';
+import { ClientAdminActionsTemplate, ClientUpdate } from '../common/clientAdminActionsTemplate';
 
-export interface ClientUpdate {
-	type: ModelTypes;
-	id: string;
-	update: any;
-}
-
-export class ClientAdminActions {
+export class ClientAdminActions extends ClientAdminActionsTemplate {
 	constructor(private model: AdminModel) {
+		super();
 	}
 	connected() {
 		this.model.initialize(true);
@@ -19,7 +13,7 @@ export class ClientAdminActions {
 	disconnected() {
 		this.model.updateTitle();
 	}
-	@Method()
+	//@Method()
 	updates(updates: ClientUpdate[]) {
 		for (const { type, id, update } of updates) {
 			const model = this.model[type] as ModelSubscriber<any>;

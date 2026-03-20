@@ -7,7 +7,6 @@ import {
 import { trimRepeatedLetters, urlRegexTexts, ipRegexText, urlExceptionRegex } from '../common/filterUtils';
 import { parseExpression } from '../common/expressionUtils';
 import { filterBadWords } from '../common/swears';
-import { cleanMessage } from '../client/clientUtils';
 import { parseCommand, getChatPrefix, RunCommand } from './commands';
 import { IClient, OnSuspiciousMessage, ServerEntity, OnMessageSettings } from './serverInterfaces';
 import { World } from './world';
@@ -17,6 +16,7 @@ import { isFriend } from './services/friends';
 import { invalidEnumReturn } from '../common/utils';
 import { isWorldPointWithPaddingVisible } from '../common/camera';
 import { tileWidth } from '../common/constants';
+import { cleanMessage } from '../common/stringUtils';
 
 function isLaugh(message: string): boolean {
 	return /(^| )(ha(ha)+|he(he)+|ja(ja)+|ха(ха)+|lol|rofl)$/i.test(message);

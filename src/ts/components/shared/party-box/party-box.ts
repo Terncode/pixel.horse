@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { PartyMember } from '../../../common/interfaces';
 import { PonyTownGame } from '../../../client/game';
 import { partyLeaderIcon, offlineIcon } from '../../../client/icons';
-import { getPaletteInfo } from '../../../common/pony';
+import { getPaletteInfo } from '../../../client/pony';
 
 @Component({
 	selector: 'party-box',

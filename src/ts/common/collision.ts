@@ -1,9 +1,10 @@
 import { Entity, IMap, Region, EntityFlags } from './interfaces';
 import { clamp } from './utils';
 import { toWorldX, toWorldY } from './positionUtils';
-import { getRegionGlobal, isInWaterAt } from './worldMap';
 import { tileWidth, tileHeight, PONY_TYPE, REGION_SIZE, REGION_WIDTH, REGION_HEIGHT } from './constants';
 import { isInTheAir, isFlying } from './entityUtils';
+import { getRegionGlobal, getRegionUnsafe } from './region';
+import { isInWaterAt } from './tileUtils';
 
 export function isOutsideMap<T>(x: number, y: number, map: IMap<T>): boolean {
 	return x < 0 || y < 0 || x >= map.width || y >= map.height;
@@ -292,5 +293,25 @@ export function updatePosition(entity: Entity, delta: number, map: IMap<Region |
 
 	if (DEVELOPMENT && steps <= 0) {
 		console.error('Overflow collision steps');
+	}
+}
+
+export function setColliderDirty(map: IMap<Region | undefined>, region: Region, x: number, y: number) {
+	region.colliderDirty = true;
+
+	if (x === 0) {
+		const r = getRegionUnsafe(map, region.x - 1, region.y);
+		r && (r.colliderDirty = true);
+	} else if (x === (REGION_SIZE - 1)) {
+		const r = getRegionUnsafe(map, region.x + 1, region.y);
+		r && (r.colliderDirty = true);
+	}
+
+	if (y === 0) {
+		const r = getRegionUnsafe(map, region.x, region.y - 1);
+		r && (r.colliderDirty = true);
+	} else if (y === (REGION_SIZE - 1)) {
+		const r = getRegionUnsafe(map, region.x, region.y + 1);
+		r && (r.colliderDirty = true);
 	}
 }

@@ -1,6 +1,6 @@
 import '../lib';
 import { expect } from 'chai';
-import { resizeCanvas, resizeCanvasWithRatio } from '../../client/canvasUtils';
+import { resizeCanvas, resizeCanvasWithRatio } from '../../common/canvasUtils';
 
 describe('canvasUtils', () => {
 	describe('resizeCanvas()', () => {

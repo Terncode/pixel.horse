@@ -2,10 +2,10 @@
 import { compareCanvases, loadSprites, loadImageAsCanvas, clearCompareResults } from '../lib';
 import * as path from 'path';
 import { TRANSPARENT, blushColor, WHITE } from '../../common/colors';
-import { defaultPonyState, defaultDrawPonyOptions } from '../../client/ponyHelpers';
+import { defaultPonyState, defaultDrawPonyOptions } from '../../common/ponyHelpers';
 import { mockPaletteManager, createDefaultPony } from '../../common/ponyInfo';
 import { PonyState, PalettePonyInfo, PonyInfo, DrawPonyOptions, NoDraw } from '../../common/interfaces';
-import { sit, trot, sitDown, laugh, fly } from '../../client/ponyAnimations';
+import { sit, trot, sitDown, laugh, fly } from '../../common/ponyAnimations';
 import { drawCanvas } from '../../graphics/contextSpriteBatch';
 import { parseExpression } from '../../common/expressionUtils';
 import { compressPonyString, decodePonyInfo } from '../../common/compressPony';

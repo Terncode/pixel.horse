@@ -1,16 +1,16 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { PonyInfo, PonyState } from '../../../common/interfaces';
 import { toPalette, createDefaultPony, syncLockedPonyInfo } from '../../../common/ponyInfo';
-import { defaultPonyState, defaultDrawPonyOptions } from '../../../client/ponyHelpers';
+import { defaultPonyState, defaultDrawPonyOptions } from '../../../common/ponyHelpers';
 import { expressions } from '../../../common/expressions';
-import { createCanvas, disableImageSmoothing, saveCanvas } from '../../../client/canvasUtils';
+import { createCanvas, disableImageSmoothing, saveCanvas } from '../../../common/canvasUtils';
 import { ContextSpriteBatch } from '../../../graphics/contextSpriteBatch';
 import { RED } from '../../../common/colors';
-import { loadAndInitSpriteSheets } from '../../../client/spriteUtils';
-import { createBodyAnimation } from '../../../client/ponyAnimations';
+import { createBodyAnimation } from '../../../common/ponyAnimations';
 import { drawPony } from '../../../client/ponyDraw';
 import { faHome } from '../../../client/icons';
 import { paletteSpriteSheet } from '../../../generated/sprites';
+import { loadAndInitSpriteSheets } from '../../../client/loadSprites';
 
 @Component({
 	selector: 'tools-expressions',

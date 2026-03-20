@@ -6,7 +6,7 @@ import {
 import { logger } from './logger';
 import { isAdmin } from '../common/accountUtils';
 import { FriendData } from '../common/interfaces';
-import { replaceEmojis } from '../client/emoji';
+import { replaceEmojis } from '../common/emoji';
 import { filterForbidden } from './characterUtils';
 import { filterName } from '../common/swears';
 

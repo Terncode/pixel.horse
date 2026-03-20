@@ -1,11 +1,12 @@
 import '../lib';
 import { expect } from 'chai';
 import {
-	cleanName, cleanMessage, filterString, isSpamMessage, toSocialSiteInfo
+	isSpamMessage, toSocialSiteInfo
 } from '../../client/clientUtils';
 import { repeat, removeItem } from '../../common/utils';
 import { SAY_MAX_LENGTH } from '../../common/constants';
 import { oauthProviders } from '../../client/data';
+import { cleanMessage, cleanName, filterString } from '../../common/stringUtils';
 
 const cleanNameTests: [string | undefined, string, string][] = [
 	[undefined, '', 'undefined'],

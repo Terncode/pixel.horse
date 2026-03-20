@@ -1,11 +1,11 @@
-import { animatorState as state, animatorTransition as transition, anyState, AnimatorState } from '../common/animator';
+import { animatorState as state, animatorTransition as transition, anyState, AnimatorState } from './animator';
 import {
 	stand, sit, sitDown, standUp, lie, lieDown, sitUp, flyBug, fly, flyUp, flyDown, flyUpBug, flyDownBug,
 	trot, boop, boopSit, swim, sitToTrot, lieToTrot, boopLie, trotToFly, trotToFlyBug, boopFly, boopFlyBug,
 	flyToTrot, flyToTrotBug, swing, swimToTrot, trotToSwim, swimToFly, flyToSwim, boopSwim, swimToFlyBug, flyToSwimBug,
 	kissBody, kissLiftHoofBody, kissFlyBody, kissFlyBugBody, kissLieBody, kissSitBody, kissSwimBody, kissToTrot
 } from './ponyAnimations';
-import { BodyAnimation } from '../common/interfaces';
+import { BodyAnimation } from './interfaces';
 
 function n(value: string) {
 	return (DEVELOPMENT || SERVER) ? value : '';

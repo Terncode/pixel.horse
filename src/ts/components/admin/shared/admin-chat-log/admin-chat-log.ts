@@ -2,10 +2,11 @@ import { Component, Input, OnDestroy, ElementRef } from '@angular/core';
 import * as moment from 'moment';
 import { AdminModel } from '../../../services/adminModel';
 import { Account } from '../../../../common/adminInterfaces';
-import { ChatDate, createChatDate, createDateRange, replaceSwears } from '../../../../common/adminUtils';
+import { ChatDate, createChatDate, createDateRange } from '../../../../common/adminUtils';
 import { faSearch, faSpinner, faSync, faFileAlt, faTimes, faChevronLeft, faChevronRight } from '../../../../client/icons';
 import { removeAllNodes, appendAllNodes, showTextInNewTab } from '../../../../client/htmlUtils';
 import { includes } from '../../../../common/utils';
+import { replaceSwears } from '../../../../client/adminHtmlUtils';
 
 @Component({
 	selector: 'admin-chat-log',

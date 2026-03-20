@@ -10,14 +10,13 @@ import {
 	HAlign, VAlign, TextOptions, lineBreak, drawTextAligned, measureText, drawText, drawOutlinedText
 } from '../graphics/spriteFont';
 import * as sprites from '../generated/sprites';
-import { fontPal, fontSmallPal } from '../client/fonts';
-import { getPonyChatHeight, isPony } from '../common/pony';
+import { fontPal, fontSmallPal } from '../common/fonts';
 import { worldToScreen } from '../common/camera';
 import { multiplyColor, colorToCSS } from '../common/color';
 import { getTag, getTagPalette } from '../common/tags';
 import { rect } from '../common/rect';
 import { mockPaletteManager } from '../common/ponyInfo';
-import { sortEntities, isHidden, isFriend } from '../common/entityUtils';
+import { sortEntities, isHidden, isFriend, isPony, getPonyChatHeight } from '../common/entityUtils';
 
 const baloonTaper = [
 	{ w: 1, y: 2 },

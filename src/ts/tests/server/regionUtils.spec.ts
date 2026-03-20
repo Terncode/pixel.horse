@@ -10,8 +10,8 @@ import { IClient, ServerRegion } from '../../server/serverInterfaces';
 import { addEntityToRegion, createServerRegion } from '../../server/serverRegion';
 import { createServerMap } from '../../server/serverMap';
 import { mockClient, serverEntity } from '../mocks';
-import { getRegion } from '../../common/worldMap';
 import { EntityFlags } from '../../common/interfaces';
+import { getRegion } from '../../common/region';
 
 describe('regionUtils', () => {
 	let client: IClient;

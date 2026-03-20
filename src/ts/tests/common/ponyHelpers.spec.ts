@@ -1,6 +1,6 @@
 import '../lib';
 import { expect } from 'chai';
-import { defaultPonyState, isStateEqual } from '../../client/ponyHelpers';
+import { defaultPonyState, isStateEqual } from '../../common/ponyHelpers';
 
 describe('interfaces', () => {
 	describe('isStateEqual()', () => {

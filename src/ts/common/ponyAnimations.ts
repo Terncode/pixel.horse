@@ -1,5 +1,5 @@
-import { BodyAnimation, BodyAnimationFrame, HeadAnimation, HeadAnimationFrame, BodyShadow, HeadAnimationProperties } from '../common/interfaces';
-import { repeat, flatten } from '../common/utils';
+import { BodyAnimation, BodyAnimationFrame, HeadAnimation, HeadAnimationFrame, BodyShadow, HeadAnimationProperties } from './interfaces';
+import { repeat, flatten } from './utils';
 
 // body animations
 

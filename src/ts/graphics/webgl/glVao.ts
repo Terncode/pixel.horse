@@ -1,4 +1,4 @@
-import { timeStart, timeEnd } from '../../client/timing';
+import { timeStart, timeEnd } from '../../common/timing';
 
 export interface VAOAttributes {
 	name: string;

@@ -5,7 +5,7 @@ import {
 	Account, Event, Auth, ROLES, Character, MergeInfo, MergeAccountData, SupporterInvite, accountFlags,
 	OriginInfoBase, DuplicateResult, AroundEntry, LogEntry
 } from '../../../common/adminInterfaces';
-import { compareByName, createSupporterChanges, SupporterChange, getTranslationUrl, getAge } from '../../../common/adminUtils';
+import { compareByName, SupporterChange, getTranslationUrl, getAge } from '../../../common/adminUtils';
 import { hasRole } from '../../../common/accountUtils';
 import { AdminModel } from '../../services/adminModel';
 import {
@@ -16,6 +16,7 @@ import {
 import { flagsToString, includes, flatten, removeItem } from '../../../common/utils';
 import { Subscription } from '../../../common/interfaces';
 import { showTextInNewTab } from '../../../client/htmlUtils';
+import { createSupporterChanges } from '../../../client/adminHtmlUtils';
 
 const defaultLimit = 15;
 const defaultDuplicatesLimit = 10;

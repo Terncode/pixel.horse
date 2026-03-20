@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { fromPairs } from 'lodash';
 import { faHome } from '../../../client/icons';
-import { ponyStates, } from '../../../client/ponyStates';
+import { ponyStates, } from '../../../common/ponyStates';
 import { AgDragEvent } from '../../shared/directives/agDrag';
 import { AnimatorState } from '../../../common/animator';
 import { distance, flatten } from '../../../common/utils';

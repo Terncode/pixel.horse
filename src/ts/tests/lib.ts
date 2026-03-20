@@ -8,13 +8,13 @@ import * as del from 'del';
 import { once, mapValues } from 'lodash';
 import { spawnSync } from 'child_process';
 import { createStubInstance, SinonStubbedInstance, stub } from 'sinon';
-import { loadAndInitSheets } from '../client/spriteUtils';
 import '../server/canvasUtilsNode';
 import { setPaletteManager } from '../common/mixins';
 import { mockPaletteManager } from '../common/ponyInfo';
 import { spriteSheets } from '../generated/sprites';
 import { pathTo } from '../server/paths';
 import { loadImage, loadImageSync, createCanvas } from '../server/canvasUtilsNode';
+import { loadAndInitSheets } from '../client/loadSprites';
 
 require('chai').use(require('chai-as-promised'));
 

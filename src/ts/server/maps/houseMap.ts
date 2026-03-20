@@ -7,8 +7,8 @@ import { TileType, MapType, MapFlags, EntityState } from '../../common/interface
 import { createServerMap, setTile, MapData, saveMap } from '../serverMap';
 import { WallController } from '../controllers';
 import { resetRegionUpdates } from '../serverRegion';
-import { getTile } from '../../common/worldMap';
 import { tileHeight, HOUSE_ENTITY_LIMIT } from '../../common/constants';
+import { getTile } from '../../common/tileUtils';
 
 export let defaultHouseSave: MapData | undefined = undefined;
 

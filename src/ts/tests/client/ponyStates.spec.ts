@@ -4,9 +4,9 @@ import {
 	trotting, flying, standing, lying, sitting, hovering, toBoopState, booping, boopingSitting,
 	boopingLying, boopingFlying, sittingDown, isFlyingUp, flyingUp, trottingToFlying, flyingToTrotting,
 	flyingDown, isFlyingUpOrDown, isFlyingDown
-} from '../../client/ponyStates';
+} from '../../common/ponyStates';
 import { EntityState } from '../../common/interfaces';
-import { flagsToState } from '../../common/pony';
+import { flagsToState } from '../../client/pony';
 
 describe('ponyStates', () => {
 	describe('flagsToState()', () => {

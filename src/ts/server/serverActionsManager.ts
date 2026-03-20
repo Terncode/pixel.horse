@@ -3,7 +3,6 @@ import * as fs from 'fs';
 import { noop, random } from 'lodash';
 import { HOUR, SECOND, SEASON, HOLIDAY, UNHIDE_TIMEOUT, MINUTE } from '../common/constants';
 import { CharacterState, ServerConfig, Settings } from '../common/adminInterfaces';
-import { ClientActions } from '../client/clientActions';
 import {
 	updateAccountSafe, timeoutAccount, reportInviteLimitAccount, reportSwearingAccount, reportSpammingAccount,
 	reportFriendLimitAccount
@@ -31,6 +30,7 @@ import { updateCharacterState } from './characterUtils';
 import { FriendsService } from './services/friends';
 import { config } from './config';
 import { parseSeason, parseHoliday } from '../common/utils';
+import { ClientActionsTemplate } from '../common/clientActionsTemplte';
 
 async function refreshSettings(account: IAccount) {
 	const a = await Account.findOne({ _id: account._id }, 'settings').exec();
@@ -105,7 +105,7 @@ export function createServerActionsFactory(
 	const move = createMove(teleportCounter);
 	const ignorePlayer = createIgnorePlayer(updateAccount);
 
-	async function createServerActions(client: ClientActions & SocketClient & ClientExtensions & IClient) {
+	async function createServerActions(client: ClientActionsTemplate & SocketClient & ClientExtensions & IClient) {
 		const { account } = client.tokenData as TokenData;
 		const [friendIds, hideIds] = await Promise.all([findFriendIds(account._id), findHideIds(account._id)]);
 		createClientAndPony(client, friendIds, hideIds, server, world, statesCounter);

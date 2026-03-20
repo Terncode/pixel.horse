@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { Model, getPonyTag } from '../../services/model';
-import { defaultPonyState } from '../../../client/ponyHelpers';
+import { defaultPonyState } from '../../../common/ponyHelpers';
 import { GameService } from '../../services/gameService';
 import { OAuthProvider, PonyObject } from '../../../common/interfaces';
-import { stand } from '../../../client/ponyAnimations';
+import { stand } from '../../../common/ponyAnimations';
 
 @Component({
 	selector: 'home',

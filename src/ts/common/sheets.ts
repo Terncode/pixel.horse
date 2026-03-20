@@ -1,9 +1,9 @@
 import { range, times } from 'lodash';
 import { PonyInfo, Point, PonyState, DrawPonyOptions, PonyInfoNumber, SpriteSet, PalettePonyInfo, NoDraw } from './interfaces';
 import * as offsets from './offsets';
-import { defaultPonyState } from '../client/ponyHelpers';
+import { defaultPonyState } from './ponyHelpers';
 import { WHITE, BLACK, ORANGE, BLUE, CYAN, RED } from './colors';
-import { createBodyFrame } from '../client/ponyAnimations';
+import { createBodyFrame } from './ponyAnimations';
 import { setFlag, repeat } from './utils';
 
 type OnFrame = (pony: PonyInfoNumber, state: PonyState, options: DrawPonyOptions, x: number, y: number, pattern: number) => void;

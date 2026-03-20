@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy, Input, ViewChild } from '@angular/core';
-import { defaultExpression } from '../../../client/ponyUtils';
-import { defaultPonyState } from '../../../client/ponyHelpers';
+import { defaultExpression } from '../../../common/ponyUtils';
+import { defaultPonyState } from '../../../common/ponyHelpers';
 import { Expression, Muzzle, HeadAnimation, BodyAnimation, Eye } from '../../../common/interfaces';
-import { excite_meno, happy_tongue_meno, stand, boop, happy_tongue_meno_2 } from '../../../client/ponyAnimations';
+import { excite_meno, happy_tongue_meno, stand, boop, happy_tongue_meno_2 } from '../../../common/ponyAnimations';
 import { FrameService, FrameLoop } from '../../services/frameService';
 import { CharacterPreview } from '../character-preview/character-preview';
 import { decompressPonyString } from '../../../common/compressPony';

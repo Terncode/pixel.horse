@@ -1,7 +1,7 @@
 import { Sprite, Palette, PaletteSpriteBatch as IPaletteSpriteBatch, Matrix2D, Batch } from '../common/interfaces';
 import { BaseSpriteBatch, getColorFloat } from './baseSpriteBatch';
 import { colorFromRGBA, colorToFloat } from '../common/color';
-import { createSprite } from '../client/spriteUtils';
+import { createSprite } from '../common/spriteUtils';
 import { createPalette } from './paletteManager';
 
 const defaultRectSprite = createSprite(0, 0, 1, 1, 0, 0, 3);

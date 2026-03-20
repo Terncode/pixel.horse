@@ -7,16 +7,16 @@ import {
 	GRASS_COLOR, getMessageColor, OUTLINE_COLOR, MOD_COLOR, ADMIN_COLOR, PATREON_COLOR, ANNOUNCEMENT_COLOR,
 	WHITE, PARTY_COLOR, RED, ORANGE, PURPLE, GREEN, YELLOW, BLUE, BLACK, CYAN, TRANSPARENT, WHISPER_COLOR
 } from '../../../common/colors';
-import { loadAndInitSpriteSheets } from '../../../client/spriteUtils';
 import { MessageType, FontPalettes, Palette } from '../../../common/interfaces';
 import { faHome, faStar } from '../../../client/icons';
 import * as sprites from '../../../generated/sprites';
-import { disableImageSmoothing } from '../../../client/canvasUtils';
+import { disableImageSmoothing } from '../../../common/canvasUtils';
 import { mockPaletteManager } from '../../../common/ponyInfo';
-import { fontPal, fontSmallPal } from '../../../client/fonts';
+import { fontPal, fontSmallPal } from '../../../common/fonts';
 import { measureText, drawText, drawOutlinedText, lineBreak, drawTextAligned, HAlign } from '../../../graphics/spriteFont';
 import { rect } from '../../../common/rect';
 import { colorToCSS } from '../../../common/color';
+import { loadAndInitSpriteSheets } from '../../../client/loadSprites';
 
 interface Message {
 	label: string;

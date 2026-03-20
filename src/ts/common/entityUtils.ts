@@ -1,16 +1,35 @@
 import { sort } from 'timsort';
 import {
-	Entity, EntityState, BodyAnimation, Point, EntityFlags, IMap, Pony, Says, EntityPlayerState, WorldMap
+	Entity, EntityState, BodyAnimation, Point, EntityFlags, IMap, Pony, Says, EntityPlayerState, WorldMap,
+	BodyAnimationFrame,
+	HeadAnimationFrame
 } from './interfaces';
-import { hasFlag, distance, pushUniq, setFlag } from './utils';
-import { stand, sit, lie, fly, flyBug, swim } from '../client/ponyAnimations';
-import { releasePony, isPony } from './pony';
+import { hasFlag, distance, pushUniq, setFlag, removeItemFast } from './utils';
+import { stand, sit, lie, fly, flyBug, swim, defaultBodyFrame, defaultHeadAnimation, defaultHeadFrame } from './ponyAnimations';
 import { toScreenX, toScreenY } from './positionUtils';
 import { releasePalette } from '../graphics/paletteManager';
 import { rect } from './rect';
-import { addOrRemoveFromEntityList } from './worldMap';
 import { PONY_TYPE } from './constants';
 import { isStaticCollision } from './collision';
+import { releasePalettes } from './ponyInfo';
+import { trotting, flying, hovering } from './ponyStates';
+import * as offsets from './offsets';
+
+
+export function releasePalettePonyInfo(pony: Pony) {
+	if (pony.palettePonyInfo !== undefined) {
+		releasePalettes(pony.palettePonyInfo);
+		pony.palettePonyInfo = undefined;
+	}
+}
+
+export function releasePony(pony: Pony) {
+	if (pony.ponyState.holding) {
+		releaseEntity(pony.ponyState.holding);
+	}
+
+	releasePalettePonyInfo(pony);
+}
 
 export function releaseEntity(entity: Entity) {
 	if (isPony(entity)) {
@@ -22,6 +41,31 @@ export function releaseEntity(entity: Entity) {
 			releasePalette(palette);
 		}
 	}
+}
+
+export function getPonyAnimationFrame<T>({ frames }: { frames: T[] }, frame: number, defaultFrame: T): T {
+	return frames.length > 0 ? frames[Math.max(0, frame) % frames.length] : defaultFrame;
+}
+
+export function getPonyChatHeight(pony: Pony) {
+	const baseHeight = 2;
+	const state = pony.ponyState;
+
+	if (pony.animator.state === trotting) {
+		return baseHeight;
+	} else if (pony.animator.state === flying || pony.animator.state === hovering) {
+		return baseHeight - 16;
+	} else {
+		const frame = getPonyAnimationFrame(state.animation, state.animationFrame, defaultBodyFrame);
+		const animation = state.headAnimation || defaultHeadAnimation;
+		const headFrame = getPonyAnimationFrame(animation, state.headAnimationFrame, defaultHeadFrame);
+		return baseHeight + getHeadY(frame, headFrame);
+	}
+}
+
+export function getHeadY(frame: BodyAnimationFrame, headFrame: HeadAnimationFrame): number {
+	const headOffset = offsets.headOffsets[frame.body];
+	return frame.bodyY + frame.headY + headFrame.headY + headOffset.y;
 }
 
 export function addChatBubble(map: WorldMap, entity: Entity, says: Says) {
@@ -234,4 +278,18 @@ export function isDecal(entity: Entity) {
 
 export function isCritter(entity: Entity) {
 	return (entity.flags & EntityFlags.Critter) !== 0;
+}
+
+export function addOrRemoveFromEntityList(list: Entity[], entity: Entity, had: boolean, has: boolean) {
+	if (had !== has) {
+		if (has) {
+			pushUniq(list, entity);
+		} else {
+			removeItemFast(list, entity);
+		}
+	}
+}
+
+export function isPony(entity: Entity): entity is Pony {
+	return entity.type === PONY_TYPE;
 }

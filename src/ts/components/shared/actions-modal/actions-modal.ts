@@ -12,7 +12,7 @@ import {
 import { createExpression, readFileAsText } from '../../../client/clientUtils';
 import { ACTION_EXPRESSION_BG, ACTION_EXPRESSION_EYE_COLOR, fillToOutline } from '../../../common/colors';
 import { faLock, faApple, faLaughBeam, faComment, faCog, faCogs } from '../../../client/icons';
-import { createEyeSprite } from '../../../client/spriteUtils';
+import { createEyeSprite } from '../../../common/spriteUtils';
 import { times, hasFlag } from '../../../common/utils';
 import { PonyTownGame } from '../../../client/game';
 import { getEntityNames } from '../../services/model';

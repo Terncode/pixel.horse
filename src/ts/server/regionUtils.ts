@@ -9,10 +9,10 @@ import { writeRegion, writeUpdate } from '../common/encoders/updateEncoder';
 import { toWorldX, toWorldY } from '../common/positionUtils';
 import { isRectVisible } from '../common/camera';
 import { timingStart, timingEnd } from './timing';
-import { getRegion } from '../common/worldMap';
 import { logger } from './logger';
 import { EntityFlags } from '../common/interfaces';
 import { REGION_SIZE } from '../common/constants';
+import { getRegion } from '../common/region';
 
 let updatesBuffer = new ArrayBuffer(4096);
 let updatesBufferOffset = 0;

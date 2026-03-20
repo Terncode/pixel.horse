@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { emojis } from '../../../client/emoji';
+import { emojis } from '../../../common/emoji';
 import { getUrl } from '../../../client/rev';
 import { CREDITS, CONTRIBUTORS, Credit } from '../../../client/credits';
 import { CHANGELOG } from '../../../generated/changelog';

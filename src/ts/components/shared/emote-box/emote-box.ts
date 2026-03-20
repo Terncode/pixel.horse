@@ -1,8 +1,8 @@
 import { Component, Input, AfterViewInit, ElementRef, ChangeDetectionStrategy, ViewChild, NgZone } from '@angular/core';
-import { findEmoji, getEmojiImageAsync } from '../../../client/emoji';
-import { loadAndInitSpriteSheets } from '../../../client/spriteUtils';
-import { font } from '../../../client/fonts';
+import { findEmoji, getEmojiImageAsync } from '../../../common/emoji';
+import { font } from '../../../common/fonts';
 import { getCharacterSprite } from '../../../graphics/spriteFont';
+import { loadAndInitSpriteSheets } from '../../../client/loadSprites';
 
 @Component({
 	selector: 'emote-box',

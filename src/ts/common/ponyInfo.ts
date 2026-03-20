@@ -11,7 +11,7 @@ import { BLACK, fillToOutline, fillToOutlineColor, WHITE, TRANSPARENT, fillToOut
 import {
 	mergedManes, mergedBackManes, mergedFacialHair, mergedEarAccessories, mergedChestAccessories,
 	SLEEVED_ACCESSORIES, mergedBackAccessories, mergedExtraAccessories, mergedHeadAccessories
-} from '../client/ponyUtils';
+} from './ponyUtils';
 
 const MAX_COLORS = 6;
 const FILLS = ['1e90ff', '32cd32', 'da70d6', 'dc143c', '7fffd4'];

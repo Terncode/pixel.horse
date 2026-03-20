@@ -1,11 +1,11 @@
 import { ClientExtensions, BinaryWriter } from 'ag-sockets';
-import { ClientActions } from '../client/clientActions';
 import {
 	Entity, ServerFlags, AccountSettings, NotificationFlags, Expression, Camera, SayData, Region, TileUpdate,
 	Rect, IMap, MapType, TileType, MapState, UpdateFlags, Action, EntityOrPonyOptions, EntityPlayerState, MapFlags
 } from '../common/interfaces';
 import { IAccount, ICharacter, UpdateAccount } from './db';
 import { AccountUpdate, CharacterState, GameServerSettings, Suspicious } from '../common/adminInterfaces';
+import { ClientActionsTemplate } from '../common/clientActionsTemplte';
 
 export interface EntityUpdate {
 	entity: Entity;
@@ -132,7 +132,7 @@ export interface ServerMap extends IMap<ServerRegion> {
 	editingLocked: boolean;
 }
 
-export interface IClient extends ClientActions, ClientExtensions {
+export interface IClient extends ClientActionsTemplate, ClientExtensions {
 	// origin info
 	ip: string;
 	country: string;

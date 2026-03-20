@@ -1,31 +1,9 @@
-import { once, noop } from 'lodash';
-import { ColorExtra, ColorExtraSets, PonyEye, SpriteSheet, Sprite } from '../common/interfaces';
-import { spriteSheets } from '../generated/sprites';
-import { loadImage, createCanvas } from '../client/canvasUtils';
-import { getUrl } from './rev';
-import { createFonts } from './fonts';
-
-export function createSprite(x: number, y: number, w: number, h: number, ox: number, oy: number, type: number): Sprite {
-	return { x, y, w, h, ox, oy, type };
-}
-
-export function addTitles(sprites: ColorExtraSets, titles: string[]): ColorExtraSets {
-	return sprites && sprites.map((ns, i) =>
-		ns && ns.map(s => s && { color: s.color, colors: s.colors, title: titles[i], label: titles[i] }));
-}
-
-export function addLabels(sprites: ColorExtraSets, labels: string[]) {
-	sprites && sprites.forEach((s, i) => s && s[0] ? s[0]!.label = labels[i] : undefined);
-	return sprites;
-}
-
-export function createEyeSprite(eye: PonyEye | undefined, iris: number, defaultPalette: Uint32Array): ColorExtra | undefined {
-	return eye && { color: eye.irises[iris]!, colors: 2, extra: eye.base, palettes: [defaultPalette] };
-}
-
-export function getColorCount(sprite: ColorExtra | undefined): number {
-	return sprite && sprite.colors ? Math.floor((sprite.colors - 1) / 2) : 0;
-}
+import { noop, once } from "lodash";
+import { getUrl } from "./rev";
+import { spriteSheets } from "../generated/sprites";
+import { createCanvas, loadImage } from "../common/canvasUtils";
+import { createFonts } from "../common/fonts";
+import { SpriteSheet } from "../common/interfaces";
 
 export function createSpriteUtils() {
 	createFonts();

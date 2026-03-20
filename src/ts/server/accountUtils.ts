@@ -8,7 +8,6 @@ import { fromNow, includes, hasFlag } from '../common/utils';
 import {
 	isAdmin, getCharacterLimit as getCharacterLimitInternal, getSupporterInviteLimit as getSupporterInviteLimitInternal
 } from '../common/accountUtils';
-import { cleanName } from '../client/clientUtils';
 import {
 	IAccount, IAuth, Account, ID, characterCount as getCharacterCount, findAccount, queryAccount, updateAccount,
 	FriendRequest, IFriendRequest
@@ -20,6 +19,7 @@ import { isActive, supporterLevel, isPastSupporter } from '../common/adminUtils'
 import { IClient } from './serverInterfaces';
 import { providers } from './oauth';
 import { taskQueue } from './utils/taskQueue';
+import { cleanName } from '../common/stringUtils';
 
 export interface SuspiciousCheckers {
 	isSuspiciousName(name: string): boolean;

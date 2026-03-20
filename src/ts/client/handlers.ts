@@ -8,15 +8,15 @@ import {
 } from '../common/interfaces';
 import { bitmask, setFlag, findById, distance, hasFlag, distanceXY, invalidEnum, removeItem } from '../common/utils';
 import { isChatVisible } from '../common/camera';
-import { createRegion, worldToRegionX, worldToRegionY } from '../common/region';
+import { createRegion, getRegionGlobal, getRegionUnsafe, worldToRegionX, worldToRegionY } from '../common/region';
 import { createAnEntity, poof, poof2 } from '../common/entities';
-import { getPonyState, setPonyState, isPonyFlying, addChatBubble, isHidden } from '../common/entityUtils';
+import { getPonyState, setPonyState, isPonyFlying, addChatBubble, isHidden, addOrRemoveFromEntityList, isPony } from '../common/entityUtils';
 import {
-	isPony, createPony, setPonyExpression, updatePonyInfo, updatePonyHold, doPonyAction, hasHeadAnimation,
+	createPony, setPonyExpression, updatePonyInfo, updatePonyHold, doPonyAction, hasHeadAnimation,
 	setHeadAnimation,
 	doBoopPonyAction,
 	isPonyBug
-} from '../common/pony';
+} from './pony';
 import { PonyTownGame } from './game';
 import { setupPlayer, savePlayerPosition } from './sec';
 import { PONY_INFO_KEY, FLY_DELAY, isChatlogRangeUnlimited, SECOND, PONY_TYPE } from '../common/constants';
@@ -26,15 +26,16 @@ import { decodeUpdate, readOneUpdate } from '../common/encoders/updateDecoder';
 import { updateEntityVelocity } from '../common/entityUtils';
 import { decodePonyInfo } from '../common/compressPony';
 import { mockPaletteManager } from '../common/ponyInfo';
-import { yawn, laugh, sneeze, kiss, kissFly, kissFlyBug, excite } from './ponyAnimations';
+import { yawn, laugh, sneeze, kiss, kissFly, kissFlyBug, excite } from '../common/ponyAnimations';
 import {
-	findEntityById, getRegionGlobal, setTile, removeEntity, addEntity, removeEntityDirectly, setRegion,
-	addEntityToMapRegion, switchEntityRegion, getRegionUnsafe, addOrRemoveFromEntityList,
-} from '../common/worldMap';
+	findEntityById, removeEntity, addEntity, removeEntityDirectly, setRegion,
+	addEntityToMapRegion, switchEntityRegion,
+} from './worldMap';
 import { isSelected } from './gameUtils';
 import { compareFriends } from '../components/services/model';
 import { canCollideWith } from '../common/collision';
 import { hasDrawLight, hasLightSprite } from './draw';
+import { setTile } from '../common/tileUtils';
 
 function log(message: string) {
 	if (DEVELOPMENT && !TESTS) {

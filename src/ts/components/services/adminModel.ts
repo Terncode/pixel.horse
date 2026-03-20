@@ -15,11 +15,12 @@ import { LiveCollection } from './liveCollection';
 import { socketOptions, token } from '../../client/data';
 import { getUrl } from '../../client/rev';
 import {
-	formatChat, formatEventDesc, getId, banMessage, parsePonies
+	getId, banMessage, parsePonies
 } from '../../common/adminUtils';
 import { StorageService } from './storageService';
 import { decompressPonyString } from '../../common/compressPony';
 import { ModelSubscriber } from './modelSubscriber';
+import { formatChat, formatEventDesc } from '../../client/adminHtmlUtils';
 
 interface FindPoniesResult {
 	items: string[];

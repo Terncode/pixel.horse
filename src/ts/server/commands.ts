@@ -4,7 +4,7 @@ import {
 } from '../common/interfaces';
 import { hasRole } from '../common/accountUtils';
 import { butterfly, bat, firefly, cloud, getEntityType, getEntityTypeName } from '../common/entities';
-import { emojis } from '../client/emoji';
+import { emojis } from '../common/emoji';
 import { IClient, ServerMap } from './serverInterfaces';
 import { World } from './world';
 import { NotificationService } from './services/notification';
@@ -29,11 +29,11 @@ import {
 } from './serverMap';
 import { PARTY_LIMIT, tileWidth, tileHeight, MAP_LOAD_SAVE_TIMEOUT } from '../common/constants';
 import { PartyService } from './services/party';
-import { getRegionGlobal } from '../common/worldMap';
 import { swapCharacter } from './characterUtils';
 import { writeFileAsync } from 'fs';
 import { Account } from './db';
 import { defaultHouseSave, removeToolbox, restoreToolbox } from './maps/houseMap';
+import { getRegionGlobal } from '../common/region';
 
 export interface CommandContext {
 	world: World;

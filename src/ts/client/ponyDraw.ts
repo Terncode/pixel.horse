@@ -8,14 +8,14 @@ import { WHITE, SHINES_COLOR, FAR_COLOR, TRANSPARENT, fillToOutlineColor } from 
 import { toInt, hasFlag, repeat, flatten, point } from '../common/utils';
 import * as sprites from '../generated/sprites';
 import * as offsets from '../common/offsets';
-import { defaultHeadAnimation, defaultBodyFrame, defaultHeadFrame } from './ponyAnimations';
+import { defaultHeadAnimation, defaultBodyFrame, defaultHeadFrame } from '../common/ponyAnimations';
 import { toWorldX, toWorldY } from '../common/positionUtils';
 import {
 	frontHooves, PONY_WIDTH, PONY_HEIGHT, wings, chestBehind, tails, chest, neckAccessories, waistAccessories,
 	SLEEVED_ACCESSORIES, blinkFrames, flipIris, claws, Sets, backAccessories, SLEEVED_BACK_ACCESSORIES,
 	CHEST_ACCESSORIES_IN_FRONT, flipFaceAccessoryType, flipFaceAccessoryPattern, backLegSleeves,
 	NO_MANE_HEAD_ACCESSORIES, backHoovesInFront, frontHoovesInFront
-} from './ponyUtils';
+} from '../common/ponyUtils';
 import { HEAD_ACCESSORY_OFFSETS, EAR_ACCESSORY_OFFSETS, EXTRA_ACCESSORY_OFFSETS } from '../common/offsets';
 import { createMat2D, identityMat2D, translateMat2D, copyMat2D, rotateMat2D, scaleMat2D } from '../common/mat2d';
 import { darkenForOutline } from '../common/ponyInfo';
@@ -124,11 +124,6 @@ export function createHeadTransform(
 	scaleMat2D(headTransform, headTransform, headTurned ? -1 : 1, 1);
 	translateMat2D(headTransform, headTransform, -headFlipOffsetX, -headFlipOffsetY);
 	return headTransform;
-}
-
-export function getHeadY(frame: BodyAnimationFrame, headFrame: HeadAnimationFrame): number {
-	const headOffset = offsets.headOffsets[frame.body];
-	return frame.bodyY + frame.headY + headFrame.headY + headOffset.y;
 }
 
 const defaultShadow: BodyShadow = { frame: 0, offset: 0 };

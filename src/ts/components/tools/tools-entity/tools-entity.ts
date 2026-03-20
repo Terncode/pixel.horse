@@ -10,18 +10,18 @@ import { SHADOW_COLOR, WHITE, BLACK, TRANSPARENT, RED, ORANGE, PURPLE } from '..
 import { Key } from '../../../client/input/input';
 import { drawOutline } from '../../../graphics/graphicsUtils';
 import { drawCanvas, ContextSpriteBatch } from '../../../graphics/contextSpriteBatch';
-import { loadAndInitSpriteSheets } from '../../../client/spriteUtils';
 import { AgDragEvent } from '../../shared/directives/agDrag';
 import { faHome, faSave, faEraser, faTrash, faPlus, faCrosshairs } from '../../../client/icons';
 import { StorageService } from '../../services/storageService';
 import { mockPaletteManager, toPalette } from '../../../common/ponyInfo';
 import { OFFLINE_PONY } from '../../../common/constants';
 import { drawPony } from '../../../client/ponyDraw';
-import { defaultPonyState, defaultDrawPonyOptions } from '../../../client/ponyHelpers';
+import { defaultPonyState, defaultDrawPonyOptions } from '../../../common/ponyHelpers';
 import { createBaseEntity } from '../../../common/entities';
 import { decompressPonyString } from '../../../common/compressPony';
-import { disableImageSmoothing } from '../../../client/canvasUtils';
+import { disableImageSmoothing } from '../../../common/canvasUtils';
 import { toScreenX, toScreenYWithZ } from '../../../common/positionUtils';
+import { loadAndInitSpriteSheets } from '../../../client/loadSprites';
 
 const COVER = parseColor('DeepSkyBlue');
 const COLLIDER = ORANGE;

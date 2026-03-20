@@ -16,10 +16,10 @@ import {
 } from '../../common/errors';
 import { version, host } from '../../client/data';
 import {
-	toSocialSiteInfo, cleanName, validatePonyName, isStandalone, attachDebugMethod
+	toSocialSiteInfo, isStandalone, attachDebugMethod
 } from '../../client/clientUtils';
 import { ErrorReporter } from './errorReporter';
-import { randomString } from '../../common/stringUtils';
+import { cleanName, randomString, validatePonyName } from '../../common/stringUtils';
 import { StorageService } from './storageService';
 import { decompressPonyString, compressPonyString, decodePonyInfo } from '../../common/compressPony';
 import { SECOND, PLAYER_DESC_MAX_LENGTH, NEW_ACCOUNT_PONY_NAME } from '../../common/constants';

@@ -1,17 +1,18 @@
 import {
 	PaletteManager, Season, TileSets, Region, TileType, Camera, PaletteSpriteBatch, DrawOptions, WorldMap, IMap,
-	Sprite, MapType
-} from '../common/interfaces';
+	Sprite, MapType,
+	canWalk
+} from './interfaces';
 import * as sprites from '../generated/sprites';
-import { getRegionTile, getRegionElevation } from '../common/region';
-import { getRegionGlobal } from '../common/worldMap';
-import { tileWidth, tileHeight, tileElevation, WATER_FPS, REGION_SIZE, WATER_HEIGHT } from '../common/constants';
-import { clamp, toInt, at, invalidEnumReturn } from '../common/utils';
-import { isAreaVisible } from '../common/camera';
-import { WHITE } from '../common/colors';
+import { getRegionTile, getRegionElevation, setRegionTile, getRegionTileIndex, setRegionTileDirty, doRelativeToRegion, getRegionGlobal } from './region';
+import { tileWidth, tileHeight, tileElevation, WATER_FPS, REGION_SIZE, WATER_HEIGHT } from './constants';
+import { clamp, toInt, at, invalidEnumReturn } from './utils';
+import { isAreaVisible } from './camera';
+import { WHITE } from './colors';
 import { releasePalette } from '../graphics/paletteManager';
 import { drawPixelText } from '../graphics/graphicsUtils';
-import { toScreenX, toScreenY, toWorldZ } from '../common/positionUtils';
+import { toScreenX, toScreenY, toWorldZ } from './positionUtils';
+import { setColliderDirty } from './collision';
 
 const TILE_COUNTS = [[0, 4], [2, 3], [4, 3], [6, 3], [8, 3], [13, 3], [14, 3], [47, 4]];
 export const TILE_COUNT_MAP: number[] = [];
@@ -599,4 +600,52 @@ export function getTileHeight(
 	}
 
 	return 0;
+}
+
+export function getTile<T>(map: IMap<T>, x: number, y: number): TileType {
+	const region = getRegionGlobal(map, x, y) as any as Region;
+
+	if (region) {
+		const regionX = Math.floor(x - region.x * REGION_SIZE);
+		const regionY = Math.floor(y - region.y * REGION_SIZE);
+		return getRegionTile(region, regionX, regionY);
+	} else {
+		return TileType.None;
+	}
+}
+
+export function setTile(map: WorldMap, worldX: number, worldY: number, type: TileType) {
+	const region = getRegionGlobal(map, worldX, worldY);
+
+	if (!region)
+		return;
+
+	const x = Math.floor(worldX - region.x * REGION_SIZE);
+	const y = Math.floor(worldY - region.y * REGION_SIZE);
+
+	const old = getRegionTile(region, x, y);
+	setRegionTile(region, x, y, type);
+
+	setTilesDirty(map, worldX - 1, worldY - 1, 3, 3);
+
+	if (canWalk(old) !== canWalk(type)) {
+		setColliderDirty(map, region, x, y);
+	}
+}
+
+export function setTilesDirty(map: IMap<Region | undefined>, ox: number, oy: number, w: number, h: number) {
+	for (let y = 0; y < h; y++) {
+		for (let x = 0; x < w; x++) {
+			doRelativeToRegion(map, x + ox, y + oy, (region, x, y) => setRegionTileDirty(region, x, y));
+		}
+	}
+}
+
+export function getTileIndex2(map: IMap<Region | undefined>, x: number, y: number) {
+	const region = getRegionGlobal(map, x, y);
+	return region ? getRegionTileIndex(region, x - region.x * REGION_SIZE, y - region.y * REGION_SIZE) : 0;
+}
+
+export function isInWaterAt(map: IMap<Region | undefined>, x: number, y: number) {
+	return getTile(map, x, y) === TileType.Water && isInWater(getTileIndex2(map, x, y), x, y);
 }

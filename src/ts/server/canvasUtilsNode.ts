@@ -2,7 +2,7 @@
 
 import { readFileAsync, readFileSync } from 'fs';
 import { createCanvas as createNodeCanvas, Image } from 'canvas';
-import { setup } from '../client/canvasUtils';
+import { setup } from '../common/canvasUtils';
 
 export const createCanvas = createNodeCanvas;
 

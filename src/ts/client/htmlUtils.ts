@@ -1,6 +1,6 @@
-import { hasEmojis, splitEmojis, findEmoji, getEmojiImageAsync } from './emoji';
+import { hasEmojis, splitEmojis, findEmoji, getEmojiImageAsync } from '../common/emoji';
 import { Dict } from '../common/interfaces';
-import { font } from './fonts';
+import { font } from '../common/fonts';
 import { getCharacterSprite } from '../graphics/spriteFont';
 
 export function createHtmlNodes(value: string | undefined, scale: number): Node[] {

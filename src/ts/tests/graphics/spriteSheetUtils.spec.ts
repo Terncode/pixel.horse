@@ -2,7 +2,7 @@ import '../lib';
 import { expect } from 'chai';
 import { stub, assert } from 'sinon';
 import { createTexturesForSpriteSheets } from '../../graphics/spriteSheetUtils';
-import { createCanvas } from '../../client/canvasUtils';
+import { createCanvas } from '../../common/canvasUtils';
 import { SpriteSheet } from '../../common/interfaces';
 
 function createImageData() {

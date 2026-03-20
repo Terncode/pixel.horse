@@ -1,26 +1,27 @@
 import {
-	Entity, Point, TileType, Rect, MapInfo, Camera, Region, IMap, MapState, defaultMapState, Pony,
-	MapType, EntityFlags, WorldMap, Weather, EntityState, canWalk, MapFlags,
-} from './interfaces';
-import { contains, removeItem, boundsIntersect, array, pushUniq, containsPoint, removeItemFast } from './utils';
-import { isBoundsVisible, } from './camera';
+	Entity, Point, TileType, Rect, MapInfo, Camera, Region, MapState, defaultMapState, Pony,
+	MapType, EntityFlags, WorldMap, Weather, EntityState, MapFlags,
+} from '../common/interfaces';
+import { contains, removeItem, boundsIntersect, array, pushUniq, containsPoint, removeItemFast } from '../common/utils';
+import { isBoundsVisible, } from '../common/camera';
 import {
-	getRegionTile, setRegionTile, setRegionTileDirty, getRegionElevation, setRegionElevation,
-	getRegionTileIndex, worldToRegionX, worldToRegionY, generateRegionCollider, invalidateRegionsCollider
-} from './region';
-import { weatherRain, splash } from './entities';
-import { releaseEntity, isMoving, isHidden, isDrawable, isPonyFlying } from './entityUtils';
-import { updatePonyEntity, invalidatePalettesForPony, ensurePonyInfoDecoded, isPony, isPonyOnTheGround } from './pony';
-import { getTileHeight, updateTileIndices, isInWater } from '../client/tileUtils';
-import { toScreenX, toScreenY, toScreenYWithZ, rectToScreen, toWorldZ } from './positionUtils';
-import { hasDrawLight, hasLightSprite } from '../client/draw';
-import { PonyTownGame } from '../client/game';
-import { WATER_FPS, PONY_TYPE, REGION_SIZE } from './constants';
-import { updatePosition, canCollideWith } from './collision';
+	getRegionElevation, setRegionElevation,
+	worldToRegionX, worldToRegionY, generateRegionCollider, invalidateRegionsCollider,
+	getRegionGlobal, getRegion, doRelativeToRegion
+} from '../common/region';
+import { weatherRain, splash } from '../common/entities';
+import { releaseEntity, isMoving, isHidden, isDrawable, isPonyFlying, isPony } from '../common/entityUtils';
+import { updatePonyEntity, invalidatePalettesForPony, ensurePonyInfoDecoded, isPonyOnTheGround } from './pony';
+import { getTileHeight, updateTileIndices, getTile, setTile, getTileIndex2, setTilesDirty, isInWaterAt } from '../common/tileUtils';
+import { toScreenX, toScreenY, toScreenYWithZ, rectToScreen, toWorldZ } from '../common/positionUtils';
+import { hasDrawLight, hasLightSprite } from './draw';
+import { PonyTownGame } from './game';
+import { WATER_FPS, PONY_TYPE, REGION_SIZE } from '../common/constants';
+import { updatePosition, canCollideWith } from '../common/collision';
 import { PaletteManager } from '../graphics/paletteManager';
-import { timeEnd, timeStart } from '../client/timing';
-import { playEffect } from '../client/handlers';
-import { isFlyingDown } from '../client/ponyStates';
+import { timeEnd, timeStart } from '../common/timing';
+import { playEffect } from './handlers';
+import { isFlyingDown } from '../common/ponyStates';
 
 const defaultMapInfo: MapInfo = {
 	type: MapType.None,
@@ -213,60 +214,8 @@ export function removeEntityDirectly(map: WorldMap, entity: Entity) {
 	});
 }
 
-export function setTile(map: WorldMap, worldX: number, worldY: number, type: TileType) {
-	const region = getRegionGlobal(map, worldX, worldY);
-
-	if (!region)
-		return;
-
-	const x = Math.floor(worldX - region.x * REGION_SIZE);
-	const y = Math.floor(worldY - region.y * REGION_SIZE);
-
-	const old = getRegionTile(region, x, y);
-	setRegionTile(region, x, y, type);
-
-	setTilesDirty(map, worldX - 1, worldY - 1, 3, 3);
-
-	if (canWalk(old) !== canWalk(type)) {
-		setColliderDirty(map, region, x, y);
-	}
-}
-
-export function setColliderDirty(map: IMap<Region | undefined>, region: Region, x: number, y: number) {
-	region.colliderDirty = true;
-
-	if (x === 0) {
-		const r = getRegionUnsafe(map, region.x - 1, region.y);
-		r && (r.colliderDirty = true);
-	} else if (x === (REGION_SIZE - 1)) {
-		const r = getRegionUnsafe(map, region.x + 1, region.y);
-		r && (r.colliderDirty = true);
-	}
-
-	if (y === 0) {
-		const r = getRegionUnsafe(map, region.x, region.y - 1);
-		r && (r.colliderDirty = true);
-	} else if (y === (REGION_SIZE - 1)) {
-		const r = getRegionUnsafe(map, region.x, region.y + 1);
-		r && (r.colliderDirty = true);
-	}
-}
-
 export function setTileAtRegion(map: WorldMap, regionX: number, regionY: number, x: number, y: number, type: TileType) {
 	setTile(map, regionX * REGION_SIZE + x, regionY * REGION_SIZE + y, type);
-}
-
-export function setTilesDirty(map: IMap<Region | undefined>, ox: number, oy: number, w: number, h: number) {
-	for (let y = 0; y < h; y++) {
-		for (let x = 0; x < w; x++) {
-			doRelativeToRegion(map, x + ox, y + oy, (region, x, y) => setRegionTileDirty(region, x, y));
-		}
-	}
-}
-
-function getTileIndex(map: IMap<Region | undefined>, x: number, y: number) {
-	const region = getRegionGlobal(map, x, y);
-	return region ? getRegionTileIndex(region, x - region.x * REGION_SIZE, y - region.y * REGION_SIZE) : 0;
 }
 
 export function getElevation(map: WorldMap, x: number, y: number) {
@@ -309,18 +258,6 @@ function updateMinMaxRegion(map: WorldMap) {
 
 	map.maxRegionX = Math.min(map.maxRegionX, map.regionsX - 1);
 	map.maxRegionY = Math.min(map.maxRegionY, map.regionsY - 1);
-}
-
-function doRelativeToRegion(
-	map: IMap<Region | undefined>, x: number, y: number, action: (region: Region, x: number, y: number) => void
-) {
-	const region = getRegionGlobal(map, x, y);
-
-	if (region) {
-		const regionX = Math.floor(x - region.x * REGION_SIZE);
-		const regionY = Math.floor(y - region.y * REGION_SIZE);
-		action(region, regionX, regionY);
-	}
 }
 
 function addEntityToRegion(region: Region, entity: Entity, map: WorldMap) {
@@ -437,50 +374,6 @@ function removeEntityFromMapRegion(map: WorldMap, entity: Entity) {
 	forEachRegion(map, region => !removeEntityFromRegion(region, entity, map));
 }
 
-export function getTile<T>(map: IMap<T>, x: number, y: number): TileType {
-	const region = getRegionGlobal(map, x, y) as any as Region;
-
-	if (region) {
-		const regionX = Math.floor(x - region.x * REGION_SIZE);
-		const regionY = Math.floor(y - region.y * REGION_SIZE);
-		return getRegionTile(region, regionX, regionY);
-	} else {
-		return TileType.None;
-	}
-}
-
-export function getRegionGlobal<T>(map: IMap<T>, x: number, y: number): T {
-	const rx = worldToRegionX(x, map);
-	const ry = worldToRegionY(y, map);
-	return getRegion(map, rx, ry);
-}
-
-export function getRegion<T>(map: IMap<T>, x: number, y: number): T {
-	if (x < 0 || y < 0 || x >= map.regionsX || y >= map.regionsY) {
-		throw new Error(`Invalid region coords (${x}, ${y})`);
-	} else {
-		return map.regions[((x | 0) + (y | 0) * map.regionsX) | 0];
-	}
-}
-
-export function getRegionUnsafe<T>(map: IMap<T>, x: number, y: number): T | undefined {
-	if (x < 0 || y < 0 || x >= map.regionsX || y >= map.regionsY) {
-		return undefined;
-	} else {
-		return map.regions[((x | 0) + (y | 0) * map.regionsX) | 0];
-	}
-}
-
-export function addOrRemoveFromEntityList(list: Entity[], entity: Entity, had: boolean, has: boolean) {
-	if (had !== has) {
-		if (has) {
-			pushUniq(list, entity);
-		} else {
-			removeItemFast(list, entity);
-		}
-	}
-}
-
 export function updateEntitiesWithNames(map: WorldMap, hover: Point, player: Entity) {
 	for (let i = map.entitiesWithNames.length - 1; i >= 0; i--) {
 		const entity = map.entitiesWithNames[i];
@@ -562,11 +455,7 @@ export function updateMap(map: WorldMap, delta: number) {
 }
 
 export function getMapHeightAt(map: WorldMap, x: number, y: number, gameTime: number) {
-	return getTileHeight(getTile(map, x, y), getTileIndex(map, x, y), x, y, gameTime, map.type);
-}
-
-export function isInWaterAt(map: IMap<Region | undefined>, x: number, y: number) {
-	return getTile(map, x, y) === TileType.Water && isInWater(getTileIndex(map, x, y), x, y);
+	return getTileHeight(getTile(map, x, y), getTileIndex2(map, x, y), x, y, gameTime, map.type);
 }
 
 export function updateEntities(game: PonyTownGame, gameTime: number, delta: number, safe: boolean) {

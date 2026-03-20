@@ -3,7 +3,6 @@ import { fromByteArray } from 'base64-js';
 import {
 	TileType, MapInfo, MapState, defaultMapState, Rect, MapType, ServerFlags, EntityFlags, MapFlags, EntityState
 } from '../common/interfaces';
-import { getRegionGlobal, getTile, getRegion } from '../common/worldMap';
 import { distanceSquaredXY, containsPoint, hasFlag } from '../common/utils';
 import { POSITION_MAX } from '../common/movementUtils';
 import { getEntityTypeName, getEntityType, createAnEntity } from '../common/entities';
@@ -19,6 +18,8 @@ import { createCanvas } from './canvasUtilsNode';
 import { mockPaletteManager } from '../common/ponyInfo';
 import { setEntityName } from './entityUtils';
 import { WallController } from './controllers/wallController';
+import { getTile } from '../common/tileUtils';
+import { getRegion, getRegionGlobal } from '../common/region';
 
 export interface EntityData {
 	type: string;

@@ -1,7 +1,7 @@
 import { compareCanvases, loadSprites, loadImageAsCanvas, clearCompareResults } from '../lib';
 import { expect } from 'chai';
 import { WHITE, BLACK } from '../../common/colors';
-import { fontPal } from '../../client/fonts';
+import { fontPal } from '../../common/fonts';
 import { drawCanvas, ContextSpriteBatch } from '../../graphics/contextSpriteBatch';
 import { pathTo } from '../../server/paths';
 import { paletteSpriteSheet } from '../../generated/sprites';

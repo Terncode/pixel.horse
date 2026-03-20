@@ -1,10 +1,10 @@
 import { escape } from 'lodash';
-import { Sprite } from '../common/interfaces';
+import { Sprite } from './interfaces';
 import { canvasToSource } from './canvasUtils';
 import { drawCanvas } from '../graphics/contextSpriteBatch';
-import { WHITE } from '../common/colors';
+import { WHITE } from './colors';
 import { normalSpriteSheet } from '../generated/sprites';
-import { includes } from '../common/utils';
+import { includes } from './utils';
 
 export interface Emoji {
 	names: string[];

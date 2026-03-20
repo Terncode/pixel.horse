@@ -6,16 +6,16 @@ import { toPalette } from '../../../common/ponyInfo';
 import { GRASS_COLOR, TRANSPARENT } from '../../../common/colors';
 import {
 	createCanvas, disableImageSmoothing, getPixelRatio, resizeCanvas, resizeCanvasWithRatio
-} from '../../../client/canvasUtils';
-import { BLINK_FRAMES } from '../../../client/ponyUtils';
-import { defaultPonyState, defaultDrawPonyOptions } from '../../../client/ponyHelpers';
+} from '../../../common/canvasUtils';
+import { BLINK_FRAMES } from '../../../common/ponyUtils';
+import { defaultPonyState, defaultDrawPonyOptions } from '../../../common/ponyHelpers';
 import { ContextSpriteBatch } from '../../../graphics/contextSpriteBatch';
 import { colorToCSS } from '../../../common/color';
-import { loadAndInitSpriteSheets } from '../../../client/spriteUtils';
 import { drawNamePlate, commonPalettes, DrawNameFlags } from '../../../graphics/graphicsUtils';
 import { drawPony } from '../../../client/ponyDraw';
 import { paletteSpriteSheet } from '../../../generated/sprites';
-import { replaceEmojis } from '../../../client/emoji';
+import { replaceEmojis } from '../../../common/emoji';
+import { loadAndInitSpriteSheets } from '../../../client/loadSprites';
 
 const DEFAULT_STATE = defaultPonyState();
 const DEFAULT_OPTIONS = defaultDrawPonyOptions();

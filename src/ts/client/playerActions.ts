@@ -1,5 +1,5 @@
 import { isCommand, processCommand, hasFlag, includes, point } from '../common/utils';
-import { canPonyLie, canPonyFlyUp, canPonyStand, canPonySit, doBoopPonyAction } from '../common/pony';
+import { canPonyLie, canPonyFlyUp, canPonyStand, canPonySit, doBoopPonyAction } from './pony';
 import { PonyTownGame } from './game';
 import {
 	setPonyState, canBoop, isPonyLying, isPonyFlying, isPonyStanding, isPonySitting, getInteractBounds,
@@ -8,7 +8,7 @@ import {
 import { EntityState, Action, Pony, ChatType, EntityFlags, Point, TileType } from '../common/interfaces';
 import { FLY_DELAY } from '../common/constants';
 import { randomString } from '../common/stringUtils';
-import { pickEntitiesByRect, pickAnyEntities } from '../common/worldMap';
+import { pickEntitiesByRect, pickAnyEntities } from './worldMap';
 import { centerPoint } from '../common/rect';
 import { pointToWorld, roundPositionX, roundPositionY } from '../common/positionUtils';
 import { hammer, shovel } from '../common/entities';

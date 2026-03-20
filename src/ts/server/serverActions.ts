@@ -28,7 +28,6 @@ import { Move } from './move';
 import { logger } from './logger';
 import { findFriends } from './db';
 import { Say, saySystem } from './chat';
-import { getTile } from '../common/worldMap';
 import { updateRegion, getExpectedRegion } from './regionUtils';
 import { findEntities } from './serverMap';
 import { FriendsService, toFriendOnline } from './services/friends';
@@ -37,6 +36,7 @@ import { swapCharacter } from './characterUtils';
 import { isOutsideMap } from '../common/collision';
 import { createAnEntity } from '../common/entities';
 import { mockPaletteManager } from '../common/ponyInfo';
+import { getTile } from '../common/tileUtils';
 
 interface AddedEntity {
 	name: string;

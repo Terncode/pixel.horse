@@ -6,12 +6,13 @@ import { drawBounds, drawPixelText, drawBoundsOutline, drawOutlineRect, drawWorl
 import { ORANGE, BLUE, PURPLE, BLACK, RED, WHITE, CYAN, HOTPINK, GRAY } from '../common/colors';
 import { toScreenX, toScreenY, toWorldX, toWorldY } from '../common/positionUtils';
 import { tileWidth, tileHeight, PONY_TYPE, REGION_SIZE, REGION_WIDTH, REGION_HEIGHT } from '../common/constants';
-import { forEachRegion, getAnyBounds, getRegion, isInWaterAt } from '../common/worldMap';
-import { drawPonyEntity, drawPonyEntityLight, drawPonyEntityLightSprite } from '../common/pony';
+import { forEachRegion, getAnyBounds } from './worldMap';
+import { drawPonyEntity, drawPonyEntityLight, drawPonyEntityLightSprite } from './pony';
 import { getInteractBounds, sortEntities, isHidden, getSitOnBounds } from '../common/entityUtils';
-import { drawTiles, drawTilesNew, drawTilesDebugInfo } from './tileUtils';
+import { drawTiles, drawTilesNew, drawTilesDebugInfo, isInWaterAt } from '../common/tileUtils';
 import { withAlphaFloat } from '../common/color';
-import { timeStart, timeEnd } from './timing';
+import { timeStart, timeEnd } from '../common/timing';
+import { getRegion } from '../common/region';
 
 const SELECTED_ENTITY_BOUNDS = withAlphaFloat(ORANGE, 0.5);
 

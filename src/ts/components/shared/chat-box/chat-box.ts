@@ -4,16 +4,17 @@ import { ChatType, isPartyChat, Entity, FakeEntity } from '../../../common/inter
 import { SAY_MAX_LENGTH } from '../../../common/constants';
 import { Key } from '../../../client/input/input';
 import { PonyTownGame } from '../../../client/game';
-import { cleanMessage, isSpamMessage } from '../../../client/clientUtils';
+import { isSpamMessage } from '../../../client/clientUtils';
 import { faComment, faAngleDoubleRight } from '../../../client/icons';
 import { isInParty } from '../../../client/partyUtils';
 import { handleActionCommand } from '../../../client/playerActions';
-import { hasHeadAnimation } from '../../../common/pony';
-import { AutocompleteState, autocompleteMesssage, replaceEmojis, emojis } from '../../../client/emoji';
+import { hasHeadAnimation } from '../../../client/pony';
+import { AutocompleteState, autocompleteMesssage, replaceEmojis, emojis } from '../../../common/emoji';
 import { replaceNodes } from '../../../client/htmlUtils';
 import { invalidEnumReturn } from '../../../common/utils';
 import { findMatchingEntityNames, findEntityOrMockByAnyMeans, findBestEntityByName } from '../../../client/handlers';
 import { sample } from 'lodash';
+import { cleanMessage } from '../../../common/stringUtils';
 
 const chatTypeNames: string[] = [];
 const chatTypeClasses: string[] = [];

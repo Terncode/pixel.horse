@@ -4,7 +4,7 @@ import { createServerMap, findEntities, findClosestEntity } from '../../server/s
 import { serverEntity } from '../mocks';
 import { ServerEntity, ServerMap, ServerRegion } from '../../server/serverInterfaces';
 import { addEntityToRegion } from '../../server/serverRegion';
-import { getRegion } from '../../common/worldMap';
+import { getRegion } from '../../common/region';
 
 describe('mapUtils', () => {
 	let map: ServerMap;

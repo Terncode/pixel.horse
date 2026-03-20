@@ -2,13 +2,14 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ACCOUNT_NAME_MAX_LENGTH, ACCOUNT_NAME_MIN_LENGTH, HIDES_PER_PAGE } from '../../../common/constants';
 import { UpdateAccountData, SocialSiteInfo, OAuthProvider, HiddenPlayer } from '../../../common/interfaces';
 import {
-	toSocialSiteInfo, cleanName, supporterTitle, supporterClass, isSupporterOrPastSupporter, supporterRewards
+	toSocialSiteInfo, supporterTitle, supporterClass, isSupporterOrPastSupporter, supporterRewards
 } from '../../../client/clientUtils';
 import { oauthProviders } from '../../../client/data';
 import { Model } from '../../services/model';
 import { getProviderIcon } from '../../shared/sign-in-box/sign-in-box';
 import { faStar, faExclamationCircle, faSync } from '../../../client/icons';
 import { Router } from '@angular/router';
+import { cleanName } from '../../../common/stringUtils';
 
 @Component({
 	selector: 'account',

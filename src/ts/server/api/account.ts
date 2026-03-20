@@ -4,7 +4,6 @@ import {
 	UpdateAccountData, AccountSettings, AccountData, ModAction, EntitiesEditorInfo, EntityNameTypes
 } from '../../common/interfaces';
 import { isMod } from '../../common/accountUtils';
-import { cleanName } from '../../client/clientUtils';
 import { toAccountData, toPonyObject, toSocialSite, toPonyObjectFields, toSocialSiteFields } from '../serverUtils';
 import {
 	IAccount, FindAccountSafe, FindAuth, FindAuths, FindCharacters, CountAuths, Auth,
@@ -15,6 +14,7 @@ import * as entities from '../../common/entities';
 import { includes, clamp, createValidBirthDate, parseISODate, formatISODate } from '../../common/utils';
 import { getAccountAlertMessage } from '../accountUtils';
 import { getAge } from '../../common/adminUtils';
+import { cleanName } from '../../common/stringUtils';
 
 export type GetAccountCharacters = ReturnType<typeof createGetAccountCharacters>;
 export type UpdateAccount = ReturnType<typeof createUpdateAccount>;

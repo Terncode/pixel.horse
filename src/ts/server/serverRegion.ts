@@ -8,9 +8,9 @@ import {
 } from '../common/constants';
 import { rectToScreen } from '../common/positionUtils';
 import { removeItem, hasFlag } from '../common/utils';
-import { canCollideWith } from '../common/collision';
+import { canCollideWith, setColliderDirty } from '../common/collision';
 import { invalidateRegionsCollider, getRegionTile } from '../common/region';
-import { setColliderDirty, setTilesDirty } from '../common/worldMap';
+import { setTilesDirty } from '../common/tileUtils';
 
 const subscribeBoundsBottomPad = 3;
 

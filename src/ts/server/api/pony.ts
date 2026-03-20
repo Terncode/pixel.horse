@@ -1,6 +1,5 @@
 import { PonyObject, PonyInfoNumber } from '../../common/interfaces';
 import { CharacterFlags } from '../../common/adminInterfaces';
-import { cleanName, validatePonyName } from '../../client/clientUtils';
 import { Reporter, LogAccountMessage } from '../serverInterfaces';
 import { toPonyObject } from '../serverUtils';
 import { isForbiddenName } from '../../common/security';
@@ -12,6 +11,7 @@ import { CHARACTER_SAVING_ERROR, CHARACTER_LIMIT_ERROR } from '../../common/erro
 import { decompressPony, compressPony } from '../../common/compressPony';
 import { getCharacterLimit } from '../accountUtils';
 import { PLAYER_DESC_MAX_LENGTH } from '../../common/constants';
+import { cleanName, validatePonyName } from '../../common/stringUtils';
 
 function colorToText(c: number): string {
 	return c ? colorToHexRGB(c) : '';

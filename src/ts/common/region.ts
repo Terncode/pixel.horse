@@ -1,7 +1,6 @@
 import { TileType, Region, IMap } from './interfaces';
 import { clamp } from './utils';
 import { tileWidth, tileHeight, REGION_SIZE, REGION_WIDTH, REGION_HEIGHT } from './constants';
-import { getRegion } from './worldMap';
 import { toScreenX, toScreenY } from './positionUtils';
 import { ponyColliders, ponyCollidersBounds } from './mixins';
 import { decompressTiles } from './compress';
@@ -198,5 +197,40 @@ export function generateRegionCollider<T extends Region | undefined>(region: Reg
 				}
 			}
 		}
+	}
+}
+
+
+export function getRegionGlobal<T>(map: IMap<T>, x: number, y: number): T {
+	const rx = worldToRegionX(x, map);
+	const ry = worldToRegionY(y, map);
+	return getRegion(map, rx, ry);
+}
+
+export function getRegion<T>(map: IMap<T>, x: number, y: number): T {
+	if (x < 0 || y < 0 || x >= map.regionsX || y >= map.regionsY) {
+		throw new Error(`Invalid region coords (${x}, ${y})`);
+	} else {
+		return map.regions[((x | 0) + (y | 0) * map.regionsX) | 0];
+	}
+}
+
+export function getRegionUnsafe<T>(map: IMap<T>, x: number, y: number): T | undefined {
+	if (x < 0 || y < 0 || x >= map.regionsX || y >= map.regionsY) {
+		return undefined;
+	} else {
+		return map.regions[((x | 0) + (y | 0) * map.regionsX) | 0];
+	}
+}
+
+export function doRelativeToRegion(
+	map: IMap<Region | undefined>, x: number, y: number, action: (region: Region, x: number, y: number) => void
+) {
+	const region = getRegionGlobal(map, x, y);
+
+	if (region) {
+		const regionX = Math.floor(x - region.x * REGION_SIZE);
+		const regionY = Math.floor(y - region.y * REGION_SIZE);
+		action(region, regionX, regionY);
 	}
 }

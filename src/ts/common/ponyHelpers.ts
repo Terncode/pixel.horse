@@ -1,5 +1,5 @@
-import { DrawPonyOptions, NoDraw, PonyState, PonyStateFlags } from '../common/interfaces';
-import { SHADOW_COLOR, blushColor } from '../common/colors';
+import { DrawPonyOptions, NoDraw, PonyState, PonyStateFlags } from './interfaces';
+import { SHADOW_COLOR, blushColor } from './colors';
 import { stand } from './ponyAnimations';
 
 const defaultBlushColor = blushColor(0);

@@ -3,7 +3,7 @@ import { PlayerAction, Notification, NotificationFlags, EntityPlayerState } from
 import { PonyTownGame } from '../../../client/game';
 import { hasFlag, setFlag } from '../../../common/utils';
 import { faBan } from '../../../client/icons';
-import { getPaletteInfo } from '../../../common/pony';
+import { getPaletteInfo } from '../../../client/pony';
 
 @Component({
 	selector: 'notification-item',

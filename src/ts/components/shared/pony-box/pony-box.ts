@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { PlayerAction, Pony, EntityPlayerState, Entity } from '../../../common/interfaces';
-import { getPaletteInfo } from '../../../common/pony';
+import { getPaletteInfo } from '../../../client/pony';
 import { Model } from '../../services/model';
 import { PonyTownGame } from '../../../client/game';
 import {

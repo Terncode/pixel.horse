@@ -1,5 +1,5 @@
 import { PaletteSpriteBatch, Sprite, Palette, SpriteBatch, SpriteSheet, Matrix2D, Batch } from '../common/interfaces';
-import { createCanvas } from '../client/canvasUtils';
+import { createCanvas } from '../common/canvasUtils';
 import { colorToRGBA, getR, getG, getB, getAlpha } from '../common/color';
 import { BaseStateBatch } from './baseStateBatch';
 import { commonPalettes } from './graphicsUtils';

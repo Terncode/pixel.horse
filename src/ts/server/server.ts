@@ -22,8 +22,6 @@ import { rollbarCheckIgnore } from '../common/rollbar';
 import { isBanned } from '../common/adminUtils';
 import { includes } from '../common/utils';
 import { STAMP } from '../generated/hash';
-import { ClientActions } from '../client/clientActions';
-import { ClientAdminActions } from '../client/clientAdminActions';
 import { ServerActions } from './serverActions';
 import { AdminServerActions } from './adminServerActions';
 import { IAccount, Account } from './db';
@@ -59,6 +57,8 @@ import { InternalAdminApi } from './api/internal-admin';
 import { AdminService } from './services/adminService';
 import { createEndPoints } from './api/admin';
 import { World } from './world';
+import { ClientActionsTemplate } from '../common/clientActionsTemplte';
+import { ClientAdminActionsTemplate } from '../common/clientAdminActionsTemplate';
 
 function getServiceWorker() {
 	try {
@@ -255,7 +255,7 @@ if (args.game) {
 		},
 	};
 
-	const gameSocket = host.socket(ServerActions, ClientActions, createServerActions as any, options);
+	const gameSocket = host.socket(ServerActions, ClientActionsTemplate, createServerActions as any, options);
 	const tokens = tokenService(gameSocket);
 
 	start(world, server);
@@ -282,12 +282,12 @@ if (args.admin) {
 		app.use('/api-internal-admin', internal(config, server), wrapApi(server, adminApi));
 	}
 
-	const createClient = (client: ClientAdminActions & ClientExtensions) =>
+	const createClient = (client: ClientAdminActionsTemplate & ClientExtensions) =>
 		new AdminServerActions(client, server, settings, adminService!, endPoints!, removedDocument);
 
 	const base = '/admin';
 	const assetsBase = args.standaloneadmin ? '/admin' : '';
-	const adminSocket = host.socket(AdminServerActions, ClientAdminActions, createClient, socketOptionsBase);
+	const adminSocket = host.socket(AdminServerActions, ClientAdminActionsTemplate, createClient, socketOptionsBase);
 	const sendAdminPage = index.admin(production, `${base}/`, assetsBase, 'bootstrap-admin.js', adminSocket);
 
 	app.get(`${base}`, ...adminMiddlewares(), sendAdminPage);
@@ -306,7 +306,7 @@ if (args.tools) {
 }
 
 if (args.login) {
-	const socketOptions = createClientOptions(ServerActions, ClientActions, socketOptionsBase);
+	const socketOptions = createClientOptions(ServerActions, ClientActionsTemplate, socketOptionsBase);
 	const userPage = index.user(
 		production, '/', 'style.css', 'bootstrap.js', 'bootstrap-es.js', socketOptions, false, !!args.local, !production);
 	const offlinePage = fs.readFileSync(pathTo('public', 'offline.html'), 'utf8');

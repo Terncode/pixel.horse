@@ -15,9 +15,9 @@ import { ErrorReporter } from '../services/errorReporter';
 import { SECOND, PONY_TYPE } from '../../common/constants';
 import { ChatBox } from '../shared/chat-box/chat-box';
 import { ChatLogMessage } from '../shared/chat-log/chat-log';
-import { isPony } from '../../common/pony';
-import { findEntityById } from '../../common/worldMap';
+import { findEntityById } from '../../client/worldMap';
 import { isSelected } from '../../client/gameUtils';
+import { isPony } from '../../common/entityUtils';
 
 export function tooltipConfig() {
 	return Object.assign(new TooltipConfig(), { container: 'body' });

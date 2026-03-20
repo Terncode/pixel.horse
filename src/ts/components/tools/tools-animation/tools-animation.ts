@@ -12,15 +12,15 @@ import {
 import { removeItem, repeat, isKeyEventInvalid, cloneDeep, array, hasFlag } from '../../../common/utils';
 import { toPalette, createDefaultPony, syncLockedPonyInfo } from '../../../common/ponyInfo';
 import { Key } from '../../../client/input/input';
-import { defaultPonyState, defaultDrawPonyOptions } from '../../../client/ponyHelpers';
+import { defaultPonyState, defaultDrawPonyOptions } from '../../../common/ponyHelpers';
 import {
 	headAnimations, animations, createBodyFrame, createHeadFrame, stand, sit, mergeAnimations,
 	sitDown, lieDown, lie, sitUp, standUp
-} from '../../../client/ponyAnimations';
+} from '../../../common/ponyAnimations';
 import { ContextSpriteBatch } from '../../../graphics/contextSpriteBatch';
 import * as sprites from '../../../generated/sprites';
-import { createCanvas, disableImageSmoothing, saveCanvas } from '../../../client/canvasUtils';
-import { loadAndInitSpriteSheets, createEyeSprite } from '../../../client/spriteUtils';
+import { createCanvas, disableImageSmoothing, saveCanvas } from '../../../common/canvasUtils';
+import { createEyeSprite } from '../../../common/spriteUtils';
 import { drawPony } from '../../../client/ponyDraw';
 import {
 	faLock, faHome, faArrowRight, faArrowLeft, faPause, faPlay, faChevronRight, faChevronLeft, faRetweet,
@@ -30,6 +30,7 @@ import {
 import { FrameService, FrameLoop } from '../../services/frameService';
 import { StorageService } from '../../services/storageService';
 import { decompressPonyString } from '../../../common/compressPony';
+import { loadAndInitSpriteSheets } from '../../../client/loadSprites';
 
 const ponyWidth = 80;
 const ponyHeight = 80;

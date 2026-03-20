@@ -1,7 +1,7 @@
 import { Rect, Sprite, SpriteBatch, PaletteSpriteBatch, Palette, isPaletteSpriteBatch } from '../common/interfaces';
 import { WHITE } from '../common/colors';
 import { stringToCodesTemp, codesBuffer } from '../common/stringUtils';
-import { createSprite } from '../client/spriteUtils';
+import { createSprite } from '../common/spriteUtils';
 
 export const enum HAlign {
 	Left,

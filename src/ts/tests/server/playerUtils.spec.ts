@@ -17,11 +17,11 @@ import { createServerRegion } from '../../server/serverRegion';
 import { rect } from '../../common/rect';
 import { CounterService } from '../../server/services/counter';
 import { createCamera } from '../../common/camera';
-import { getRegion } from '../../common/worldMap';
 import { createServerMap } from '../../server/serverMap';
 import { createBinaryWriter, getWriterBuffer } from 'ag-sockets';
 import { sendAction } from '../../server/entityUtils';
 import { updateColliders } from '../common/collision.spec';
+import { getRegion } from '../../common/region';
 
 describe('playerUtils', () => {
 	const def = { x: 0, y: 0, vx: 0, vy: 0, action: 0, playerState: 0, options: undefined };

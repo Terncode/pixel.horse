@@ -11,27 +11,27 @@ import { PonyTownGame } from './game';
 import { boopAction, upAction, downAction, turnHeadAction } from './playerActions';
 import { ACTIONS_LIMIT, COMMAND_ACTION_TIME_DELAY } from '../common/constants';
 import { cloneDeep, hasFlag } from '../common/utils';
-import { boop, defaultHeadFrame, stand, sneeze, yawn, lie, sit, fly, laugh, kiss, excite } from './ponyAnimations';
+import { boop, defaultHeadFrame, stand, sneeze, yawn, lie, sit, fly, laugh, kiss, excite } from '../common/ponyAnimations';
 import { createDefaultPony, syncLockedPonyInfo, toPalette, mockPaletteManager } from '../common/ponyInfo';
 import {
 	ACTION_EXPRESSION_EYE_COLOR, ACTION_EXPRESSION_BG, ACTION_ACTION_COAT_COLOR, WHITE, HEARTS_COLOR,
 	ACTION_COMMAND_BG, BLACK, ACTION_ACTION_BG, ACTION_ITEM_BG, blushColor, ENTITY_ITEM_BG, TRANSPARENT
 } from '../common/colors';
-import { resizeCanvasWithRatio, getPixelRatio, disableImageSmoothing } from './canvasUtils';
+import { resizeCanvasWithRatio, getPixelRatio, disableImageSmoothing } from '../common/canvasUtils';
 import { drawCanvas, ContextSpriteBatch } from '../graphics/contextSpriteBatch';
-import { defaultPonyState, defaultDrawPonyOptions } from './ponyHelpers';
+import { defaultPonyState, defaultDrawPonyOptions } from '../common/ponyHelpers';
 import { drawHead, drawPony } from './ponyDraw';
 import { parseColor, toGrayscale, colorToHexRGB } from '../common/color';
 import { rect, addRects, centerPoint } from '../common/rect';
 import { drawTextAligned, HAlign, VAlign } from '../graphics/spriteFont';
-import { fontPal } from '../client/fonts';
+import { fontPal } from '../common/fonts';
 import { isPonyLying, isPonySitting, isPonyStanding, isPonyFlying } from '../common/entityUtils';
-import { canPonyFly } from '../common/pony';
+import { canPonyFly } from './pony';
 import { apple2, createAnEntity } from '../common/entities';
 import { fakePaletteManager } from '../common/mixins';
-import { spriteSheetsLoaded } from './spriteUtils';
 import { getEntityTypesFromName } from '../components/services/model';
 import { toWorldY, toWorldX } from '../common/positionUtils';
+import { spriteSheetsLoaded } from './loadSprites';
 
 const CANVAS_SIZE = 29;
 const ICON_SIZE = 16;

@@ -8,7 +8,7 @@ import { ServerRegion } from '../../server/serverInterfaces';
 import { PONY_TYPE, tileWidth, tileHeight } from '../../common/constants';
 import { generateRegionCollider } from '../../common/region';
 import { ponyColliders } from '../../common/mixins';
-import { updateTileIndices } from '../../client/tileUtils';
+import { updateTileIndices } from '../../common/tileUtils';
 
 export function colliders(x: number, y: number, w: number, h: number, tall = true, exact = false): Collider[] {
 	return [{ x, y, w, h, tall, exact }];

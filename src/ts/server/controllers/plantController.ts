@@ -4,7 +4,7 @@ import { World } from '../world';
 import { timingStart, timingEnd } from '../timing';
 import { Rect, CreateEntityMethod, ServerFlags, TileType } from '../../common/interfaces';
 import { removeItem, randomPoint } from '../../common/utils';
-import { getTile } from '../../common/worldMap';
+import { getTile } from '../../common/tileUtils';
 
 interface Plant extends ServerEntity {
 	plantStage: number;

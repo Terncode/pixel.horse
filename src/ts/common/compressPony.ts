@@ -5,13 +5,13 @@ import { syncLockedPonyInfoNumber, syncLockedPonyInfo, createBasePony, toPalette
 import { bitWriter, bitReader, ReadBits, WriteBits, countBits, numberToBitCount } from './bitUtils';
 import { BLACK, WHITE, TRANSPARENT } from './colors';
 import { at, toInt, pushUniq, array, clamp, includes, att } from './utils';
-import { getColorCount } from '../client/spriteUtils';
+import { getColorCount } from './spriteUtils';
 import * as sprites from '../generated/sprites';
 import { parseColorFast, colorToHexRGB } from './color';
 import {
 	SLEEVED_ACCESSORIES, frontHooves, mergedFacialHair, mergedBackAccessories, mergedManes,
 	mergedBackManes, mergedExtraAccessories, mergedHeadAccessories
-} from '../client/ponyUtils';
+} from './ponyUtils';
 import { CM_SIZE } from './constants';
 
 export const VERSION = 5; // previous: 3

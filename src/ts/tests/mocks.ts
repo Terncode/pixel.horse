@@ -4,14 +4,14 @@ import { Subject } from 'rxjs';
 import { SinonStubbedInstance, stub } from 'sinon';
 import { IClient, Reporter, ServerEntity, ServerRegion } from '../server/serverInterfaces';
 import { IAccount, ICharacter, IAuth } from '../server/db';
-import { ClientActions } from '../client/clientActions';
 import { Entity, IMap, defaultWorldState } from '../common/interfaces';
 import { createServerMap } from '../server/serverMap';
 import { createCamera } from '../common/camera';
-import { getRegionGlobal } from '../common/worldMap';
 import { mixColliderRect } from '../common/mixins';
 import { createBinaryWriter } from 'ag-sockets';
 import { PONY_TYPE } from '../common/constants';
+import { getRegionGlobal } from '../common/region';
+import { ClientActionsTemplate } from '../common/clientActionsTemplte';
 
 export function auth(item: Partial<IAuth>): IAuth {
 	return item as IAuth;
@@ -106,7 +106,7 @@ export function mockClient(fields: any = {}): IClient {
 		...fields,
 	};
 
-	const client = mock(ClientActions, partial) as IClient;
+	const client = mock(ClientActionsTemplate, partial) as IClient;
 
 	client.pony.client = client;
 	return client;

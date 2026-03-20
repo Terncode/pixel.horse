@@ -3,11 +3,11 @@ import {
 } from '@angular/core';
 import { PalettePonyInfo } from '../../../common/interfaces';
 import { ContextSpriteBatch } from '../../../graphics/contextSpriteBatch';
-import { createCanvas, disableImageSmoothing, getPixelRatio, resizeCanvasWithRatio } from '../../../client/canvasUtils';
-import { defaultDrawPonyOptions, defaultPonyState } from '../../../client/ponyHelpers';
-import { loadAndInitSpriteSheets } from '../../../client/spriteUtils';
+import { createCanvas, disableImageSmoothing, getPixelRatio, resizeCanvasWithRatio } from '../../../common/canvasUtils';
+import { defaultDrawPonyOptions, defaultPonyState } from '../../../common/ponyHelpers';
 import { drawPony } from '../../../client/ponyDraw';
 import { paletteSpriteSheet } from '../../../generated/sprites';
+import { loadAndInitSpriteSheets } from '../../../client/loadSprites';
 
 const scales: { [key: string]: number } = {
 	large: 3,

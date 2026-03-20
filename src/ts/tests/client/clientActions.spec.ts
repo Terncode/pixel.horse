@@ -20,9 +20,10 @@ import { createCamera } from '../../common/camera';
 import { commonPalettes } from '../../graphics/graphicsUtils';
 import { Model } from '../../components/services/model';
 import { createRegion } from '../../common/region';
-import { getTile, addEntity, setRegion, createWorldMap } from '../../common/worldMap';
+import { addEntity, setRegion, createWorldMap } from '../../client/worldMap';
 import { createServerRegion } from '../../server/serverRegion';
 import { ServerRegion } from '../../server/serverInterfaces';
+import { getTile } from '../../common/tileUtils';
 
 describe('ClientActions', () => {
 	let zone: NgZone;

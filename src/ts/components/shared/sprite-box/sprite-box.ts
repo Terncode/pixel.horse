@@ -5,12 +5,12 @@ import { Rect, Sprite, ColorExtra, Palette } from '../../../common/interfaces';
 import { parseColor, colorToCSS } from '../../../common/color';
 import { mockPaletteManager, toColorList, getColorsFromSet } from '../../../common/ponyInfo';
 import { ContextSpriteBatch } from '../../../graphics/contextSpriteBatch';
-import { createCanvas, disableImageSmoothing, resizeCanvas } from '../../../client/canvasUtils';
+import { createCanvas, disableImageSmoothing, resizeCanvas } from '../../../common/canvasUtils';
 import { WHITE } from '../../../common/colors';
 import { rect } from '../../../common/rect';
-import { loadAndInitSpriteSheets } from '../../../client/spriteUtils';
 import { faTimes } from '../../../client/icons';
 import { paletteSpriteSheet } from '../../../generated/sprites';
+import { loadAndInitSpriteSheets } from '../../../client/loadSprites';
 
 let redrawFrame = 0;
 const forRedraw: SpriteBox[] = [];

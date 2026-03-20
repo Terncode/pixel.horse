@@ -9,12 +9,13 @@ import {
 	isCritter, isDecal, entityInRange, SIT_ON_BOUNDS_WIDTH, SIT_ON_BOUNDS_HEIGHT, SIT_ON_BOUNDS_OFFSET
 } from '../common/entityUtils';
 import { pushUpdateEntityToRegion } from './serverRegion';
-import { getRegion, getRegionGlobal, getTile } from '../common/worldMap';
 import { filterName } from '../common/swears';
 import { shouldBeFacingRight } from '../common/movementUtils';
 import { writeOneEntity, writeOneUpdate } from '../common/encoders/updateEncoder';
 import { PONY_TYPE } from '../common/constants';
 import { grapesPurple, grapesGreen } from '../common/entities';
+import { getTile } from '../common/tileUtils';
+import { getRegion, getRegionGlobal } from '../common/region';
 
 export function isEntityShadowed(entity: ServerEntity): entity is ServerEntityWithClient {
 	return entity.client !== undefined && entity.client.shadowed;

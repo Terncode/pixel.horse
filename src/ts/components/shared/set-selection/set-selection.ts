@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnChanges, Directive, Optional } from '@angular/core';
 import { clamp } from 'lodash';
 import { SpriteSet, ColorExtraSets, ColorExtraSet } from '../../../common/interfaces';
-import { getColorCount } from '../../../client/spriteUtils';
+import { getColorCount } from '../../../common/spriteUtils';
 
 const FILLS = ['Orange', 'DodgerBlue', 'LimeGreen', 'Orchid', 'crimson', 'Aquamarine'];
 const OUTLINES = ['Chocolate', 'SteelBlue', 'ForestGreen', 'DarkOrchid', 'darkred', 'DarkTurquoise'];

@@ -1,6 +1,6 @@
 import '../lib';
 import { expect } from 'chai';
-import { splitEmojis, findEmoji, replaceEmojis, emojis, hasEmojis, autocompleteMesssage } from '../../client/emoji';
+import { splitEmojis, findEmoji, replaceEmojis, emojis, hasEmojis, autocompleteMesssage } from '../../common/emoji';
 
 describe('emotes', () => {
 	describe('findEmote()', () => {

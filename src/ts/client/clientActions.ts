@@ -1,12 +1,11 @@
 import { NgZone } from '@angular/core';
-import { Method, SocketClient, Bin, getMethods } from 'ag-sockets/dist/browser';
+import { getMethods } from 'ag-sockets/dist/browser';
 import {
 	MapInfo, WorldState, PartyMember, PartyFlags, Action, NotificationFlags, Pony, LeaveReason,
 	SayData, MapState, defaultMapState, Apply, InfoFlags, PonyData, FriendStatusData, WorldMap
 } from '../common/interfaces';
 import { hasFlag, findById } from '../common/utils';
-import { isPony } from '../common/pony';
-import { setTileAtRegion, findEntityById, createWorldMap, removeRegions, updateMapState } from '../common/worldMap';
+import { setTileAtRegion, findEntityById, createWorldMap, removeRegions, updateMapState } from './worldMap';
 import { GameService } from '../components/services/gameService';
 import { PonyTownGame } from './game';
 import { supportsLetAndConst, isInIncognitoMode } from './clientUtils';
@@ -19,20 +18,18 @@ import {
 	updatePonyInfoWithPoof, subscribeRegion, handleUpdates, handleUpdateEntity, handleRemoveEntity, handleSays,
 	handleEntityInfo, handleUpdatePonies, filterEntityName, handleUpdateFriends
 } from './handlers';
-import { nameToHTML } from './emoji';
-
-const BinEntityId = Bin.U32;
-const BinEntityPlayerState = Bin.U8;
-const BinNotificationId = Bin.U16;
-const BinSayDatas = [BinEntityId, Bin.Str, Bin.U8];
+import { nameToHTML } from '../common/emoji';
+import { ClientActionsTemplate } from '../common/clientActionsTemplte';
+import { isPony } from '../common/entityUtils';
 
 function findPonyById(map: WorldMap, id: number) {
 	const entity = findEntityById(map, id);
 	return entity && isPony(entity) ? entity : undefined;
 }
 
-export class ClientActions implements SocketClient {
+export class ClientActions extends ClientActionsTemplate {
 	constructor(private gameService: GameService, private game: PonyTownGame, private model: Model, private zone: NgZone) {
+		super();
 	}
 	private apply: Apply = func => this.zone.run(func);
 	connected() {
@@ -57,29 +54,29 @@ export class ClientActions implements SocketClient {
 	invalidVersion() {
 		DEVELOPMENT && !TESTS && console.error('Invalid version');
 	}
-	@Method({ binary: [Bin.U32] })
+	// @Method({ binary: [Bin.U32] })
 	queue(place: number) {
 		this.game.placeInQueue = place;
 	}
-	@Method({ binary: [Bin.Obj, Bin.Bool] })
+	// @Method({ binary: [Bin.Obj, Bin.Bool] })
 	worldState(state: WorldState, initial: boolean) {
 		this.game.placeInQueue = 0;
 		this.game.setWorldState(state, initial);
 	}
-	@Method({ binary: [Bin.Obj, Bin.Obj] })
+	// @Method({ binary: [Bin.Obj, Bin.Obj] })
 	mapState(info: MapInfo, state: MapState) {
 		this.game.map = createWorldMap(info, state);
 		this.game.player = undefined;
 		this.game.setupMap();
 		updateMapState(this.game.map, defaultMapState, this.game.map.state);
 	}
-	@Method({ binary: [Bin.Obj] })
+	// @Method({ binary: [Bin.Obj] })
 	mapUpdate(state: MapState) {
 		const prevState = this.game.map.state;
 		this.game.map.state = state;
 		updateMapState(this.game.map, prevState, this.game.map.state);
 	}
-	@Method({ binary: [] })
+	// @Method({ binary: [] })
 	mapSwitching() {
 		this.game.loaded = false;
 		this.game.placeInQueue = 0;
@@ -89,13 +86,13 @@ export class ClientActions implements SocketClient {
 			this.game.player.vy = 0;
 		}
 	}
-	@Method({ binary: [Bin.I32, Bin.I32, Bin.U8Array] })
+	// @Method({ binary: [Bin.I32, Bin.I32, Bin.U8Array] })
 	mapTest(width: number, height: number, buffer: Uint8Array) {
 		const data = new Uint32Array(width * height);
 		(new Uint8Array(data.buffer)).set(buffer);
 		this.game.minimap = { width, height, data };
 	}
-	@Method({ binary: [BinEntityId, Bin.Str, Bin.Str, Bin.Str, Bin.U16] })
+	// @Method({ binary: [BinEntityId, Bin.Str, Bin.Str, Bin.Str, Bin.U16] })
 	myEntity(id: number, name: string, info: string, characterId: string, crc: number) {
 		this.game.playerId = id;
 		this.game.playerName = name;
@@ -122,7 +119,7 @@ export class ClientActions implements SocketClient {
 
 		this.game.onActionsUpdate.next();
 	}
-	@Method({ binary: [[Bin.U8], [Bin.U8Array], Bin.U8Array, [Bin.U8Array], BinSayDatas] })
+	// @Method({ binary: [[Bin.U8], [Bin.U8Array], Bin.U8Array, [Bin.U8Array], BinSayDatas] })
 	update(unsubscribes: number[], subscribes: Uint8Array[], updates: Uint8Array | null, regions: Uint8Array[], says: SayData[]) {
 		removeRegions(this.game.map, unsubscribes);
 
@@ -158,7 +155,7 @@ export class ClientActions implements SocketClient {
 			handleSays(this.game, id, message, type);
 		}
 	}
-	@Method({ binary: [Bin.F32, Bin.F32, Bin.Bool] })
+	// @Method({ binary: [Bin.F32, Bin.F32, Bin.Bool] })
 	fixPosition(x: number, y: number, safe: boolean) {
 		if (DEVELOPMENT && !TESTS && !safe) {
 			console.error(`fix position (${x.toFixed(2)}, ${y.toFixed(2)})`);
@@ -174,7 +171,7 @@ export class ClientActions implements SocketClient {
 
 		this.game.send(server => server.fixedPosition());
 	}
-	@Method({ binary: [BinEntityId, Bin.U8, Bin.Obj] })
+	// @Method({ binary: [BinEntityId, Bin.U8, Bin.Obj] })
 	actionParam(id: number, action: Action, param: any) {
 		switch (action) {
 			case Action.ACL:
@@ -189,13 +186,13 @@ export class ClientActions implements SocketClient {
 				DEVELOPMENT && !TESTS && console.error(`actionParam: Invalid action: ${action}`);
 		}
 	}
-	@Method({ binary: [Bin.U8] })
+	// @Method({ binary: [Bin.U8] })
 	left(reason: LeaveReason) {
 		this.game.player = undefined;
 		this.game.map = createWorldMap();
 		this.apply(() => this.gameService.left('clientActions.left', reason));
 	}
-	@Method({ binary: [BinNotificationId, BinEntityId, Bin.Str, Bin.Str, Bin.Str, Bin.U8] })
+	// @Method({ binary: [BinNotificationId, BinEntityId, Bin.Str, Bin.Str, Bin.Str, Bin.U8] })
 	addNotification(id: number, entityId: number, name: string, message: string, note: string, flags: NotificationFlags) {
 		const defaultCharacter = hasFlag(flags, NotificationFlags.Supporter) ? this.game.supporterPony : this.game.offlinePony;
 		const pony = (entityId && findPonyById(this.game.map, entityId)) || defaultCharacter;
@@ -205,17 +202,17 @@ export class ClientActions implements SocketClient {
 
 		this.apply(() => addNotification(this.game, { id, message, note, pony, flags, open: false, fresh: true }));
 	}
-	@Method({ binary: [BinNotificationId] })
+	// @Method({ binary: [BinNotificationId] })
 	removeNotification(id: number) {
 		this.apply(() => removeNotification(this.game, id));
 	}
-	@Method({ binary: [BinEntityId, BinEntityId] })
+	// @Method({ binary: [BinEntityId, BinEntityId] })
 	updateSelection(currentId: number, newId: number) {
 		if (isSelected(this.game, currentId)) {
 			this.game.select(newId ? findPonyById(this.game.map, newId) : undefined);
 		}
 	}
-	@Method({ binary: [[BinEntityId, Bin.U8]] })
+	// @Method({ binary: [[BinEntityId, Bin.U8]] })
 	updateParty(party: [number, PartyFlags][] | undefined) {
 		const members = party && party.map<PartyMember>(([id, flags]) => ({
 			id,
@@ -239,26 +236,26 @@ export class ClientActions implements SocketClient {
 			this.game.onPartyUpdate.next();
 		});
 	}
-	@Method({ binary: [[BinEntityId, Bin.Obj, Bin.U8Array, Bin.U8Array, BinEntityPlayerState, Bin.Bool]] })
+	// @Method({ binary: [[BinEntityId, Bin.Obj, Bin.U8Array, Bin.U8Array, BinEntityPlayerState, Bin.Bool]] })
 	updatePonies(ponies: PonyData[]) {
 		handleUpdatePonies(this.game, ponies);
 	}
-	@Method({ binary: [Bin.Obj, Bin.Bool] })
+	// @Method({ binary: [Bin.Obj, Bin.Bool] })
 	updateFriends(friends: FriendStatusData[], removeMissing: boolean) {
 		handleUpdateFriends(this.game, friends, removeMissing);
 	}
-	@Method({ binary: [BinEntityId, Bin.Str, Bin.U32, Bin.Bool] })
+	// @Method({ binary: [BinEntityId, Bin.Str, Bin.U32, Bin.Bool] })
 	entityInfo(id: number, name: string, crc: number, nameBad: boolean) {
 		handleEntityInfo(this.game, id, name, crc, nameBad);
 	}
-	@Method({ binary: [Bin.Obj] })
+	// @Method({ binary: [Bin.Obj] })
 	entityList(value: { name: string; x: number; y: number; }[]) {
 		if (DEVELOPMENT || BETA) {
 			const list = value.map(({ name, x, y }) => `${name}(${x.toFixed(2)}, ${y.toFixed(2)})`).join('\n');
 			console.log(`ENTITIES:\n${list}`);
 		}
 	}
-	@Method({ binary: [Bin.Obj] })
+	// @Method({ binary: [Bin.Obj] })
 	testPositions(data: { frame: number; x: number | undefined; y: number | undefined; moved: boolean; }[]) {
 		if (DEVELOPMENT) {
 			const round = (x: number) => Math.round(x * 100);

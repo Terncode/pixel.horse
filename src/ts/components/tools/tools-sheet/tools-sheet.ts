@@ -1,12 +1,12 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { compact } from 'lodash';
 import { getCols, getRows, createPsd, savePsd, drawPsd } from '../sheetExport';
-import { loadAndInitSpriteSheets } from '../../../client/spriteUtils';
-import { saveCanvas } from '../../../client/canvasUtils';
+import { saveCanvas } from '../../../common/canvasUtils';
 import { faHome, faSync, faFileImage } from '../../../client/icons';
 import { StorageService } from '../../services/storageService';
 import { at } from '../../../common/utils';
 import { sheets, Sheet } from '../../../common/sheets';
+import { loadAndInitSpriteSheets } from '../../../client/loadSprites';
 
 @Component({
 	selector: 'tools-sheet',

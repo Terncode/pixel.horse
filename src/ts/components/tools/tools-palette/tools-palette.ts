@@ -4,11 +4,11 @@ import { setPaletteManager } from '../../../common/mixins';
 import { parseColor, colorToCSS } from '../../../common/color';
 import { PaletteManager, releasePalette } from '../../../graphics/paletteManager';
 import { drawCanvas } from '../../../graphics/contextSpriteBatch';
-import { disableImageSmoothing } from '../../../client/canvasUtils';
+import { disableImageSmoothing } from '../../../common/canvasUtils';
 import { SHADOW_COLOR, WHITE } from '../../../common/colors';
 import { PaletteRenderable } from '../../../common/interfaces';
-import { loadAndInitSpriteSheets } from '../../../client/spriteUtils';
 import { faHome } from '../../../client/icons';
+import { loadAndInitSpriteSheets } from '../../../client/loadSprites';
 
 const BG = parseColor('lightgreen');
 const DEFAULT_PALETTE = [0, 0xffffffff];

@@ -9,7 +9,6 @@ import {
 	AuthUpdate, PonyCreator, ServerConfig, GameServerSettings, AccountState, AuthDetails, MergeAccountData,
 	FindAccountQuery, AdminCache, ClearOrignsOptions, ModelTypes, Stats
 } from '../common/adminInterfaces';
-import { ClientAdminActions, ClientUpdate } from '../client/clientAdminActions';
 import { TokenData } from './serverInterfaces';
 import { toAccountData, toPonyObjectAdmin } from './serverUtils';
 import {
@@ -38,6 +37,7 @@ import { getDuplicateEntries, getAllDuplicatesQuickInfo, getAllDuplicatesWithInf
 import { splitAccounts } from './api/merge';
 import { removeAuth, assignAuth } from './api/admin-auths';
 import { removeFriend, addFriend } from './accountUtils';
+import { ClientAdminActionsTemplate, ClientUpdate } from '../common/clientAdminActionsTemplate';
 
 @Socket({
 	id: 'admin',
@@ -51,7 +51,7 @@ export class AdminServerActions implements IAdminServerActions, SocketServer {
 	private cache: AdminCache = {};
 	private subscriptions = new Map<string, Subscription>();
 	constructor(
-		private client: ClientAdminActions & ClientExtensions,
+		private client: ClientAdminActionsTemplate & ClientExtensions,
 		private server: ServerConfig,
 		private settings: Settings,
 		private adminService: AdminService,

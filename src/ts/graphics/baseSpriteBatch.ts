@@ -4,7 +4,7 @@ import { colorToFloat, colorToFloatAlpha } from '../common/color';
 import { BaseStateBatch } from './baseStateBatch';
 import { VAO, createVAO } from './webgl/glVao';
 import { VAOAttributeDefinition, getVAOAttributesSize, createVAOAttributes } from './webgl/vaoAttributes';
-import { timeStart, timeEnd } from '../client/timing';
+import { timeStart, timeEnd } from '../common/timing';
 import { isIdentity } from '../common/mat2d';
 
 // const BATCH_BUFFER_SIZE = 2048; // 8kb

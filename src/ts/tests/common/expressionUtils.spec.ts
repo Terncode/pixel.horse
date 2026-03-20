@@ -4,7 +4,7 @@ import { parseExpression, expression } from '../../common/expressionUtils';
 import { expressions } from '../../common/expressions';
 import { Expression, Iris, Eye, Muzzle, ExpressionExtra } from '../../common/interfaces';
 import { decodeExpression, encodeExpression } from '../../common/encoders/expressionEncoder';
-import { flipIris } from '../../client/ponyUtils';
+import { flipIris } from '../../common/ponyUtils';
 
 function toExpression([right, left, muzzle, rightIris = 0, leftIris = 0, extra = 0]: any): Expression {
 	return { left, right, muzzle, rightIris, leftIris, extra };

@@ -3,9 +3,9 @@
 import { range, dropRight, compact, max, zip } from 'lodash';
 import {
 	Eye, Iris, Muzzle, ExpressionExtra, Sprite, ColorExtraSets, PonyInfoBase, SpriteSetBase, ColorExtra, ColorExtraSet
-} from '../common/interfaces';
+} from './interfaces';
 import * as sprites from '../generated/sprites';
-import { HEAD_ACCESSORY_OFFSETS, EXTRA_ACCESSORY_OFFSETS, EAR_ACCESSORY_OFFSETS } from '../common/offsets';
+import { HEAD_ACCESSORY_OFFSETS, EXTRA_ACCESSORY_OFFSETS, EAR_ACCESSORY_OFFSETS } from './offsets';
 
 export const PONY_WIDTH = 80;
 export const PONY_HEIGHT = 70;

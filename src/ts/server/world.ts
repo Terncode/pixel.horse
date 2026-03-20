@@ -32,14 +32,13 @@ import { roundPosition, roundPositionXMidPixel, roundPositionYMidPixel } from '.
 import { logger } from './logger';
 import { updateCamera, centerCameraOn } from '../common/camera';
 import { timingStart, timingEnd, timingUpdate } from './timing';
-import { getRegionGlobal, getTile } from '../common/worldMap';
 import { getEntityTypeName } from '../common/entities';
 import { toFriendOnline, toFriendOffline, FriendsService } from './services/friends';
 // import { Pool, createPool } from './pool';
 import { isStaticCollision, fixCollision, updatePosition } from '../common/collision';
 import { HidingService } from './services/hiding';
-import { generateRegionCollider } from '../common/region';
-import { updateTileIndices } from '../client/tileUtils';
+import { generateRegionCollider, getRegionGlobal } from '../common/region';
+import { getTile, updateTileIndices } from '../common/tileUtils';
 import { removeEntityFromRegion } from './serverRegion';
 import { createIslandMap } from './maps/islandMap';
 import { createHouseMap } from './maps/houseMap';

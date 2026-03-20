@@ -1,10 +1,9 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { saveCanvas, disableImageSmoothing, createCanvas } from '../../../client/canvasUtils';
-import { loadAndInitSpriteSheets } from '../../../client/spriteUtils';
+import { saveCanvas, disableImageSmoothing, createCanvas } from '../../../common/canvasUtils';
 import { tileHeight, tileWidth, REGION_SIZE } from '../../../common/constants';
 import { faHome } from '../../../client/icons';
-import { updateMap, getTile, createWorldMap, setRegion, setTile } from '../../../common/worldMap';
+import { updateMap, createWorldMap, setRegion } from '../../../client/worldMap';
 import {
 	Season, DrawOptions, defaultDrawOptions, EntityFlags, Entity, WorldMap, MapType, MapFlags
 } from '../../../common/interfaces';
@@ -12,7 +11,7 @@ import { drawCanvas } from '../../../graphics/contextSpriteBatch';
 import { paletteSpriteSheet } from '../../../generated/sprites';
 import { createRegion } from '../../../common/region';
 import { deserializeTiles } from '../../../common/compress';
-import { createTileSets } from '../../../client/tileUtils';
+import { createTileSets, getTile, setTile } from '../../../common/tileUtils';
 import { createCamera } from '../../../common/camera';
 import { mockPaletteManager } from '../../../common/ponyInfo';
 import { isCritter } from '../../../common/entityUtils';
@@ -25,6 +24,7 @@ import { getShadowColor, HOUR_LENGTH, createLightData } from '../../../common/ti
 import { StorageService } from '../../services/storageService';
 import { getTileColor } from '../../../common/colors';
 import { colorToCSS } from '../../../common/color';
+import { loadAndInitSpriteSheets } from '../../../client/loadSprites';
 
 export interface ToolsMapOtherInfo {
 	season: Season;

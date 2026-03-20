@@ -6,7 +6,7 @@ import { logger } from './logger';
 import { SERVER_FPS } from '../common/constants';
 import { ServerConfig } from '../common/adminInterfaces';
 import { timingReset, timingStart, timingEnd } from './timing';
-import { initializeTileHeightmaps } from '../client/tileUtils';
+import { initializeTileHeightmaps } from '../common/tileUtils';
 import { normalSpriteSheet } from '../generated/sprites';
 import { pathTo } from './paths';
 import { createMainMap } from './maps/mainMap';

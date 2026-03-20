@@ -17,26 +17,25 @@ import {
 } from '../common/constants';
 import {
 	ensureAllVisiblePoniesAreDecoded, invalidatePalettes, updateMap, updateEntities,
-	getMapHeightAt, updateEntitiesWithNames, updateEntitiesCoverLifted, getTile,
+	getMapHeightAt, updateEntitiesWithNames, updateEntitiesCoverLifted,
 	pickEntities, updateEntitiesTriggers, getElevation, setElevation, createWorldMap
-} from '../common/worldMap';
+} from './worldMap';
 import { updateCamera, centerCameraOn, screenToWorld, createCamera } from '../common/camera';
 import { WHITE, BLACK, SHADOW_COLOR, getTileColor, RED, CAVE_LIGHT, CAVE_SHADOW } from '../common/colors';
 import { formatHourMinutes, getLightColor, getShadowColor, createLightData } from '../common/timeUtils';
 import { toggleWalls } from '../common/mixins';
 import { getEntityTypeName, hammer, broom, createAnEntity, saw, placeableEntities, shovel } from '../common/entities';
-import { hasExtendedInfo, setHeadAnimation, createPony } from '../common/pony';
+import { hasExtendedInfo, setHeadAnimation, createPony } from './pony';
 import { PaletteManager } from '../graphics/paletteManager';
 import { isWebGL2 } from '../graphics/webgl/webglUtils';
 import { drawFullScreenMessage, drawNames, drawChat } from '../graphics/graphicsUtils';
 import { Key } from './input/input';
-import { loadAndInitSpriteSheets } from './spriteUtils';
 import { version, isMobile } from './data';
 import { Game } from './gameLoop';
 import { Audio } from '../components/services/audio';
-import { getPixelRatio } from './canvasUtils';
+import { getPixelRatio } from '../common/canvasUtils';
 import { colorToFloatArray, parseColor, colorToExistingFloatArray, makeTransparent } from '../common/color';
-import { nom } from './ponyAnimations';
+import { nom } from '../common/ponyAnimations';
 import { InputManager } from './input/inputManager';
 import { roundPositionX, roundPositionY, toScreenX, toScreenY } from '../common/positionUtils';
 import { StorageService } from '../components/services/storageService';
@@ -51,17 +50,17 @@ import { ClientSocketService } from '../components/services/gameService';
 import { attachDebugMethod, initFeatureFlags, updateRangeIndicator, initLogger, log, getSaysTime } from './clientUtils';
 import { restorePlayerPosition, savePlayerPosition } from './sec';
 import { drawEntityLights, drawEntityLightSprites, drawMap, drawDebugRegions } from './draw';
-import { updateTileSets, initializeTileHeightmaps } from './tileUtils';
+import { updateTileSets, initializeTileHeightmaps, getTile } from '../common/tileUtils';
 import {
 	downAction, upAction, turnHeadAction, boopAction, interact, toggleWall, editorMoveEntities,
 	editorSelectEntities, editorDragEntities
 } from './playerActions';
-import { fontSmallPal, fontSmall, font, fontMono } from './fonts';
+import { fontSmallPal, fontSmall, font, fontMono } from '../common/fonts';
 import { drawText, drawOutlinedText, measureText } from '../graphics/spriteFont';
 import { initializeToys } from './ponyDraw';
 import { ErrorReporter } from '../components/services/errorReporter';
 import { mockPaletteManager } from '../common/ponyInfo';
-import { timeStart, timeEnd, timingCollate, timeReset } from './timing';
+import { timeStart, timeEnd, timingCollate, timeReset } from '../common/timing';
 import { createFrameBuffer, bindFrameBuffer, unbindFrameBuffer, disposeFrameBuffer } from '../graphics/webgl/frameBuffer';
 import { WebGL, initWebGL, disposeWebGL, initWebGLResources } from './webgl';
 import { bindTexture } from '../graphics/webgl/texture2d';
@@ -72,6 +71,7 @@ import { createMat4, ortho } from '../common/mat4';
 import { Model } from '../components/services/model';
 import { filterEntityName } from './handlers';
 import { isOutsideMap } from '../common/collision';
+import { loadAndInitSpriteSheets } from './loadSprites';
 
 interface Minimap {
 	width: number;

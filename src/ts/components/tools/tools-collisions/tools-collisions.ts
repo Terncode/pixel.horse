@@ -3,7 +3,7 @@ import { AgDragEvent } from '../../shared/directives/agDrag';
 import { Rect, Point } from '../../../common/interfaces';
 import { roundPosition } from '../../../common/positionUtils';
 import { point, distanceSquaredXY, clamp } from '../../../common/utils';
-import { createCanvas, disableImageSmoothing } from '../../../client/canvasUtils';
+import { createCanvas, disableImageSmoothing } from '../../../common/canvasUtils';
 
 const pixelSize = 10;
 const tileWidth = 32 * pixelSize;

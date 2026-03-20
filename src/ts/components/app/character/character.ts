@@ -9,18 +9,18 @@ import { findById, toInt, cloneDeep, delay } from '../../../common/utils';
 import {
 	SLEEVED_ACCESSORIES, frontHooves, mergedBackManes, mergedManes, mergedFacialHair, mergedEarAccessories,
 	mergedChestAccessories, mergedFaceAccessories, mergedBackAccessories, mergedExtraAccessories, mergedHeadAccessories
-} from '../../../client/ponyUtils';
-import { defaultPonyState, defaultDrawPonyOptions } from '../../../client/ponyHelpers';
+} from '../../../common/ponyUtils';
+import { defaultPonyState, defaultDrawPonyOptions } from '../../../common/ponyHelpers';
 import { toPalette, getBaseFill, syncLockedPonyInfo } from '../../../common/ponyInfo';
 import * as sprites from '../../../generated/sprites';
-import { boop, trot, stand, sitDownUp, lieDownUp, fly, flyBug } from '../../../client/ponyAnimations';
+import { boop, trot, stand, sitDownUp, lieDownUp, fly, flyBug } from '../../../common/ponyAnimations';
 import { drawCanvas } from '../../../graphics/contextSpriteBatch';
 import { Model, getPonyTag } from '../../services/model';
-import { loadAndInitSpriteSheets, addTitles, createEyeSprite, addLabels } from '../../../client/spriteUtils';
+import { addTitles, createEyeSprite, addLabels } from '../../../common/spriteUtils';
 import { GameService } from '../../services/gameService';
 import { TRANSPARENT, BLACK, blushColor } from '../../../common/colors';
 import { precompressPony, compressPonyString, decompressPony, decompressPonyString } from '../../../common/compressPony';
-import { saveCanvas } from '../../../client/canvasUtils';
+import { saveCanvas } from '../../../common/canvasUtils';
 import { drawPony } from '../../../client/ponyDraw';
 import { getProviderIcon } from '../../shared/sign-in-box/sign-in-box';
 import { faPlay, faLock, faSave, faCode, faInfoCircle } from '../../../client/icons';
@@ -28,6 +28,7 @@ import { isFileSaverSupported, createExpression, readFileAsText } from '../../..
 import { emptyTag, getAvailableTags } from '../../../common/tags';
 import { ButtMarkEditorState } from '../../shared/butt-mark-editor/butt-mark-editor';
 import { parseColorWithAlpha } from '../../../common/color';
+import { loadAndInitSpriteSheets } from '../../../client/loadSprites';
 
 const frontHoofTitles = ['', 'Fetlocks', 'Paws', 'Claws', ''];
 const backHoofTitles = ['', 'Fetlocks', 'Paws', '', ''];

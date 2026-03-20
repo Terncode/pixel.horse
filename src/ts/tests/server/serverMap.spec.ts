@@ -1,8 +1,8 @@
 import '../lib';
 import { expect } from 'chai';
 import { createServerMap } from '../../server/serverMap';
-import { getRegion, getRegionGlobal } from '../../common/worldMap';
 import { ServerMap } from '../../server/serverInterfaces';
+import { getRegion, getRegionGlobal } from '../../common/region';
 
 describe('serverMap', () => {
 	let map: ServerMap;
