@@ -1870,3 +1870,5 @@ if (typeof window !== 'undefined') {
 	const nodeLoadTime = getNanoSeconds() - process.uptime() * 1e9;
 	counterNow = () => (getNanoSeconds() - nodeLoadTime) / 1e6;
 }
+
+export type PrimitiveValues = string | number | symbol | boolean;

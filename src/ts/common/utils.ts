@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Point, Rect, Entity, Dict, Holiday, Season } from './interfaces';
+import { Point, Rect, Entity, Dict, Holiday, Season, PrimitiveValues } from './interfaces';
 import { tileWidth, tileHeight, SECOND, MINUTE, HOUR, DAY } from './constants';
 import { ACCESS_ERROR, NOT_FOUND_ERROR, OFFLINE_ERROR, PROTECTION_ERROR } from './errors';
 
@@ -561,4 +561,14 @@ export function getY(e: AnyEvent): number {
 
 export function isKeyEventInvalid(e: KeyboardEvent) {
 	return e.target && /^(input|textarea|select)$/i.test((<any>e.target).tagName);
+}
+
+export function uniqById<T>(array: T[], uniqueKey: (self: T) => PrimitiveValues) {
+	const seen = new Set<PrimitiveValues>();
+	return array.filter(item => {
+		const id = uniqueKey(item);
+	  const isDuplicate = seen.has(id);
+	  seen.add(id);
+	  return !isDuplicate;
+	});
 }
