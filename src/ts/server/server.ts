@@ -8,7 +8,7 @@ import * as bodyParser from 'body-parser';
 import * as expressSession from 'express-session';
 import * as serveFavicon from 'serve-favicon';
 import * as Rollbar from 'rollbar';
-import * as passport from 'passport';
+import { Passport } from 'passport';
 import * as connectMongo from 'connect-mongo';
 import * as express from 'express';
 import { WebSocketServer } from '@encharm/cws';
@@ -83,6 +83,7 @@ const limit = !production || args.tools ? '100mb' : '100kb';
 
 Bluebird.config({ warnings: false, longStackTraces: !production });
 
+const passport = new Passport();
 const rollbar = config.rollbar && Rollbar.init({
 	accessToken: config.rollbar.serverToken,
 	environment: config.rollbar.environment,
@@ -330,7 +331,7 @@ if (args.login) {
 
 	app.use('/assets-admin', ...adminMiddlewares(), express.static(adminAssetsPath, { maxAge, etag }));
 	app.use('/auth', ...sessionMiddlewares(), authRoutes(
-		config.host, server, settings, liveSettings, args.local || DEVELOPMENT, removedDocument));
+		config.host, server, settings, liveSettings, args.local || DEVELOPMENT, removedDocument, passport));
 	app.use('/api', ...sessionMiddlewares(), api(
 		server, settings, { version, host: config.host, debug: DEVELOPMENT, local: !!args.local }, removedDocument));
 	app.use('/api1', ...sessionMiddlewares(), api1(server, settings));

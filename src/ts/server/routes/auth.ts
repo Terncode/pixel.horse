@@ -1,5 +1,5 @@
 import { Router, Request, Response, RequestHandler } from 'express';
-import { use, authenticate, AuthenticateOptions } from 'passport';
+import * as passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { remove } from 'lodash';
 import { MINUTE } from '../../common/constants';
@@ -20,11 +20,15 @@ import { mergeAccounts } from '../api/merge';
 import { findOrCreateAuth } from '../authUtils';
 import { getOriginFromHTTP, getOrigin, addOrigin } from '../originUtils';
 import { Profile } from '../../common/interfaces';
+import { Handler } from 'express';
+
 
 interface MergeRequest {
 	accountId: string;
 	time: number;
 }
+
+type PassportAuth = passport.Authenticator<Handler, any, any, passport.AuthenticateOptions>
 
 const FRESH_ACCOUNT_TIME = 1 * MINUTE;
 const mergeRequests: MergeRequest[] = [];
@@ -215,11 +219,11 @@ async function handleAuth(
 }
 
 function createHandler(
-	server: ServerConfig, live: ServerLiveSettings, id: string, options: AuthenticateOptions,
-	removedDocument: RemovedDocument
+	server: ServerConfig, live: ServerLiveSettings, id: string, options: passport.AuthenticateOptions,
+	removedDocument: RemovedDocument, passport: PassportAuth
 ): RequestHandler {
 	return (req, res, next) => {
-		const handler = authenticate(id, options, (error: Error | null, account: IAccount | null) =>
+		const handler = passport.authenticate(id, options, (error: Error | null, account: IAccount | null) =>
 			handleAuth(server, live, removedDocument, req, res, error, account));
 
 		return handler(req, res, next);
@@ -228,7 +232,7 @@ function createHandler(
 
 export function authRoutes(
 	host: string, server: ServerConfig, settings: Settings, live: ServerLiveSettings, mockLogin: boolean,
-	removedDocument: RemovedDocument
+	removedDocument: RemovedDocument, passport: PassportAuth
 ) {
 	const failureRedirect = `/?error=${encodeURIComponent('Authentication failed')}`;
 	const app = Router();
@@ -261,7 +265,7 @@ export function authRoutes(
 			return account;
 		}
 
-		use(id, new strategy(options, (req, _accessToken, _refreshToken, oauthProfile, callback) => {
+		passport.use(id, new strategy(options, (req, _accessToken, _refreshToken, oauthProfile, callback) => {
 			const profile = getProfile(id, oauthProfile);
 
 			signInOrSignUp(req, profile)
@@ -274,8 +278,8 @@ export function authRoutes(
 				});
 		}));
 
-		app.get(`/${id}`, limit(120, 3600), createHandler(server, live, id, { scope, failureRedirect }, removedDocument));
-		app.get(`/${id}/callback`, limit(120, 3600), createHandler(server, live, id, { failureRedirect }, removedDocument));
+		app.get(`/${id}`, limit(120, 3600), createHandler(server, live, id, { scope, failureRedirect }, removedDocument, passport));
+		app.get(`/${id}/callback`, limit(120, 3600), createHandler(server, live, id, { failureRedirect }, removedDocument, passport));
 		app.get(`/${id}/merge`, limit(120, 3600), authRequest, (req, res) => {
 			const accountId = (req.user as IAccount)._id.toString();
 			mergeRequests.push({ accountId, time: Date.now() });
@@ -349,8 +353,8 @@ export function authRoutes(
 			return [account._id.toString(), account.name];
 		}));
 
-		use(new LocalStrategy((login, _pass, done) => Account.findById(login, done)));
-		app.get('/local', authenticate('local', { successRedirect: '/', failureRedirect: '/failed-login' }));
+		passport.use(new LocalStrategy((login, _pass, done) => Account.findById(login, done)));
+		app.get('/local', passport.authenticate('local', { successRedirect: '/', failureRedirect: '/failed-login' }));
 	}
 
 	return app;
