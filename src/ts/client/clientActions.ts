@@ -1,5 +1,4 @@
 import { NgZone } from '@angular/core';
-import { getMethods } from 'ag-sockets/dist/browser';
 import {
 	MapInfo, WorldState, PartyMember, PartyFlags, Action, NotificationFlags, Pony, LeaveReason,
 	SayData, MapState, defaultMapState, Apply, InfoFlags, PonyData, FriendStatusData, WorldMap
@@ -186,7 +185,7 @@ export class ClientActions extends ClientActionsTemplate {
 				DEVELOPMENT && !TESTS && console.error(`actionParam: Invalid action: ${action}`);
 		}
 	}
-	// @Method({ binary: [Bin.U8] })
+	// @Method({ binary: [Bin.U8] }>)
 	left(reason: LeaveReason) {
 		this.game.player = undefined;
 		this.game.map = createWorldMap();
@@ -291,11 +290,4 @@ export class ClientActions extends ClientActionsTemplate {
 				`${log}`);
 		}
 	}
-}
-
-/* istanbul ignore next */
-if (DEVELOPMENT) {
-	getMethods(ClientActions)
-		.filter(m => !m.options.binary)
-		.forEach(m => console.error(`Missing binary encoding for ClientActions.${m.name}()`));
 }

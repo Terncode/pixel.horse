@@ -1,4 +1,4 @@
-import { Method, SocketClient, Bin } from 'ag-sockets/dist/browser';
+import { Method, SocketClient, Bin, getMethods } from 'ag-sockets/dist/browser';
 import {
 	MapInfo, WorldState, PartyFlags, Action, NotificationFlags, LeaveReason,
 	SayData, MapState, PonyData, FriendStatusData} from './interfaces';
@@ -50,4 +50,11 @@ export class ClientActionsTemplate implements SocketClient {
     entityList(_value: { name: string; x: number; y: number; }[]) {}
     @Method({ binary: [Bin.Obj] })
     testPositions(_data: { frame: number; x: number | undefined; y: number | undefined; moved: boolean; }[]) {}
+}
+
+/* istanbul ignore next */
+if (DEVELOPMENT) {
+	getMethods(ClientActionsTemplate)
+		.filter(m => !m.options.binary)
+		.forEach(m => console.error(`Missing binary encoding for ClientActions.${m.name}()`));
 }
