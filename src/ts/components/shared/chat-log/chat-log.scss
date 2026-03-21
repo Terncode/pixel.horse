@@ -7,7 +7,7 @@ $chat-log-tabs-height: 30px;
 $chat-log-buttons-width: 40px;
 
 $resizer-size: 12px;
-$resizer-offset: $resizer-size / 2;
+$resizer-offset: $resizer-size * 0.5;
 
 .chat-log {
 	display: flex;

@@ -5,11 +5,11 @@ $slider-fill: #eaeaea;
 
 $bar-height: 8px;
 $bar-control-size: 20px;
-$bar-border-radius: $bar-height / 2;
+$bar-border-radius: $bar-height * 0.5;
 
 :host {
 	display: inline-block;
-	padding: 2px ($bar-control-size - $bar-height + 10px) / 2;
+	padding: 2px ($bar-control-size - $bar-height + 10px) * 0.5;
 	width: 100%;
 	
 	&:focus {
@@ -61,8 +61,8 @@ $bar-border-radius: $bar-height / 2;
 
 .slider-bar-control {
 	position: absolute;
-	left: -$bar-control-size / 2;
-	top: -($bar-control-size - $bar-height) / 2;
+	left: -$bar-control-size * 0.5;
+	top: -($bar-control-size - $bar-height) * 0.5;
 	width: $bar-control-size;
 	height: $bar-control-size;
 	border-radius: 50%;

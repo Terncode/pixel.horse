@@ -18,8 +18,8 @@ $time-size: 20px;
 	
 	> div {
 		position: absolute;
-		left: -$state-size / 2;
-		top: -$state-size / 2;
+		left: -$state-size * 0.5;
+		top: -$state-size * 0.5;
 		width: $state-size;
 		height: $state-size;
 		background: gray;
@@ -43,8 +43,8 @@ $time-size: 20px;
 
 	> div {
 		position: absolute;
-		left: -$time-size / 2;
-		top: -$time-size / 2;
+		left: -$time-size * 0.5;
+		top: -$time-size * 0.5;
 		width: $time-size;
 		height: $time-size;
 		background: gray;
