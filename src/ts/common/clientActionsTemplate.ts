@@ -1,7 +1,7 @@
 import { Method, SocketClient, Bin } from 'ag-sockets/dist/browser';
 import {
 	MapInfo, WorldState, PartyFlags, Action, NotificationFlags, LeaveReason,
-	SayData, MapState, PonyData, FriendStatusData} from '../common/interfaces';
+	SayData, MapState, PonyData, FriendStatusData} from './interfaces';
 const BinEntityId = Bin.U32;
 const BinEntityPlayerState = Bin.U8;
 const BinNotificationId = Bin.U16;

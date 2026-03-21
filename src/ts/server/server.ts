@@ -57,7 +57,7 @@ import { InternalAdminApi } from './api/internal-admin';
 import { AdminService } from './services/adminService';
 import { createEndPoints } from './api/admin';
 import { World } from './world';
-import { ClientActionsTemplate } from '../common/clientActionsTemplte';
+import { ClientActionsTemplate } from '../common/clientActionsTemplate';
 import { ClientAdminActionsTemplate } from '../common/clientAdminActionsTemplate';
 
 function getServiceWorker() {

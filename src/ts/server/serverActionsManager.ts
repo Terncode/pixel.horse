@@ -30,7 +30,7 @@ import { updateCharacterState } from './characterUtils';
 import { FriendsService } from './services/friends';
 import { config } from './config';
 import { parseSeason, parseHoliday } from '../common/utils';
-import { ClientActionsTemplate } from '../common/clientActionsTemplte';
+import { ClientActionsTemplate } from '../common/clientActionsTemplate';
 
 async function refreshSettings(account: IAccount) {
 	const a = await Account.findOne({ _id: account._id }, 'settings').exec();

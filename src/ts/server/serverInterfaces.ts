@@ -5,7 +5,7 @@ import {
 } from '../common/interfaces';
 import { IAccount, ICharacter, UpdateAccount } from './db';
 import { AccountUpdate, CharacterState, GameServerSettings, Suspicious } from '../common/adminInterfaces';
-import { ClientActionsTemplate } from '../common/clientActionsTemplte';
+import { ClientActionsTemplate } from '../common/clientActionsTemplate';
 import { MapFlags, MapType } from '../common/commonInterfaces';
 
 export interface EntityUpdate {

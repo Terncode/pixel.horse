@@ -19,7 +19,7 @@ import {
 	handleEntityInfo, handleUpdatePonies, filterEntityName, handleUpdateFriends
 } from './handlers';
 import { nameToHTML } from '../common/emoji';
-import { ClientActionsTemplate } from '../common/clientActionsTemplte';
+import { ClientActionsTemplate } from '../common/clientActionsTemplate';
 import { isPony } from '../common/entityUtils';
 
 function findPonyById(map: WorldMap, id: number) {

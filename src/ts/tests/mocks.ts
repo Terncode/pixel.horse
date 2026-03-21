@@ -11,7 +11,7 @@ import { mixColliderRect } from '../common/mixins';
 import { createBinaryWriter } from 'ag-sockets';
 import { PONY_TYPE } from '../common/constants';
 import { getRegionGlobal } from '../common/region';
-import { ClientActionsTemplate } from '../common/clientActionsTemplte';
+import { ClientActionsTemplate } from '../common/clientActionsTemplate';
 
 export function auth(item: Partial<IAuth>): IAuth {
 	return item as IAuth;
