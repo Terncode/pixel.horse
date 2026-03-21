@@ -20,7 +20,7 @@ $chat-line-indent: 10px;
 }
 
 @each $key, $value in $chat-colors {
-	&.chat-line-#{$key} {
+	.chat-line-#{$key} {
 		color: $value;
 
 		> .chat-line-name {

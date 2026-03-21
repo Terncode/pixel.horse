@@ -11,7 +11,7 @@ To discuss licensing, contact `ponytownhelp@gmail.com`.
 
 ## Prerequisites
 
-* [Node.js](https://nodejs.org/download/release/v12.22.12) (version 12)
+* [Node.js](https://nodejs.org/download/release/v14.21.3) (version 14)
 * gulp `npm install -g gulp`
 * MongoDB: [download link](https://www.mongodb.com/download-center/community) and [installation instructions](https://docs.mongodb.com/manual/administration/install-community/)
 * [ImageMagick](https://imagemagick.org/script/download.php#windows) (optional, required for generating preview gifs in animation tool)

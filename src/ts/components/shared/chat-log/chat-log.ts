@@ -240,8 +240,8 @@ export class ChatLog implements AfterViewInit, OnDestroy, DoCheck {
 	private indexes = new Map<string, IndexEntry>();
 	private messageCounter = 0;
 	private lastOpacity = 0;
-	private autoClear?: NodeJS.Timeout;
-	private autoUnfocus?: NodeJS.Timeout;
+	private autoClear?: number;
+	private autoUnfocus?: number;
 	constructor(
 		private game: PonyTownGame,
 		private settingsService: SettingsService,
@@ -466,13 +466,13 @@ export class ChatLog implements AfterViewInit, OnDestroy, DoCheck {
 			this.filterColor = this.bg;
 		}
 
-		this.autoClear = setTimeout(() => {
+		this.autoClear = window.setTimeout(() => {
 			this.filterInput.nativeElement.value = '';
 			this.filterChat();
 			this.unFocus();
 		}, SECOND * 30);
 
-		this.autoUnfocus = setTimeout(() => {
+		this.autoUnfocus = window.setTimeout(() => {
 			this.unFocus();
 		}, SECOND * 3);
 

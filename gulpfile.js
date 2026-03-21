@@ -6,7 +6,8 @@ const gulp = require('gulp');
 const _ = require('lodash');
 const gulpif = require('gulp-if');
 const rev = require('gulp-rev');
-const sass = require('gulp-sass');
+const gulpSass = require('gulp-sass');
+const dartSass = require('sass');
 const shell = require('gulp-shell');
 const cssnano = require('gulp-cssnano');
 const imagemin = require('gulp-imagemin');
@@ -25,6 +26,8 @@ const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-'
 const HASH = _.range(0, 10).map(() => chars[Math.floor(Math.random() * chars.length)]).join('');
 
 let development = true;
+
+const sass = gulpSass(dartSass);
 
 function swallowError(e) {
 	console.log(e.message);

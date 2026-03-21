@@ -19,7 +19,7 @@ kbd {
 }
 
 @each $color, $value in $gamepad-colors {
-	.gamepad-#{$color} > kbd, kbd.gamepad-#{$color} {
+	.gamepad-#{"" + $color} > kbd, kbd.gamepad-#{"" + $color} {
 		background: $value;
 	}
 }
