@@ -321,14 +321,8 @@ const setProd = cb => {
 	cb();
 };
 
-const warnAboutTscBeingDumb = cb => {
-	console.log("You're probably about to see some warnings from tsc about not being able to find certain files.");
-	console.log("Don't worry about these. It's a known issue regarding circular build dependencies. The build should continue despite these errors.");
-	cb();
-};
-
 const empty = cb => cb();
-const tsTools = gulp.series(warnAboutTscBeingDumb, npmScript('ts-tools'));
+const tsTools = gulp.series(npmScript('ts-tools'));
 const spritesTask = argv.sprites ? sprites : empty;
 const buildSprites = gulp.series(tsTools, sprites);
 

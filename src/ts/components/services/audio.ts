@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Howl } from 'howler';
 import { random, sample } from 'lodash';
-import { Season, Holiday, MapType } from '../../common/interfaces';
 import { getUrl } from '../../client/rev';
+import { Holiday, MapType, Season } from '../../common/commonInterfaces';
 
 interface Track {
 	name: string;

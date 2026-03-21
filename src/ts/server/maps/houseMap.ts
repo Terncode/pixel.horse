@@ -3,12 +3,13 @@ import { rect } from '../../common/rect';
 import { ServerMap, MapUsage, ServerEntity } from '../serverInterfaces';
 import { World, goToMap } from '../world';
 import { addSpawnPointIndicators } from '../mapUtils';
-import { TileType, MapType, MapFlags, EntityState } from '../../common/interfaces';
+import { TileType, EntityState } from '../../common/interfaces';
 import { createServerMap, setTile, MapData, saveMap } from '../serverMap';
 import { WallController } from '../controllers';
 import { resetRegionUpdates } from '../serverRegion';
 import { tileHeight, HOUSE_ENTITY_LIMIT } from '../../common/constants';
 import { getTile } from '../../common/tileUtils';
+import { MapFlags, MapType } from '../../common/commonInterfaces';
 
 export let defaultHouseSave: MapData | undefined = undefined;
 

@@ -533,3 +533,12 @@ export function rgb2hsl(rgb: RGB): HSL {
 export function hsl2CSS(hsl: HSL) {
 	return `hsl(${hsl.h},${hsl.s}%,${hsl.l}%)`;
 }
+
+export function darkenForOutline(color: number) {
+	const mult = (159 / 255);
+	const r = (mult * getR(color)) | 0;
+	const g = (mult * getG(color)) | 0;
+	const b = (mult * getB(color)) | 0;
+	const a = getAlpha(color);
+	return colorFromRGBA(r, g, b, a);
+}

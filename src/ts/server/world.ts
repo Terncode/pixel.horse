@@ -1,7 +1,7 @@
 import { getWriterBuffer } from 'ag-sockets';
 import { remove, compact } from 'lodash';
 import {
-	TileType, WorldState, Season, Holiday, WorldStateFlags, LeaveReason, NotificationFlags, UpdateFlags, Action, counterNow,
+	TileType, WorldState, WorldStateFlags, LeaveReason, NotificationFlags, UpdateFlags, Action, counterNow,
 } from '../common/interfaces';
 import { removeItem, distance, clamp, randomPoint, includes, fromNow } from '../common/utils';
 import { HOUR_LENGTH, DAY_LENGTH } from '../common/timeUtils';
@@ -44,6 +44,7 @@ import { createIslandMap } from './maps/islandMap';
 import { createHouseMap } from './maps/houseMap';
 import { updateMainMapSeason } from './maps/mainMap';
 import { updateWorldPerfStats } from './worldPerfStats';
+import { Holiday, Season } from '../common/commonInterfaces';
 
 interface MapSwitch {
 	map: ServerMap;

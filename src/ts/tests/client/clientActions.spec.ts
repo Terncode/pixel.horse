@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
 import { expect } from 'chai';
 import { stub, assert, SinonStub } from 'sinon';
 import {
-	MessageType, Action, PartyFlags, NotificationFlags, LeaveReason, TileType, Weather, InfoFlags, Pony
+	MessageType, Action, PartyFlags, NotificationFlags, LeaveReason, TileType, InfoFlags, Pony
 } from '../../common/interfaces';
 import * as handlers from '../../client/handlers';
 import { pony } from '../../common/entities';
@@ -24,6 +24,7 @@ import { addEntity, setRegion, createWorldMap } from '../../client/worldMap';
 import { createServerRegion } from '../../server/serverRegion';
 import { ServerRegion } from '../../server/serverInterfaces';
 import { getTile } from '../../common/tileUtils';
+import { Weather } from '../../common/commonInterfaces';
 
 describe('ClientActions', () => {
 	let zone: NgZone;

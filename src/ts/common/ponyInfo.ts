@@ -6,7 +6,7 @@ import {
 } from './interfaces';
 import { toInt, array, includes, att } from './utils';
 import { CM_SIZE } from './constants';
-import { parseColorFast, getR, getAlpha, colorFromRGBA, getG, getB, colorToHexRGB } from './color';
+import { parseColorFast, colorToHexRGB, darkenForOutline } from './color';
 import { BLACK, fillToOutline, fillToOutlineColor, WHITE, TRANSPARENT, fillToOutlineWithDarken } from './colors';
 import {
 	mergedManes, mergedBackManes, mergedFacialHair, mergedEarAccessories, mergedChestAccessories,
@@ -342,15 +342,6 @@ export function toColorList(colors: (string | undefined)[]): Uint32Array {
 	}
 
 	return result;
-}
-
-export function darkenForOutline(color: number) {
-	const mult = (159 / 255);
-	const r = (mult * getR(color)) | 0;
-	const g = (mult * getG(color)) | 0;
-	const b = (mult * getB(color)) | 0;
-	const a = getAlpha(color);
-	return colorFromRGBA(r, g, b, a);
 }
 
 function getColorsGeneric(

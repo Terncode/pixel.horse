@@ -1,8 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Point, Rect, Entity, Dict, Holiday, Season, PrimitiveValues } from './interfaces';
+import { Point, Rect, Entity, Dict, PrimitiveValues } from './interfaces';
 import { tileWidth, tileHeight, SECOND, MINUTE, HOUR, DAY } from './constants';
 import { ACCESS_ERROR, NOT_FOUND_ERROR, OFFLINE_ERROR, PROTECTION_ERROR } from './errors';
+import { Season, Holiday } from './commonInterfaces';
 
 // enum
 

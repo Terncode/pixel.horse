@@ -2,13 +2,14 @@ import { compact } from 'lodash';
 import * as sprites from '../generated/sprites';
 import {
 	Entity, PaletteManager, Rect, ServerFlags, PaletteRenderable, ColorShadow, EntityDescriptor, EntityOptions,
-	CreateEntityMethod, CreateEntity, EntityFlags, MixinEntity, EntityWorldState, defaultWorldState, ColorExtra, InteractAction
+	CreateEntityMethod, CreateEntity, EntityFlags, MixinEntity, EntityWorldState, defaultWorldState, ColorExtra, InteractAction,
+	AnimatedRenderable1,
+	AnimatedRenderable
 } from './interfaces';
 import { tileWidth, tileHeight, ENTITY_TYPE_LIMIT, WATER_FPS, PONY_TYPE, WATER_HEIGHT } from './constants';
 import { CLOUD_SHADOW_COLOR, WHITE } from './colors';
 import {
-	mixDrawSpider, setPaletteManager, AnimatedRenderable,
-	AnimatedRenderable1, collider, taperColliderSW, taperColliderNE, taperColliderSE,
+	mixDrawSpider, setPaletteManager, collider, taperColliderSW, taperColliderNE, taperColliderSE,
 	taperColliderNW, skewColliderNE, ponyColliders, ponyCollidersBounds, mixTrigger, mixDraw, mixInteract,
 	mixPickable, mixMinimap, mixColliderRect, mixColliderRounded, mixLight, mixLightSprite, mixColliders,
 	mixDrawShadow, mixAnimation, mixBobbing, mixDrawWall, mixDrawRain, mixDrawSeasonal, mixDrawWindow,

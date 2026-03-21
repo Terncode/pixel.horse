@@ -1,6 +1,6 @@
 import { range, compact, escapeRegExp } from 'lodash';
 import {
-	MessageType, ChatType, Expression, Eye, Muzzle, Action, Weather, toAnnouncementMessageType,
+	MessageType, ChatType, Expression, Eye, Muzzle, Action, toAnnouncementMessageType,
 } from '../common/interfaces';
 import { hasRole } from '../common/accountUtils';
 import { butterfly, bat, firefly, cloud, getEntityType, getEntityTypeName } from '../common/entities';
@@ -34,6 +34,7 @@ import { writeFileAsync } from 'fs';
 import { Account } from './db';
 import { defaultHouseSave, removeToolbox, restoreToolbox } from './maps/houseMap';
 import { getRegionGlobal } from '../common/region';
+import { Weather } from '../common/commonInterfaces';
 
 export interface CommandContext {
 	world: World;

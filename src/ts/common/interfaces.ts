@@ -1,7 +1,7 @@
 import { Texture2D } from '../graphics/webgl/texture2d';
 import { WHITE, SHADOW_COLOR } from './colors';
-import { AnimationPlayer } from './animationPlayer';
 import { Animator } from './animator';
+import { Holiday, MapFlags, MapType, Season, Weather } from './commonInterfaces';
 
 export type Log = (...args: any[]) => void;
 export type Apply = (func: () => void) => void;
@@ -10,41 +10,6 @@ export type Matrix2D = Float32Array;
 
 export interface Dict<T> {
 	[key: string]: T;
-}
-
-export const enum Season {
-	Summer = 1,
-	Autumn = 2,
-	Winter = 4,
-	Spring = 8,
-}
-
-export const enum Holiday {
-	None,
-	Christmas,
-	Halloween,
-	StPatricks,
-	Easter,
-}
-
-export const enum Weather {
-	None,
-	Rain,
-}
-
-export const enum MapType {
-	None,
-	Island,
-	House,
-	Cave,
-}
-
-export const enum MapFlags {
-	None = 0,
-	EditableWalls = 1,
-	EditableEntities = 2,
-	EditableTiles = 4,
-	EdibleGrass = 8,
 }
 
 export const enum NotificationFlags {
@@ -1872,3 +1837,46 @@ if (typeof window !== 'undefined') {
 }
 
 export type PrimitiveValues = string | number | symbol | boolean;
+
+export interface Renderable {
+	color?: Sprite;
+	shadow?: Sprite;
+}
+
+export interface AnimatedRenderable {
+	frames: Sprite[];
+	shadow?: Sprite;
+	palette: Uint32Array;
+}
+
+export interface AnimatedRenderable1 {
+	frames: (Sprite | undefined)[];
+}
+
+export const enum AnimationPhase {
+	Starting,
+	Playing,
+	Ending,
+}
+
+export interface SpriteAnimation {
+	loop: boolean;
+	start: number;
+	middle: number;
+	end: number;
+	fps: number;
+	palette: Uint32Array;
+	frames: Sprite[];
+	flipFrames?: Sprite[];
+}
+
+export interface AnimationPlayer {
+	nextAnimation: SpriteAnimation | undefined;
+	currentAnimation: SpriteAnimation | undefined;
+	time: number;
+	frame: number;
+	phase: AnimationPhase;
+	dirty: boolean;
+	palette: Palette;
+}
+

@@ -18,7 +18,8 @@ import {
 } from '../common/ponyUtils';
 import { HEAD_ACCESSORY_OFFSETS, EAR_ACCESSORY_OFFSETS, EXTRA_ACCESSORY_OFFSETS } from '../common/offsets';
 import { createMat2D, identityMat2D, translateMat2D, copyMat2D, rotateMat2D, scaleMat2D } from '../common/mat2d';
-import { darkenForOutline } from '../common/ponyInfo';
+import { darkenForOutline } from '../common/color';
+
 
 type Batch = PaletteSpriteBatch;
 type Info = Readonly<PalettePonyInfo>;

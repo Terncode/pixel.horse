@@ -5,7 +5,7 @@ import { tileHeight, tileWidth, REGION_SIZE } from '../../../common/constants';
 import { faHome } from '../../../client/icons';
 import { updateMap, createWorldMap, setRegion } from '../../../client/worldMap';
 import {
-	Season, DrawOptions, defaultDrawOptions, EntityFlags, Entity, WorldMap, MapType, MapFlags
+	DrawOptions, defaultDrawOptions, EntityFlags, Entity, WorldMap,
 } from '../../../common/interfaces';
 import { drawCanvas } from '../../../graphics/contextSpriteBatch';
 import { paletteSpriteSheet } from '../../../generated/sprites';
@@ -25,6 +25,7 @@ import { StorageService } from '../../services/storageService';
 import { getTileColor } from '../../../common/colors';
 import { colorToCSS } from '../../../common/color';
 import { loadAndInitSpriteSheets } from '../../../client/loadSprites';
+import { MapFlags, MapType, Season } from '../../../common/commonInterfaces';
 
 export interface ToolsMapOtherInfo {
 	season: Season;

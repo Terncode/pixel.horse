@@ -2,10 +2,10 @@ import { Injectable, NgZone } from '@angular/core';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { debounce } from 'lodash';
 import {
-	EntityState, Pony, Notification, TileType, Action, IServerActions, Season, WorldState, Holiday,
+	EntityState, Pony, Notification, TileType, Action, IServerActions, WorldState,
 	TileSets, ChatMessage, PartyInfo, Entity, DrawOptions, Engine, defaultDrawOptions, PonyStateFlags,
 	DoAction, ChatType, WorldStateFlags, DebugFlags, MessageType, AccountSettings, Matrix4,
-	FakeEntity, SelectFlags, WorldMap, MapType, MapFlags, EntityFlags, houseTiles, isValidTile, GraphicsQuality
+	FakeEntity, SelectFlags, WorldMap, EntityFlags, houseTiles, isValidTile, GraphicsQuality
 } from '../common/interfaces';
 import {
 	clamp, lengthOfXY, setFlag, hasFlag, boundsIntersect, point, toInt, lerpColor, distanceXY
@@ -72,6 +72,7 @@ import { Model } from '../components/services/model';
 import { filterEntityName } from './handlers';
 import { isOutsideMap } from '../common/collision';
 import { loadAndInitSpriteSheets } from './loadSprites';
+import { Holiday, MapFlags, MapType, Season } from '../common/commonInterfaces';
 
 interface Minimap {
 	width: number;

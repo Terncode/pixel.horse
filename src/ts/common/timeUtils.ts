@@ -1,7 +1,8 @@
 import { lerpColors, withAlphaFloat } from './color';
 import { WHITE, SHADOW_COLOR, BLACK } from './colors';
+import { Season } from './commonInterfaces';
 import { MINUTE } from './constants';
-import { Season } from './interfaces';
+
 
 const DAY_START = 4.75; // 04:45
 const DAY_END = 20.25; // 20:15

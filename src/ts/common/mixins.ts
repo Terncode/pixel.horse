@@ -3,7 +3,7 @@ import * as sprites from '../generated/sprites';
 import {
 	EntityPart, Sprite, Rect, SpriteBatch, PaletteManager, Palette, PaletteRenderable, PaletteSpriteBatch,
 	DrawOptions, getAnimationFromEntityState, EntityState, SignEntityOptions, EntityFlags, Collider, MixinEntity,
-	Season,
+	AnimatedRenderable1, Renderable, AnimatedRenderable,
 } from './interfaces';
 import { at, att, hasFlag, invalidEnum } from './utils';
 import { WHITE, BLACK, RED } from './colors';
@@ -12,21 +12,7 @@ import { rect, addRects, addRect } from './rect';
 import { SECOND, LIGHT_VOLUME_SCALE } from './constants';
 import { mockPaletteManager } from './ponyInfo';
 import { releasePalette } from '../graphics/paletteManager';
-
-interface Renderable {
-	color?: Sprite;
-	shadow?: Sprite;
-}
-
-export interface AnimatedRenderable {
-	frames: Sprite[];
-	shadow?: Sprite;
-	palette: Uint32Array;
-}
-
-export interface AnimatedRenderable1 {
-	frames: (Sprite | undefined)[];
-}
+import { Season } from './commonInterfaces';
 
 const predefinedSteps = [
 	[],

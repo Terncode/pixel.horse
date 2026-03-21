@@ -1,6 +1,6 @@
 import {
-	PaletteManager, Season, TileSets, Region, TileType, Camera, PaletteSpriteBatch, DrawOptions, WorldMap, IMap,
-	Sprite, MapType,
+	PaletteManager,TileSets, Region, TileType, Camera, PaletteSpriteBatch, DrawOptions, WorldMap, IMap,
+	Sprite,
 	canWalk
 } from './interfaces';
 import * as sprites from '../generated/sprites';
@@ -13,6 +13,7 @@ import { releasePalette } from '../graphics/paletteManager';
 import { drawPixelText } from '../graphics/graphicsUtils';
 import { toScreenX, toScreenY, toWorldZ } from './positionUtils';
 import { setColliderDirty } from './collision';
+import { MapType, Season } from './commonInterfaces';
 
 const TILE_COUNTS = [[0, 4], [2, 3], [4, 3], [6, 3], [8, 3], [13, 3], [14, 3], [47, 4]];
 export const TILE_COUNT_MAP: number[] = [];

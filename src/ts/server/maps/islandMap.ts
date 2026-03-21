@@ -8,7 +8,7 @@ import {
 	addSpawnPointIndicators, generateTileIndicesAndColliders, removePonies, worldForTemplates, createBunny
 } from '../mapUtils';
 import { serverMapInstanceFromTemplate, createServerMap, copyMapTiles, deserializeMap } from '../serverMap';
-import { TileType, MapType, Season } from '../../common/interfaces';
+import { TileType } from '../../common/interfaces';
 import { rect } from '../../common/rect';
 import { createAddLight, createSignWithText, createWoodenFenceMaker, createBoxOfLanterns } from '../controllerUtils';
 import { setEntityName, updateEntityOptions } from '../entityUtils';
@@ -17,6 +17,7 @@ import { tileWidth, tileHeight } from '../../common/constants';
 import { TorchController, UpdateController } from '../controllers';
 import { resetRegionUpdates } from '../serverRegion';
 import { point } from '../../common/utils';
+import { MapType, Season } from '../../common/commonInterfaces';
 
 const islandMapData = JSON.parse(fs.readFileSync(pathTo('src', 'maps', 'island.json'), 'utf8'));
 

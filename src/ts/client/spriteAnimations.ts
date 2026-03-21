@@ -1,7 +1,5 @@
 import * as sprites from '../generated/sprites';
-import { SpriteAnimation } from '../common/animationPlayer';
-import { AnimatedRenderable } from '../common/mixins';
-import { Sprite } from '../common/interfaces';
+import { AnimatedRenderable, Sprite, SpriteAnimation } from '../common/interfaces';
 
 export const zzzAnimation1 = createSpriteAnimation(
 	sprites.emote_sleep1, 8, 8, 4, 7, true, sprites.emote_sleep1_flip.frames);

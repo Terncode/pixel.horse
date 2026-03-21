@@ -1,4 +1,4 @@
-import { Season, Holiday } from './interfaces';
+import { Holiday, Season } from './commonInterfaces';
 
 export const SEASON: Season = Season.Spring;
 export const HOLIDAY: Holiday = Holiday.None;

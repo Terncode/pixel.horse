@@ -4,13 +4,14 @@ import { ServerMap, MapUsage, ServerEntity } from '../serverInterfaces';
 import { World, goToMap } from '../world';
 import { addSpawnPointIndicators } from '../mapUtils';
 import { createServerMap, deserializeMap } from '../serverMap';
-import { TileType, MapType } from '../../common/interfaces';
+import { TileType } from '../../common/interfaces';
 import { rect } from '../../common/rect';
 import { TorchController, FlyingCritterController } from '../controllers';
 import * as entities from '../../common/entities';
 import { WallController } from '../controllers/wallController';
 import { createBoxOfLanterns, give } from '../controllerUtils';
 import { holdItem } from '../playerUtils';
+import { MapType } from '../../common/commonInterfaces';
 
 const mapData = JSON.parse(fs.readFileSync(pathTo('src', 'maps', 'cave.json'), 'utf8'));
 

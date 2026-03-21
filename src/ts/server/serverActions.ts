@@ -2,7 +2,7 @@ import { Socket, Method, SocketServer, Bin, getMethods } from 'ag-sockets';
 import {
 	PlayerAction, ModAction, ChatType, PonyData, IServerActions, TileType, Action, EditorAction, Entity,
 	EntityOrPonyOptions, LeaveReason, SupporterInvite, InfoFlags, AccountSettings, FriendStatusFlags,
-	SelectFlags, UpdateFlags, isValidModTile, isValidTile, MapFlags, EntityState, houseTiles
+	SelectFlags, UpdateFlags, isValidModTile, isValidTile, EntityState, houseTiles
 } from '../common/interfaces';
 import { CharacterState, ServerConfig } from '../common/adminInterfaces';
 import { PARTY_LIMIT, OFFLINE_PONY, TILE_CHANGE_RANGE, MIN_HIDE_TIME, MAX_HIDE_TIME, PONY_TYPE } from '../common/constants';
@@ -37,6 +37,7 @@ import { isOutsideMap } from '../common/collision';
 import { createAnEntity } from '../common/entities';
 import { mockPaletteManager } from '../common/ponyInfo';
 import { getTile } from '../common/tileUtils';
+import { MapFlags } from '../common/commonInterfaces';
 
 interface AddedEntity {
 	name: string;

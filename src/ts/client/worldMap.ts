@@ -1,6 +1,6 @@
 import {
 	Entity, Point, TileType, Rect, MapInfo, Camera, Region, MapState, defaultMapState, Pony,
-	MapType, EntityFlags, WorldMap, Weather, EntityState, MapFlags,
+	EntityFlags, WorldMap, EntityState,
 } from '../common/interfaces';
 import { contains, removeItem, boundsIntersect, array, pushUniq, containsPoint, removeItemFast } from '../common/utils';
 import { isBoundsVisible, } from '../common/camera';
@@ -22,6 +22,7 @@ import { PaletteManager } from '../graphics/paletteManager';
 import { timeEnd, timeStart } from '../common/timing';
 import { playEffect } from './handlers';
 import { isFlyingDown } from '../common/ponyStates';
+import { MapFlags, MapType, Weather } from '../common/commonInterfaces';
 
 const defaultMapInfo: MapInfo = {
 	type: MapType.None,

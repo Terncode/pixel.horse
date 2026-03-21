@@ -1,7 +1,7 @@
-import { MessageType, Season, TileType } from './interfaces';
-import { colorFromHSVA, colorToHexRGB, parseColorFast, colorToHSVA, withAlphaFloat } from './color';
+import { MessageType, TileType } from './interfaces';
+import { colorFromHSVA, colorToHexRGB, parseColorFast, colorToHSVA, withAlphaFloat, darkenForOutline } from './color';
 import { invalidEnum, invalidEnumReturn } from './utils';
-import { darkenForOutline } from './ponyInfo';
+import { Season } from './commonInterfaces';
 
 // basic
 

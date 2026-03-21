@@ -1,12 +1,13 @@
 import * as entities from '../../common/entities';
 import { rect } from '../../common/rect';
-import { TileType, MapType } from '../../common/interfaces';
+import { TileType } from '../../common/interfaces';
 import { createServerMap } from '../serverMap';
 import { World, goToMap } from '../world';
 import { allEntities } from '../api/account';
 import { createSign } from '../controllerUtils';
 import { ServerEntity } from '../serverInterfaces';
 import { setEntityName } from '../entityUtils';
+import { MapType } from '../../common/commonInterfaces';
 
 export function createPaletteMap(world: World) {
 	const map = createServerMap('palette', MapType.None, 10, 10, TileType.Grass);

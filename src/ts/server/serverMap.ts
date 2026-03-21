@@ -1,7 +1,7 @@
 import { writeFileAsync, readFileAsync, writeFileSync } from 'fs';
 import { fromByteArray } from 'base64-js';
 import {
-	TileType, MapInfo, MapState, defaultMapState, Rect, MapType, ServerFlags, EntityFlags, MapFlags, EntityState
+	TileType, MapInfo, MapState, defaultMapState, Rect, ServerFlags, EntityFlags, EntityState
 } from '../common/interfaces';
 import { distanceSquaredXY, containsPoint, hasFlag } from '../common/utils';
 import { POSITION_MAX } from '../common/movementUtils';
@@ -20,6 +20,7 @@ import { setEntityName } from './entityUtils';
 import { WallController } from './controllers/wallController';
 import { getTile } from '../common/tileUtils';
 import { getRegion, getRegionGlobal } from '../common/region';
+import { MapFlags, MapType } from '../common/commonInterfaces';
 
 export interface EntityData {
 	type: string;

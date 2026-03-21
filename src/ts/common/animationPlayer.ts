@@ -1,35 +1,8 @@
 import { sample } from 'lodash';
-import { Sprite, Palette, PaletteSpriteBatch } from './interfaces';
+import { AnimationPhase, AnimationPlayer, Palette, PaletteSpriteBatch, SpriteAnimation } from './interfaces';
 import { drawSpriteCropped } from '../graphics/graphicsUtils';
 import { includes } from './utils';
 import { WHITE } from './colors';
-
-const enum AnimationPhase {
-	Starting,
-	Playing,
-	Ending,
-}
-
-export interface SpriteAnimation {
-	loop: boolean;
-	start: number;
-	middle: number;
-	end: number;
-	fps: number;
-	palette: Uint32Array;
-	frames: Sprite[];
-	flipFrames?: Sprite[];
-}
-
-export interface AnimationPlayer {
-	nextAnimation: SpriteAnimation | undefined;
-	currentAnimation: SpriteAnimation | undefined;
-	time: number;
-	frame: number;
-	phase: AnimationPhase;
-	dirty: boolean;
-	palette: Palette;
-}
 
 export function createAnimationPlayer(palette: Palette): AnimationPlayer {
 	return {

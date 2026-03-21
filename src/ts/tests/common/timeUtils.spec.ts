@@ -4,7 +4,7 @@ import {
 	formatHourMinutes, getLightColor, HOUR_LENGTH, isDay, isNight, LightData, createLightData
 } from '../../common/timeUtils';
 import { WHITE } from '../../common/colors';
-import { Season } from '../../common/interfaces';
+import { Season } from '../../common/commonInterfaces';
 
 const LIGHT_DAY = WHITE;
 const LIGHT_NIGHT = 0x2b3374ff;

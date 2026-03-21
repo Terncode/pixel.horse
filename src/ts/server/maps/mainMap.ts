@@ -3,7 +3,7 @@ import { sample, random } from 'lodash';
 import { pathTo } from '../paths';
 import { World, goToMap } from '../world';
 import { createServerMap, deserializeMap, snapshotTiles, setTile, lockTile, lockTiles } from '../serverMap';
-import { TileType, Season, MapType, Holiday, MessageType, ServerFlags, MapFlags } from '../../common/interfaces';
+import { TileType, MessageType, ServerFlags } from '../../common/interfaces';
 import { rect } from '../../common/rect';
 import * as entities from '../../common/entities';
 import {
@@ -27,6 +27,7 @@ import { toWorldX } from '../../common/positionUtils';
 import { deserializeTiles } from '../../common/compress';
 import * as ctrl from '../controllers';
 import { isNightTime, isDayTime } from '../../common/timeUtils';
+import { Holiday, MapFlags, MapType, Season } from '../../common/commonInterfaces';
 
 const mainMapData = JSON.parse(fs.readFileSync(pathTo('src', 'maps', 'main.json'), 'utf8'));
 const mainMapTiles = deserializeTiles(mainMapData.tiles);

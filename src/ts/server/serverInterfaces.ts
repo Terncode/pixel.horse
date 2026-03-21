@@ -1,11 +1,12 @@
 import { ClientExtensions, BinaryWriter } from 'ag-sockets';
 import {
 	Entity, ServerFlags, AccountSettings, NotificationFlags, Expression, Camera, SayData, Region, TileUpdate,
-	Rect, IMap, MapType, TileType, MapState, UpdateFlags, Action, EntityOrPonyOptions, EntityPlayerState, MapFlags
+	Rect, IMap, TileType, MapState, UpdateFlags, Action, EntityOrPonyOptions, EntityPlayerState,
 } from '../common/interfaces';
 import { IAccount, ICharacter, UpdateAccount } from './db';
 import { AccountUpdate, CharacterState, GameServerSettings, Suspicious } from '../common/adminInterfaces';
 import { ClientActionsTemplate } from '../common/clientActionsTemplte';
+import { MapFlags, MapType } from '../common/commonInterfaces';
 
 export interface EntityUpdate {
 	entity: Entity;

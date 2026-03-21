@@ -1,12 +1,13 @@
 import * as fs from 'fs';
 import * as entities from '../../common/entities';
 import { rect } from '../../common/rect';
-import { TileType, MapType } from '../../common/interfaces';
+import { TileType } from '../../common/interfaces';
 import { createServerMap, deserializeMap } from '../serverMap';
 import { World, goToMap } from '../world';
 import { createSign } from '../controllerUtils';
 import { ServerEntity } from '../serverInterfaces';
 import { pathTo } from '../paths';
+import { MapType } from '../../common/commonInterfaces';
 
 // load tile data
 // To customize the map use in-game editor tools to change tiles, then use `/savemap custom` command,
