@@ -24,7 +24,7 @@ function loadSpriteSheet(sheet: SpriteSheet, loadImage: LoadImage) {
 		sheet.srcA ? loadImage(sheet.srcA) : Promise.resolve(undefined)
 	])
 		.then(([img, imgA]) => {
-			sheet.data = getImageData(img);
+			sheet.data = getImageData(img!);
 
 			if (imgA) {
 				const alpha = getImageData(imgA);

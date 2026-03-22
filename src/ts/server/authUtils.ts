@@ -2,7 +2,7 @@ import { uniq } from 'lodash';
 import { Types } from 'mongoose';
 import { Profile } from '../common/interfaces';
 import { arraysEqual } from '../common/utils';
-import { IAccount, IAuth, Auth, findAuthByOpenId, updateAuth, UpdateAuth, Account } from './db';
+import { IAccount, IAuth, Auth, findAuthByOpenId, updateAuth, UpdateAuth, Account, MongoUpdate } from './db';
 import { system } from './logger';
 import { UserError } from './userError';
 import { CreateAccountOptions, connectOnlySocialError } from './accountUtils';
@@ -48,7 +48,7 @@ export async function updateAuthInfo(
 	if (!auth)
 		return;
 
-	const changes: Partial<IAuth> = {};
+	const changes: MongoUpdate<IAuth> = {};
 
 	if (profile.url && auth.url !== profile.url) {
 		changes.url = profile.url;
@@ -91,7 +91,7 @@ async function createAuth(profile: Profile, account: string | undefined) {
 }
 
 async function verifyOrRestoreAuth(auth: IAuth, mergeAccount: string | undefined) {
-	const changes: Partial<IAuth> = { lastUsed: new Date() };
+	const changes: MongoUpdate<IAuth> = { lastUsed: new Date() };
 
 	if (auth.disabled || auth.banned) {
 		if (!auth.banned && auth.account && !!mergeAccount) {

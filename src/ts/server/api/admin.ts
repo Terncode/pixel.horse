@@ -238,8 +238,8 @@ export async function getAccountDetails(accountId: ID): Promise<AccountDetails> 
 		merges: account.merges || [],
 		banLog: account.banLog || [],
 		supporterLog: account.supporterLog || [],
-		invitesReceived: invitesReceived.map(convertInvite),
-		invitesSent: invitesSent.map(convertInvite),
+		invitesReceived: invitesReceived!.map(convertInvite),
+		invitesSent: invitesSent!.map(convertInvite),
 		state: account.state || {},
 	} : {
 			merges: [],

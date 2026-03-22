@@ -119,11 +119,12 @@ async function merge(
 	const merges = mergeLists(account.merges, merge.merges, 20);
 	const state = mergeStates(account.state, merge.state);
 	const alert = account.alert || merge.alert;
-	merges.push({ id: withId, name: merge.name, date: new Date(), reason, data });
+	merges.push({ id: withId, name: merge.name, date: new Date(), reason, data } as any);
 
 	const update: Partial<AccountBase<string>> = {
-		origins, ignores, emails, note, lastVisit, ban, shadow, mute, flags, counters, patreon, supporter, merges,
-		createdAt, supporterLog, supporterTotal, banLog, state, alert, birthdate,
+		origins, ignores, emails, note, lastVisit, ban, shadow, mute, flags,
+		counters, patreon, supporter, merges: merges as any, createdAt, supporterLog: supporterLog as any,
+		supporterTotal, banLog: banLog as any, state, alert, birthdate,
 	};
 
 	await Promise.all([
