@@ -10,7 +10,7 @@
     	}
 	},
 	"files": [
-		"src/ts/bootstrap.ts"
+		"src/ts/bootstrap-tools.ts"
 	],
 	"angularCompilerOptions": {
 		"genDir": "src/ts",

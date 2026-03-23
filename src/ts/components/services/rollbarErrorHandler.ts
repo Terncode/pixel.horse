@@ -42,12 +42,11 @@ export function rollbarFactory() {
 }
 
 @Injectable()
-export class RollbarErrorHandler extends ErrorHandler {
-	constructor(private injector: Injector) {
-		super();
-	}
+export class RollbarErrorHandler implements ErrorHandler {
+	private errorHandler = new ErrorHandler();
+	constructor(private injector: Injector) {}
 	handleError(error: any) {
-		super.handleError(error);
+		this.errorHandler.handleError(error);
 
 		if (!DEVELOPMENT && rollbarConfig.accessToken) {
 			const rollbar = this.injector.get(RollbarService);
