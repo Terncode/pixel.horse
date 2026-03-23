@@ -290,7 +290,7 @@ function getSpriteImageData(s: ExtSprite): ImageData | undefined {
 
 	const context = s.image.getContext('2d')!;
 	const { width, height, data } = context.getImageData(s.ox, s.oy, s.w, s.h);
-	return { width, height, data };
+	return { width, height, data } as ImageData;
 }
 
 export function createSpriteSheet(name: string, images: ExtSprite[], log: boolean, size: number, bg?: string, pack = false) {

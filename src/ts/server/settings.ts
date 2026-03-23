@@ -18,11 +18,11 @@ export async function loadSettings() {
 		const json = await readFileAsync(settingsPath, 'utf8');
 		return JSON.parse(json) as Settings;
 	} catch (e) {
-		if (e.code === 'ENOENT') {
+		if ((e as NodeJS.ErrnoException).code === 'ENOENT') {
 			try {
 				await mkdirAsync(paths.pathTo('settings'));
 			} catch (e2) {
-				if (e2.code !== 'EEXIST') throw e;
+				if ((e2 as NodeJS.ErrnoException).code !== 'EEXIST') throw e;
 			}
 		} else {
 			console.error('Error reading settings file: ' + e);

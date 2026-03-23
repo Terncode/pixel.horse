@@ -4,6 +4,7 @@ import { Layer as PsdLayer, Psd as PsdFile, readPsd, initializeCanvas } from 'ag
 import { Layer, Psd } from './types';
 import { createExtCanvas } from './canvas-utils';
 import { matcher, parseWithNumber } from './common';
+import { isErrorAlike } from '../common/utils';
 
 initializeCanvas((width, height) => createExtCanvas(width, height, 'loaded from psd'));
 
@@ -20,7 +21,11 @@ export function openPsd(filePath: string) {
 		});
 		return toPsd(psd, name, dir);
 	} catch (e) {
-		console.error(`Failed to load: ${filePath}: ${e.message}`);
+		if (isErrorAlike(e)) {
+			console.error(`Failed to load: ${filePath}: ${e.message}`);
+		} else {
+			console.error(e);
+		}
 		throw e;
 	}
 }

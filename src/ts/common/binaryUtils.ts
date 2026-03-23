@@ -1,4 +1,5 @@
 import { BinaryWriter, getWriterBuffer, createBinaryWriter, resizeWriter } from 'ag-sockets/dist/browser';
+import { isDataViewError } from './utils';
 
 export function writeBinary(write: (writer: BinaryWriter) => void): Uint8Array {
 	const writer = createBinaryWriter();
@@ -8,7 +9,7 @@ export function writeBinary(write: (writer: BinaryWriter) => void): Uint8Array {
 			write(writer);
 			break;
 		} catch (e) {
-			if (e instanceof RangeError || /DataView/.test(e.message)) {
+			if (e instanceof RangeError || isDataViewError(e)) {
 				resizeWriter(writer);
 			} else {
 				throw e;

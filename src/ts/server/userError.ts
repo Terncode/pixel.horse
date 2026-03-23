@@ -3,6 +3,7 @@ import { logger } from './logger';
 import { createFromRequest } from './reporter';
 import { IClient, Reporter } from './serverInterfaces';
 import { ServerConfig } from '../common/adminInterfaces';
+import { isError } from 'lodash';
 
 export interface UserErrorInfo {
 	error?: Error;
@@ -21,8 +22,8 @@ export class UserError extends Error {
 	}
 }
 
-export function isUserError(e: Error): e is UserError {
-	return e.name === 'UserError';
+export function isUserError(e: unknown): e is UserError {
+	return isError(e) && e.name === 'UserError';
 }
 
 function report(message: string, info: UserErrorInfo, reporter: Reporter | undefined, extra = '') {

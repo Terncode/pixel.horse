@@ -9,7 +9,7 @@ import { Character, Account } from '../db';
 import { createClientAndPony } from '../playerUtils';
 import { CounterService } from '../services/counter';
 import { CharacterState, ServerConfig } from '../../common/adminInterfaces';
-import { removeItem, times } from '../../common/utils';
+import { isDataViewError, removeItem, times } from '../../common/utils';
 import { timingStart, timingEnd } from '../timing';
 
 interface Options {
@@ -128,7 +128,7 @@ async function joinFakeClient(token: any, server: ServerConfig, world: World): P
 
 					break;
 				} catch (e) {
-					if (e instanceof RangeError || /DataView/.test(e.message)) {
+					if (e instanceof RangeError ||  isDataViewError(e)) {
 						resizeWriter(packetWriter);
 					} else {
 						throw e;

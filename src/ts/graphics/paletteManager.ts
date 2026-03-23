@@ -1,6 +1,6 @@
 import { Palette, PaletteManager as IPaletteManager } from '../common/interfaces';
 import { Texture2D, resizeTexture, disposeTexture, createEmptyTexture } from './webgl/texture2d';
-import { times, flatten, computeCRC } from '../common/utils';
+import { times, flatten, computeCRC, isErrorAlike } from '../common/utils';
 
 const INITIAL_SIZE = 512;
 const MAX_SIZE = 2048;
@@ -163,7 +163,7 @@ export class PaletteManager implements IPaletteManager {
 				resizeTexture(gl, this.paletteTexture, size, size);
 			}
 		} catch (e) {
-			throw new Error(`Failed to create/resize texture (${size}) ${e.stack}`);
+			throw new Error(`Failed to create/resize texture (${size})${isErrorAlike(e) ? ` ${e.stack}` : ''}`);
 		}
 
 		this.size = size;

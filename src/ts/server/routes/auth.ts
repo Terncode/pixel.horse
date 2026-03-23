@@ -3,7 +3,7 @@ import * as passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { remove } from 'lodash';
 import { MINUTE } from '../../common/constants';
-import { fromNow, hasFlag, includes, uniqById } from '../../common/utils';
+import { fromNow, hasFlag, includes, isError, uniqById } from '../../common/utils';
 import { BannedMuted, Settings, ServerConfig, AccountFlags, ServerLiveSettings } from '../../common/adminInterfaces';
 import { Account, IAccount, Origin, IOrigin } from '../db';
 import { limit, auth as authRequest, wrap } from '../requestUtils';
@@ -214,7 +214,8 @@ async function handleAuth(
 		}
 	} catch (e) {
 		const message = merge ? 'Account merge error' : 'Authentication error';
-		handleErrorAndRedirect(server, merge ? '/account' : '/', message, e, req, res);
+		const error = isError(e) ? e : new Error(`Unknown error: ${e}`);
+		handleErrorAndRedirect(server, merge ? '/account' : '/', message, error, req, res);
 	}
 }
 

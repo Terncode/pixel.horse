@@ -16,7 +16,7 @@ import * as paths from '../paths';
 import { logger } from '../logger';
 import { AdminService } from '../services/adminService';
 import { loadSettings, saveSettings } from '../settings';
-import { flatten } from '../../common/utils';
+import { flatten, isErrorAlike } from '../../common/utils';
 
 function encodeItems<T>(items: T[], base: BaseValues, encode: (items: T, base: BaseTimes) => any[]): any[][] {
 	const baseValues = getBaseTimes(base);
@@ -139,7 +139,7 @@ export async function getChat(search: string, date: string, caseInsensitive: boo
 					const log = await fetchChatlog(lines);
 					return more + log;
 				} catch (e) {
-					if (e.message !== 'stdout maxBuffer exceeded') {
+					if (isErrorAlike(e) && e.message !== 'stdout maxBuffer exceeded') {
 						throw e;
 					}
 				}

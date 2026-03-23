@@ -3,6 +3,7 @@ import { compact } from 'lodash';
 import { AdminModel } from '../../services/adminModel';
 import { Account, GeneralSettings } from '../../../common/adminInterfaces';
 import { Subscription } from '../../../common/interfaces';
+import { isErrorAlike } from '../../../common/utils';
 
 interface Field {
 	key: keyof GeneralSettings;
@@ -65,7 +66,7 @@ export class AdminOther implements OnInit, OnDestroy {
 			compact(this.suspiciousPonies!.split(/\n/g).map(x => x.trim())).map(x => JSON.parse(x));
 			this.model.updateSettings({ suspiciousPonies: this.suspiciousPonies });
 		} catch (e) {
-			this.suspiciousPoniesError = e.message;
+			this.suspiciousPoniesError = isErrorAlike(e) ? e.message : 'Unknown error';
 		}
 	}
 	resetSuspiciousPonies() {

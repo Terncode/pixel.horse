@@ -192,7 +192,7 @@ export class StatsTracker {
 			try {
 				fs.mkdirSync(path.dirname(this.statsPath), { recursive: true });
 			} catch (e) {
-				if (e.code !== 'EEXIST') throw e;
+				if ((e as NodeJS.ErrnoException).code !== 'EEXIST') throw e;
 			}
 			fs.writeFileSync(this.statsPath, encodeCSV(statsHeaders), { encoding: 'utf8' });
 		}

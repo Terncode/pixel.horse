@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { lastValueFrom, Observable } from 'rxjs';
 import { Point, Rect, Entity, Dict, PrimitiveValues } from './interfaces';
 import { tileWidth, tileHeight, SECOND, MINUTE, HOUR, DAY } from './constants';
 import { ACCESS_ERROR, NOT_FOUND_ERROR, OFFLINE_ERROR, PROTECTION_ERROR } from './errors';
@@ -449,7 +449,7 @@ export function delay(timeout: number) {
 }
 
 export function observableToPromise<T>(observable: Observable<T>) {
-	return observable.toPromise()
+	return lastValueFrom(observable)
 		.catch(({ status, error }: HttpErrorResponse) => {
 			const text = error && error.text;
 
@@ -461,7 +461,7 @@ export function observableToPromise<T>(observable: Observable<T>) {
 			e.status = status;
 			e.text = text;
 			throw e;
-		});
+		}) as Promise<T>;
 }
 
 // other
@@ -572,4 +572,30 @@ export function uniqById<T>(array: T[], uniqueKey: (self: T) => PrimitiveValues)
 	  seen.add(id);
 	  return !isDuplicate;
 	});
+}
+
+export function isErrorAlike(
+	errorQuestionMark: unknown,
+): errorQuestionMark is { message: string; stack?: string; code?: string } {
+	if (errorQuestionMark && typeof errorQuestionMark === 'object') {
+		return 'message' in errorQuestionMark || 'stack' in errorQuestionMark || 'code' in errorQuestionMark;
+	}
+	return false;
+}
+
+export function isError(
+	errorQuestionMark: unknown,
+): errorQuestionMark is Error {
+	if (errorQuestionMark instanceof Error) {
+		return 'message' in errorQuestionMark || 'stack' in errorQuestionMark || 'code' in errorQuestionMark;
+	}
+	return false;
+}
+
+export function isDataViewError(e: unknown) {
+	return isErrorAlike(e) ? /DataView/.test(e.message) : false;
+}
+
+export function isOverflowError(e: unknown) {
+	return e instanceof RangeError || isDataViewError(e);
 }

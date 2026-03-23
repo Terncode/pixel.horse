@@ -116,8 +116,16 @@ async function join(joinServer: InternalGameServerState, account: IAccount, char
 
 		return await joinServer.api.join(account._id.toString(), character._id.toString());
 	} catch (error) {
-		if (error.error && error.error.userError) {
-			throw new UserError(error.error.error);
+		if (
+			typeof error === 'object' &&
+			error !== null &&
+			'error' in error &&
+			typeof (error as any).error === 'object' &&
+			(error as any).error !== null &&
+			'userError' in (error as any).error &&
+			(error as any).error.userError
+		) {
+			throw new UserError((error as any).error.error);
 		} else {
 			logger.error(error);
 			throw new Error('Internal error');

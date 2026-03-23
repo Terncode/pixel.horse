@@ -12,6 +12,7 @@ import { decompressPony, compressPony } from '../../common/compressPony';
 import { getCharacterLimit } from '../accountUtils';
 import { PLAYER_DESC_MAX_LENGTH } from '../../common/constants';
 import { cleanName, validatePonyName } from '../../common/stringUtils';
+import { isError } from 'lodash';
 
 function colorToText(c: number): string {
 	return c ? colorToHexRGB(c) : '';
@@ -93,7 +94,7 @@ export const createSavePony =
 				character.lastUsed = new Date();
 			} catch (error) {
 				const message = DEVELOPMENT ? `${CHARACTER_SAVING_ERROR} (${error})` : CHARACTER_SAVING_ERROR;
-				throw new UserError(message, { error, data: { pony: data }, desc: `info: "${data.info}"` });
+				throw new UserError(message, { error: isError(error) ? error : new Error('Unknown error'), data: { pony: data }, desc: `info: "${data.info}"` });
 			}
 
 			const count = created ? await characterCount(account._id) : 0;

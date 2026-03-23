@@ -4,7 +4,7 @@ import { uniq, truncate } from 'lodash';
 import { AccountState, AccountFlags, AuthBase } from '../common/adminInterfaces';
 import { Profile, ModInfo, AccountDataFlags } from '../common/interfaces';
 import { ACCOUNT_NAME_MAX_LENGTH, DAY } from '../common/constants';
-import { fromNow, includes, hasFlag } from '../common/utils';
+import { fromNow, includes, hasFlag, isErrorAlike } from '../common/utils';
 import {
 	isAdmin, getCharacterLimit as getCharacterLimitInternal, getSupporterInviteLimit as getSupporterInviteLimitInternal
 } from '../common/accountUtils';
@@ -113,7 +113,7 @@ async function checkNewAccount(account: IAccount, options: CreateAccountOptions)
 				}
 			}
 		} catch (e) {
-			options.warn(account._id, `Error when checking new account`, e.message);
+			options.warn(account._id, `Error when checking new account`, isErrorAlike(e) ? e.message : undefined);
 		}
 	});
 }

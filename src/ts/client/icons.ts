@@ -76,7 +76,7 @@ export {
 	faArrowUp,
 	faArrowDown,
 	faEyeDropper,
-	faPaintBrush,
+	faPaintbrush,
 	faEllipsisV,
 	faExclamationCircle,
 	faUserPlus,

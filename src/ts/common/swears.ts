@@ -1479,7 +1479,7 @@ function tryRegex(value: string, flags: string) {
 	try {
 		return new RegExp(value, flags);
 	} catch (e) {
-		console.error(e.message);
+		console.error(e);
 		return new RegExp(/(?!.*)/);
 	}
 }

@@ -3,7 +3,7 @@ import { encodeString } from 'ag-sockets/dist/utf8';
 import {
 	Entity, Rect, EntityState, UpdateFlags, Action, EntityOrPonyOptions, UpdateType, TileType, canWalk, setAnimationToEntityState
 } from '../common/interfaces';
-import { normalize, containsPoint, boundsIntersect, clamp, pointInXYWH, hasFlag, setFlag } from '../common/utils';
+import { normalize, containsPoint, boundsIntersect, clamp, pointInXYWH, hasFlag, setFlag, isOverflowError } from '../common/utils';
 import { ServerEntity, ServerEntityWithClient, ServerMap, EntityUpdateBase, IClient } from './serverInterfaces';
 import {
 	isCritter, isDecal, entityInRange, SIT_ON_BOUNDS_WIDTH, SIT_ON_BOUNDS_HEIGHT, SIT_ON_BOUNDS_OFFSET
@@ -163,11 +163,7 @@ export function pushUpdateEntity(update: EntityUpdateBase) {
 	}
 }
 
-export function isOverflowError(e: Error) {
-	return e instanceof RangeError || /DataView/.test(e.message);
-}
-
-function resizePreserveWriter(error: Error, writer: BinaryWriter, offset: number) {
+function resizePreserveWriter(error: unknown, writer: BinaryWriter, offset: number) {
 	if (isOverflowError(error)) {
 		const bytes = writer.bytes;
 		resizeWriter(writer);

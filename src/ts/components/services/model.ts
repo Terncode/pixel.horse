@@ -9,7 +9,7 @@ import {
 	OAuthProvider, EntitiesEditorInfo, FriendData, PalettePonyInfo, HiddenPlayer
 } from '../../common/interfaces';
 import { createDefaultPony, syncLockedPonyInfo, mockPaletteManager } from '../../common/ponyInfo';
-import { removeById, observableToPromise, delay, computeFriendsCRC } from '../../common/utils';
+import { removeById, observableToPromise, delay, computeFriendsCRC, isErrorAlike } from '../../common/utils';
 import { isMod, getSupporterInviteLimit, getCharacterLimit } from '../../common/accountUtils';
 import {
 	NAME_ERROR, ACCESS_ERROR, CHARACTER_SAVING_ERROR, NOT_AUTHENTICATED_ERROR, OFFLINE_ERROR, PROTECTION_ERROR
@@ -277,7 +277,7 @@ export class Model {
 			return { ponyInfo, ...pony };
 		} catch (e) {
 			this.errorReporter.reportError(e, { ponyInfo: pony.info });
-			this.errorReporter.reportError('Pony info reading error', { originalError: e.message, ponyInfo: pony.info });
+			this.errorReporter.reportError('Pony info reading error', { originalError: isErrorAlike(e) ? e.message: '', ponyInfo: pony.info });
 			throw new Error('Error while reading pony info');
 		}
 	}

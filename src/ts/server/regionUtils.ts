@@ -1,10 +1,10 @@
 import { createBinaryWriter, getWriterBuffer, BinaryWriter } from 'ag-sockets';
-import { removeItem, pointInRect, clamp, includes } from '../common/utils';
+import { removeItem, pointInRect, clamp, includes, isErrorAlike, isOverflowError } from '../common/utils';
 import { ServerEntity, IClient, ServerRegion, ServerMap } from './serverInterfaces';
 import {
 	tickTilesRestoration, resetRegionUpdates, pushRemoveEntityToRegion, removeEntityFromRegion, addEntityToRegion
 } from './serverRegion';
-import { updateEntity, isEntityShadowed, isOverflowError, pushAddEntityToClient } from './entityUtils';
+import { updateEntity, isEntityShadowed, pushAddEntityToClient } from './entityUtils';
 import { writeRegion, writeUpdate } from '../common/encoders/updateEncoder';
 import { toWorldX, toWorldY } from '../common/positionUtils';
 import { isRectVisible } from '../common/camera';
@@ -21,11 +21,12 @@ export function resetEncodeUpdate() {
 	updatesBufferOffset = 0;
 }
 
-function resizeUpdatesBuffer(e: Error) {
+function resizeUpdatesBuffer(e: unknown) {
 	if (isOverflowError(e)) {
 		updatesBuffer = new ArrayBuffer(updatesBuffer.byteLength * 2);
 		updatesBufferOffset = 0;
-		DEVELOPMENT && logger.debug(`resize buffer to ${updatesBuffer.byteLength} (${e.message})`);
+		const errorMsg = isErrorAlike(e) ? e.message : `${e}`;
+		DEVELOPMENT && logger.debug(`resize buffer to ${updatesBuffer.byteLength} (${errorMsg})`);
 	} else {
 		throw e;
 	}

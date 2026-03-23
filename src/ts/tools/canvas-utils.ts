@@ -173,7 +173,7 @@ export function saveCanvas(filePath: string, canvas: HTMLCanvasElement) {
 	try {
 		fs.mkdirSync(path.dirname(filePath), { recursive: true });
 	} catch (e) {
-		if (e.code !== 'EEXIST') throw e;
+		if ((e as NodeJS.ErrnoException).code !== 'EEXIST') throw e;
 	}
 
 	fs.writeFileSync(filePath, canvas.toBuffer());

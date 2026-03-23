@@ -18,12 +18,12 @@ export interface AgDragOptions {
 
 export function handleDrag(element: HTMLElement, emit: (event: AgDragEvent) => void, options: AgDragOptions = {}) {
 	// typeof PointerEvent !== 'undefined'
-	const eventSets = window.navigator.pointerEnabled ? [
+	const eventSets = 'pointerEnabled' in window.navigator && (window.navigator as any).pointerEnabled ? [
 		{ down: 'pointerdown', move: 'pointermove', up: 'pointerup' }, // , up2: 'pointercancel' },
 	] : [
-			{ down: 'mousedown', move: 'mousemove', up: 'mouseup' },
-			{ down: 'touchstart', move: 'touchmove', up: 'touchend', up2: 'touchcancel' },
-		];
+		{ down: 'mousedown', move: 'mousemove', up: 'mouseup' },
+		{ down: 'touchstart', move: 'touchmove', up: 'touchend', up2: 'touchcancel' },
+	];
 	const emptyRect = { left: 0, top: 0 };
 	let rect = emptyRect;
 	let scrollLeft = 0;

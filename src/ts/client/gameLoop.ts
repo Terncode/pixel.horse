@@ -1,3 +1,5 @@
+import { isError } from "../common/utils";
+
 export interface Game {
 	fps: number;
 	load(): any;
@@ -44,7 +46,9 @@ export function startGameLoop(game: Game, onError = (e: Error) => console.error(
 				game.draw();
 			}
 		} catch (e) {
-			onError(e);
+			if (isError(e)) {
+				onError(e);
+			}
 		}
 
 		last = now;

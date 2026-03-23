@@ -716,7 +716,7 @@ function drawLeg(
 	}
 }
 
-function getEyeFrame(base: Eye, expression: Eye, anim: Eye, animationProperties: HeadAnimationProperties, blinkFrame: number) {
+function getEyeFrame(base: Eye, expression: Eye | -1, anim: Eye | -1, animationProperties: HeadAnimationProperties, blinkFrame: number) {
 	const frame = expression === -1 ? base : expression;
 
 	if (anim !== -1) {
@@ -741,7 +741,7 @@ function getEyeFrame(base: Eye, expression: Eye, anim: Eye, animationProperties:
 	return frame;
 }
 
-function getMouthFrame(holding: boolean, expression: Expression | undefined, headFrameMuzzle: Muzzle,
+function getMouthFrame(holding: boolean, expression: Expression | undefined, headFrameMuzzle: Muzzle | -1,
 	currentMuzzle: Muzzle | undefined, properties: HeadAnimationProperties) {
 	if (holding) {
 		return Muzzle.Smile;

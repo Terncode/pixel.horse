@@ -17,6 +17,7 @@ import { createCaveMap } from './maps/caveMap';
 import { createCustomMap } from './maps/customMap';
 import { createSign } from './controllerUtils';
 import { signQuestion } from '../common/entities';
+import { isErrorAlike } from '../common/utils';
 
 export function start(world: World, server: ServerConfig) {
 	const data = readFileSync(pathTo('src', 'ts', 'generated', 'pony.bin'));
@@ -25,7 +26,7 @@ export function start(world: World, server: ServerConfig) {
 		width: 512,
 		height: 512,
 		data: new Uint8ClampedArray(data.buffer, data.byteOffset, data.byteLength),
-	};
+	} as ImageData;
 
 	initializeTileHeightmaps();
 
@@ -94,7 +95,9 @@ export function start(world: World, server: ServerConfig) {
 				world.sparseUpdate(now);
 			}
 		} catch (e) {
-			create(server).danger(e.message);
+			if (isErrorAlike(e)) {
+				create(server).danger(e.message);
+			}
 			logger.error(e);
 		}
 

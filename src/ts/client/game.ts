@@ -8,7 +8,8 @@ import {
 	FakeEntity, SelectFlags, WorldMap, EntityFlags, houseTiles, isValidTile, GraphicsQuality
 } from '../common/interfaces';
 import {
-	clamp, lengthOfXY, setFlag, hasFlag, boundsIntersect, point, toInt, lerpColor, distanceXY
+	clamp, lengthOfXY, setFlag, hasFlag, boundsIntersect, point, toInt, lerpColor, distanceXY,
+	isErrorAlike
 } from '../common/utils';
 import {
 	OFFLINE_PONY, MAX_SCALE, SUPPORTER_PONY, DISCORD_PONY, HOUR, MIN_SCALE, CAMERA_WIDTH_MIN, CAMERA_WIDTH_MAX,
@@ -767,10 +768,10 @@ export class PonyTownGame implements Game {
 			this.discordPony = createPony(0, 0, DISCORD_PONY, palettes.defaultPalette, this.paletteManager);
 			initializeToys(this.paletteManager);
 		} catch (e) {
-			this.errorReporter.captureEvent({ name: 'failed game.initWebGL', error: e.message, stack: e.stack });
+			this.errorReporter.captureEvent({ name: 'failed game.initWebGL', error: isErrorAlike(e) ? e.message : '', stack: isErrorAlike(e) ? e.stack : '' });
 			this.releaseWebGL();
 			DEVELOPMENT && console.error(e);
-			throw new Error(`Failed to initialize graphics device (${e.message})`);
+			throw new Error(`Failed to initialize graphics device (${isErrorAlike(e) ? e.message : 'Unknown error'})`);
 		}
 	}
 	private releaseWebGL() {
@@ -1478,7 +1479,7 @@ export class PonyTownGame implements Game {
 				const height = getMapHeightAt(this.map, this.hover.x, this.hover.y, this.time);
 				drawText(paletteBatch, `${height.toFixed(2)}`, fontSmallPal, BLACK, x, y);
 			} catch (e) {
-				console.warn(e.message);
+				console.warn(e);
 			}
 		}
 
