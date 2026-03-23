@@ -3,7 +3,7 @@ import { logger } from './logger';
 import { createFromRequest } from './reporter';
 import { IClient, Reporter } from './serverInterfaces';
 import { ServerConfig } from '../common/adminInterfaces';
-import { isError } from 'lodash';
+import { isError } from '../common/utils';
 
 export interface UserErrorInfo {
 	error?: Error;

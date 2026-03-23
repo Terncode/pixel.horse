@@ -57,7 +57,8 @@ export default function (settings: Settings, live: ServerLiveSettings, statsTrac
 	const app = Router();
 
 	app.get('/game/status', offline(settings), (req, res) => {
-		const status = getGameStatus(servers, live, req.query.short === 'true', req.query.d | 0);
+		const d = typeof req.query?.d === 'number' ? req.query?.d : (typeof req.query?.d === 'string' ? parseInt(req.query?.d, 16) : 0);
+		const status = getGameStatus(servers, live, req.query.short === 'true', d | 0);
 		res.json(status);
 		statsTracker.logRequest(req, status);
 	});
