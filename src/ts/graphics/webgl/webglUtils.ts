@@ -25,14 +25,14 @@ export function getWebGLContext(canvas: HTMLCanvasElement): WebGLRenderingContex
 	const useDebugContext = false;
 
 	if (useDebugContext) {
-		gl = makeDebugContext(gl);
+		gl = makeDebugContext(gl as WebGLRenderingContext);
 
 		if (!gl) {
 			throw new Error(WEBGL_CREATION_ERROR);
 		}
 	}
 
-	return gl;
+	return gl as WebGLRenderingContext;
 }
 
 export function isWebGL2(gl: WebGLRenderingContext | undefined) {
