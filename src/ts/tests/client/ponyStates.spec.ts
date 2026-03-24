@@ -43,7 +43,7 @@ describe('ponyStates', () => {
 		});
 
 		it('throws on invalid state', () => {
-			expect(() => flagsToState(112, false, false)).throw('Invalid pony state (112)');
+			expect(() => flagsToState(112 as EntityState, false, false)).throw('Invalid pony state (112)');
 		});
 	});
 

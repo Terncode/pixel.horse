@@ -477,7 +477,7 @@ describe('ServerActions', () => {
 		it('throws on invalid action', () => {
 			stub(world, 'getClientByEntityId').returns({} as any);
 
-			expect(() => serverActions.playerAction(1, 999, undefined))
+			expect(() => serverActions.playerAction(1, 999 as PlayerAction, undefined))
 				.throw('Invalid player action (undefined) [999]');
 		});
 	});
@@ -628,7 +628,7 @@ describe('ServerActions', () => {
 		});
 
 		it('rejects on invalid action', async () => {
-			await expect(serverActions.otherAction(222, 123, 0)).rejectedWith('Invalid mod action (123)');
+			await expect(serverActions.otherAction(222, 123 as ModAction, 0)).rejectedWith('Invalid mod action (123)');
 		});
 
 		it('rejects on entityId not a number', async () => {
@@ -950,7 +950,7 @@ describe('ServerActions', () => {
 			setTile(client.map, 1, 2, TileType.Dirt);
 			const setTileStub = stub(world, 'setTile');
 
-			serverActions.changeTile(1, 2, 999);
+			serverActions.changeTile(1, 2, 999 as TileType);
 
 			assert.notCalled(setTileStub);
 			expect(getWriterBuffer(client.updateQueue)).eql(new Uint8Array([]));

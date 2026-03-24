@@ -63,7 +63,7 @@ export function createFrameBuffer(gl: WebGL, width: number, height: number, opti
 		}
 	}
 
-	let colorType = gl.UNSIGNED_BYTE;
+	let colorType: number = gl.UNSIGNED_BYTE;
 	const OES_texture_float = gl.getExtension('OES_texture_float');
 
 	if (float && numColors > 0) {

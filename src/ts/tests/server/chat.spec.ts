@@ -185,7 +185,7 @@ describe('chat', () => {
 		});
 
 		it('sends say for invalid type', () => {
-			say(client, 'test', 100, undefined, {});
+			say(client, 'test', 100 as ChatType, undefined, {});
 
 			expect(client.saysQueue).eql([[client.pony.id, 'test', MessageType.Chat]]);
 		});

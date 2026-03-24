@@ -5,7 +5,7 @@ import { stub, assert } from 'sinon';
 import { findClosest, updateEntityOptions, updateEntityState, fixPosition } from '../../server/entityUtils';
 import { mockClient, serverEntity } from '../mocks';
 import { createServerRegion } from '../../server/serverRegion';
-import { UpdateFlags } from '../../common/interfaces';
+import { EntityState, UpdateFlags } from '../../common/interfaces';
 import { IClient } from '../../server/serverInterfaces';
 import { createServerMap } from '../../server/serverMap';
 
@@ -61,7 +61,7 @@ describe('entityUtils [server]', () => {
 		it('sets flags on entity', () => {
 			const entity = serverEntity(0);
 
-			updateEntityState(entity, 123);
+			updateEntityState(entity, 123 as EntityState);
 
 			expect(entity.state).equal(123);
 		});
@@ -72,7 +72,7 @@ describe('entityUtils [server]', () => {
 			entity.client = mockClient({});
 			entity.region = region;
 
-			updateEntityState(entity, 123);
+			updateEntityState(entity, 123 as EntityState);
 
 			expect(region.entityUpdates).eql([
 				{ entity, flags: UpdateFlags.State, x: 0, y: 0, vx: 0, vy: 0, action: 0, playerState: 0, options: undefined },
@@ -84,7 +84,7 @@ describe('entityUtils [server]', () => {
 			entity.region = createServerRegion(0, 0);
 			entity.client = mockClient({ shadowed: true });
 
-			updateEntityState(entity, 123);
+			updateEntityState(entity, 123 as EntityState);
 
 			expect(getWriterBuffer(entity.client.updateQueue)).eql(new Uint8Array([2, 0, 4, 0, 0, 0, 12, 123]));
 		});

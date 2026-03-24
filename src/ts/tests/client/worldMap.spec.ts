@@ -36,7 +36,7 @@ describe('worldMap', () => {
 			const e = entity(123, 0, 0, 2);
 			addEntity(game.map, e);
 
-			handleUpdateEntity(game, { ...def, id: 123, x: 2, y: 3, vx: 4, vy: 5, state: 123, expression: 234 });
+			handleUpdateEntity(game, { ...def, id: 123, x: 2, y: 3, vx: 4, vy: 5, state: 123 as EntityState, expression: 234 });
 
 			expect(e.x).equal(2);
 			expect(e.y).equal(3);
@@ -74,7 +74,7 @@ describe('worldMap', () => {
 			e.ponyState = defaultPonyState();
 			addEntity(game.map, e);
 
-			handleUpdateEntity(game, { ...def, id: 123, x: 2, y: 3, vx: 4, vy: 5, state: 123 });
+			handleUpdateEntity(game, { ...def, id: 123, x: 2, y: 3, vx: 4, vy: 5, state: 123 as EntityState });
 
 			expect(e.state).equal(123);
 		});

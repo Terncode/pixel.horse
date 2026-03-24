@@ -34,7 +34,7 @@ describe('expressionUtils', () => {
 
 			const expr = parseExpression('^^');
 			expect(expr).eql(expected, '1st');
-			expr!.extra = 999;
+			expr!.extra = 999 as ExpressionExtra;
 
 			expect(parseExpression('^^')).eql(expected, '2nd');
 		});

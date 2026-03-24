@@ -247,7 +247,7 @@ describe('updateEncoder', () => {
 			setEntityName(entity, 'foo');
 			const info = new Uint8Array([1, 2, 3]);
 			entity.client = mockClient();
-			entity.state = 123;
+			entity.state = 123 as EntityState;
 			entity.options = { toy: 5, expr: 123 };
 			entity.encryptedInfoSafe = info;
 			entity.vx = 1;
@@ -259,7 +259,7 @@ describe('updateEncoder', () => {
 					{
 						id: 123, x: 10, y: 20, vx: 1, vy: 2, type: 32,
 						name: 'foo', switchRegion: false, crc: 0, info,
-						state: 123, expression: undefined, action: undefined, options: { toy: 5, expr: 123 },
+						state: 123 as EntityState, expression: undefined, action: undefined, options: { toy: 5, expr: 123 },
 						playerState: 2, filterName: false,
 					},
 				],

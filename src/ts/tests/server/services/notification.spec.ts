@@ -5,6 +5,7 @@ import { stub, spy, assert } from 'sinon';
 import { IClient } from '../../../server/serverInterfaces';
 import { NotificationService } from '../../../server/services/notification';
 import { times } from '../../../common/utils';
+import { NotificationFlags } from '../../../common/interfaces';
 
 describe('NotificationService', () => {
 	let notificationService: NotificationService;
@@ -58,7 +59,7 @@ describe('NotificationService', () => {
 
 			notificationService.addNotification(client, notification);
 
-			assert.calledWith(addNotification, 1, 0, 'name', 'test', 'note', 123);
+			assert.calledWith(addNotification, 1, 0, 'name', 'test', 'note', 123 as NotificationFlags);
 		});
 
 		it('does not add notification to client if limit is reached', () => {

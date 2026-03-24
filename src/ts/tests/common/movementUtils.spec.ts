@@ -97,7 +97,7 @@ describe('movementUtils', () => {
 		});
 
 		it('handles invalid flags', () => {
-			const [a, b, c, d, e] = encodeMovement(10, 10, 1, 999, 123, rect(0, 0, 100, 100));
+			const [a, b, c, d, e] = encodeMovement(10, 10, 1, 999 as EntityState, 123, rect(0, 0, 100, 100));
 
 			expect(decodeMovement(a, b, c, d, e)).eql({
 				x: 10.015625, y: 10.020833333333334, dir: 1, flags: 231, time: 123,

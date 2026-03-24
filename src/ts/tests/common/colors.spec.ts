@@ -40,7 +40,7 @@ describe('colors', () => {
 
 		it('returns white color for other types', () => {
 			expect(getMessageColor(MessageType.Chat)).equals(WHITE);
-			expect(getMessageColor(999)).equals(WHITE);
+			expect(getMessageColor(999 as MessageType)).equals(WHITE);
 		});
 	});
 });
