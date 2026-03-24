@@ -5,7 +5,7 @@ const common = require('./webpack.common.js');
 const compilerOptions = {
 	...require('./tsconfig.json').compilerOptions,
 	target: 'es6',
-	module: 'es2015',
+	module: 'es2016',
 };
 
 module.exports = merge(common, {
@@ -18,15 +18,26 @@ module.exports = merge(common, {
 	devtool:  'eval-cheap-source-map',
 	devServer: {
 		host: '0.0.0.0',
-		port: 8090,
+		port: 8091,
 		hot: true,
+		historyApiFallback: true,
 		compress: false,
-		allowedHosts: ['all'],
+		client: {
+			progress: true,
+			overlay: {
+				errors: true,
+				warnings: false
+			}
+		},
+		static: {
+			publicPath: '/assets/scripts/',
+		},
+		allowedHosts: 'all',
 		headers: {
 			'Access-Control-Allow-Origin': '*',
 			'Access-Control-Allow-Methods': 'GET',
 			'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization'
-		}
+		  }
 	},
 	stats: {
 		preset: 'normal',
@@ -34,7 +45,7 @@ module.exports = merge(common, {
 		modules: true,
 		errorDetails: true,
 		moduleTrace: true
-	},
+	},	
 	output: {
 		pathinfo: false
 	},
@@ -72,6 +83,7 @@ module.exports = merge(common, {
 		},
 	},
 	plugins: [
+		new webpack.HotModuleReplacementPlugin(),
 		new webpack.DefinePlugin({
 			DEVELOPMENT: true, TOOLS: true, SERVER: false,
 			BETA: true, TIMING: true, TESTS: false

@@ -1,13 +1,15 @@
-const path = require('path');
-const webpack = require('webpack');
-const { merge } = require('webpack-merge');
-const TerserPlugin = require('terser-webpack-plugin');
-const WrapperPlugin = require('wrapper-webpack-plugin');
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const { AngularWebpackPlugin } = require('@ngtools/webpack');
-const linkerPlugin = require('@angular/compiler-cli/linker/babel');
-const common = require('./webpack.common.js');
-const fs = require('fs');
+import path from 'path';
+import webpack from 'webpack';
+import { merge } from 'webpack-merge';
+import TerserPlugin from 'terser-webpack-plugin';
+import WrapperPlugin from 'wrapper-webpack-plugin';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+import { AngularWebpackPlugin } from '@ngtools/webpack';
+import linkerPlugin from '@angular/compiler-cli/linker/babel';
+import common from './webpack.common.js';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const r = p => JSON.parse(fs.readFileSync(p, 'utf8'));
 
@@ -32,8 +34,8 @@ const scripts = [
 	['bootstrap-tools', 'tools/tools.module#ToolsAppModule', 'assets', compilerOptions, 'tsconfig-aot-tools.json', 5, true],
 ];
 
-const toolsScrips =	['bootstrap-tools', 'tools/tools.module#ToolsAppModule', 'assets', compilerOptions, 'tsconfig-aot-tools.json', 5, true];
-const max = Math.max(...([...scripts, toolsScrips].map(e => e[0].length)));
+
+const max = Math.max(...([...scripts].map(e => e[0].length)));
 function getScripts(args) {
 	const { analyze, main, admin, tools, beta } = args;
 	if (tools || beta) {
@@ -49,7 +51,7 @@ function getScripts(args) {
 	}
 }
 
-module.exports = (args = {}) =>
+export default (args = {}) =>
 	getScripts(args)
 		.map(([script, entry, outDir, compilerOptions, tsconfig, _ecma, TOOLS]) => merge(common, {
 			mode: 'production',
@@ -62,7 +64,7 @@ module.exports = (args = {}) =>
 			},
 			output: Object.assign({}, common.output, {
 				filename: '[name]-[chunkhash:10].js',
-				path: path.resolve(__dirname, 'build', outDir, 'scripts'),
+				path: path.resolve(__dirname, 'dist', 'browser' , outDir, 'scripts'),
 			}),
 			devtool: script === 'bootstrap' ? 'source-map' : false,
 			module: {
@@ -95,7 +97,7 @@ module.exports = (args = {}) =>
 				modules: true,
 				errorDetails: true,
 				moduleTrace: true
-			},
+			},	
 			optimization: {
 				minimizer: [
 					new TerserPlugin({
