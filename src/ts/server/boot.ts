@@ -6,7 +6,20 @@ import 'core-js/stable/promise/finally';
 import 'reflect-metadata';
 import * as Bluebird from 'bluebird';
 import * as fs from 'fs';
-import { argv } from 'yargs';
+import * as yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
+
+const argv = (yargs as any)(hideBin(process.argv))
+	.option('beta', {
+		type: 'boolean',
+		default: false
+	})
+	.option('tools', {
+		type: 'boolean',
+		default: false
+	})
+	.parseSync();
+
 
 (global as any).DEVELOPMENT = process.env.NODE_ENV !== 'production';
 (global as any).BETA = !!argv.beta;

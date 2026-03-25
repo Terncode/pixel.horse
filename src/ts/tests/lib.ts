@@ -4,7 +4,7 @@ import '../server/boot';
 import * as mongoose from 'mongoose';
 import * as fs from 'fs';
 import * as path from 'path';
-import * as del from 'del';
+import { deleteAsync } from 'del';
 import { once, mapValues } from 'lodash';
 import { spawnSync } from 'child_process';
 import { createStubInstance, SinonStubbedInstance, stub } from 'sinon';
@@ -51,7 +51,7 @@ export function generateDiff(expectedPath: string, actualPath: string) {
 }
 
 export async function clearCompareResults(group: string) {
-	await del([pathTo('tools', 'temp', group, '*.png').replace(/\\/g, '/')]);
+	await deleteAsync([pathTo('tools', 'temp', group, '*.png').replace(/\\/g, '/')]);
 }
 
 export function compareCanvases(

@@ -81,7 +81,7 @@ function getLabel(arg: LogArgument | undefined) {
 	if (typeof arg === 'string') {
 		return arg;
 	} else if (arg && 'message' in arg) {
-		return arg.message + (arg.stack || '');
+		return (arg as any).message + (arg.stack || '');
 	} else {
 		return arg ? arg.toString() : '';
 	}

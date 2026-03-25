@@ -1,5 +1,20 @@
-import { argv } from 'yargs';
 import { ServerConfig } from '../common/adminInterfaces';
+import * as yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
+
+const argv = (yargs as any)(hideBin(process.argv))
+	.option('port', { type: 'string' })
+	.option('login', { type: 'boolean', default: false })
+	.option('admin', { type: 'boolean', default: false })
+	.option('standaloneadmin', { type: 'boolean', default: false })
+	.option('game', { type: 'string', default: DEVELOPMENT })
+	.option('superadmin', { type: 'string' })
+	.option('users', { type: 'boolean', default: false })
+	.option('tools', { type: 'boolean', default: false })
+	.option('webpack', { type: 'boolean', default: false })
+	.option('local', { type: 'boolean', default: false })
+	.option('nocleanup', { type: 'boolean', default: false })
+	.parse();
 
 export interface AppConfig {
 	title: string;

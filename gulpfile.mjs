@@ -1,33 +1,46 @@
-require('source-map-support').install();
+import 'source-map-support/register.js';
+import fs from 'fs';
+import path from 'path';
+import gulp from 'gulp';
+import _ from 'lodash';
+import gulpif from 'gulp-if';
+import rev from 'gulp-rev';
+import gulpSass from 'gulp-sass';
+import  dartSass from 'sass';
+import shell from 'gulp-shell';
+import cssnano from 'gulp-cssnano';
+import imagemin from 'gulp-imagemin';
+import autoprefixer from 'gulp-autoprefixer';
+import liveServer from 'gulp-live-server';
+import sizereport from 'gulp-sizereport';
+import markdownTree from 'markdown-tree';
+import mocha from 'gulp-spawn-mocha';
+import remapIstanbul from 'remap-istanbul/lib/gulpRemapIstanbul.js';
+import { spawn } from 'child_process';
+import yargs from 'yargs/yargs';
+import { hideBin } from 'yargs/helpers';
+import { deleteAsync } from 'del';
+import config from './config.json' with { type: 'json' };
 
-const fs = require('fs');
-const path = require('path');
-const gulp = require('gulp');
-const _ = require('lodash');
-const gulpif = require('gulp-if');
-const rev = require('gulp-rev');
-const gulpSass = require('gulp-sass');
-const dartSass = require('sass');
-const shell = require('gulp-shell');
-const cssnano = require('gulp-cssnano');
-const imagemin = require('gulp-imagemin');
-const autoprefixer = require('gulp-autoprefixer');
-const liveServer = require('gulp-live-server');
-const sizereport = require('gulp-sizereport');
-const markdownTree = require('markdown-tree');
-const del = require('del');
-const mocha = require('gulp-spawn-mocha');
-const remapIstanbul = require('remap-istanbul/lib/gulpRemapIstanbul');
-const spawn = require('child_process').spawn;
-const argv = require('yargs').argv;
-const config = require('./config.json');
+let development = true;
 const stamp = Math.floor(Math.random() * 0xffffffff);
 const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-';
 const HASH = _.range(0, 10).map(() => chars[Math.floor(Math.random() * chars.length)]).join('');
 
-let development = true;
-
 const sass = gulpSass(dartSass);
+
+const argv = yargs(hideBin(process.argv))
+	.option('fast', { type: 'boolean', default: false })
+	.option('noserver', { type: 'boolean', default: false })
+	.option('adm', { type: 'boolean', default: false })
+	.option('debug', { type: 'boolean', default: false })
+	.option('main', { type: 'boolean', default: false })
+	.option('beta', { type: 'boolean', default: false })
+	.option('timing', { type: 'boolean', default: false })
+	.option('coverage', { type: 'boolean', default: false })
+	.option('tests', { type: 'boolean', default: false })
+	.option('sprites', { type: 'boolean', default: false })
+	.parse();
 
 function swallowError(e) {
 	console.log(e.message);
@@ -56,13 +69,13 @@ const npmScript = (name, args = []) => {
 	return func;
 };
 
-const clean = () => del([
+const clean = () => deleteAsync([
 	'build/*',
 	'temp/*',
 	'!temp/.gitignore',
 ]);
 
-const clearnAdmin = () => del([
+const clearAdmin = () => deleteAsync([
 	'build/assets-admin',
 ]);
 
@@ -114,17 +127,44 @@ const changelog = cb => {
 };
 
 const icons = cb => {
-	const root1 = path.join('node_modules', '@fortawesome', 'free-solid-svg-icons');
-	const root2 = path.join('node_modules', '@fortawesome', 'free-brands-svg-icons');
+	const fontPaths = [
+		path.join('node_modules', '@fortawesome', 'free-solid-svg-icons'),
+		path.join('node_modules', '@fortawesome', 'free-brands-svg-icons')
+	];
+	const parseIcon = pathString => {
+		const faCode = fs.readFileSync(pathString, 'utf8');
+		const exports = {};
+		const fakeRequire = relative => {
+			const splitPath = pathString.split(path.sep);
+			splitPath.pop();
+			const newPath = `${splitPath.join(path.sep)}${path.sep}${relative}.js`;
+			return parseIcon(newPath);
+		};
+		const fn = new Function('exports', 'require', faCode);
+		fn(exports, fakeRequire);
+		return exports;
+	};
 
-	const getIconCode = src => JSON.stringify(require(`./${src}`).definition);
+	const getIconCode = src => JSON.stringify(parseIcon(`./${src}`).definition);
 	const iconsTs = readFile('src/ts/client/icons.ts');
 	const matched = _.uniq(iconsTs.match(/\bfa[A-Z]\S*\b/g));
-	const icons = matched.map(m => ({
-		name: m,
-		code: fs.existsSync(path.join(root1, `${m}.js`)) ? getIconCode(path.join(root1, `${m}.js`)) : getIconCode(path.join(root2, `${m}.js`)),
-	})).sort((a, b) => a.name.localeCompare(b.name));
-	const code = `/* tslint:disable */\n\n${icons.map(({ name, code }) => `export const ${name} = ${code};`).join('\n')}`;
+
+	const icons = matched.map(m => {
+		const iconPath = (e) => path.join(e, `${m}.js`);
+		const paths = fontPaths.map(e => iconPath(e));
+		const found = paths.find(e => fs.existsSync(e));
+		if (!found) {
+			console.log(paths.join('\n'));
+			throw new Error(`Unable to find icon ${m}`);
+		}
+		const iconCode = getIconCode(found);
+
+		return {
+			name: m,
+			code: iconCode
+		};
+	}).sort((a, b) => a.name.localeCompare(b.name));
+	const code = `/* eslint-disable */\n\n${icons.map(({ name, code }) => `export const ${name} = ${code};`).join('\n')}`;
 	fs.writeFile('src/ts/generated/fa-icons.ts', lintCode(code), 'utf8', cb);
 };
 
@@ -161,7 +201,7 @@ const assetsRev = cb => {
 	fs.writeFile('src/ts/generated/rev.ts', lintCode(code), 'utf8', cb);
 };
 
-const assetsCopy = () => gulp.src('assets/**/*')
+const assetsCopy = () => gulp.src('assets/**/*', { encoding: false })
 	.pipe(gulpif(!argv.fast, imagemin()))
 	.pipe(rev())
 	.pipe(gulp.dest('build/assets'))
@@ -169,7 +209,7 @@ const assetsCopy = () => gulp.src('assets/**/*')
 	.pipe(gulp.dest('build'));
 
 function buildSass(name, src, dest) {
-	const result = () => gulp.src([src], { base: 'src' })
+	const result = () => gulp.src([src], { base: 'src', encoding: false })
 		.pipe(sass({
 			includePaths: ['src/styles/'],
 		}).on('error', sass.logError))
@@ -180,6 +220,7 @@ function buildSass(name, src, dest) {
 	result.displayName = `sass (${name})`;
 	return result;
 }
+
 
 const sassMain = buildSass('main', 'src/styles/style.scss', 'build/assets');
 const sassInline = buildSass('inline', 'src/styles/style-inline.scss', 'build/assets');
@@ -330,15 +371,16 @@ const spritesTask = argv.sprites ? sprites : empty;
 const buildSprites = gulp.series(tsTools, sprites);
 
 const build = gulp.series(clean, setProd, common, ts, webpackProd, sw, size);
-const admin = gulp.series(clearnAdmin, setProd, sassAdmin, ts, webpackAdmin);
+const admin = gulp.series(clearAdmin, setProd, sassAdmin, ts, webpackAdmin);
 const dev = gulp.series(clean, spritesTask, common, gulp.parallel(serverDev, watch, watchTools));
 
-module.exports = {
+export {
 	music,
 	admin,
 	build,
 	dev,
-	sprites: buildSprites,
-	default: dev,
-	test: watchTests,
+	sprites,
+	tests as test
 };
+		// gulp.watch(['build/**/*.css']).on('change', path => server.notify({ path }));
+		// gulp.watch(['build/**/*.js']).on('change', path => server.notify({ path }));
