@@ -107,7 +107,7 @@ const manifest = cb => {
 
 const sprites = () => Promise.resolve() // del(['tools/output/images/*'])
 	.then(() => runAsync('node', ['src/scripts/tools/create-sprites.js']))
-	.then(() => gulp.src('tools/output/images/*')
+	.then(() => gulp.src('tools/output/images/*', { encoding: false })
 		.pipe(gulpif(!argv.fast, imagemin()))
 		.pipe(gulp.dest('assets/images')));
 
