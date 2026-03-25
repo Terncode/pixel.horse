@@ -8,7 +8,7 @@ import { BannedMuted, Settings, ServerConfig, AccountFlags, ServerLiveSettings }
 import { Account, IAccount, Origin, IOrigin } from '../db';
 import { limit, auth as authRequest, wrap } from '../requestUtils';
 import { CreateAccountOptions, findOrCreateAccount, SuspiciousCheckers, getAccountAlertMessage } from '../accountUtils';
-import { create, createFromRequest } from '../reporter';
+import { createReporter, createFromRequest } from '../reporter';
 import { logger, logServer, system } from '../logger';
 import { providers, getProfile } from '../oauth';
 import { accountChanged, RemovedDocument } from '../internal';
@@ -120,7 +120,7 @@ async function checkBanField(
 	server: ServerConfig, account: IAccount, field: keyof BannedMuted, message: string, origin: IOrigin
 ) {
 	if (isActive(origin[field]) && !isActive(account[field])) {
-		create(server, account._id, undefined, origin).warn(message);
+		createReporter(server, account._id, undefined, origin).warn(message);
 		account[field] = origin[field];
 		await account.save();
 	}
@@ -385,7 +385,7 @@ function createOptions(
 		creationLocked: acl && acl > (new Date()).toISOString(),
 		canCreateAccounts: !!settings.canCreateAccounts,
 		reportPotentialDuplicates: !!settings.reportPotentialDuplicates,
-		warn: (accountId, message, desc) => create(server, accountId, undefined, origin).warn(message, desc),
+		warn: (accountId, message, desc) => createReporter(server, accountId, undefined, origin).warn(message, desc),
 		...checkers,
 	};
 }

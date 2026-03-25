@@ -29,7 +29,7 @@ import {
 	findPonies, removeCharactersAboveLimit, createCharacter, removeCharacter, assignCharacter, removeAllCharacters
 } from './api/ponies';
 import { accountStatus, accountAround, getServer, getLoginServer, RemovedDocument, accountHidden } from './internal';
-import { create } from './reporter';
+import { createReporter } from './reporter';
 import { system } from './logger';
 import { AdminService } from './services/adminService';
 import { getOriginStats, clearOrigins, removeAllOrigins, removeOrigins, addOrigin, clearOriginsForAccounts } from './api/origins';
@@ -185,7 +185,7 @@ export class AdminServerActions implements IAdminServerActions, SocketServer {
 	}
 	@Method({ promise: true })
 	async report(accountId: string) {
-		create(this.server, accountId).info(`Reported by ${this.account.name}`);
+		createReporter(this.server, accountId).info(`Reported by ${this.account.name}`);
 	}
 	@Method({ promise: true })
 	async notifyUpdate(server: string) {

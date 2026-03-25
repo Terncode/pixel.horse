@@ -19,7 +19,7 @@ import { World } from './world';
 import { centerCameraOn, createCamera } from '../common/camera';
 import { findEntitiesInBounds } from './serverMap';
 import { CounterService } from './services/counter';
-import { create } from './reporter';
+import { createReporter } from './reporter';
 import { updateAccountState } from './accountUtils';
 import { isMod } from '../common/accountUtils';
 import { getOriginFromHTTP } from './originUtils';
@@ -61,7 +61,7 @@ export function createClientAndPony(
 ) {
 	const { account, character } = client.tokenData as TokenData;
 	const origin = client.originalRequest && getOriginFromHTTP(client.originalRequest);
-	const reporter = create(server, account._id, character._id, origin);
+	const reporter = createReporter(server, account._id, character._id, origin);
 	const state = getAndFixCharacterState(server, character, world, states);
 
 	client.characterState = state;

@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs';
 import * as ctrl from './controllers';
 import { World, goToMap } from './world';
-import { create } from './reporter';
+import { createReporter } from './reporter';
 import { logger } from './logger';
 import { SERVER_FPS } from '../common/constants';
 import { ServerConfig } from '../common/adminInterfaces';
@@ -77,7 +77,7 @@ export function start(world: World, server: ServerConfig) {
 	world.initialize(last);
 
 	if (!DEVELOPMENT) {
-		create(server).info(`Server started`);
+		createReporter(server).info(`Server started`);
 	}
 
 	setInterval(() => {
@@ -96,7 +96,7 @@ export function start(world: World, server: ServerConfig) {
 			}
 		} catch (e) {
 			if (isErrorAlike(e)) {
-				create(server).danger(e.message);
+				createReporter(server).danger(e.message);
 			}
 			logger.error(e);
 		}

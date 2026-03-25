@@ -43,7 +43,7 @@ const createLogEvent =
 const ignoreWarnings = ['Suspicious message', 'Spam'];
 
 /* istanbul ignore next */
-export function create(server: ServerConfig, account?: ID, pony?: ID, originInfo?: IOriginInfo): Reporter {
+export function createReporter(server: ServerConfig, account?: ID, pony?: ID, originInfo?: IOriginInfo): Reporter {
 	const logEvent = createLogEvent(server);
 	const accountId = `${account}`;
 
@@ -99,5 +99,5 @@ export function createFromRequest(server: ServerConfig, req: Request, pony?: any
 	const user = req && req.user as IAccount | undefined;
 	const account = user?._id?.toString();
 	const origin = req ? getOrigin(req) : undefined;
-	return create(server, account, pony, origin);
+	return createReporter(server, account, pony, origin);
 }

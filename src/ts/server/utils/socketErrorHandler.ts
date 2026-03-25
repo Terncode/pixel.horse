@@ -5,7 +5,7 @@ import { IClient } from '../serverInterfaces';
 import { logger } from '../logger';
 import { isUserError, reportUserError2 } from '../userError';
 import { includes } from '../../common/utils';
-import { create } from '../reporter';
+import { createReporter } from '../reporter';
 import { ServerConfig } from '../../common/adminInterfaces';
 import { getOriginFromHTTP } from '../originUtils';
 import { ServerActions } from '../serverActions';
@@ -62,9 +62,9 @@ function reportError(rollbar: Rollbar | undefined, e: Error, client: IClient | u
 			client.reporter.error(e);
 		} else if (client && client.originalRequest) {
 			const origin = client.originalRequest && getOriginFromHTTP(client.originalRequest);
-			create(config, undefined, undefined, origin).error(e);
+			createReporter(config, undefined, undefined, origin).error(e);
 		} else {
-			create(config).error(e);
+			createReporter(config).error(e);
 		}
 
 		if (!rollbarIgnore.test(e.message)) {
