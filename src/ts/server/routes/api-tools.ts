@@ -24,7 +24,7 @@ export default function (server: ServerConfig, settings: Settings, world: World 
 		handleJSON(server, req, res, createGetAccountCharacters(findAllCharacters)(req.user as IAccount));
 	});
 
-	app.get('/animation/:id', offline, (req, res) => {
+	app.get<{ id: string }>('/animation/:id', offline, (req, res) => {
 		const filePath = path.join(paths.store, req.params.id);
 
 		res.sendFile(filePath);

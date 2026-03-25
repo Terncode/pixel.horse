@@ -162,8 +162,8 @@ app.use(bodyParser.urlencoded({ extended: true, limit }));
 app.use(require('cookie-parser')());
 
 if (args.login || args.admin) {
-	passport.serializeUser<IAccount, string>((account, done) => done(null, account._id.toString()));
-	passport.deserializeUser<IAccount | false, string>((id, done) =>
+	passport.serializeUser<string>((account, done) => done(null, (account as IAccount)._id.toString()));
+	passport.deserializeUser<string>((id, done) =>
 		Account.findById(id, (err, a) => done(err, a && !isBanned(a) ? a : false)));
 }
 

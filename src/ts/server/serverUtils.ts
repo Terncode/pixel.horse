@@ -81,7 +81,7 @@ export function execAsync(command: string, options?: ExecOptions) {
 			if (error) {
 				reject(error);
 			} else {
-				resolve({ stdout, stderr });
+				resolve({ stdout: stdout.toString(), stderr: stderr.toString() });
 			}
 		});
 	});

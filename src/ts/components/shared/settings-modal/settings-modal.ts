@@ -10,6 +10,7 @@ import { cloneDeep } from '../../../common/utils';
 import { PonyTownGame } from '../../../client/game';
 import { updateRangeIndicator, readFileAsText } from '../../../client/clientUtils';
 import { faSlidersH, faCommentSlash, faGamepad, faImage, faDownload, faUpload, faComment } from '../../../client/icons';
+import { saveAs } from 'file-saver';
 
 @Component({
 	selector: 'settings-modal',

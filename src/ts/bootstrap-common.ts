@@ -12,6 +12,8 @@ if (document.body.getAttribute('data-debug') !== 'true' || localStorage.producti
     enableProdMode();
 }
 
-if (typeof module !== 'undefined' && module.hot) {
-    module.hot.accept();
+
+
+if (typeof module !== 'undefined' && (module as any).hot) {
+    (module as any).hot.accept();
 }

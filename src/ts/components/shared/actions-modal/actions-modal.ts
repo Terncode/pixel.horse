@@ -16,6 +16,7 @@ import { createEyeSprite } from '../../../common/spriteUtils';
 import { times, hasFlag } from '../../../common/utils';
 import { PonyTownGame } from '../../../client/game';
 import { getEntityNames } from '../../services/model';
+import { saveAs } from 'file-saver';
 
 function eyeSprite(e: PonyEye | undefined) {
 	return createEyeSprite(e, 0, sprites.defaultPalette);

@@ -288,9 +288,14 @@ export function authRoutes(
 		});
 	});
 
-	app.post('/sign-out', wrap(server, req => {
+	app.post('/sign-out', wrap(server, async req => {
 		kickCurrentUser(req);
-		req.logout();
+		await new Promise<void>(resolve => req.logout(error => {
+			if (error) {
+				logger.error(error);
+			}
+			resolve();
+		}));
 		return { success: true };
 	}));
 

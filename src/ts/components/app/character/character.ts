@@ -29,6 +29,7 @@ import { emptyTag, getAvailableTags } from '../../../common/tags';
 import { ButtMarkEditorState } from '../../shared/butt-mark-editor/butt-mark-editor';
 import { parseColorWithAlpha } from '../../../common/color';
 import { loadAndInitSpriteSheets } from '../../../client/loadSprites';
+import { saveAs } from 'file-saver';
 
 const frontHoofTitles = ['', 'Fetlocks', 'Paws', 'Claws', ''];
 const backHoofTitles = ['', 'Fetlocks', 'Paws', '', ''];
