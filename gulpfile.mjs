@@ -299,6 +299,19 @@ const serverDev = cb => {
 	cb();
 };
 
+const patchWebWorkerTask = cb => {
+	const t = './dist/browser/sw.min.js';
+	if (fs.existsSync(t)) {
+		fs.renameSync(t, t.replace('.min', ''));
+	}
+
+	const a = './dist/browser/sw.min.js.map';
+	if (fs.existsSync(a)) {
+		fs.unlinkSync(a);
+	}
+	cb();
+};
+
 let webpackScript = 'webpack-prod';
 const webpackArgs = ['--'];
 
@@ -380,7 +393,6 @@ export {
 	build,
 	dev,
 	sprites,
+	patchWebWorkerTask as patchWebWorker,
 	tests as test
 };
-		// gulp.watch(['build/**/*.css']).on('change', path => server.notify({ path }));
-		// gulp.watch(['build/**/*.js']).on('change', path => server.notify({ path }));

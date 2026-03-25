@@ -1,5 +1,6 @@
 const { hash } = require('./src/ts/generated/hash.json');
-const ignore = /^\/((a(pi(\d?|-tools)|uth|dm(in)?)|(bl|m)ep)|tools|reload)\/|\.html|^\/sw\.js$/;
+const ignore = /^\/((a(pi(\d?|-tools)|uth|dm(in)?)|(bl|m)ep)|tools|reload)\/?|\.html|^\/sw\.js$/;
+
 
 module.exports = {
 	globDirectory: 'build/',
@@ -7,17 +8,18 @@ module.exports = {
 		'**/*.{js,css,png,jpg,wasm}',
 	],
 	globIgnores: [
+		'**/assets/maps/**',
 		'**/assets-admin/**',
 		'**/bootstrap-es*',
 		'**/bootstrap-tools*',
 		'**/style-tools*',
 		'**/style-inline*',
-		'**/sw.min.js',
+		'**/sw.js',
 	],
 	dontCacheBustURLsMatching: /-[a-f0-9]{10}\./,
 	swDest: 'build/sw.js',
 	navigateFallback: '/',
-	navigateFallbackBlacklist: [ignore],
+	navigateFallbackDenylist: [ignore],
 	maximumFileSizeToCacheInBytes: 10 * 1024 * 1024, // 10 MB
 	// importWorkboxFrom: 'local',
 	skipWaiting: true,
