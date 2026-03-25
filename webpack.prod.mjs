@@ -64,7 +64,7 @@ export default (args = {}) =>
 			},
 			output: Object.assign({}, common.output, {
 				filename: '[name]-[chunkhash:10].js',
-				path: path.resolve(__dirname, 'dist', 'browser' , outDir, 'scripts'),
+				path: path.resolve(__dirname, 'build', outDir, 'scripts'),
 			}),
 			devtool: script === 'bootstrap' ? 'source-map' : false,
 			module: {

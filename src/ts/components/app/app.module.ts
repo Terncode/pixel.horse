@@ -7,7 +7,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
-
 import { SharedModule } from '../shared/shared.module';
 
 import { App } from './app';
@@ -41,7 +40,6 @@ export const routes: Routes = [
 		PopoverModule.forRoot(),
 		ButtonsModule.forRoot(),
 		TooltipModule.forRoot(),
-		// TypeaheadModule.forRoot(),
 		SharedModule,
 		RouterModule.forRoot(routes),
 		FontAwesomeModule,

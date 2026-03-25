@@ -71,10 +71,12 @@ import { FocusTrap } from './directives/focusTrap';
 import { HasFeature } from './directives/hasFeature';
 import { dropdownDirectives } from './directives/dropdown';
 import { SaveActiveTab } from './directives/saveActiveTab';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { SiteNamePipe } from './pipes/siteName';
 import { VisitPTButton } from './visit-pt-button/visit-pt-button';
 import { VisitPTPony } from './visit-pt-pony/visit-pt-pony';
+import { CommonModule } from '@angular/common';
 
 const declarations = [
 	ActionBar,
@@ -143,7 +145,7 @@ const declarations = [
 	FocusTrap,
 	HasFeature,
 	SaveActiveTab,
-	SiteNamePipe,
+	SiteNamePipe
 ];
 
 @NgModule({
@@ -156,10 +158,12 @@ const declarations = [
 		ButtonsModule,
 		ModalModule.forRoot(),
 		FontAwesomeModule,
+		DragDropModule,
+		CommonModule,
 		// ScrollingModule,
 	],
 	declarations: declarations,
-	exports: declarations,
+	exports: [declarations]
 })
 export class SharedModule {
 }
