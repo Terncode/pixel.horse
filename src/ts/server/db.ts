@@ -1,4 +1,4 @@
-import { model, Schema, Types, Document, Query } from 'mongoose';
+import { model, Schema, Types, Document, Query, QueryFilter, UpdateQuery } from 'mongoose';
 import {
 	TimestampsBase, EventBase, CharacterBase, AccountBase, AuthBase, OriginBase, OriginInfoBase, CharacterState,
 	SupporterInviteBase, FriendRequestBase, HideRequestBase, MergeHideData
@@ -9,6 +9,7 @@ import { FriendData } from '../common/interfaces';
 import { replaceEmojis } from '../common/emoji';
 import { filterForbidden } from './characterUtils';
 import { filterName } from '../common/swears';
+import { compact, noop } from 'lodash';
 
 //set('debug', true); // debug mongoose
 
@@ -205,13 +206,13 @@ export const Origin = model<IOrigin>('Origin', originSchema);
 export const Session = model<ISession>('session', sessionSchema);
 export const Character = model<ICharacter>('Character', characterSchema);
 
-accountSchema.post('remove', function (doc: Document) {
+accountSchema.post('deleteOne', function (doc: Document) {
 	Promise.all([
-		Character.deleteMany({ account: doc._id }).exec(),
-		Event.deleteMany({ account: doc._id }).exec(),
-		Auth.deleteMany({ account: doc._id }).exec(),
-		FriendRequest.deleteMany({ $or: [{ target: doc._id }, { source: doc._id }] }).exec(),
-		HideRequest.deleteMany({ $or: [{ target: doc._id }, { source: doc._id }] }).exec(),
+		Character.deleteOne({ account: doc._id }).exec(),
+		Event.deleteOne({ account: doc._id }).exec(),
+		Auth.deleteOne({ account: doc._id }).exec(),
+		FriendRequest.deleteOne({ $or: [{ target: doc._id }, { source: doc._id }] }).exec(),
+		HideRequest.deleteOne({ $or: [{ target: doc._id }, { source: doc._id }] }).exec(),
 	]).catch(logger.error);
 });
 
@@ -249,15 +250,11 @@ export interface MongoUpdateExpr<T> extends MongoUpdateExprField<T> {
 	$addToSet?: any;
 }
 
-export type MongoQuery<T> = {
-	[P in keyof T]?: T[P] | MongoQueryExpr<T[P]>;
-};
-
 export type MongoUpdate<T> = {
 	[P in keyof T]?: T[P] | MongoUpdateExprField<T[P]>;
 } & MongoUpdateExpr<T>;
 
-export function iterate<T>(query: Query<T>, onData: (doc: T) => void) {
+export function iterate<T>(query: Query<T, T>, onData: (doc: T) => void) {
 	return new Promise<void>(resolve => {
 		query.cursor()
 			.on('data', onData)
@@ -290,7 +287,7 @@ export type FindCharacter = (characterId: ID, accountId: ID) => Promise<ICharact
 export type FindCharacterSafe = (characterId: ID, accountId: ID) => Promise<ICharacter>;
 export type FindCharacters = (accountId: ID, fields?: string) => Promise<ICharacter[]>;
 export type UpdateCharacterState = (characterId: ID, serverName: string, state: CharacterState) => Promise<void>;
-export type QueryCharacter = (query: MongoQuery<ICharacter>, fields?: string) => Promise<ICharacter | undefined>;
+export type QueryCharacter = (query: QueryFilter<ICharacter>, fields?: string) => Promise<ICharacter | undefined>;
 
 export function createCharacter(account: IAccount) {
 	return new Character({ account: account._id, creator: `${account.name} [${account._id}]` });
@@ -323,12 +320,13 @@ export function findLatestCharacters(account: ID, count: number): Promise<IChara
 		.exec();
 }
 
-export function removeCharacter(id: ID, account: ID): Promise<ICharacter | undefined> {
-	return Character.findOneAndRemove({ _id: id, account }).exec().then(nullToUndefined);
+export async function removeCharacter(id: ID, account: ID): Promise<ICharacter | undefined> {
+	const doc = await Character.findOneAndDelete({ _id: id, account }).exec();
+	return doc ?? undefined;
 }
 
 export const updateCharacterState: UpdateCharacterState = (characterId, serverName, state) =>
-	Character.updateOne({ _id: characterId }, { [`state.${serverName}`]: state }).exec().then(nullToUndefined);
+	Character.updateOne({ _id: characterId }, { [`state.${serverName}`]: state }).exec().then(noop);
 
 export const queryCharacter: QueryCharacter = (query, fields) =>
 	Character.findOne(query, fields).exec() as any;
@@ -338,8 +336,8 @@ export const queryCharacter: QueryCharacter = (query, fields) =>
 export type FindAuth = (authId: ID, accountId: ID, fields?: string) => Promise<IAuth | undefined>;
 export type FindAuths = (accountId: ID, fields?: string) => Promise<IAuth[]>;
 export type CountAuths = (accountId: ID) => Promise<number>;
-export type QueryAuths = (query: MongoQuery<IAuth>, fields?: string) => Promise<IAuth[]>;
-export type UpdateAuth = (authId: ID, update: MongoUpdate<IAuth>) => Promise<void>;
+export type QueryAuths = (query: QueryFilter<IAuth>, fields?: string) => Promise<IAuth[]>;
+export type UpdateAuth = (authId: ID, update: UpdateQuery<IAuth>) => Promise<void>;
 
 export const findAuthByOpenId = (openId: string, provider: string): Promise<IAuth | undefined> =>
 	Auth.findOne({ openId, provider }).exec().then(nullToUndefined);
@@ -363,22 +361,23 @@ export const queryAuths: QueryAuths = (query, fields) =>
 	Auth.find(query, fields).lean().exec();
 
 export const updateAuth: UpdateAuth = (id, update) =>
-	Auth.updateOne({ _id: id }, update).exec();
+	Auth.updateOne({ _id: id }, update).exec().then(noop);
+
 
 // accounts
 
 export type FindAccountSafe = (accountId: ID, projection?: string) => Promise<IAccount>;
 export type UpdateAccount = (accountId: ID, update: MongoUpdate<IAccount>) => Promise<void>;
-export type UpdateAccounts = (query: MongoQuery<IAccount>, update: MongoUpdate<IAccount>) => Promise<void>;
-export type QueryAccounts = (query: MongoQuery<IAccount>, fields?: string) => Promise<IAccount[]>;
-export type QueryAccount = (query: MongoQuery<IAccount>, fields?: string) => Promise<IAccount | undefined>;
+export type UpdateAccounts = (query: QueryFilter<IAccount>, update: MongoUpdate<IAccount>) => Promise<void>;
+export type QueryAccounts = (query: QueryFilter<IAccount>, fields?: string) => Promise<IAccount[]>;
+export type QueryAccount = (query: QueryFilter<IAccount>, fields?: string) => Promise<IAccount | undefined>;
 
 export const findAccount = (account: ID, projection?: string): Promise<IAccount | undefined> =>
 	Account.findById(account, projection).exec().then(nullToUndefined);
 
 export function checkIfAdmin(account: ID): Promise<boolean> {
 	return Account.findOne({ _id: account }, 'roles').lean().exec()
-		.then(a => a && isAdmin(a));
+		.then(a => a && isAdmin(a)).then(r => !!r);
 }
 
 export function findAccountSafe(account: ID, projection?: string): Promise<IAccount> {
@@ -387,10 +386,10 @@ export function findAccountSafe(account: ID, projection?: string): Promise<IAcco
 }
 
 export const updateAccount: UpdateAccount = (accountId, update) =>
-	Account.updateOne({ _id: accountId }, update).exec();
+	Account.updateOne({ _id: accountId }, update).exec().then(noop);
 
 export const updateAccounts: UpdateAccounts = (query, update) =>
-	Account.updateMany(query, update).exec();
+	Account.updateMany(query, update).exec().then(noop);
 
 export const queryAccounts: QueryAccounts = (query, fields) =>
 	Account.find(query, fields).lean().exec();
@@ -428,8 +427,8 @@ export async function findFriends(accountId: ID, withCharacters: boolean): Promi
 	let characters: ICharacter[] = [];
 
 	if (withCharacters) {
-		const characterIds = accounts.map(a => a.lastCharacter).filter(id => id);
-		characters = await Character.find({ _id: { $in: characterIds } }, '_id name info').lean().exec();
+		const characterIds = compact(accounts.map(a => a.lastCharacter?.toString()));
+		characters = await Character.find({ _id: { $in: characterIds } }, '_id name info').lean<ICharacter[]>().exec();
 	}
 
 	return accounts.map(a => {

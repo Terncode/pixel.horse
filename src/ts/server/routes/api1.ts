@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import { noop } from 'lodash';
 import { findAllCharacters, findAllVisibleAuths, IAccount, Account } from '../db';
 import { offline, hash, handleJSON } from '../requestUtils';
 import { createGetAccountData } from '../api/account';
@@ -27,7 +26,7 @@ export default function (server: ServerConfig, settings: Settings) {
 					(lastBrowserId && account.lastBrowserId !== lastBrowserId)) {
 					account.lastUserAgent = lastUserAgent;
 					account.lastBrowserId = lastBrowserId;
-					Account.updateOne({ _id: account._id }, { lastUserAgent, lastBrowserId }, noop);
+					Account.updateOne({ _id: account._id }, { lastUserAgent, lastBrowserId });
 				}
 
 				return await getAccountData(account);

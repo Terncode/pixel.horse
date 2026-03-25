@@ -29,7 +29,6 @@ describe('SupporterInvitesService', () => {
 			countDocuments: stub(),
 			create: stub(),
 			deleteOne: stub(),
-			deleteMany: stub(),
 			updateMany: stub(),
 		} as any;
 		log = stub();
@@ -43,7 +42,7 @@ describe('SupporterInvitesService', () => {
 	describe('getInvites()', () => {
 		it('returns all invites from given client', async () => {
 			const client = mockClient();
-			model.find.withArgs({ source: client.account._id }).returns({
+			model.find.withArgs({ source: client.account._id } as any).returns({
 				exec: stub().resolves([
 					{ _id: 'foo', name: 'Foo', info: 'info', active: true, anotherField: 'xyz' },
 				])
@@ -292,7 +291,7 @@ describe('SupporterInvitesService', () => {
 
 			await service.uninvite(requester, 'foobar');
 
-			assert.calledWithMatch(model.deleteOne, { _id: 'foobar', source: requester.account._id });
+			assert.calledWithMatch(model.deleteOne as any, { _id: 'foobar', source: requester.account._id });
 		});
 	});
 
@@ -312,12 +311,12 @@ describe('SupporterInvitesService', () => {
 				{ _id: 'aaa', active: false, source: { supporter: SupporterFlags.Supporter1 } },
 				{ _id: 'bbb', active: true, source: { supporter: SupporterFlags.Supporter1 } },
 			];
-			model.find.withArgs({}, '_id active')
+			model.find.withArgs({} as any, '_id active')
 				.returns({
 					populate: stub().withArgs('source', '_id supporter patreon roles')
 						.returns({ lean: stub().returns(exec(data)) })
 				} as any);
-			model.deleteMany.returns({ exec: stub() } as any);
+			model.deleteOne.returns({ exec: stub() } as any);
 			model.updateMany.returns({ exec: stub() } as any);
 
 			await updateSupporterInvites(model as any);
@@ -331,7 +330,7 @@ describe('SupporterInvitesService', () => {
 				{ _id: 'bbb', active: true, source: {} },
 			];
 			model.find.returns({ populate: stub().returns({ lean: stub().returns(exec(data)) }) } as any);
-			model.deleteMany.returns({ exec: stub() } as any);
+			model.deleteOne.returns({ exec: stub() } as any);
 			model.updateMany.returns({ exec: stub() } as any);
 
 			await updateSupporterInvites(model as any);
@@ -345,7 +344,7 @@ describe('SupporterInvitesService', () => {
 				{ _id: 'bbb', active: true, source: {} },
 			];
 			model.find.returns({ populate: stub().returns({ lean: stub().returns(exec(data)) }) } as any);
-			model.deleteMany.returns({ exec: stub() } as any);
+			model.deleteOne.returns({ exec: stub() } as any);
 			model.updateMany.returns({ exec: stub() } as any);
 
 			await updateSupporterInvites(model as any);
@@ -360,7 +359,7 @@ describe('SupporterInvitesService', () => {
 				{ _id: 'bbb', active: false, source: {} },
 			];
 			model.find.returns({ populate: stub().returns({ lean: stub().returns(exec(data)) }) } as any);
-			model.deleteMany.returns({ exec: stub() } as any);
+			model.deleteOne.returns({ exec: stub() } as any);
 			model.updateMany.returns({ exec: stub() } as any);
 
 			await updateSupporterInvites(model as any);
@@ -370,12 +369,12 @@ describe('SupporterInvitesService', () => {
 
 		it('removes old inactive entries', async () => {
 			model.find.returns({ populate: stub().returns({ lean: stub().returns({ exec: stub() }) }) } as any);
-			model.deleteMany.returns({ exec: stub() } as any);
+			model.deleteOne.returns({ exec: stub() } as any);
 			clock.setSystemTime(123 * DAY);
 
 			await updateSupporterInvites(model as any);
 
-			assert.calledWithMatch(model.deleteMany, { active: false, updatedAt: { $lt: new Date(23 * DAY) } });
+			assert.calledWithMatch(model.deleteOne as any, { active: false, updatedAt: { $lt: new Date(23 * DAY) } });
 		});
 	});
 });

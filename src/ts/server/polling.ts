@@ -101,7 +101,7 @@ const cleanupStrayAuths = (removedDocument: RemovedDocument) =>
 		const date = fromNow(-1 * DAY);
 		const query = { account: { $exists: false }, updatedAt: { $lt: date }, createdAt: { $lt: date } };
 		const items = await queryAuths(query, '_id');
-		await Auth.deleteMany(query).exec();
+		await Auth.deleteOne(query).exec();
 		await Bluebird.map(items, item => removedDocument('auths', item._id.toString()), { concurrency: 4 });
 		logPerformance(`[async] cleanupAccountAlerts (${Date.now() - start}ms)`);
 	};

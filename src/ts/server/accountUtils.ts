@@ -229,7 +229,7 @@ export async function removeFriend(accountId: string, friendId: string) {
 	const existing = await findFriendRequest(accountId, friendId);
 
 	if (existing) {
-		existing.remove();
+		existing.deleteOne();
 	}
 }
 

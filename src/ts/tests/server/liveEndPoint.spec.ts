@@ -99,7 +99,7 @@ describe('liveEndPoint', () => {
 			const find = stubFind([{ _id: 'aaa' }, { _id: 'bbb' }]);
 
 			return liveEndPoint.getAll()
-				.then(() => assert.calledWithMatch(find, { updatedAt: { $gt: new Date(0) } }, '_id name desc'));
+				.then(() => assert.calledWithMatch(find as any, { updatedAt: { $gt: new Date(0) } }, '_id name desc'));
 		});
 
 		it('passes given timestamp to find method', () => {
@@ -107,7 +107,7 @@ describe('liveEndPoint', () => {
 			const find = stubFind([{ _id: 'aaa' }, { _id: 'bbb' }]);
 
 			return liveEndPoint.getAll(timestamp)
-				.then(() => assert.calledWithMatch(find, { updatedAt: { $gt: new Date(timestamp) } }, '_id name desc'));
+				.then(() => assert.calledWithMatch(find as any, { updatedAt: { $gt: new Date(timestamp) } }, '_id name desc'));
 		});
 
 		describe('if items exceed limit', () => {

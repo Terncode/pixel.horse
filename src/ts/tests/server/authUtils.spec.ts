@@ -14,7 +14,7 @@ describe('authUtils', () => {
 	describe('updateAuthInfo()', () => {
 		it('updates url and name fields', async () => {
 			const updateAuth = stub();
-			const a = auth({ _id: 'bar' });
+			const a = auth({ _id: new Types.ObjectId('bar') });
 
 			await updateAuthInfo(updateAuth, a, profile({ username: 'foo', url: 'bar' }), undefined);
 
@@ -33,7 +33,7 @@ describe('authUtils', () => {
 
 		it('updates email field (from empty)', async () => {
 			const updateAuth = stub();
-			const a = auth({ _id: 'bar' });
+			const a = auth({ _id: new Types.ObjectId('bar') });
 
 			await updateAuthInfo(updateAuth, a, profile({ emails: ['b', 'c'] }), undefined);
 
@@ -44,7 +44,7 @@ describe('authUtils', () => {
 		it('saves updated auth', async () => {
 			const updateAuth = stub();
 
-			await updateAuthInfo(updateAuth, auth({ _id: 'bar' }), profile({ username: 'foo' }), undefined);
+			await updateAuthInfo(updateAuth, auth({ _id: new Types.ObjectId('bar') }), profile({ username: 'foo' }), undefined);
 
 			assert.calledWith(updateAuth, 'bar', { name: 'foo' });
 		});
@@ -55,20 +55,20 @@ describe('authUtils', () => {
 
 			await updateAuthInfo(stub(), a, profile({ username: 'foo', url: 'bar' }), accountId);
 
-			expect(a.account).eql(Types.ObjectId(accountId));
+			expect(a.account).eql(new Types.ObjectId(accountId));
 		});
 
 		it('does not save auth if nothing changed', async () => {
 			const updateAuth = stub();
 
-			await updateAuthInfo(updateAuth, auth({ _id: 'bar', name: 'foo' }), profile({ username: 'foo' }), undefined);
+			await updateAuthInfo(updateAuth, auth({ _id: new Types.ObjectId('bar'), name: 'foo' }), profile({ username: 'foo' }), undefined);
 
 			assert.notCalled(updateAuth);
 		});
 
 		it('does nothing if email list is the same', async () => {
 			const updateAuth = stub();
-			const a = auth({ _id: 'bar', emails: ['a', 'b'] });
+			const a = auth({ _id: new Types.ObjectId('bar'), emails: ['a', 'b'] });
 
 			await updateAuthInfo(updateAuth, a, profile({ emails: ['b', 'a'] }), undefined);
 

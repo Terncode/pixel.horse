@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import { truncate } from 'lodash';
 import { Reporter } from './serverInterfaces';
-import { Event, IEvent, IOriginInfo, ID, IAccount } from './db';
+import { Event, IOriginInfo, ID, IAccount } from './db';
 import { logger, system } from './logger';
 import { ServerConfig } from '../common/adminInterfaces';
 import { getOrigin } from './originUtils';
@@ -32,7 +32,7 @@ const createLogEvent =
 
 						return Event.updateOne({ _id: event._id }, { desc: event.desc, count: event.count + 1 }).exec();
 					} else {
-						return Event.create(<IEvent>{ server, account, pony, type, message, origin, desc });
+					 	return Event.create({ server, account, pony, type, message, origin, desc }) as any;
 					}
 				})
 				.catch(logger.error);
@@ -97,7 +97,7 @@ export function create(server: ServerConfig, account?: ID, pony?: ID, originInfo
 /* istanbul ignore next */
 export function createFromRequest(server: ServerConfig, req: Request, pony?: any) {
 	const user = req && req.user as IAccount | undefined;
-	const account = user ? user.id : undefined;
+	const account = user?._id?.toString();
 	const origin = req ? getOrigin(req) : undefined;
 	return create(server, account, pony, origin);
 }

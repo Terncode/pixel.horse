@@ -12,13 +12,14 @@ import { createServerMap } from '../../server/serverMap';
 import { CounterService } from '../../server/services/counter';
 import { createCharacterState } from '../../server/playerUtils';
 import { hasFlag } from '../../common/utils';
+import { Types } from 'mongoose';
 
 describe('characterUtils', () => {
 	describe('createPony()', () => {
 		const defaultState: CharacterState = { x: 0, y: 0, flags: 0 };
 
 		it('creates pony entity', () => {
-			const pony = createPony(account({ _id: '' }), character({ name: 'foo' }), defaultState);
+			const pony = createPony(account({ _id: new Types.ObjectId('') }), character({ name: 'foo' }), defaultState);
 
 			expect(pony).not.undefined;
 			expect(pony.type).equal(entities.pony.type);
@@ -27,7 +28,7 @@ describe('characterUtils', () => {
 		it('sets initial position for character from state', () => {
 			const main: CharacterState = { ...defaultState, x: 1, y: 2 };
 
-			const pony = createPony(account({ _id: '' }), character({ name: 'foo' }), main);
+			const pony = createPony(account({ _id: new Types.ObjectId('') }), character({ name: 'foo' }), main);
 
 			expect(pony.x).eql(1, 'x');
 			expect(pony.y).eql(2, 'y');
@@ -36,7 +37,7 @@ describe('characterUtils', () => {
 		it('sets facing from state', () => {
 			const main: CharacterState = { ...defaultState, flags: CharacterStateFlags.Right };
 
-			const pony = createPony(account({ _id: '' }), character({ name: 'foo' }), main);
+			const pony = createPony(account({ _id: new Types.ObjectId('') }), character({ name: 'foo' }), main);
 
 			expect(pony.state).equal(EntityState.FacingRight);
 		});
@@ -44,7 +45,7 @@ describe('characterUtils', () => {
 		it('sets extra flag from state', () => {
 			const main: CharacterState = { ...defaultState, flags: CharacterStateFlags.Extra };
 
-			const pony = createPony(account({ _id: '' }), character({ name: 'foo' }), main);
+			const pony = createPony(account({ _id: new Types.ObjectId('') }), character({ name: 'foo' }), main);
 
 			expect(pony.options!.extra).true;
 		});
@@ -52,7 +53,7 @@ describe('characterUtils', () => {
 		it('sets held item from state', () => {
 			const main: CharacterState = { ...defaultState, hold: 'apple' };
 
-			const pony = createPony(account({ _id: '' }), character({ name: 'foo' }), main);
+			const pony = createPony(account({ _id: new Types.ObjectId('') }), character({ name: 'foo' }), main);
 
 			expect(pony.options!.hold).equal(entities.apple.type);
 		});
@@ -60,7 +61,9 @@ describe('characterUtils', () => {
 		it('ignores held item from state if type is invalid', () => {
 			const main: CharacterState = { ...defaultState, hold: 'does_not_exist' };
 
-			const pony = createPony(account({ _id: '' }), character({ name: 'foo' }), main);
+			const pony = createPony(account({ _id: new Types.ObjectId('')
+
+			 }), character({ name: 'foo' }), main);
 
 			expect(pony.options!.hold).undefined;
 		});
@@ -143,7 +146,7 @@ describe('characterUtils', () => {
 
 			updatePony(entity1, account({ _id: genObjectId() }), character({ name: 'Foo', info: OFFLINE_PONY }));
 			updatePony(
-				entity2, account({ _id: '' }), character({ name: 'Bar', info: 'DAT/AADapSD/1wC7Li42QAJkJEAT8ADAAxADhAYQFGAQAA==' }));
+				entity2, account({ _id: new Types.ObjectId('') }), character({ name: 'Bar', info: 'DAT/AADapSD/1wC7Li42QAJkJEAT8ADAAxADhAYQFGAQAA==' }));
 
 			expect(entity1.canFly).false;
 			expect(entity2.canFly).true;

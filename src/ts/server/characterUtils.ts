@@ -2,7 +2,7 @@ import { repeat } from 'lodash';
 import { toByteArray } from 'base64-js';
 import { encodeString } from 'ag-sockets/dist/utf8';
 import { PonyOptions, EntityState, UpdateFlags } from '../common/interfaces';
-import { ICharacter, IAccount, Character, MongoQuery, queryCharacter } from './db';
+import { ICharacter, IAccount, Character, queryCharacter } from './db';
 import { isForbiddenName } from '../common/security';
 import { supporterLevel } from '../common/adminUtils';
 import { CharacterFlags, CharacterState, ServerConfig, CharacterStateFlags } from '../common/adminInterfaces';
@@ -22,6 +22,7 @@ import { saySystem } from './chat';
 import { isPonyFlying } from '../common/entityUtils';
 import { createCharacterState, updateClientCharacter } from './playerUtils';
 import { encodeExpression } from '../common/encoders/expressionEncoder';
+import { QueryFilter } from 'mongoose';
 
 export const defaultCharacterState: CharacterState = { x: 0, y: 0 };
 
@@ -177,7 +178,7 @@ export function logRemovedCharacter({ _id, account, name, info }: ICharacter) {
 	log(systemMessage(`${account}`, `removed pony [${_id}] "${name}" ${info}`));
 }
 
-export async function swapCharacter(client: IClient, { server }: World, query: MongoQuery<ICharacter>) {
+export async function swapCharacter(client: IClient, { server }: World, query: QueryFilter<ICharacter>) {
 	if (client.isSwitchingMap)
 		return;
 

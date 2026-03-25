@@ -88,7 +88,7 @@ export const createSavePony =
 				character.desc = typeof data.desc === 'string' ? data.desc.substr(0, PLAYER_DESC_MAX_LENGTH) : '';
 				character.name = data.name;
 				character.tag = data.tag;
-				character.site = auth ? auth._id : null;
+				character.site = auth?._id;
 				character.info = info;
 				character.flags = flags;
 				character.lastUsed = new Date();
@@ -115,9 +115,9 @@ export const createSavePony =
 			}
 
 			if (created) {
-				log(account._id, `created pony "${character.name}"`);
+				log(account._id.toString(), `created pony "${character.name}"`);
 			} else if (nameChanged) {
-				log(account._id, `renamed pony "${oldName}" => "${character.name}"`);
+				log(account._id.toString(), `renamed pony "${oldName}" => "${character.name}"`);
 			}
 
 			return toPonyObject(character);

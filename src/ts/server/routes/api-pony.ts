@@ -31,7 +31,7 @@ export default function (server: ServerConfig, settings: Settings, removedDocume
 		savePonyHandler(req.user as IAccount, req.body.pony, createFromRequest(server, req))));
 
 	app.post('/pony/remove', offline, hash, validAccount, wrap(server, req =>
-		removePonyHandler(req.body.id, (req.user as IAccount).id)));
+		removePonyHandler(req.body.id, (req.user as IAccount)?._id.toString())));
 
 	return app;
 }

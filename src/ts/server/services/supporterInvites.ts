@@ -96,12 +96,12 @@ export class SupporterInvitesService {
 type LeanInvite = ISupporterInvite & { source: IAccount };
 
 export async function updateSupporterInvites(model: Model<ISupporterInvite>) {
-	const invites: LeanInvite[] = await model.find({}, '_id active')
+	const invites = await model.find({}, '_id active')
 		.populate('source', '_id supporter patreon roles')
-		.lean()
+		.lean<LeanInvite[]>()
 		.exec();
 
-	const itemsBySource = toPairs(groupBy(invites, i => i.source._id as string));
+	const itemsBySource = toPairs(groupBy(invites, i => i.source._id));
 	const itemsToUpdate = itemsBySource
 		.map(([_, items]) => {
 			const source = items[0].source;
@@ -123,5 +123,5 @@ export async function updateSupporterInvites(model: Model<ISupporterInvite>) {
 		return model.updateMany({ _id: { $in: ids } }, { active }).exec();
 	}));
 
-	await model.deleteMany({ active: false, updatedAt: { $lt: fromNow(-100 * DAY) } }).exec();
+	await model.deleteOne({ active: false, updatedAt: { $lt: fromNow(-100 * DAY) } }).exec();
 }

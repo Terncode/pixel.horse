@@ -137,19 +137,19 @@ async function merge(
 		Promise.all([
 			SupporterInvite.updateMany({ source: merge._id }, { source: account._id }).exec(),
 			SupporterInvite.updateMany({ target: merge._id }, { target: account._id }).exec(),
-		]).then(() => SupporterInvite.remove({ target: account._id, source: account._id }).exec()),
+		]).then(() => SupporterInvite.deleteOne({ target: account._id, source: account._id }).exec()),
 		Promise.all([
 			FriendRequest.updateMany({ source: merge._id }, { source: account._id }).exec(),
 			FriendRequest.updateMany({ target: merge._id }, { target: account._id }).exec(),
-		]).then(() => FriendRequest.remove({ target: account._id, source: account._id }).exec()),
+		]).then(() => FriendRequest.deleteOne({ target: account._id, source: account._id }).exec()),
 		Promise.all([
 			HideRequest.updateMany({ source: merge._id }, { source: account._id }).exec(),
 			HideRequest.updateMany({ target: merge._id }, { target: account._id }).exec(),
-		]).then(() => HideRequest.remove({ target: account._id, source: account._id }).exec()),
+		]).then(() => HideRequest.deleteOne({ target: account._id, source: account._id }).exec()),
 	]);
 
 	await removeDuplicateFriendRequests(id);
-	await merge.remove();
+	await merge.deleteOne();
 	await kickFromAllServers(withId);
 	await removedDocument('accounts', withId);
 	await updateCharacterCount(id);
@@ -175,7 +175,7 @@ async function removeDuplicateFriendRequests(id: string) {
 	}
 
 	if (removeRequests.length) {
-		await FriendRequest.remove({ _id: { $in: removeRequests } }).exec();
+		await FriendRequest.deleteOne({ _id: { $in: removeRequests } }).exec();
 	}
 }
 
@@ -227,7 +227,7 @@ export async function split(
 
 	const friendsToRemove = [...(keep.friends || []), ...(split.friends || [])];
 
-	await FriendRequest.deleteMany({
+	await FriendRequest.deleteOne({
 		$or: [
 			{ target: account._id, source: { $in: friendsToRemove } },
 			{ source: account._id, target: { $in: friendsToRemove } },
@@ -243,7 +243,7 @@ export async function split(
 
 	const hidesToRemove = [...(keep.hides || []), ...(split.hides || [])].map(hide => hide.id);
 
-	await HideRequest.deleteMany({
+	await HideRequest.deleteOne({
 		$or: [
 			{ source: account._id, target: { $in: hidesToRemove } },
 		],

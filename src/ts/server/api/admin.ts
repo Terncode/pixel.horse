@@ -6,7 +6,7 @@ import {
 } from '../../common/adminInterfaces';
 import { execAsync } from '../serverUtils';
 import {
-	IAccount, Account, Origin, Event, iterate, ISession, Session, SupporterInvite as DBSupporterInvite,
+	Account, Origin, Event, iterate, ISession, Session, SupporterInvite as DBSupporterInvite,
 	findAccount, ISupporterInvite, ID
 } from '../db';
 import { servers, serverStatus, loginServers } from '../internal';
@@ -157,7 +157,7 @@ export async function getChat(search: string, date: string, caseInsensitive: boo
 }
 
 export async function getChatForAccounts(accountIds: string[], date: string) {
-	const accounts: Partial<IAccount>[] = await Account.find({ _id: { $in: accountIds } }, '_id merges').lean().exec();
+	const accounts = await Account.find({ _id: { $in: accountIds } }, '_id merges').lean().exec();
 	const map = new Map<string, string>();
 	const ids = flatten(accounts.map(a => [a._id.toString(), ...(a.merges || []).map(a => a.id)]));
 
@@ -174,6 +174,7 @@ export async function getChatForAccounts(accountIds: string[], date: string) {
 	const fixed = chat.replace(/^([0-9:]+) \[([a-f0-9]{24})\]/gmu, (_, date, id) =>
 		`${date} ${map.has(id) ? map.get(id) : `[${id}]`}`);
 
+
 	return fixed;
 }
 
@@ -187,11 +188,11 @@ export async function clearSessions(accountId: string) {
 				const user = data && data.passport && data.passport.user;
 
 				if (user === accountId) {
-					clearIds.push(session._id);
+					clearIds.push(session._id.toString());
 				}
 			}
 		} catch (e) {
-			logger.error('Error when claring session', e, session._id, session.session);
+			logger.error('Error when clearing session', e, session._id, session.session);
 		}
 	});
 

@@ -49,7 +49,7 @@ export function createLiveEndPoint<T extends Doc>(
 			.tap(item => {
 				if (item) {
 					removedItem(item._id.toString());
-					return item.remove() as any;
+					return item.deleteOne() as any;
 				}
 			})
 			.tap(item => item && afterDelete && afterDelete(item))
@@ -86,12 +86,12 @@ export function createLiveEndPoint<T extends Doc>(
 
 	function findItemsExact(date: Date): Promise<T[]> {
 		return Promise.resolve(model.find({ updatedAt: date }, fields.join(' '))
-			.lean()
+			.lean<T[]>()
 			.exec());
 	}
 
 	function hasItem(items: T[], id: string) {
-		return items.some(i => i._id === id);
+		return items.some(i => i._id.toString() === id);
 	}
 
 	function addTailItems(items: T[]): Promise<{ items: T[]; more: boolean; }> {
@@ -108,7 +108,7 @@ export function createLiveEndPoint<T extends Doc>(
 		}
 
 		return findItemsExact(items[items.length - 1].updatedAt)
-			.then(other => other.filter(i => !hasItem(items, i._id)))
+			.then(other => other.filter(i => !hasItem(items, i?._id.toString())))
 			.then(other => [...items, ...other])
 			.then(items => ({ items, more: true }));
 	}

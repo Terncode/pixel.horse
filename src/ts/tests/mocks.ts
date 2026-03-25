@@ -62,7 +62,7 @@ export function genId() {
 }
 
 export function genObjectId() {
-	return Types.ObjectId(genId());
+	return new Types.ObjectId(genId());
 }
 
 export function mockClient(fields: any = {}): IClient {
@@ -81,8 +81,8 @@ export function mockClient(fields: any = {}): IClient {
 		friends: new Set<string>(),
 		accountSettings: {},
 		originalRequest: { headers: {} },
-		account: { id: accountId, _id: Types.ObjectId(accountId), ignores: [] },
-		character: { id: characterId, _id: Types.ObjectId(characterId) },
+		account: { id: accountId, _id: new Types.ObjectId(accountId), ignores: [] },
+		character: { id: characterId, _id: new Types.ObjectId(characterId) },
 		isMod: false,
 		pony,
 		map: createServerMap('', 0, 1, 1),

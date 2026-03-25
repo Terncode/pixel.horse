@@ -4,7 +4,7 @@ require('source-map-support').install();
 
 import 'core-js/stable/promise/finally';
 import 'reflect-metadata';
-import * as Promise from 'bluebird';
+import * as Bluebird from 'bluebird';
 import * as fs from 'fs';
 import { argv } from 'yargs';
 
@@ -16,4 +16,4 @@ import { argv } from 'yargs';
 (global as any).TESTS = false;
 (global as any).performance = Date;
 
-Promise.promisifyAll(fs);
+Bluebird.promisifyAll(fs);

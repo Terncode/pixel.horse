@@ -27,7 +27,7 @@ export const validAccount = (server: ServerConfig): RequestHandler => (req, res,
 	const accountId = req.body.accountId as string;
 	const accountName = req.body.accountName as string;
 
-	if (!account || account.id !== accountId) {
+	if (!account || account._id.toString() !== accountId) {
 		if (!/#$/.test(accountId)) {
 			createFromRequest(server, req).warn(ACCOUNT_ERROR, `${accountName} [${accountId}] (${req.path})`);
 		}

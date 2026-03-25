@@ -65,7 +65,7 @@ export async function updateAuthInfo(
 	}
 
 	if (!auth.account && accountId) {
-		changes.account = Types.ObjectId(accountId);
+		changes.account = new Types.ObjectId(accountId);
 	}
 
 	if (Object.keys(changes).length > 0) {

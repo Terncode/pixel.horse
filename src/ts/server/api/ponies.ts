@@ -75,7 +75,7 @@ export async function removeCharacter(service: AdminService, characterId: string
 		return;
 
 	await kickFromAllServersByCharacter(characterId);
-	await character.remove();
+	await character.deleteOne();
 	await updateCharacterCount(character.account);
 	logRemovedCharacter(character);
 	service.ponies.removed(characterId);
@@ -83,7 +83,7 @@ export async function removeCharacter(service: AdminService, characterId: string
 
 async function removeCharacters(character: ICharacter[], accountId: string, removedDocument: RemovedDocument) {
 	await Bluebird.map(character, async c => {
-		await c.remove();
+		await c.deleteOne();
 		await removedDocument('ponies', c._id.toString());
 		logRemovedCharacter(c);
 	}, { concurrency: 4 });

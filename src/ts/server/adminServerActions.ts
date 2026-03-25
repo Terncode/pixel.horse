@@ -289,12 +289,12 @@ export class AdminServerActions implements IAdminServerActions, SocketServer {
 	}
 	@Method({ promise: true })
 	async getPoniesCreators(account: string) {
-		const items: ICharacter[] = await Character.find({ account }, '_id name creator').lean().exec();
-		return items.map(({ _id, name, creator }) => <PonyCreator>{ _id, name, creator });
+		const items = await Character.find({ account }, '_id name creator').lean<ICharacter[]>().exec();
+		return items.map(({ _id, name, creator }) => <PonyCreator>{ _id: _id.toString(), name, creator });
 	}
 	@Method({ promise: true })
 	async getPoniesForAccount(account: string) {
-		return await Character.find({ account }).lean().exec();
+		return await Character.find({ account }).lean().exec() as any;
 	}
 	@Method({ promise: true })
 	async getDetailsForAccount(accountId: string) {

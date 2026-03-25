@@ -84,8 +84,8 @@ const ignoreErrors = [
 function kickCurrentUser(req: Request) {
 	const user = req.user as IAccount | undefined;
 
-	if (user) {
-		kickFromAllServers(user.id)
+	if (user?._id) {
+		kickFromAllServers(user._id?.toString())
 			.catch(e => logger.error(e));
 	}
 }
@@ -97,7 +97,7 @@ function logIn(req: Request, account: IAccount) {
 	});
 }
 
-function isMerge(accountId: string) {
+function isMerge(accountId: string | undefined) {
 	const minTime = fromNow(-10 * MINUTE).getTime();
 	remove(mergeRequests, r => r.time < minTime);
 	return mergeRequests.some(r => r.accountId === accountId);
@@ -186,7 +186,7 @@ async function handleAuth(
 	req: Request, res: Response, error: Error | null, account: IAccount | null,
 ) {
 	const user = req.user as IAccount | undefined;
-	const merge = isMerge(user && user.id);
+	const merge = isMerge(user?._id?.toString());
 
 	try {
 		if (error) {
@@ -359,7 +359,12 @@ export function authRoutes(
 			return [account._id.toString(), account.name];
 		}));
 
-		passport.use(new LocalStrategy((login, _pass, done) => Account.findById(login, done)));
+		passport.use(new LocalStrategy((login, _pass, done) => 
+			Account.findById(login)
+				.then(data => done(undefined, data as any))
+				.catch(e => done(e)))
+			);
+
 		app.get('/local', passport.authenticate('local', { successRedirect: '/', failureRedirect: '/failed-login' }));
 	}
 

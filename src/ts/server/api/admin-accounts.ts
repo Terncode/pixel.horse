@@ -183,7 +183,7 @@ export async function removeAccount(service: AdminService, accountId: string) {
 	if (account) {
 		checkIfNotAdmin(account, `remove account: ${accountId}`);
 
-		await account.remove();
+		await account.deleteOne();
 
 		service.removedItem('accounts', accountId);
 	}

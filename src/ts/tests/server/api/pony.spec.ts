@@ -54,7 +54,7 @@ describe('api pony', () => {
 
 		describe('for existing character', () => {
 			const characterId = genId();
-			const characterObjectId = Types.ObjectId(characterId);
+			const characterObjectId = new Types.ObjectId(characterId);
 			let character: ICharacter;
 			let account = { _id: 'accid' } as any;
 
@@ -212,7 +212,7 @@ describe('api pony', () => {
 
 			beforeEach(() => {
 				character = {
-					_id: Types.ObjectId(characterId),
+					_id: new Types.ObjectId(characterId),
 					save() { return this; }
 				} as any;
 

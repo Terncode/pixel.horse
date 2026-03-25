@@ -9,7 +9,7 @@ import * as expressSession from 'express-session';
 import * as serveFavicon from 'serve-favicon';
 import * as Rollbar from 'rollbar';
 import { Passport } from 'passport';
-import * as connectMongo from 'connect-mongo';
+import MongoStore from 'connect-mongo';
 import * as express from 'express';
 import { WebSocketServer } from '@encharm/cws';
 import { compact, once } from 'lodash';
@@ -67,14 +67,11 @@ function getServiceWorker() {
 	}
 }
 
-mongoose.connect(config.db, {
-	reconnectTries: Number.MAX_VALUE,
-	useNewUrlParser: true,
-	useCreateIndex: true,
-	useFindAndModify: false,
-});
+const clientP = mongoose.connect(config.db, {
+	autoIndex: true,
+  	serverSelectionTimeoutMS: 5000,
+}).then(m => m.connection.getClient());
 
-const MongoStore = connectMongo(expressSession);
 const app = express();
 const production = app.get('env') === 'production';
 const maxAge = production ? YEAR : 0;
@@ -163,8 +160,14 @@ app.use(require('cookie-parser')());
 
 if (args.login || args.admin) {
 	passport.serializeUser<string>((account, done) => done(null, (account as IAccount)._id.toString()));
-	passport.deserializeUser<string>((id, done) =>
-		Account.findById(id, (err, a) => done(err, a && !isBanned(a) ? a : false)));
+		passport.deserializeUser<string>(async (id, done) => {
+		try {
+			const account = await Account.findById(id).exec();
+			done(undefined, account && !isBanned(account) ? account : false);
+		} catch (error) {
+			done(error);
+		}
+	});
 }
 
 const ignore = [
@@ -198,7 +201,7 @@ const createSession = () => expressSession({
 	cookie: {
 		maxAge: WEEK * 2,
 	},
-	store: new MongoStore({ mongooseConnection: mongoose.connection }),
+	store: new MongoStore({ client: clientP }),
 });
 
 const statsPath = pathTo('logs', `stats-${server.id}.csv`);

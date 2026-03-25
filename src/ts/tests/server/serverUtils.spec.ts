@@ -55,11 +55,11 @@ describe('serverUtils', () => {
 			const id = genId();
 
 			expect(toPonyObject(character({
-				_id: Types.ObjectId(id),
+				_id: new Types.ObjectId(id),
 				name: 'foo',
 				desc: 'aaa',
 				info: 'info',
-				site: Types.ObjectId('000000000000000000000002'),
+				site: new Types.ObjectId('000000000000000000000002'),
 				tag: 'tag',
 				lastUsed: new Date(123),
 			}))).eql({
@@ -79,7 +79,7 @@ describe('serverUtils', () => {
 			const id = genId();
 
 			expect(toPonyObject(character({
-				_id: Types.ObjectId(id),
+				_id: new Types.ObjectId(id),
 				name: 'foo',
 			}))).eql({
 				id: id,
@@ -96,7 +96,7 @@ describe('serverUtils', () => {
 
 		it('sets hide support field', () => {
 			const output = toPonyObject(character({
-				_id: Types.ObjectId(genId()),
+				_id: new Types.ObjectId(genId()),
 				name: 'foo',
 				flags: CharacterFlags.HideSupport,
 			}));
@@ -106,7 +106,7 @@ describe('serverUtils', () => {
 
 		it('sets respawn at spawn field', () => {
 			const output = toPonyObject(character({
-				_id: Types.ObjectId(genId()),
+				_id: new Types.ObjectId(genId()),
 				name: 'foo',
 				flags: CharacterFlags.RespawnAtSpawn,
 			}));
@@ -124,11 +124,11 @@ describe('serverUtils', () => {
 			const id = genId();
 
 			expect(toPonyObjectAdmin(character({
-				_id: Types.ObjectId(id),
+				_id: new Types.ObjectId(id),
 				name: 'foo',
 				desc: 'aaa',
 				info: 'info',
-				site: Types.ObjectId('000000000000000000000001'),
+				site: new Types.ObjectId('000000000000000000000001'),
 				tag: 'tag',
 				lastUsed: new Date(123),
 				creator: 'foo bar',
@@ -156,7 +156,7 @@ describe('serverUtils', () => {
 			const id = genId();
 
 			expect(toSocialSite(auth({
-				_id: Types.ObjectId(id),
+				_id: new Types.ObjectId(id),
 				name: 'foo',
 				provider: 'github',
 				url: 'foo.com',

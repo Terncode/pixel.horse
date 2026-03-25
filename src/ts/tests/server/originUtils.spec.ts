@@ -12,7 +12,7 @@ describe('originUtils', () => {
 
 		beforeEach(() => {
 			clock = useFakeTimers();
-			update = stub(Account, 'update').returns({ exec: () => Promise.resolve() } as any);
+			update = stub(Account as any, 'update').returns({ exec: () => Promise.resolve() } as any);
 		});
 
 		afterEach(() => {
