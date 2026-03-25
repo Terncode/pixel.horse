@@ -49,18 +49,3 @@ declare module 'timsort' {
 	export function sort<T>(array: T[], compare: (a: T, b: T) => number): void;
 }
 
-declare module 'color-convert' {
-	export const hex: {
-		lab(color: string): [number, number, number];
-	};
-}
-
-declare module 'delta-e' {
-	export interface LAB {
-		L: number;
-		A: number;
-		B: number;
-	}
-
-	export function getDeltaE00(a: LAB, b: LAB): number;
-}

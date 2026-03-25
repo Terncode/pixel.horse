@@ -1,5 +1,5 @@
 import { uniq, compact } from 'lodash';
-import { hex } from 'color-convert';
+import convert from 'color-convert';
 import { getDeltaE00, LAB } from 'delta-e';
 import { repeat } from '../common/utils';
 import { CM_SIZE } from '../common/constants';
@@ -417,7 +417,7 @@ const patterns = [
 ];
 
 export function hexToLab(c: string): LAB {
-	const [L, A, B] = hex.lab(c);
+	const [L, A, B] = convert.hex.lab(c);
 	return { L, A, B };
 }
 

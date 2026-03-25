@@ -1,8 +1,8 @@
-import { Request, Response, NextFunction, RequestHandler } from 'express';
+import { Request, Response, RequestHandler } from 'express';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as moment from 'moment';
-import * as ExpressBrute from 'express-brute';
+import rateLimit from 'express-rate-limit';
 import { noop } from 'lodash';
 import { HASH } from '../generated/hash';
 import { isAdmin } from '../common/accountUtils';
@@ -96,19 +96,18 @@ export const admin = (server: ServerConfig): RequestHandler => (req, res, next) 
 	}
 };
 
-const store = new ExpressBrute.MemoryStore();
-
 export function limit(freeRetries: number, lifetime: number) {
-	const options: any = {
-		freeRetries,
-		lifetime,
-		failCallback(req: Request, res: Response, _next: NextFunction, nextValidRequestDate: any) {
+	const limiter = rateLimit({
+		windowMs: lifetime * 1000,
+		max: freeRetries,
+		handler(req, res) {
 			logger.warn(`rate limit ${req.url} ${req.ip}`);
-			res.status(429).send(`Too many requests, please try again ${moment(nextValidRequestDate).fromNow()}`);
+			const retryAfter = moment(Date.now() + lifetime * 1000).fromNow();
+			res.status(429).send(`Too many requests, please try again ${retryAfter}`);
 		}
-	};
+	});
 
-	return (new (ExpressBrute as any)(store, options)).prevent;
+	return limiter;
 }
 
 function reportError(e: Error, server: ServerConfig, req: Request) {

@@ -293,19 +293,19 @@ if (args.admin) {
 	const adminSocket = host.socket(AdminServerActions, ClientAdminActionsTemplate, createClient, socketOptionsBase);
 	const sendAdminPage = index.admin(production, `${base}/`, assetsBase, 'bootstrap-admin.js', adminSocket);
 
+	app.use(`${base}`, ...adminMiddlewares(), sendAdminPage);
 	app.get(`${base}`, ...adminMiddlewares(), sendAdminPage);
-	app.get(`${base}/*`, ...adminMiddlewares(), sendAdminPage);
 }
 
 if (args.tools) {
 	const toolsPage = index.user(
 		production, '/tools/', 'style-tools.css', 'bootstrap-tools.js', 'bootstrap-tools.js', undefined, true, !!args.local, false);
 
+	app.use('/tools', ...sessionMiddlewares(), auth, (_, res) => res.send(toolsPage.page));
 	app.get('/tools', ...sessionMiddlewares(), auth, (_, res) => res.send(toolsPage.page));
-	app.get('/tools/*', ...sessionMiddlewares(), auth, (_, res) => res.send(toolsPage.page));
 
 	app.use('/api-tools', ...sessionMiddlewares(), apiTools(server, settings, theWorld));
-	app.get('/api-tools/*', (_, res) => res.sendStatus(404));
+	app.get('/api-tools', (_, res) => res.sendStatus(404));
 }
 
 if (args.login) {
@@ -343,14 +343,14 @@ if (args.login) {
 	const loginApi = createInternalLoginApi(settings, liveSettings, stats, reloadSettings, removedDocument);
 	app.use('/api-internal-login', internal(config, server), wrapApi(server, loginApi));
 
-	app.get('/assets-admin/*', notFound);
-	app.get('/assets/*', notFound);
-	app.get('/auth/*', notFound);
-	app.get('/api/*', notFound);
-	app.get('/api1/*', notFound);
-	app.get('/api2/*', notFound);
+	app.use('/assets-admin', notFound);
+	app.use('/assets', notFound);
+	app.use('/auth', notFound);
+	app.use('/api', notFound);
+	app.use('/api1', notFound);
+	app.use('/api2', notFound);
 
-	app.get('/*', (req, res) => {
+	app.use((req, res) => {
 		if (settings.isPageOffline) {
 			res.send(offlinePage);
 		} else {
