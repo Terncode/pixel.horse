@@ -14,7 +14,7 @@ import * as express from 'express';
 import { WebSocketServer } from '@encharm/cws';
 import { compact, once } from 'lodash';
 import { copySync, removeSync, ensureDirSync } from 'fs-extra';
-import { createServerHost, createClientOptions, ServerOptions, ClientExtensions, Packet } from 'ag-sockets';
+import { createServerHost, createClientOptions, ServerOptions, ClientExtensions } from 'ag-sockets';
 import { config, port, server, args, version } from './config';
 import { YEAR, WEEK } from '../common/constants';
 import { rollbarCheckIgnore } from '../common/rollbar';
@@ -210,7 +210,7 @@ const sessionMiddlewares = once(() => [createSession(), passport.initialize(), p
 const adminMiddlewares = once(() => [...sessionMiddlewares(), isAdmin(server)]);
 const socketOptionsBase: ServerOptions = {
 	ws: { Server: WebSocketServer },
-	hash: STAMP,
+	hash: STAMP.toString(),
 };
 
 initLogRequest(stats.logRequest);
@@ -246,15 +246,15 @@ if (args.game) {
 		...socketOptionsBase,
 		verifyClient: () => !getSettings().isServerOffline && !liveSettings.shutdown,
 		forceBinary: true,
-		onSend: (packet: Packet) => {
-			sent += packet.binary ? packet.binary.byteLength : (packet.json ? packet.json.length : 0);
+		onSend: (id: number, name: string, packetSize: number, binary: boolean) => {
+			sent += packetSize;
 			sentPackets++;
-			stats.logSendStats(packet);
+			stats.logSendStats(id, name, binary, packetSize);
 		},
-		onRecv: (packet: Packet) => {
-			received += packet.binary ? packet.binary.byteLength : (packet.json ? packet.json.length : 0);
+		onRecv: (id: number, name: string, packetSize: number, binary: boolean) => {
+			received += packetSize;
 			receivedPackets++;
-			stats.logRecvStats(packet);
+			stats.logRecvStats(id, name, binary, packetSize);
 		},
 	};
 

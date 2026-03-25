@@ -1,6 +1,5 @@
 import '../lib';
 import { expect } from 'chai';
-import { encodeString } from 'ag-sockets/dist/utf8';
 import { createExtraOptions, updatePony, encryptInfo, createPony, getAndFixCharacterState } from '../../server/characterUtils';
 import { account, character, serverEntity, entity, genObjectId } from '../mocks';
 import { CharacterFlags, CharacterState, SupporterFlags, CharacterStateFlags } from '../../common/adminInterfaces';
@@ -13,6 +12,7 @@ import { CounterService } from '../../server/services/counter';
 import { createCharacterState } from '../../server/playerUtils';
 import { hasFlag } from '../../common/utils';
 import { Types } from 'mongoose';
+import { encodeString } from '../../common/binaryUtils';
 
 describe('characterUtils', () => {
 	describe('createPony()', () => {

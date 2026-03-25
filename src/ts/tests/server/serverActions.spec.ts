@@ -3,7 +3,6 @@ import { expect } from 'chai';
 import { stub, assert, spy, SinonSpy, SinonFakeTimers, useFakeTimers, SinonStub } from 'sinon';
 import { range } from 'lodash';
 import { getWriterBuffer } from 'ag-sockets';
-import { encodeString } from 'ag-sockets/dist/utf8';
 import {
 	ChatType, TileType, Action, PlayerAction, ModAction, Eye, Muzzle, SelectFlags, InfoFlags
 } from '../../common/interfaces';
@@ -24,6 +23,7 @@ import { SupporterInvitesService } from '../../server/services/supporterInvites'
 import { createCamera } from '../../common/camera';
 import { FriendsService } from '../../server/services/friends';
 import * as playerUtils from '../../server/playerUtils';
+import { encodeString } from '../../common/binaryUtils';
 
 describe('ServerActions', () => {
 	let accountService = stubFromInstance<AccountService>({

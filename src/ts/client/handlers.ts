@@ -1,6 +1,5 @@
 import { compact, escapeRegExp, repeat } from 'lodash';
 import { createBinaryReader, readUint8, readUint32, readUint16 } from 'ag-sockets/dist/browser';
-import { decodeString } from 'ag-sockets/dist/utf8';
 import {
 	Entity, Region, Pony, EntityState, PonyOptions, MessageType, isNonIgnorableMessage, EntityPlayerState,
 	EntityOrPonyOptions, isPublicMessage, FakeEntity, Action, WorldMap, DoAction, UpdateType, DecodedUpdate,
@@ -36,6 +35,7 @@ import { compareFriends } from '../components/services/model';
 import { canCollideWith } from '../common/collision';
 import { hasDrawLight, hasLightSprite } from './draw';
 import { setTile } from '../common/tileUtils';
+import { decodeStringFromUint8Array } from '../common/binaryUtils';
 
 function log(message: string) {
 	if (DEVELOPMENT && !TESTS) {
@@ -180,7 +180,7 @@ export function handleUpdateEntity(game: PonyTownGame, update: DecodedUpdate) {
 
 export function handleUpdatePonies(game: PonyTownGame, ponies: PonyData[]) {
 	for (const [id, options = {}, name, info, playerState, nameBad] of ponies) {
-		const decodedName = name && decodeString(name) || undefined;
+		const decodedName = name && decodeStringFromUint8Array(name) || undefined;
 		const filteredName = filterEntityName(game, decodedName, nameBad);
 		const decodedInfo = info ? bitmask(info, PONY_INFO_KEY) : '';
 		const pony = createPonyEntity(game, id, options, filteredName, decodedInfo, EntityState.None);

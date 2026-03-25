@@ -95,7 +95,7 @@ export class World {
 		// this.mapPools.set('house', createPool(10, () => createHouseMap(this, true), resetHouseMap));
 
 		partyService.partyChanged.subscribe(client => {
-			if (client.isConnected && client.map.usage === MapUsage.Party) {
+			if (client.isConnected() && client.map.usage === MapUsage.Party) {
 				if (
 					client.party && client.party.leader === client && client.map.instance === client.accountId &&
 					!this.maps.some(m => m.id === client.map.id && m.instance === client.party!.id)
@@ -785,7 +785,7 @@ export class World {
 				client.disconnect(true);
 			} else {
 				setTimeout(() => {
-					if (client.isConnected) {
+					if (client.isConnected()) {
 						client.disconnect(true);
 					}
 				}, 200);

@@ -1,6 +1,5 @@
 import { stubClass, resetStubMethods } from '../lib';
 import { NgZone } from '@angular/core';
-import { encodeString } from 'ag-sockets/dist/utf8';
 import { Subject } from 'rxjs';
 import { expect } from 'chai';
 import { stub, assert, SinonStub } from 'sinon';
@@ -25,6 +24,7 @@ import { createServerRegion } from '../../server/serverRegion';
 import { ServerRegion } from '../../server/serverInterfaces';
 import { getTile } from '../../common/tileUtils';
 import { Weather } from '../../common/commonInterfaces';
+import { encodeString } from '../../common/binaryUtils';
 
 describe('ClientActions', () => {
 	let zone: NgZone;

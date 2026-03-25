@@ -3,13 +3,13 @@ import { expect } from 'chai';
 import { encodeUpdateSimple, encodeRegionSimple } from '../../../common/encoders/updateEncoder';
 import { EntityState, DecodedRegionUpdate, UpdateFlags, TileType } from '../../../common/interfaces';
 import { entity, mockClient, serverEntity } from '../../mocks';
-import { encodeString } from 'ag-sockets/dist/utf8';
 import { emptyUpdate, decodeUpdate } from '../../../common/encoders/updateDecoder';
 import { createServerRegion } from '../../../server/serverRegion';
 import { IClient, ServerRegion } from '../../../server/serverInterfaces';
 import { setEntityName } from '../../../server/entityUtils';
 import { compressTiles } from '../../../common/compress';
 import { REGION_SIZE } from '../../../common/constants';
+import { encodeString } from '../../../common/binaryUtils';
 
 describe('updateEncoder', () => {
 	describe('encodeUpdate() + decodeUpdate()', () => {

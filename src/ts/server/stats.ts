@@ -3,7 +3,6 @@ import * as path from 'path';
 import * as moment from 'moment';
 import { compact } from 'lodash';
 import { Request } from 'express';
-import { Packet } from 'ag-sockets';
 import { RequestStats, ServerStats } from '../common/adminInterfaces';
 import { HOUR } from '../common/constants';
 import { ByteSize } from './utils/byteSize';
@@ -92,13 +91,13 @@ export class StatsTracker {
 	logSpamming = () => {
 		this.dailySpamming++;
 	}
-	logRecvStats = (packet: Packet) => {
-		this.logSocketStats(this.recvStats, packet);
+	logRecvStats = (id: number, name: string, binary: boolean, size: number) => {
+		this.logSocketStats(this.recvStats, id, name, binary, size);
 	}
-	logSendStats = (packet: Packet) => {
-		this.logSocketStats(this.sendStats, packet);
+	logSendStats = (id: number, name: string, binary: boolean, size: number) => {
+		this.logSocketStats(this.sendStats, id, name, binary, size);
 	}
-	private logSocketStats(stats: (SocketStats | undefined)[], { id, name, binary, json }: Packet) {
+	private logSocketStats(stats: (SocketStats | undefined)[], id: number, name: string, binary: boolean, size: number) {
 		const entry = stats[id] || (stats[id] = {
 			id,
 			name,
@@ -119,7 +118,7 @@ export class StatsTracker {
 			entry.countStr++;
 		}
 
-		entry.size.addBytes(binary ? (binary.length || binary.byteLength) : (json ? json.length : 0));
+		entry.size.addBytes(size);
 	}
 	getStats(): RequestStats[] {
 		const result: RequestStats[] = [];

@@ -2,9 +2,9 @@ import {
 	BinaryWriter, BinaryReader, writeInt16, readInt16, createBinaryReader, readUint16, readLength,
 	readUint32, readUint8, readObject, readUint8Array
 } from 'ag-sockets/dist/browser';
-import { decodeString } from 'ag-sockets/dist/utf8';
 import { DecodedUpdate, DecodedRegionUpdate, TileUpdate, UpdateFlags } from '../interfaces';
 import { tileWidth, tileHeight, MAX_VELOCITY } from '../constants';
+import { decodeStringFromUint8Array } from '../binaryUtils';
 
 export function writeVelocity(writer: BinaryWriter, value: number) {
 	if (value >= MAX_VELOCITY || value <= -MAX_VELOCITY) {
@@ -140,7 +140,7 @@ export function readOneUpdate(reader: BinaryReader): DecodedUpdate | undefined {
 	}
 
 	if ((flags & UpdateFlags.Name) !== 0) {
-		update.name = decodeString(readUint8Array(reader)) || undefined;
+		update.name = decodeStringFromUint8Array(readUint8Array(reader)) || undefined;
 		update.filterName = (flags & UpdateFlags.NameBad) !== 0;
 	}
 

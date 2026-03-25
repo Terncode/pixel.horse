@@ -1,5 +1,4 @@
-import { resizeWriter, writeUint8, BinaryWriter, writeUint32, writeUint16 } from 'ag-sockets';
-import { encodeString } from 'ag-sockets/dist/utf8';
+import { writeUint8, BinaryWriter, writeUint32, writeUint16 } from 'ag-sockets';
 import {
 	Entity, Rect, EntityState, UpdateFlags, Action, EntityOrPonyOptions, UpdateType, TileType, canWalk, setAnimationToEntityState
 } from '../common/interfaces';
@@ -16,6 +15,7 @@ import { PONY_TYPE } from '../common/constants';
 import { grapesPurple, grapesGreen } from '../common/entities';
 import { getTile } from '../common/tileUtils';
 import { getRegion, getRegionGlobal } from '../common/region';
+import { encodeString, resizeWriterWithData } from '../common/binaryUtils';
 
 export function isEntityShadowed(entity: ServerEntity): entity is ServerEntityWithClient {
 	return entity.client !== undefined && entity.client.shadowed;
@@ -163,17 +163,16 @@ export function pushUpdateEntity(update: EntityUpdateBase) {
 	}
 }
 
-function resizePreserveWriter(error: unknown, writer: BinaryWriter, offset: number) {
+function resizePreserveWriter(error: Error, writer: BinaryWriter, offset: number) {
 	if (isOverflowError(error)) {
-		const bytes = writer.bytes;
-		resizeWriter(writer);
-		writer.bytes.set(bytes);
+		resizeWriterWithData(writer);
 		writer.offset = offset;
-		// DEVELOPMENT && logger.debug(`resize writer to ${writer.bytes.byteLength} (${error.message})`);
+		// DEVELOPMENT && console.log(`resize writer to ${writer.view.byteLength} (${error.message})`);
 	} else {
 		throw error;
 	}
 }
+
 
 export function pushAddEntityToClient(client: IClient, entity: ServerEntity) {
 	const writer = client.updateQueue;
@@ -185,7 +184,7 @@ export function pushAddEntityToClient(client: IClient, entity: ServerEntity) {
 			writeOneEntity(writer, entity, client);
 			break;
 		} catch (e) {
-			resizePreserveWriter(e, writer, offset);
+			resizePreserveWriter(e as Error, writer, offset);
 		}
 	}
 }
@@ -201,7 +200,7 @@ export function pushUpdateEntityToClient(client: IClient, update: EntityUpdateBa
 			writeOneUpdate(writer, entity, flags, x, y, vx, vy, options, action, playerState);
 			break;
 		} catch (e) {
-			resizePreserveWriter(e, writer, offset);
+			resizePreserveWriter(e as Error, writer, offset);
 		}
 	}
 }
@@ -216,7 +215,7 @@ export function pushRemoveEntityToClient(client: IClient, entity: ServerEntity) 
 			writeUint32(writer, entity.id);
 			break;
 		} catch (e) {
-			resizePreserveWriter(e, writer, offset);
+			resizePreserveWriter(e as Error, writer, offset);
 		}
 	}
 }
@@ -233,7 +232,7 @@ export function pushUpdateTileToClient(client: IClient, x: number, y: number, ty
 			writeUint8(writer, type);
 			break;
 		} catch (e) {
-			resizePreserveWriter(e, writer, offset);
+			resizePreserveWriter(e as Error, writer, offset);
 		}
 	}
 }

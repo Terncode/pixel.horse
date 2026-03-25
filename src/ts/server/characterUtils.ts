@@ -1,6 +1,5 @@
 import { repeat } from 'lodash';
 import { toByteArray } from 'base64-js';
-import { encodeString } from 'ag-sockets/dist/utf8';
 import { PonyOptions, EntityState, UpdateFlags } from '../common/interfaces';
 import { ICharacter, IAccount, Character, queryCharacter } from './db';
 import { isForbiddenName } from '../common/security';
@@ -23,6 +22,7 @@ import { isPonyFlying } from '../common/entityUtils';
 import { createCharacterState, updateClientCharacter } from './playerUtils';
 import { encodeExpression } from '../common/encoders/expressionEncoder';
 import { QueryFilter } from 'mongoose';
+import { encodeString } from '../common/binaryUtils';
 
 export const defaultCharacterState: CharacterState = { x: 0, y: 0 };
 

@@ -1,6 +1,6 @@
 import { max, compact } from 'lodash';
 import { saveAs } from 'file-saver';
-import { Psd, writePsd, Layer } from 'ag-psd';
+import { Psd, writePsd, Layer, BlendMode } from 'ag-psd';
 import { SpriteSet, PonyInfoNumber, PaletteSpriteSet, NoDraw } from '../../common/interfaces';
 import { times, cloneDeep, setFlag, includes, toInt } from '../../common/utils';
 import { createDefaultPony, syncLockedPonyInfoNumber, toPaletteNumber, mockPaletteManager } from '../../common/ponyInfo';
@@ -237,7 +237,7 @@ function createPsdPatternLayers(sheet: Sheet, rows: number, cols: number, layer:
 			canvas: drawPsdLayer(sheet, rows, cols, layer, i),
 			hidden: true,
 			clipping: true,
-			blendMode: 'multiply',
+			blendMode: 'multiply' as BlendMode,
 		})),
 	]);
 }

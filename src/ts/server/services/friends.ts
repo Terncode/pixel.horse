@@ -53,7 +53,7 @@ export function toFriendRemove(client: IClient): FriendStatusData {
 }
 
 export function toFriend(client: IClient): FriendStatusData {
-	if (client.isConnected) {
+	if (client.isConnected()) {
 		return toFriendOnline(client);
 	} else {
 		return toFriendOffline(client);
