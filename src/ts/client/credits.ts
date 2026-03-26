@@ -25,6 +25,12 @@ export const CREDITS: Credit[] = [
 	// 	links: ['https://twitter.com/your_twitter_handle'],
 	// },
 	{
+		name: 'Terncode',
+		title: 'Programmer',
+		avatarIndex: 7,
+		links: ['https://twitter.com/terncode', 'https://github.com/Terncode']
+	},
+	{
 		name: 'Bytewave',
 		title: 'Programmer / Moderator',
 		avatarIndex: 0,
@@ -71,12 +77,6 @@ export const CREDITS: Credit[] = [
 		title: 'Moderator',
 		avatarIndex: 9,
 		links: ['https://twitter.com/Sunberreiy']
-	},
-	{
-		name: 'Terncode',
-		title: 'Programmer',
-		avatarIndex: 7,
-		links: ['https://twitter.com/terncode', 'https://github.com/Terncode']
 	},
 	{
 		name: 'ZizzyDizzyMC',
