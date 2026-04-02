@@ -66,6 +66,7 @@ const debugRate = DEVELOPMENT ? '1000/s' : '';
 	debug: false,
 	connectionTokens: true,
 	pingInterval: 3000,
+	clientPingInterval: 3000,
 	connectionTimeout: 10000,
 	reconnectTimeout: 500,
 	transferLimit: 4000,
