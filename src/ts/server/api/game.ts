@@ -1,4 +1,3 @@
-import { parse } from 'url';
 import { VERSION_ERROR } from '../../common/errors';
 import { IAccount, IOriginInfo, ICharacter, FindCharacter, HasActiveSupporterInvites } from '../db';
 import { UserError } from '../userError';
@@ -43,8 +42,8 @@ export const createJoinGame =
 				if (clientVersion !== version)
 					throw new UserError(VERSION_ERROR);
 
-				if (parse(url).host !== parse(host).host && !debug && !local)
-					throw new UserError('Invalid data', { message: 'Invalid host', desc: url });
+				if (new URL(url).host !== new URL(host).host && !debug && !local)
+    				throw new UserError('Invalid data', { message: 'Invalid host', desc: url });
 
 				if (!server)
 					throw new UserError('Invalid data');
