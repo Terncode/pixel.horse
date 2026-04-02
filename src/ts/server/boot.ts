@@ -8,6 +8,7 @@ import * as Bluebird from 'bluebird';
 import * as fs from 'fs';
 import * as yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
+import { noop } from 'lodash';
 
 const argv = (yargs as any)(hideBin(process.argv))
 	.option('beta', {
@@ -28,5 +29,19 @@ const argv = (yargs as any)(hideBin(process.argv))
 (global as any).TIMING = false;
 (global as any).TESTS = false;
 (global as any).performance = Date;
+
+function PerformanceDate(...args: any[]) {
+	//@ts-ignore
+	return new Date(...args);
+}
+
+PerformanceDate.now = Date.now;
+PerformanceDate.parse = Date.parse;
+PerformanceDate.UTC = Date.UTC;
+
+PerformanceDate.markResourceTiming = noop;
+
+(global as any).performance = PerformanceDate;
+
 
 Bluebird.promisifyAll(fs);

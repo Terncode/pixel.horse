@@ -1,4 +1,3 @@
-import * as request from 'request-promise';
 import { noop, flatMap, uniq } from 'lodash';
 import {
 	InternalGameServerState, ServerStatus, InternalLoginApi, InternalLoginServerState, InternalApi, HidingStats
@@ -82,13 +81,24 @@ export function getServer(id: string) {
 export function createApi<T extends {}>(host: string, url: string, apiToken: string): T {
 	return new Proxy<T>({} as any, {
 		get: (_, key) =>
-			(...args: any[]) =>
-				Promise.resolve<T>(request(`http://${host}/${url}/api`, {
-					json: true,
-					headers: { 'api-token': apiToken },
-					method: 'post',
-					body: { method: key, args },
-				})),
+			async (...args: any[]) => {
+				const response = await fetch(`http://${host}/${url}/api`, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						'api-token': apiToken,
+					},
+					body: JSON.stringify({ method: key, args }),
+				});
+
+				if (!response.ok) {
+					throw new Error(
+						`API call failed — ${response.status} ${response.statusText} on method "${String(key)}"`
+					);
+				}
+
+				return response.json() as Promise<T>;
+			},
 	});
 }
 

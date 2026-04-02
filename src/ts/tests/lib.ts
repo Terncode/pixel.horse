@@ -5,7 +5,7 @@ import * as mongoose from 'mongoose';
 import * as fs from 'fs';
 import * as path from 'path';
 import { deleteAsync } from 'del';
-import { once, mapValues } from 'lodash';
+import { once, mapValues, noop } from 'lodash';
 import { spawnSync } from 'child_process';
 import { createStubInstance, SinonStubbedInstance, stub } from 'sinon';
 import '../server/canvasUtilsNode';
@@ -22,7 +22,18 @@ require('chai').use(require('chai-as-promised'));
 (mongoose as any).modelSchemas = {};
 (global as any).TESTS = true;
 (global as any).TOOLS = true;
-(global as any).performance = Date;
+function PerformanceDate(...args: any[]) {
+	//@ts-ignore
+	return new Date(...args);
+}
+
+PerformanceDate.now = Date.now;
+PerformanceDate.parse = Date.parse;
+PerformanceDate.UTC = Date.UTC;
+
+PerformanceDate.markResourceTiming = noop;
+
+(global as any).performance = PerformanceDate;
 
 setPaletteManager(mockPaletteManager);
 
