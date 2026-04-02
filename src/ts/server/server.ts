@@ -61,7 +61,7 @@ import { ClientAdminActionsTemplate } from '../common/clientAdminActionsTemplate
 
 function getServiceWorker() {
 	try {
-		return fs.readFileSync(pathTo('build', 'sw.min.js'));
+		return fs.readFileSync(pathTo('dist', 'browser', 'sw.js'));
 	} catch {
 		return '';
 	}
@@ -90,20 +90,20 @@ const rollbar = config.rollbar && Rollbar.init({
 	checkIgnore: rollbarCheckIgnore,
 } as any);
 
-let assetsPath = pathTo('build', 'assets');
-let adminAssetsPath = pathTo('build', 'assets-admin');
+let assetsPath = pathTo('dist', 'browser', 'assets');
+let adminAssetsPath = pathTo('dist', 'browser', 'assets-admin');
 
-ensureDirSync(pathTo('build-copy'));
+ensureDirSync(pathTo('build-snapshot'));
 
 if (production && args.login) {
-	const newAssetsPath = pathTo('build-copy', 'assets');
+	const newAssetsPath = pathTo('build-snapshot', 'assets');
 	removeSync(newAssetsPath);
 	copySync(assetsPath, newAssetsPath);
 	assetsPath = newAssetsPath;
 }
 
 if (production && args.admin) {
-	const newAssetsPath = pathTo('build-copy', 'assets-admin');
+	const newAssetsPath = pathTo('build-snapshot', 'assets-admin');
 	removeSync(newAssetsPath);
 	copySync(adminAssetsPath, newAssetsPath);
 	adminAssetsPath = newAssetsPath;

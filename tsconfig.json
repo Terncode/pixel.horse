@@ -6,7 +6,7 @@
 			"ES2022"
 		],
 		"rootDir": "src/ts",
-        "outDir": "src/scripts",
+        "outDir": "dist/node",
 		"pretty": true,
 		"module": "commonjs",
 		"moduleResolution": "node",

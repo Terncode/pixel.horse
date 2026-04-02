@@ -3,7 +3,7 @@ const ignore = /^\/((a(pi(\d?|-tools)|uth|dm(in)?)|(bl|m)ep)|tools|reload)\/?|\.
 
 
 module.exports = {
-	globDirectory: 'build/',
+	globDirectory: 'dist/browser/',
 	globPatterns: [
 		'**/*.{js,css,png,jpg,wasm}',
 	],
@@ -17,7 +17,7 @@ module.exports = {
 		'**/sw.js',
 	],
 	dontCacheBustURLsMatching: /-[a-f0-9]{10}\./,
-	swDest: 'build/sw.js',
+	swDest: 'dist/browser/sw.js',
 	navigateFallback: '/',
 	navigateFallbackDenylist: [ignore],
 	maximumFileSizeToCacheInBytes: 10 * 1024 * 1024, // 10 MB

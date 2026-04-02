@@ -39,7 +39,7 @@ const max = Math.max(...([...scripts].map(e => e[0].length)));
 function getScripts(args) {
 	const { analyze, main, admin, tools, beta } = args;
 	if (tools || beta) {
-		return [...scripts, toolsScrips];
+		return [...scripts];
 	}
 
 	if (analyze || main) {
@@ -64,7 +64,7 @@ export default (args = {}) =>
 			},
 			output: Object.assign({}, common.output, {
 				filename: '[name]-[chunkhash:10].js',
-				path: path.resolve(__dirname, 'build', outDir, 'scripts'),
+				path: path.resolve(__dirname, 'dist', 'browser' , outDir, 'scripts'),
 			}),
 			devtool: script === 'bootstrap' ? 'source-map' : false,
 			module: {
@@ -97,7 +97,7 @@ export default (args = {}) =>
 				modules: true,
 				errorDetails: true,
 				moduleTrace: true
-			},	
+			},
 			optimization: {
 				minimizer: [
 					new TerserPlugin({

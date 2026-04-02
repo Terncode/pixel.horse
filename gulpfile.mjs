@@ -70,13 +70,16 @@ const npmScript = (name, args = []) => {
 };
 
 const clean = () => deleteAsync([
-	'build/*',
+	'dist/**',
+	'!dist/node',
+	'!dist/node/**',
+	'!dist/pony*',
 	'temp/*',
 	'!temp/.gitignore',
 ]);
 
-const clearAdmin = () => deleteAsync([
-	'build/assets-admin',
+const cleanAdmin = () => deleteAsync([
+	'dist/browser/assets-admin',
 ]);
 
 const manifest = cb => {
@@ -106,7 +109,7 @@ const manifest = cb => {
 };
 
 const sprites = () => Promise.resolve() // del(['tools/output/images/*'])
-	.then(() => runAsync('node', ['src/scripts/tools/create-sprites.js']))
+	.then(() => runAsync('node', ['dist/node/tools/create-sprites.js']))
 	.then(() => gulp.src('tools/output/images/*', { encoding: false })
 		.pipe(gulpif(!argv.fast, imagemin()))
 		.pipe(gulp.dest('assets/images')));
@@ -195,7 +198,7 @@ const rollbar = cb => {
 };
 
 const assetsRev = cb => {
-	const json = fs.readFileSync('build/rev-manifest.json', 'utf8');
+	const json = fs.readFileSync('dist/browser/rev-manifest.json', 'utf8');
 	const data = _.mapValues(JSON.parse(json), value => value.replace(/^\S+-([a-f0-9]{10})\.\S+$/, '$1'));
 	const code = `export const REV: { [key: string]: string; } = ${JSON.stringify(data, null, 4)};`;
 	fs.writeFile('src/ts/generated/rev.ts', lintCode(code), 'utf8', cb);
@@ -204,9 +207,9 @@ const assetsRev = cb => {
 const assetsCopy = () => gulp.src('assets/**/*', { encoding: false })
 	.pipe(gulpif(!argv.fast, imagemin()))
 	.pipe(rev())
-	.pipe(gulp.dest('build/assets'))
+	.pipe(gulp.dest('dist/browser/assets'))
 	.pipe(rev.manifest())
-	.pipe(gulp.dest('build'));
+	.pipe(gulp.dest('dist/browser'));
 
 function buildSass(name, src, dest) {
 	const result = () => gulp.src([src], { base: 'src', encoding: false })
@@ -221,14 +224,15 @@ function buildSass(name, src, dest) {
 	return result;
 }
 
-
-const sassMain = buildSass('main', 'src/styles/style.scss', 'build/assets');
-const sassInline = buildSass('inline', 'src/styles/style-inline.scss', 'build/assets');
-const sassTools = buildSass('tools', 'src/styles/style-tools.scss', 'build/assets');
-const sassAdmin = buildSass('admin', 'src/styles/style-admin.scss', 'build/assets-admin');
+const sassMain = buildSass('main', 'src/styles/style.scss', 'dist/browser/assets');
+const sassInline = buildSass('inline', 'src/styles/style-inline.scss', 'dist/browser/assets');
+const sassTools = buildSass('tools', 'src/styles/style-tools.scss', 'dist/browser/assets');
+const sassAdmin = buildSass('admin', 'src/styles/style-admin.scss', 'dist/browser/assets-admin');
 const sassTasks = gulp.series(sassMain, sassInline, sassTools, sassAdmin);
 
-const testScripts = ['src/scripts/tests/**/*.js'];
+const testScripts = [
+	'dist/node/tests/**/*.js'
+];
 const ts = npmScript('ts');
 
 const tests = () => gulp.src(testScripts, { read: false })
@@ -253,11 +257,11 @@ const remap = () => gulp.src('coverage/coverage.json')
 	.pipe(remapIstanbul({ reports: { html: 'coverage-remapped' } }));
 
 const size = () => gulp.src([
-	'build/assets/*.js',
-	'build/assets/scripts/*.js',
-	'build/assets-admin/scripts/*.js',
-	'build/assets/styles/*.css',
-	'build/assets-admin/styles/*.css',
+	'dist/browser/assets/*.js',
+	'dist/browser/assets/scripts/*.js',
+	'dist/browser/assets-admin/scripts/*.js',
+	'dist/browser/assets/styles/*.css',
+	'dist/browser/assets-admin/styles/*.css',
 ]).pipe(sizereport({ gzip: true, total: true }));
 
 const music = () => gulp.src(path.join(config.assetsPath, 'assets/music/*.wav'), { read: false })
@@ -265,14 +269,14 @@ const music = () => gulp.src(path.join(config.assetsPath, 'assets/music/*.wav'),
 		'ffmpeg -y -i "<%= file.path %>" -acodec libmp3lame "<%= out(file.path, ".mp3") %>"',
 		'ffmpeg -y -i "<%= file.path %>" -acodec libvorbis "<%= out(file.path, ".webm") %>"',
 	], {
-			templateData: {
-				out: (file, ext) => path.join('assets', 'music', path.basename(file, '.wav') + ext),
-			}
-		}));
+		templateData: {
+			out: (file, ext) => path.join('assets', 'music', path.basename(file, '.wav') + ext),
+		}
+	}));
 
 const serverDev = cb => {
 	if (!argv.noserver) {
-		const serverPath = path.join('src', 'scripts', 'server', 'server.js');
+		const serverPath = path.join('dist', 'node', 'server', 'server.js');
 		const options = { env: { NODE_OPTIONS: '--inspect' } };
 		const commonArgs = [serverPath, '--inspect', '--color', '--beta', '--admin'];
 		const server = argv.adm ?
@@ -285,13 +289,15 @@ const serverDev = cb => {
 			cb();
 		};
 
-		gulp.watch(['build/**/*.css']).on('change', path => server.notify({ path }));
-		gulp.watch(['build/**/*.js']).on('change', path => server.notify({ path }));
+		gulp.watch(['dist/browser/**/*.css']).on('change', path => server.notify({ path }));
+		gulp.watch(['dist/browser/**/*.js']).on('change', path => server.notify({ path }));
 		gulp.watch([
-			'src/scripts/common/**/*.js',
-			'src/scripts/generated/**/*.js',
-			'src/scripts/graphics/**/*.js',
-			'src/scripts/server/**/*.js',
+			'config.json',
+			'src/maps/*.json',
+			'dist/node/common/**/*.js',
+			'dist/node/generated/**/*.js',
+			'dist/node/graphics/**/*.js',
+			'dist/node/server/**/*.js',
 			'views/index.pug',
 		], { debounceDelay: 1000 }, restart);
 	}
@@ -350,7 +356,7 @@ const watch = cb => {
 	gulp.watch(['src/ts/graphics/shaders/*.glsl'], shaders);
 
 	if (argv.coverage || argv.tests) {
-		gulp.watch(['src/scripts/**/*.js'], { debounceDelay: 1000 }, argv.coverage ? covRemap : tests);
+		gulp.watch(['dist/node/**/*.js'], { debounceDelay: 1000 }, argv.coverage ? covRemap : tests);
 	}
 
 	cb();
@@ -367,11 +373,15 @@ const watchTools = cb => {
 	cb();
 };
 
-const watchTests = cb => {
-	const task = argv.coverage ? covRemap : tests;
-	gulp.watch(['src/scripts/**/*.js', 'src/tests/**/*.txt', 'src/tests/**/*.png'], { debounceDelay: 1000 }, task);
-	cb();
-};
+// const watchTests = cb => {
+// 	const task = argv.coverage ? covRemap : tests;
+// 	gulp.watch([
+// 		'dist/node/**/*.js',
+// 		'src/tests/**/*.txt',
+// 		'src/tests/**/*.png'
+// 	], { debounceDelay: 1000 }, task);
+// 	cb();
+// };
 
 const setProd = cb => {
 	development = false;
@@ -379,12 +389,12 @@ const setProd = cb => {
 };
 
 const empty = cb => cb();
-const tsTools = gulp.series(npmScript('ts-tools'));
+//const tsTools = gulp.series(npmScript('ts-tools'));
 const spritesTask = argv.sprites ? sprites : empty;
-const buildSprites = gulp.series(tsTools, sprites);
+//const buildSprites = gulp.series(tsTools, sprites);
 
 const build = gulp.series(clean, setProd, common, ts, webpackProd, sw, size);
-const admin = gulp.series(clearAdmin, setProd, sassAdmin, ts, webpackAdmin);
+const admin = gulp.series(cleanAdmin, setProd, sassAdmin, ts, webpackAdmin);
 const dev = gulp.series(clean, spritesTask, common, gulp.parallel(serverDev, watch, watchTools));
 
 export {
