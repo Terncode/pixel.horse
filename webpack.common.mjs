@@ -1,9 +1,16 @@
-const webpack = require('webpack');
-const path = require('path');
-const autoprefixer = require('autoprefixer');
-const cssnano = require('cssnano');
+import webpack from 'webpack';
+import path from 'path';
+import autoprefixer from 'autoprefixer';
+import cssnano from 'cssnano';
+import { fileURLToPath } from 'url';
+import { createRequire } from 'module';
 
-module.exports = {
+const require = createRequire(import.meta.url);
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const config = {
 	context: path.join(__dirname, 'src'),
 	output: {
 		path: path.resolve(__dirname, 'build', 'assets', 'scripts'),
@@ -12,6 +19,9 @@ module.exports = {
 	},
 	resolve: {
 		extensions: ['.ts', '.js'],
+		fallback: {
+			util: require.resolve('util/'),
+		},
 	},
 	module: {
 		rules: [
@@ -22,21 +32,25 @@ module.exports = {
 			},
 			{
 				test: /\.css$/,
-				use: [{
-					loader: 'raw-loader',
-					options: {
-						esModule: false,
+				use: [
+					{
+						loader: 'raw-loader',
+						options: {
+							esModule: false,
+						},
 					},
-				},],
+				],
 			},
 			{
 				test: /\.html$/,
-				use: [{
-					loader: 'raw-loader',
-					options: {
-						esModule: false,
+				use: [
+					{
+						loader: 'raw-loader',
+						options: {
+							esModule: false,
+						},
 					},
-				},],
+				],
 			},
 			{
 				test: /\.pug$/,
@@ -49,7 +63,10 @@ module.exports = {
 					},
 					{
 						loader: 'pug-html-loader',
-						options: { doctype: 'html', plugins: require('pug-plugin-ng') },
+						options: {
+							doctype: 'html',
+							plugins: (await import('pug-plugin-ng')).default,
+						},
 					},
 				],
 			},
@@ -69,10 +86,13 @@ module.exports = {
 								ident: 'postcss',
 								plugins: [
 									autoprefixer('last 2 versions'),
-									cssnano({ discardComments: { removeAll: true } }),
+									cssnano({
+										discardComments: {
+											removeAll: true,
+										},
+									}),
 								],
-
-							}
+							},
 						},
 					},
 					{
@@ -86,18 +106,20 @@ module.exports = {
 				],
 			},
 			{
-				// Mark files inside `@angular/core` as using SystemJS style dynamic imports.
-				// Removing this will cause deprecation warnings to appear.
-				test: /[\/\\]@angular[\/\\]core[\/\\].+\.js$/,
-				parser: { system: false }, // disable SystemJS
+				test: /[\\/\\]@angular[\\/\\]core[\\/\\].+\.js$/,
+				parser: {
+					system: false,
+				},
 			},
 		],
 	},
 	plugins: [
 		new webpack.ContextReplacementPlugin(
-			/\@angular(\\|\/)core(\\|\/)/,
+			/\\@angular(\\|\/)core(\\|\/)/,
 			path.resolve(__dirname, 'src', 'ts'),
 			{}
 		),
 	],
 };
+
+export default config;

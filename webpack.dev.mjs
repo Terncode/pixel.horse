@@ -1,33 +1,36 @@
-const webpack = require('webpack');
-const { merge } = require('webpack-merge');
-const common = require('./webpack.common.js');
+import webpack from 'webpack';
+import { merge } from 'webpack-merge';
+import common from './webpack.common.mjs';
+import fs from 'fs';
+
+const r = p => JSON.parse(fs.readFileSync(p, 'utf8'));
+const tsconfig = r('./tsconfig.json');
 
 const compilerOptions = {
-	...require('./tsconfig.json').compilerOptions,
+	...tsconfig.compilerOptions,
 	target: 'es6',
 	module: 'es2016',
 };
 
-module.exports = merge(common, {
+const config = merge(common, {
 	mode: 'development',
 	entry: {
-		'bootstrap': './ts/bootstrap',
+		bootstrap: './ts/bootstrap',
 		'bootstrap-admin': './ts/bootstrap-admin',
 		'bootstrap-tools': './ts/bootstrap-tools',
 	},
-	devtool:  'eval-cheap-source-map',
+	devtool: 'eval-cheap-source-map',
 	devServer: {
 		host: '0.0.0.0',
 		port: 8091,
-		hot: true,
 		historyApiFallback: true,
 		compress: false,
 		client: {
 			progress: true,
 			overlay: {
 				errors: true,
-				warnings: false
-			}
+				warnings: false,
+			},
 		},
 		static: {
 			publicPath: '/assets/scripts/',
@@ -36,18 +39,19 @@ module.exports = merge(common, {
 		headers: {
 			'Access-Control-Allow-Origin': '*',
 			'Access-Control-Allow-Methods': 'GET',
-			'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization'
-		  }
+			'Access-Control-Allow-Headers':
+				'X-Requested-With, content-type, Authorization',
+		},
 	},
 	stats: {
 		preset: 'normal',
 		reasons: true,
 		modules: true,
 		errorDetails: true,
-		moduleTrace: true
-	},	
+		moduleTrace: true,
+	},
 	output: {
-		pathinfo: false
+		pathinfo: false,
 	},
 	watchOptions: {
 		ignored: /node_modules/,
@@ -70,7 +74,7 @@ module.exports = merge(common, {
 	},
 	optimization: {
 		removeAvailableModules: false,
-		removeEmptyChunks: false, // replacement of NamedModulesPlugin(),
+		removeEmptyChunks: false,
 		moduleIds: 'named',
 		splitChunks: {
 			cacheGroups: {
@@ -85,8 +89,14 @@ module.exports = merge(common, {
 	plugins: [
 		new webpack.HotModuleReplacementPlugin(),
 		new webpack.DefinePlugin({
-			DEVELOPMENT: true, TOOLS: true, SERVER: false,
-			BETA: true, TIMING: true, TESTS: false
+			DEVELOPMENT: true,
+			TOOLS: true,
+			SERVER: false,
+			BETA: true,
+			TIMING: true,
+			TESTS: false,
 		}),
 	],
 });
+
+export default config;

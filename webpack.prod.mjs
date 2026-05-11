@@ -12,7 +12,6 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const r = p => JSON.parse(fs.readFileSync(p, 'utf8'));
-
 const config = r('./config.json');
 
 const analytics = config.analytics ? `
