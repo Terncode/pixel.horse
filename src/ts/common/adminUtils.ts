@@ -1,5 +1,5 @@
-import * as moment from 'moment';
-import { escapeRegExp, startsWith, range, uniq, compact } from 'lodash';
+import { differenceInYears, format, formatDistanceToNow, subDays } from 'date-fns';
+import { escapeRegExp, startsWith, uniq, compact } from 'lodash';
 import { fromNow, toInt, hasFlag, compareDates, removeItem, includes } from './utils';
 import { DAY } from './constants';
 import {
@@ -45,7 +45,7 @@ export function highlightWords(text?: string) {
 }
 
 export function getAge(birthdate: Date) {
-	return moment().diff(birthdate, 'years');
+	return differenceInYears(new Date(), birthdate);
 }
 
 // chat & events
@@ -55,17 +55,19 @@ export interface ChatDate {
 	label: string;
 }
 
-export function createChatDate(date: moment.Moment): ChatDate {
+export function createChatDate(date: Date): ChatDate {
 	return {
 		value: date.toISOString(),
-		label: date.format('MMMM Do YYYY'),
+		label: format(date, 'MMMM do yyyy')
 	};
 }
 
 export function createDateRange(startDate: string | Date, days: number): ChatDate[] {
-	return range(days, 0)
-		.map(d => moment(startDate).subtract(d, 'days'))
-		.map(createChatDate);
+	const start = new Date(startDate);
+
+	return Array.from({ length: days }, (_, i) =>
+		createChatDate(subDays(start, days - i - 1))
+	);
 }
 
 // filtering
@@ -324,19 +326,22 @@ const fieldToAction: { [key: string]: string | undefined; } = {
 	ban: 'Banned',
 };
 
+
 export function banMessage(field: string, value: number) {
 	const action = fieldToAction[field] || 'Did';
 
 	if (value === 0) {
 		return `Un${action.toLowerCase()}`;
-	} else if (value === -1) {
-		return action;
-	} else {
-		return `${action} for (${moment.duration(value - Date.now()).humanize()})`;
 	}
+
+	if (value === -1) {
+		return action;
+	}
+
+	return `${action} for (${formatDistanceToNow(new Date(value), { addSuffix: false })})`;
 }
 
-export function isActive(value: number | undefined): boolean {
+export function isActive(value: number | undefined): value is number {
 	return !!value && (value === -1 || value > Date.now());
 }
 

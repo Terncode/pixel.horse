@@ -1,4 +1,4 @@
-import * as moment from 'moment';
+import { format } from 'date-fns';
 import chalk from 'chalk';
 import { IClient } from './serverInterfaces';
 import { decodeMovement, dirToVector, flagsToSpeed, isMovingRight } from '../common/movementUtils';
@@ -172,7 +172,7 @@ function checkTeleporting(
 			const colY = outY ? chalk.red : chalk.reset;
 
 			logger.log(
-				`[${chalk.gray(moment().format('MMM DD HH:mm:ss'))}] [${chalk.yellow('teleport')}] ` +
+				`[${chalk.gray(format(new Date(), 'MMM dd HH:mm:ss'))}] [${chalk.yellow('teleport')}] ` +
 				`[${chalk.gray(client.accountId)}] (${client.account.name})\n` +
 				`\tdx: ${client.lastX.toFixed(5)} -> ${colX(x.toFixed(5))} [${minX.toFixed(5)}-${maxX.toFixed(5)}]\n` +
 				`\tdy: ${client.lastY.toFixed(5)} -> ${colY(y.toFixed(5))} [${minY.toFixed(5)}-${maxY.toFixed(5)}]\n` +

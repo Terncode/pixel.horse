@@ -13,8 +13,8 @@ import { faCaretUp, faArrowDown, faSearch } from '../../../client/icons';
 import { sampleMessages } from '../../../common/debugData';
 import { findEntityById } from '../../../client/worldMap';
 import { colorToRGBA, rgb2hsl, HSL, hsl2CSS } from '../../../common/color';
-import * as moment from 'moment';
 import { isMobile } from '../../../client/data';
+import { format } from 'date-fns';
 
 interface IndexEntryUser {
 	id: number;
@@ -143,13 +143,18 @@ export function updateChatLogLine(line: ChatLogLineDOM, entry: ChatLogMessage, h
 	replaceNodes(line.message, message);
 }
 
+
 function updateTime(line: ChatLogLineDOM, hourMode?: '12' | '24') {
 	line.time.style.display = 'inline';
 	if (!hourMode) return;
-	if (hourMode === '24')
-		replaceNodes(line.timeContent, `[${moment().format('HH:mm:ss')}] `);
-	if (hourMode === '12')
-		replaceNodes(line.timeContent, `[${moment().format('LTS')}] `);
+
+	if (hourMode === '24') {
+		replaceNodes(line.timeContent, `[${format(new Date(), 'HH:mm:ss')}] `);
+	}
+
+	if (hourMode === '12') {
+		replaceNodes(line.timeContent, `[${format(new Date(), 'hh:mm:ss a')}] `);
+	}
 }
 
 function setNameColors(line: ChatLogLineDOM | undefined, colors?: string[]) {

@@ -1,7 +1,7 @@
 import { Request, Response, RequestHandler } from 'express';
 import * as fs from 'fs';
 import * as path from 'path';
-import * as moment from 'moment';
+import { formatDistanceToNow } from 'date-fns';
 import rateLimit from 'express-rate-limit';
 import { noop } from 'lodash';
 import { HASH } from '../generated/hash';
@@ -102,7 +102,9 @@ export function limit(freeRetries: number, lifetime: number) {
 		max: freeRetries,
 		handler(req, res) {
 			logger.warn(`rate limit ${req.url} ${req.ip}`);
-			const retryAfter = moment(Date.now() + lifetime * 1000).fromNow();
+			const retryAfter = formatDistanceToNow(new Date(Date.now() + lifetime * 1000), {
+				addSuffix: true
+			});
 			res.status(429).send(`Too many requests, please try again ${retryAfter}`);
 		}
 	});

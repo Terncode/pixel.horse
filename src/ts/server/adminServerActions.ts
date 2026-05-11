@@ -1,7 +1,7 @@
-import * as moment from 'moment';
 import { Socket, SocketServer, Method, ClientExtensions } from 'ag-sockets';
 import { AccountCounters, Subscription } from '../common/interfaces';
 import { HOUR } from '../common/constants';
+import { formatDuration as formatDurationDateFn } from 'date-fns';
 import { fromNow, removeItem, formatDuration } from '../common/utils';
 import { hasRole } from '../common/accountUtils';
 import {
@@ -38,6 +38,7 @@ import { splitAccounts } from './api/merge';
 import { removeAuth, assignAuth } from './api/admin-auths';
 import { removeFriend, addFriend } from './accountUtils';
 import { ClientAdminActionsTemplate, ClientUpdate } from '../common/clientAdminActionsTemplate';
+import { intervalToDuration } from 'date-fns';
 
 @Socket({
 	id: 'admin',
@@ -413,7 +414,12 @@ export class AdminServerActions implements IAdminServerActions, SocketServer {
 	}
 	@Method({ promise: true })
 	async timeoutAccount(accountId: string, timeout: number) {
-		const message = timeout ? `Timed out ${moment.duration(timeout).humanize()}` : 'Unmuted';
+		const message = timeout
+			? `Timed out ${formatDurationDateFn(
+				intervalToDuration({ start: 0, end: timeout }),
+				{ format: ['days', 'hours', 'minutes', 'seconds'] }
+			)}`
+			: 'Unmuted';
 		system(accountId, `${message} ${this.by()}`);
 		await timeoutAccount(accountId, fromNow(timeout | 0));
 	}

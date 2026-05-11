@@ -1,11 +1,11 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import * as moment from 'moment';
 import { compact } from 'lodash';
 import { Request } from 'express';
 import { RequestStats, ServerStats } from '../common/adminInterfaces';
 import { HOUR } from '../common/constants';
 import { ByteSize } from './utils/byteSize';
+import { format } from 'date-fns';
 
 interface Stats {
 	count: number;
@@ -175,7 +175,7 @@ export class StatsTracker {
 	}
 	private submitDailyStats(statsPath: string) {
 		const statsEntry = [
-			moment().format('MMM DD'), // DD-MM-YY HH:mm:ss
+			format(new Date(), 'MMM dd'), // DD-MM-YY HH:mm:ss
 			this.dailyRequestCount.toString(),
 			this.dailyRequestSize.toString(),
 			this.dailySwearing.toString(),

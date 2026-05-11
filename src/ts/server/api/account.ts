@@ -1,4 +1,4 @@
-import * as moment from 'moment';
+import { formatDistanceToNow } from 'date-fns';
 import { ACCOUNT_NAME_MAX_LENGTH, ACCOUNT_NAME_MIN_LENGTH, MIN_CHATLOG_RANGE, MAX_CHATLOG_RANGE, HIDES_PER_PAGE } from '../../common/constants';
 import {
 	UpdateAccountData, AccountSettings, AccountData, ModAction, EntitiesEditorInfo, EntityNameTypes
@@ -179,7 +179,7 @@ export async function getHides(account: IAccount, page: number) {
 	return hideRequests.map((f: any) => ({
 		id: f._id.toString(),
 		name: f.name,
-		date: moment(f.date).fromNow(),
+		date: formatDistanceToNow(new Date(f.date), { addSuffix: true }),
 	}));
 }
 

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, OnDestroy, OnChanges, ElementRef, ChangeDetectionStrategy } from '@angular/core';
-import * as moment from 'moment';
 import { IntervalUpdateService } from '../../services/intervalUpdateService';
+import { formatDistanceToNow } from 'date-fns';
 
 @Component({
 	selector: 'from-now',
@@ -9,13 +9,13 @@ import { IntervalUpdateService } from '../../services/intervalUpdateService';
 })
 export class FromNow implements OnInit, OnDestroy, OnChanges {
 	@Input() time?: any;
-	private moment?: moment.Moment;
+	private date?: Date;
 	private text?: string;
 	private unsubscribe?: () => void;
 	constructor(private element: ElementRef, private updateService: IntervalUpdateService) {
 	}
 	ngOnChanges() {
-		this.moment = this.time ? moment(this.time) : undefined;
+		this.date = this.time ? new Date(this.time) : undefined;
 		this.update();
 	}
 	ngOnInit() {
@@ -26,7 +26,9 @@ export class FromNow implements OnInit, OnDestroy, OnChanges {
 		this.unsubscribe && this.unsubscribe();
 	}
 	private update() {
-		const text = this.moment ? this.moment.fromNow(true).replace('seconds', 'secs') : '';
+		const text = this.date
+			? formatDistanceToNow(this.date, { addSuffix: false }).replace('seconds', 'secs')
+			: '';
 
 		if (this.text !== text) {
 			this.text = text;

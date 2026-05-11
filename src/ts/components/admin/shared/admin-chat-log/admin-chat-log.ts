@@ -1,5 +1,4 @@
 import { Component, Input, OnDestroy, ElementRef } from '@angular/core';
-import * as moment from 'moment';
 import { AdminModel } from '../../../services/adminModel';
 import { Account } from '../../../../common/adminInterfaces';
 import { ChatDate, createChatDate, createDateRange } from '../../../../common/adminUtils';
@@ -7,6 +6,7 @@ import { faSearch, faSpinner, faSync, faFileAlt, faTimes, faChevronLeft, faChevr
 import { removeAllNodes, appendAllNodes, showTextInNewTab } from '../../../../client/htmlUtils';
 import { includes } from '../../../../common/utils';
 import { replaceSwears } from '../../../../client/adminHtmlUtils';
+import { addDays } from 'date-fns';
 
 @Component({
 	selector: 'admin-chat-log',
@@ -25,7 +25,7 @@ export class AdminChatLog implements OnDestroy {
 	accounts: Account[] = [];
 	search?: string;
 	open = false;
-	today: ChatDate = createChatDate(moment());
+	today: ChatDate = createChatDate(new Date());
 	dates: ChatDate[] = [/*{ value: 'all', label: 'All' },*/ ...createDateRange(new Date(), 14)];
 	date?: ChatDate;
 	chatRaw?: string;
@@ -133,7 +133,9 @@ export class AdminChatLog implements OnDestroy {
 	}
 	private switchDate(days: number) {
 		const validDate = this.date && this.date.value !== 'all';
-		this.date = validDate ? createChatDate(moment(this.date!.value).add(days, 'days')) : this.today;
+		this.date = validDate
+			? createChatDate(addDays(new Date(this.date!.value), days))
+			: this.today;
 		this.refresh();
 	}
 	private stopInterval() {

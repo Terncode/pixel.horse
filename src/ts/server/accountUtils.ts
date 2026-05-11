@@ -1,4 +1,4 @@
-import * as moment from 'moment';
+import { formatDistanceToNow } from 'date-fns';
 import { Types } from 'mongoose';
 import { uniq, truncate } from 'lodash';
 import { AccountState, AccountFlags, AuthBase } from '../common/adminInterfaces';
@@ -38,7 +38,7 @@ export interface CreateAccountOptions extends SuspiciousCheckers {
 }
 
 function getBanInfo(value: number | undefined): string | undefined {
-	return isActive(value) ? (value === -1 ? 'perma' : moment(value).fromNow(true)) : undefined;
+	return isActive(value) ? (value === -1 ? 'perma' : formatDistanceToNow(new Date(value))) : undefined;
 }
 
 export function getModInfo({ accountId, account, country }: IClient): ModInfo {
