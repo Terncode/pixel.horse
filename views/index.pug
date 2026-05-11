@@ -76,5 +76,5 @@ html(lang="en")
 		if production
 			script(src=script async)
 		else
-			script(src="http://localhost:8091/assets/scripts/vendor.js")
-			script(src="http://localhost:8091" + script.replace('/adm/', '/'))
+			script(src="http://" + address + ":"+ port + "/assets/scripts/vendor.js")
+			script(src="http://" + address + ":"+ port + script.replace('/adm/', '/'))

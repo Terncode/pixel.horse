@@ -118,6 +118,8 @@ export function createIndex(assetsPath: string, adminAssetsPath: string) {
 			script,
 			scriptES,
 			oauthProviders,
+			port: 8091,
+			address: config.local.split(':')[0],
 			facebookAppId: config.facebookAppId,
 			isPublic: isPublic ? 'true' : undefined,
 		});
