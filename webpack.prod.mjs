@@ -6,7 +6,7 @@ import WrapperPlugin from 'wrapper-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { AngularWebpackPlugin } from '@ngtools/webpack';
 import linkerPlugin from '@angular/compiler-cli/linker/babel';
-import common from './webpack.common.js';
+import common from './webpack.common.mjs';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
