@@ -472,8 +472,8 @@ export class ToolsAnimation implements OnInit, OnDestroy {
 			}
 		} else {
 			const frames = this.headAnimation.frames
-			.map(f => [f.duration, '[' + compressHeadFrame(f).join(', ') + ']'])
-			.map(([repeat, frame]) => parseInt(`${repeat}`, 10) > 1 ? `...repeat(${repeat}, ${frame})` : frame);
+				.map(f => [f.duration, '[' + compressHeadFrame(f).join(', ') + ']'])
+				.map(([repeat, frame]) => parseInt(`${repeat}`, 10) > 1 ? `...repeat(${repeat}, ${frame})` : frame);
 			console.log(`frames: [\n${frames.map(x => `\t${x}`).join(',\n')}\n]`);
 		}
 	}

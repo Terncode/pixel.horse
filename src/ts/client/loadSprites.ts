@@ -1,9 +1,9 @@
-import { noop, once } from "lodash";
-import { getUrl } from "./rev";
-import { spriteSheets } from "../generated/sprites";
-import { createCanvas, loadImage } from "../common/canvasUtils";
-import { createFonts } from "../common/fonts";
-import { SpriteSheet } from "../common/interfaces";
+import { noop, once } from 'lodash';
+import { getUrl } from './rev';
+import { spriteSheets } from '../generated/sprites';
+import { createCanvas, loadImage } from '../common/canvasUtils';
+import { createFonts } from '../common/fonts';
+import { SpriteSheet } from '../common/interfaces';
 
 export function createSpriteUtils() {
 	createFonts();

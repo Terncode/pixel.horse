@@ -198,17 +198,17 @@ export function createDefaultButtonActions(): ButtonActionSlot[] {
 					ExpressionExtra.Zzz | ExpressionExtra.Cry | ExpressionExtra.Hearts | ExpressionExtra.Blush))
 		},
 	] : [
-			{ action: getActionAction('boop') },
-			{ action: getActionAction('down') },
-			{ action: getActionAction('up') },
-			{ action: getActionAction('turn-head') },
-			{ action: getActionAction('magic') },
-			{ action: expressionButtonAction(undefined) },
-			{ action: expressionButtonAction(createExpression(Eye.Closed, Eye.Closed, Muzzle.Smile)) },
-			{ action: expressionButtonAction(createExpression(Eye.Neutral, Eye.Neutral3, Muzzle.Smile)) },
-			{ action: expressionButtonAction(createExpression(Eye.Neutral, Eye.Neutral, Muzzle.Scrunch, Iris.Forward, Iris.Up)) },
-			{ action: expressionButtonAction(createExpression(Eye.Angry, Eye.Angry, Muzzle.Scrunch)) },
-		];
+		{ action: getActionAction('boop') },
+		{ action: getActionAction('down') },
+		{ action: getActionAction('up') },
+		{ action: getActionAction('turn-head') },
+		{ action: getActionAction('magic') },
+		{ action: expressionButtonAction(undefined) },
+		{ action: expressionButtonAction(createExpression(Eye.Closed, Eye.Closed, Muzzle.Smile)) },
+		{ action: expressionButtonAction(createExpression(Eye.Neutral, Eye.Neutral3, Muzzle.Smile)) },
+		{ action: expressionButtonAction(createExpression(Eye.Neutral, Eye.Neutral, Muzzle.Scrunch, Iris.Forward, Iris.Up)) },
+		{ action: expressionButtonAction(createExpression(Eye.Angry, Eye.Angry, Muzzle.Scrunch)) },
+	];
 }
 
 export function serializeActions(slots: ButtonActionSlot[]): string {

@@ -152,7 +152,7 @@ export class TouchController implements InputController {
 				this.touch2Id = touch.identifier;
 			}
 		}
-	}
+	};
 	private touchmove = (e: any) => {
 		e.preventDefault();
 		e.stopPropagation();
@@ -165,7 +165,7 @@ export class TouchController implements InputController {
 			this.manager.setValue(Key.MOUSE_Y, this.touchCurrent.y);
 			this.updateInput();
 		}
-	}
+	};
 	private touchend = (e: any) => {
 		e.preventDefault();
 		e.stopPropagation();
@@ -188,10 +188,10 @@ export class TouchController implements InputController {
 			this.manager.setValue(Key.TOUCH_SECOND_CLICK, 1);
 			this.touch2Id = -1;
 		}
-	}
+	};
 	private blur = () => {
 		this.reset();
-	}
+	};
 	private getTouchXY(touch: Touch) {
 		const { left, top } = this.element!.getBoundingClientRect();
 

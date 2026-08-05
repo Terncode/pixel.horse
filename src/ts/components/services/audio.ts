@@ -43,9 +43,9 @@ function getTracks(season: Season, holiday: Holiday, map: MapType) {
 					'trees-winter',
 					'reindeer-winter',
 				] : [
-						'trees',
-						'reindeer',
-					]),
+					'trees',
+					'reindeer',
+				]),
 				'season',
 				'ambient',
 				'building',

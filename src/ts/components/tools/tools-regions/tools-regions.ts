@@ -170,5 +170,5 @@ export class ToolsRegions implements OnInit, OnDestroy {
 			this.player.y += dy * delta * PONY_SPEED_TROT;
 			this.update();
 		}
-	}
+	};
 }

@@ -199,7 +199,7 @@ export class Dropdown {
 		} else if (this.autoClose && e.keyCode === 27) { // esc
 			this.close();
 		}
-	}
+	};
 	private canvasCloseHandler: any = () => this.close();
 }
 

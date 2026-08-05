@@ -437,7 +437,7 @@ export class AdminAccountDetails implements OnInit, OnDestroy {
 	}
 	highlighCharacter = (char: Character | undefined): boolean => {
 		return !!char && includes(this.ponyNames, char.name.toLowerCase());
-	}
+	};
 	clearSessions() {
 		if (this.account) {
 			this.clearingSessions = true;

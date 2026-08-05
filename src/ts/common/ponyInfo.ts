@@ -294,12 +294,12 @@ function syncLockedBasePonyInfo<T>(
 		getFillOf2(info.backMane, defaultColor),
 		getFillOf2(info.tail, defaultColor),
 	], [
-			info.coatOutline,
-			info.eyeColorRight,
-			getOutlineOf2(info.mane, defaultColor),
-			getOutlineOf2(info.backMane, defaultColor),
-			getOutlineOf2(info.tail, defaultColor),
-		]);
+		info.coatOutline,
+		info.eyeColorRight,
+		getOutlineOf2(info.mane, defaultColor),
+		getOutlineOf2(info.backMane, defaultColor),
+		getOutlineOf2(info.tail, defaultColor),
+	]);
 
 	return info;
 }

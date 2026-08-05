@@ -45,7 +45,7 @@ describe('spriteSheetUtils', () => {
 			const createTexture = stub().returns({});
 			const sheet: SpriteSheet[] = [
 				{ sprites: [undefined] as any, src: 'foo', data: createImageData(),
-				isSingleChannel: false, texture: undefined, palette: false },
+					isSingleChannel: false, texture: undefined, palette: false },
 			];
 
 			createTexturesForSpriteSheets({} as any, sheet, createTexture);

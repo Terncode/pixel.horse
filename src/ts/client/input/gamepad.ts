@@ -133,12 +133,12 @@ export class GamePadController implements InputController {
 	}
 	private gamepadconnected = (e: Event) => {
 		this.gamepadIndex = (e as GamepadEvent).gamepad.index;
-	}
+	};
 	private gamepaddisconnected = (e: Event) => {
 		if (this.gamepadIndex === (e as GamepadEvent).gamepad.index) {
 			this.scanGamepads();
 		}
-	}
+	};
 }
 
 function readAxis(manager: InputManager, keyX: Key, keyY: Key, axisX: number, axisY: number, zeroed: boolean): boolean {

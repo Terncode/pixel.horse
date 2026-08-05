@@ -32,7 +32,7 @@ export class ToolsFrame {
 		if (this.popoverIsOpen) {
 			this.togglePopover();
 		}
-	}
+	};
 	togglePopover() {
 		const rect = (this.element.nativeElement as HTMLElement).getBoundingClientRect();
 		this.placement = (rect.left < (window.innerWidth / 2)) ? 'right' : 'left';

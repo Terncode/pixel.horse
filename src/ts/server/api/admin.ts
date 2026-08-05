@@ -116,7 +116,7 @@ export async function getChat(search: string, date: string, caseInsensitive: boo
 	const options = { maxBuffer: 1 * 1024 * 1024 }; // 1MB
 
 	async function fetchChatlog(lines: number) {
-		const logFile = paths.pathTo('logs', `info.${format(date, 'yyyyMMdd')}.log`)
+		const logFile = paths.pathTo('logs', `info.${format(date, 'yyyyMMdd')}.log`);
 		const { stdout } = await execAsync(`grep ${flags}"${query}" "${logFile}" | tail -n ${lines}`, options);
 		return stdout;
 	}
@@ -243,13 +243,13 @@ export async function getAccountDetails(accountId: ID): Promise<AccountDetails> 
 		invitesSent: invitesSent!.map(convertInvite),
 		state: account.state || {},
 	} : {
-			merges: [],
-			banLog: [],
-			supporterLog: [],
-			invitesReceived: [],
-			invitesSent: [],
-			state: {},
-		};
+		merges: [],
+		banLog: [],
+		supporterLog: [],
+		invitesReceived: [],
+		invitesSent: [],
+		state: {},
+	};
 }
 
 export async function getOtherStats(service: AdminService): Promise<OtherStats> {

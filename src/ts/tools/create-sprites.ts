@@ -140,7 +140,7 @@ function getEyesFromPsd({ objects2, sprites }: Result, eyesPsd: Psd, irisesPsd: 
 
 	// const mirrored = (get: ByIndexGetter): ByIndexGetter => (canvas, index) => mirrorCanvas(get(canvas, index), -15);
 
-	const palette = [0, WHITE, BLACK]; // 
+	const palette = [0, WHITE, BLACK]; //
 
 	const getEye = (get: ByIndexGetter) => (i: number) => bases.map(base => {
 		const s = addSprite(sprites, get(shadow, i), undefined, palette);

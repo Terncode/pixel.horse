@@ -9,11 +9,10 @@ import './client/polyfils';
 import { enableProdMode } from '@angular/core';
 
 if (document.body.getAttribute('data-debug') !== 'true' || localStorage.production) {
-    enableProdMode();
+	enableProdMode();
 }
 
 
-
 if (typeof module !== 'undefined' && (module as any).hot) {
-    (module as any).hot.accept();
+	(module as any).hot.accept();
 }

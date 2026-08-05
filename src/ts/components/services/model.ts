@@ -467,7 +467,7 @@ export class Model {
 
 		this.pending = true;
 
-		const alert = !!this.accountAlert ? 'y' : '';
+		const alert = this.accountAlert ? 'y' : '';
 
 		return this.post<JoinResponse>('/api/game/join', { version, ponyId, serverId, alert, url: location.href })
 			.finally(() => this.pending = false);

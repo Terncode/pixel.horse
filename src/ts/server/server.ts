@@ -160,7 +160,7 @@ app.use(require('cookie-parser')());
 
 if (args.login || args.admin) {
 	passport.serializeUser<string>((account, done) => done(null, (account as IAccount)._id.toString()));
-		passport.deserializeUser<string>(async (id, done) => {
+	passport.deserializeUser<string>(async (id, done) => {
 		try {
 			const account = await Account.findById(id).exec();
 			done(undefined, account && !isBanned(account) ? account : false);

@@ -30,7 +30,7 @@ export class SignInBox implements OnInit {
 			.then(data => {
 				this.mocks = data;
 			})
-			.catch(noop)
+			.catch(noop);
 	}
 	async createNew() {
 		const name = prompt('Account name');

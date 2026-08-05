@@ -694,17 +694,17 @@ export class ChatLog implements AfterViewInit, OnDestroy, DoCheck {
 	scrollHandler = () => {
 		this.scrollingToEnd = true;
 		this.scroll.nativeElement.scrollTop = 99999;
-	}
+	};
 	clickNameHandler = (message: ChatLogMessage) => {
 		this.zone.run(() => this.nameClick.emit(message));
-	}
+	};
 	clickLabel = (message: ChatLogMessage) => {
 		this.zone.run(() => {
 			if (message.label) {
 				this.toggleType.emit(message.label);
 			}
 		});
-	}
+	};
 	private clearList() {
 		removeAllNodes(this.linesElement);
 	}
@@ -772,12 +772,12 @@ export class ChatLog implements AfterViewInit, OnDestroy, DoCheck {
 		return findEntityFromMessages(id, this.whisper) ||
 			findEntityFromMessages(id, this.party) ||
 			findEntityFromMessages(id, this.local);
-	}
+	};
 	private findEntityFromMessagesByName = (name: string): FakeEntity | undefined => {
 		return findEntityFromMessagesByName(name, this.game.playerId, this.whisper) ||
 			findEntityFromMessagesByName(name, this.game.playerId, this.party) ||
 			findEntityFromMessagesByName(name, this.game.playerId, this.local);
-	}
+	};
 }
 
 function findEntityFromMessages(id: number, messages: ChatLogMessage[]): FakeEntity | undefined {

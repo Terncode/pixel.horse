@@ -102,7 +102,7 @@ export class CharacterPreview implements OnDestroy, OnChanges, AfterViewInit {
 			this.lastFrame = now;
 			this.tryDraw();
 		}
-	}
+	};
 	private tryDraw() {
 		try {
 			this.draw();

@@ -123,7 +123,7 @@ export function isValid(c: number): boolean {
 		|| (c >= 0x231a && c <= 0x231b) || (c >= 0x23e9 && c <= 0x23fa) // emoji
 		|| (c >= 0x1f900 && c <= 0x1f9ff) // Supplemental Symbols and Pictographs
 		|| otherValid.has(c) // other symbols
-		;
+	;
 }
 
 export function isValid2(c: number): boolean {
@@ -156,13 +156,13 @@ export function isValid2(c: number): boolean {
 		|| (c >= 0x1f0a0 && c <= 0x1f0ae) || (c >= 0x1f0b1 && c <= 0x1f0bf) || (c >= 0x1f0c1 && c <= 0x1f0cf)
 		|| (c >= 0x1f0d1 && c <= 0x1f0df) || (c >= 0x1f0e0 && c <= 0x1f0f5) // Playing Cards
 		|| (c >= 0x1f1e6 && c <= 0x1f1ff) // Enclosed Alphanumeric Supplement (regional indicators)
-		;
+	;
 }
 
 function isInvalid(c: number): boolean {
 	return c === 0x1f595 // middle finger emoji
 		|| c === 0x00ad // soft hyphen
-		;
+	;
 }
 
 function isValidForName(c: number): boolean {

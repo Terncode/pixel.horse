@@ -350,7 +350,7 @@ export function authRoutes(
 
 		app.post('/create-account', wrap(server, async (data) => {
 			const accountCount = await Account.countDocuments();
-			
+
 			const account = await Account.create({
 				name: data.body.name,
 				roles: accountCount === 0 ? ['superadmin'] : undefined
@@ -359,11 +359,11 @@ export function authRoutes(
 			return [account._id.toString(), account.name];
 		}));
 
-		passport.use(new LocalStrategy((login, _pass, done) => 
+		passport.use(new LocalStrategy((login, _pass, done) =>
 			Account.findById(login)
 				.then(data => done(undefined, data as any))
 				.catch(e => done(e)))
-			);
+		);
 
 		app.get('/local', passport.authenticate('local', { successRedirect: '/', failureRedirect: '/failed-login' }));
 	}

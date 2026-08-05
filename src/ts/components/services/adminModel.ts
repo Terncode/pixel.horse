@@ -79,7 +79,7 @@ export class AdminModel {
 		console.error(error);
 		this.error = error.message;
 		return undefined;
-	}
+	};
 	private checkError = <T>(promise: Promise<T>) => promise.catch(this.handleError) as Promise<T | undefined>;
 	private running = true;
 	private initializedLive = false;

@@ -54,5 +54,5 @@ export class FocusTrap implements OnInit, OnDestroy {
 				this.lastActiveElement.focus();
 			}
 		}
-	}
+	};
 }

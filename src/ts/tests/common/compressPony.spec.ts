@@ -201,24 +201,24 @@ describe('compressPony', () => {
 			lockEyeColor: true,
 			lockCoatOutline: true,
 		}, {
-				customOutlines: true,
-				lockEyes: true,
-				lockEyeColor: true,
-				lockCoatOutline: true,
-				coatOutline: undefined,
-				eyeColorLeft: undefined,
-				eyeOpennessLeft: undefined,
-				eyeWhitesLeft: undefined,
-				eyelashColorLeft: undefined,
-			}));
+			customOutlines: true,
+			lockEyes: true,
+			lockEyeColor: true,
+			lockCoatOutline: true,
+			coatOutline: undefined,
+			eyeColorLeft: undefined,
+			eyeOpennessLeft: undefined,
+			eyeWhitesLeft: undefined,
+			eyelashColorLeft: undefined,
+		}));
 
 		it('removes lockBackLegAccessory', test({
 			lockBackLegAccessory: true
 		}, {
-				coatOutline: undefined,
-				eyeWhitesLeft: undefined,
-				eyelashColorLeft: undefined,
-			}));
+			coatOutline: undefined,
+			eyeWhitesLeft: undefined,
+			eyelashColorLeft: undefined,
+		}));
 
 		it('set', test({
 			customOutlines: true,
@@ -243,19 +243,19 @@ describe('compressPony', () => {
 				pattern: 1
 			}
 		}, {
-				customOutlines: true,
-				lockCoatOutline: false,
-				eyeWhitesLeft: undefined,
-				eyelashColorLeft: undefined,
-				tail: {
-					type: 1,
-					pattern: 1,
-					fills: [BLACK, BLACK, BLACK, BLACK, BLACK],
-					lockFills: [false, false, false, false, false, false],
-					outlines: [BLACK, BLACK, BLACK, BLACK, BLACK],
-					lockOutlines: [false, false, false, false, false, true],
-				}
-			}));
+			customOutlines: true,
+			lockCoatOutline: false,
+			eyeWhitesLeft: undefined,
+			eyelashColorLeft: undefined,
+			tail: {
+				type: 1,
+				pattern: 1,
+				fills: [BLACK, BLACK, BLACK, BLACK, BLACK],
+				lockFills: [false, false, false, false, false, false],
+				outlines: [BLACK, BLACK, BLACK, BLACK, BLACK],
+				lockOutlines: [false, false, false, false, false, true],
+			}
+		}));
 
 		it('missing set color', test({
 			customOutlines: true,
@@ -268,29 +268,29 @@ describe('compressPony', () => {
 				lockOutlines: [false, false, false, false, false, true],
 			}
 		}, {
-				customOutlines: true,
-				lockCoatOutline: false,
-				eyeWhitesLeft: undefined,
-				eyelashColorLeft: undefined,
-				tail: {
-					type: 1,
-					pattern: 1,
-					fills: [RED, BLUE, BLACK, ORANGE, CYAN],
-					lockFills: [false, false, false, false, false, false],
-					outlines: [RED, BLACK, RED, RED, RED],
-					lockOutlines: [false, false, false, false, false, true],
-				}
-			}));
+			customOutlines: true,
+			lockCoatOutline: false,
+			eyeWhitesLeft: undefined,
+			eyelashColorLeft: undefined,
+			tail: {
+				type: 1,
+				pattern: 1,
+				fills: [RED, BLUE, BLACK, ORANGE, CYAN],
+				lockFills: [false, false, false, false, false, false],
+				outlines: [RED, BLACK, RED, RED, RED],
+				lockOutlines: [false, false, false, false, false, true],
+			}
+		}));
 
 		it('cm', test({
 			cm: [undefined, RED, undefined, BLUE] as any,
 		}, {
-				cm: [TRANSPARENT, RED, TRANSPARENT, BLUE],
-				cmFlip: false,
-				coatOutline: undefined,
-				eyeWhitesLeft: undefined,
-				eyelashColorLeft: undefined,
-			}));
+			cm: [TRANSPARENT, RED, TRANSPARENT, BLUE],
+			cmFlip: false,
+			coatOutline: undefined,
+			eyeWhitesLeft: undefined,
+			eyelashColorLeft: undefined,
+		}));
 	});
 
 	describe('decompressPony()', () => {
@@ -345,51 +345,51 @@ describe('compressPony', () => {
 		it('eyeColorLeft', test({
 			eyeColorLeft: 'ff00ff',
 		}, {
-				coatFill: '000000',
-				coatOutline: '000000',
-				eyeColorLeft: 'ff00ff',
-				eyeColorRight: '000000',
-			}));
+			coatFill: '000000',
+			coatOutline: '000000',
+			eyeColorLeft: 'ff00ff',
+			eyeColorRight: '000000',
+		}));
 
 		it('eyeColorLeft + eyeColorRight', test({
 			eyeColorLeft: 'ff00ff',
 			eyeColorRight: '00ff00',
 		}, {
-				coatFill: '000000',
-				coatOutline: '000000',
-				eyeColorLeft: 'ff00ff',
-				eyeColorRight: '00ff00',
-			}));
+			coatFill: '000000',
+			coatOutline: '000000',
+			eyeColorLeft: 'ff00ff',
+			eyeColorRight: '00ff00',
+		}));
 
 		it('eyeColorLeft + eyeColorRight (locked)', test({
 			lockEyeColor: true,
 			eyeColorLeft: '00ff00',
 			eyeColorRight: 'ff00ff',
 		}, {
-				lockEyes: false,
-				lockEyeColor: true,
-				customOutlines: false,
-				coatFill: '000000',
-				coatOutline: '000000',
-				eyeColorLeft: 'ff00ff',
-				eyeColorRight: 'ff00ff',
-			}));
+			lockEyes: false,
+			lockEyeColor: true,
+			customOutlines: false,
+			coatFill: '000000',
+			coatOutline: '000000',
+			eyeColorLeft: 'ff00ff',
+			eyeColorRight: 'ff00ff',
+		}));
 
 		it('eyeshadow', test({
 			eyeshadow: true,
 			eyeshadowColor: 'ff00ff',
 		}, {
-				eyeshadow: true,
-				eyeshadowColor: 'ff00ff',
-				coatFill: '000000',
-				coatOutline: '000000',
-				eyeColorLeft: '000000',
-				eyeColorRight: '000000',
-				eyeWhites: 'ffffff',
-				lockEyes: false,
-				lockEyeColor: false,
-				customOutlines: false,
-			}));
+			eyeshadow: true,
+			eyeshadowColor: 'ff00ff',
+			coatFill: '000000',
+			coatOutline: '000000',
+			eyeColorLeft: '000000',
+			eyeColorRight: '000000',
+			eyeWhites: 'ffffff',
+			lockEyes: false,
+			lockEyeColor: false,
+			customOutlines: false,
+		}));
 
 		it('cm', test({ cm: ['ff0000', '', '00ff00'] }, { cm: ['ff0000', '', '00ff00'], cmFlip: false }));
 
@@ -397,9 +397,9 @@ describe('compressPony', () => {
 			cm: ['ff0000', '', '00ff00'],
 			cmFlip: true,
 		}, {
-				cm: ['ff0000', '', '00ff00'],
-				cmFlip: true,
-			}));
+			cm: ['ff0000', '', '00ff00'],
+			cmFlip: true,
+		}));
 
 		it('all locked', test({
 			tail: {
@@ -409,15 +409,15 @@ describe('compressPony', () => {
 				lockFills: [true, true, true, true, true, true],
 			}
 		}, {
-				tail: {
-					type: 2,
-					pattern: 1,
-					fills: [undefined, undefined, undefined, undefined, undefined, undefined],
-					lockFills: [true, true, true, true, true, true],
-					outlines: [undefined, undefined, undefined, undefined, undefined, undefined],
-					lockOutlines: [true, true, true, true, true, true],
-				}
-			}));
+			tail: {
+				type: 2,
+				pattern: 1,
+				fills: [undefined, undefined, undefined, undefined, undefined, undefined],
+				lockFills: [true, true, true, true, true, true],
+				outlines: [undefined, undefined, undefined, undefined, undefined, undefined],
+				lockOutlines: [true, true, true, true, true, true],
+			}
+		}));
 
 		it('set', test({
 			mane: {
@@ -427,15 +427,15 @@ describe('compressPony', () => {
 				lockFills: [false, false, false, false, false, false],
 			}
 		}, {
-				mane: {
-					type: 1,
-					pattern: 1,
-					fills: ['f0f0f0', 'ff0000', 'fff000', 'ff0f00', 'ff00f0', 'ff000f'],
-					lockFills: [false, false, false, false, false, false],
-					outlines: ['a8a8a8', 'b30000', 'b3a800', 'b30b00', 'b300a8', 'b3000a'],
-					lockOutlines: [true, true, true, true, true, true],
-				}
-			}));
+			mane: {
+				type: 1,
+				pattern: 1,
+				fills: ['f0f0f0', 'ff0000', 'fff000', 'ff0f00', 'ff00f0', 'ff000f'],
+				lockFills: [false, false, false, false, false, false],
+				outlines: ['a8a8a8', 'b30000', 'b3a800', 'b30b00', 'b300a8', 'b3000a'],
+				lockOutlines: [true, true, true, true, true, true],
+			}
+		}));
 
 		it('0 colors', test({
 			ears: {
@@ -445,15 +445,15 @@ describe('compressPony', () => {
 				lockFills: [false],
 			}
 		}, {
-				ears: {
-					type: 0,
-					pattern: 0,
-					fills: ['000000'],
-					lockFills: [false, false, false, false, false, false],
-					outlines: ['000000', undefined, undefined, undefined, undefined, undefined],
-					lockOutlines: [true, true, true, true, true, true],
-				}
-			}));
+			ears: {
+				type: 0,
+				pattern: 0,
+				fills: ['000000'],
+				lockFills: [false, false, false, false, false, false],
+				outlines: ['000000', undefined, undefined, undefined, undefined, undefined],
+				lockOutlines: [true, true, true, true, true, true],
+			}
+		}));
 
 		it('extraAccessory', test({
 			extraAccessory: {
@@ -463,15 +463,15 @@ describe('compressPony', () => {
 				lockFills: [false, false, false, false, false],
 			}
 		}, {
-				extraAccessory: {
-					type: 0,
-					pattern: 0,
-					fills: ['f0f0f0', 'ff0000', 'fff000', 'ff0f00', 'ff00f0'],
-					lockFills: [false, false, false, false, false, false],
-					outlines: ['a8a8a8', 'b30000', 'b3a800', 'b30b00', 'b300a8', undefined],
-					lockOutlines: [true, true, true, true, true, true],
-				}
-			}));
+			extraAccessory: {
+				type: 0,
+				pattern: 0,
+				fills: ['f0f0f0', 'ff0000', 'fff000', 'ff0f00', 'ff00f0'],
+				lockFills: [false, false, false, false, false, false],
+				outlines: ['a8a8a8', 'b30000', 'b3a800', 'b30b00', 'b300a8', undefined],
+				lockOutlines: [true, true, true, true, true, true],
+			}
+		}));
 
 		it('neckAccessory', test({
 			neckAccessory: { type: 0, pattern: 0 }
@@ -491,23 +491,23 @@ describe('compressPony', () => {
 				lockFills: [true, false, true],
 			},
 		}, {
-				mane: {
-					type: 1,
-					pattern: 0,
-					fills: ['ff0000'],
-					lockFills: [false, false, false, false, false, false],
-					outlines: ['b30000', undefined, undefined, undefined, undefined, undefined],
-					lockOutlines: [true, true, true, true, true, true],
-				},
-				backMane: {
-					type: 15,
-					pattern: 1,
-					fills: ['ff0000', '00ff00', 'ff0000'],
-					lockFills: [true, false, true, false, false, false],
-					outlines: ['b30000', '00b300', 'b30000', undefined, undefined, undefined],
-					lockOutlines: [true, true, true, true, true, true],
-				},
-			}));
+			mane: {
+				type: 1,
+				pattern: 0,
+				fills: ['ff0000'],
+				lockFills: [false, false, false, false, false, false],
+				outlines: ['b30000', undefined, undefined, undefined, undefined, undefined],
+				lockOutlines: [true, true, true, true, true, true],
+			},
+			backMane: {
+				type: 15,
+				pattern: 1,
+				fills: ['ff0000', '00ff00', 'ff0000'],
+				lockFills: [true, false, true, false, false, false],
+				outlines: ['b30000', '00b300', 'b30000', undefined, undefined, undefined],
+				lockOutlines: [true, true, true, true, true, true],
+			},
+		}));
 
 		it('locked back hooves', test({
 			frontHooves: {
@@ -521,23 +521,23 @@ describe('compressPony', () => {
 				lockFills: [true],
 			}
 		}, {
-				frontHooves: {
-					type: 0,
-					pattern: 0,
-					fills: ['ff0000'],
-					lockFills: [false, false, false, false, false, false],
-					outlines: ['b30000', undefined, undefined, undefined, undefined, undefined],
-					lockOutlines: [true, true, true, true, true, true],
-				},
-				backHooves: {
-					type: 1,
-					pattern: 0,
-					fills: ['ff0000'],
-					lockFills: [true, false, false, false, false, false],
-					outlines: ['b30000', undefined, undefined, undefined, undefined, undefined],
-					lockOutlines: [true, true, true, true, true, true],
-				}
-			}));
+			frontHooves: {
+				type: 0,
+				pattern: 0,
+				fills: ['ff0000'],
+				lockFills: [false, false, false, false, false, false],
+				outlines: ['b30000', undefined, undefined, undefined, undefined, undefined],
+				lockOutlines: [true, true, true, true, true, true],
+			},
+			backHooves: {
+				type: 1,
+				pattern: 0,
+				fills: ['ff0000'],
+				lockFills: [true, false, false, false, false, false],
+				outlines: ['b30000', undefined, undefined, undefined, undefined, undefined],
+				lockOutlines: [true, true, true, true, true, true],
+			}
+		}));
 
 		it('back mane', test({
 			mane: {
@@ -552,23 +552,23 @@ describe('compressPony', () => {
 				lockFills: [false, false, true, true, true, true],
 			}
 		}, {
-				mane: {
-					type: 3,
-					pattern: 1,
-					fills: ['000000', 'ffffff', '000000', '000000', '000000', '000000'],
-					lockFills: [false, false, false, false, false, false],
-					outlines: ['000000', 'b3b3b3', '000000', '000000', '000000', '000000'],
-					lockOutlines: [true, true, true, true, true, true],
-				},
-				backMane: {
-					type: 2,
-					pattern: 1,
-					fills: ['ffffff', 'ff0000', 'ffffff', 'ffffff', 'ffffff', 'ffffff'],
-					lockFills: [false, false, true, true, true, true],
-					outlines: ['b3b3b3', 'b30000', 'b3b3b3', 'b3b3b3', 'b3b3b3', 'b3b3b3'],
-					lockOutlines: [true, true, true, true, true, true],
-				}
-			}));
+			mane: {
+				type: 3,
+				pattern: 1,
+				fills: ['000000', 'ffffff', '000000', '000000', '000000', '000000'],
+				lockFills: [false, false, false, false, false, false],
+				outlines: ['000000', 'b3b3b3', '000000', '000000', '000000', '000000'],
+				lockOutlines: [true, true, true, true, true, true],
+			},
+			backMane: {
+				type: 2,
+				pattern: 1,
+				fills: ['ffffff', 'ff0000', 'ffffff', 'ffffff', 'ffffff', 'ffffff'],
+				lockFills: [false, false, true, true, true, true],
+				outlines: ['b3b3b3', 'b30000', 'b3b3b3', 'b3b3b3', 'b3b3b3', 'b3b3b3'],
+				lockOutlines: [true, true, true, true, true, true],
+			}
+		}));
 
 		it('chest accessory (adds default sleeve if missing)', test({
 			chestAccessory: {
@@ -577,23 +577,23 @@ describe('compressPony', () => {
 				fills: ['ff0000', '00ff00', '0000ff'],
 			}
 		}, {
-				chestAccessory: {
-					type: 2,
-					pattern: 8,
-					fills: ['ff0000', '00ff00', '0000ff'],
-					lockFills: [false, false, false, false, false, false],
-					outlines: ['b30000', '00b300', '0000b3', undefined, undefined, undefined],
-					lockOutlines: [true, true, true, true, true, true],
-				},
-				sleeveAccessory: {
-					type: 0,
-					pattern: 0,
-					fills: ['ff0000', 'ff0000', 'ff0000', 'ff0000', 'ff0000', 'ff0000'],
-					lockFills: [true, true, true, true, true, true],
-					outlines: ['b30000', 'b30000', 'b30000', 'b30000', 'b30000', 'b30000'],
-					lockOutlines: [true, true, true, true, true, true],
-				}
-			}));
+			chestAccessory: {
+				type: 2,
+				pattern: 8,
+				fills: ['ff0000', '00ff00', '0000ff'],
+				lockFills: [false, false, false, false, false, false],
+				outlines: ['b30000', '00b300', '0000b3', undefined, undefined, undefined],
+				lockOutlines: [true, true, true, true, true, true],
+			},
+			sleeveAccessory: {
+				type: 0,
+				pattern: 0,
+				fills: ['ff0000', 'ff0000', 'ff0000', 'ff0000', 'ff0000', 'ff0000'],
+				lockFills: [true, true, true, true, true, true],
+				outlines: ['b30000', 'b30000', 'b30000', 'b30000', 'b30000', 'b30000'],
+				lockOutlines: [true, true, true, true, true, true],
+			}
+		}));
 
 		it('back leg accessory', test({
 			backLegAccessory: {
@@ -603,16 +603,16 @@ describe('compressPony', () => {
 				lockFills: [false],
 			}
 		}, {
-				lockBackLegAccessory: false,
-				backLegAccessory: {
-					type: 1,
-					pattern: 0,
-					fills: ['ff0000'],
-					lockFills: [false, false, false, false, false, false],
-					outlines: ['b30000', undefined, undefined, undefined, undefined, undefined],
-					lockOutlines: [true, true, true, true, true, true],
-				}
-			}));
+			lockBackLegAccessory: false,
+			backLegAccessory: {
+				type: 1,
+				pattern: 0,
+				fills: ['ff0000'],
+				lockFills: [false, false, false, false, false, false],
+				outlines: ['b30000', undefined, undefined, undefined, undefined, undefined],
+				lockOutlines: [true, true, true, true, true, true],
+			}
+		}));
 
 		it('cm (with undefined)', test({
 			cm: [
@@ -623,15 +623,15 @@ describe('compressPony', () => {
 				, , 'fde9cd', ,
 			] as any
 		}, {
-				cm: [
-					'', '', '', 'fde9cd', '',
-					'fde9cd', '', '', '', '',
-					'', '', 'fde9cd', '', 'fde9cd',
-					'', '', '', '', '',
-					'', '', 'fde9cd'
-				],
-				cmFlip: false,
-			}));
+			cm: [
+				'', '', '', 'fde9cd', '',
+				'fde9cd', '', '', '', '',
+				'', '', 'fde9cd', '', 'fde9cd',
+				'', '', '', '', '',
+				'', '', 'fde9cd'
+			],
+			cmFlip: false,
+		}));
 
 		it('back leg accessory (editable)', () => {
 			const data = compressPonyString({

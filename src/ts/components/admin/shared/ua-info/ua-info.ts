@@ -8,7 +8,7 @@ function icon(value: string | undefined, defaultValue: any): any {
 
 const extensions = {
 	browser: [
-		[/(Amigo|YaBrowser)\/([\w\.]+)/i], [UAParser.BROWSER.NAME, UAParser.BROWSER.VERSION]
+		[/(Amigo|YaBrowser)\/([\w.]+)/i], [UAParser.BROWSER.NAME, UAParser.BROWSER.VERSION]
 	],
 };
 

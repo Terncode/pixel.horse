@@ -24,7 +24,7 @@ function ignore(code: number): boolean {
 		|| (code >= 0x0250 && code <= 0x02AF) // IPA Extensions
 		|| (code >= 0x2460 && code <= 0x24FF) // Enclosed Alphanumerics
 		|| (code >= 0x2300 && code <= 0x23FF) // Miscellaneous Technical
-		;
+	;
 }
 
 charsToCodes(CHARS + ROMAJI + EMOJI).forEach(code => existing.add(code));

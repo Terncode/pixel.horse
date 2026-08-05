@@ -84,19 +84,19 @@ export class StatsTracker {
 			this.logStat(
 				url || (req.baseUrl + req.path), typeof result === 'string' ? result.length : JSON.stringify(result).length);
 		}
-	}
+	};
 	logSwearing = () => {
 		this.dailySwearing++;
-	}
+	};
 	logSpamming = () => {
 		this.dailySpamming++;
-	}
+	};
 	logRecvStats = (id: number, name: string, binary: boolean, size: number) => {
 		this.logSocketStats(this.recvStats, id, name, binary, size);
-	}
+	};
 	logSendStats = (id: number, name: string, binary: boolean, size: number) => {
 		this.logSocketStats(this.sendStats, id, name, binary, size);
-	}
+	};
 	private logSocketStats(stats: (SocketStats | undefined)[], id: number, name: string, binary: boolean, size: number) {
 		const entry = stats[id] || (stats[id] = {
 			id,
@@ -112,7 +112,7 @@ export class StatsTracker {
 			lastHourSize: new ByteSize(),
 		});
 
-		if (!!binary) {
+		if (binary) {
 			entry.countBin++;
 		} else {
 			entry.countStr++;

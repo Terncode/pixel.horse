@@ -96,7 +96,7 @@ if (!DEVELOPMENT && !TESTS &&
 	|| INSECURE_RANDOM_VALUES.includes(config.secret)
 	|| INSECURE_RANDOM_VALUES.includes(config.token))) {
 	console.error(
-`
+		`
 ================================================================================
                            WARNING! WARNING! WARNING!
 

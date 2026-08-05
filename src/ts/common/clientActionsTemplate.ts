@@ -33,7 +33,7 @@ export class ClientActionsTemplate implements SocketClient {
     left(_reason: LeaveReason) {}
     @Method({ binary: [BinNotificationId, BinEntityId, Bin.Str, Bin.Str, Bin.Str, Bin.U8] })
     addNotification(_id: number, _entityId: number, _name: string, _message: string, _note: string, _flags: NotificationFlags) {}
-        
+
     @Method({ binary: [BinNotificationId] })
     removeNotification(_id: number) { }
     @Method({ binary: [BinEntityId, BinEntityId] })

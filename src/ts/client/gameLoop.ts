@@ -1,4 +1,4 @@
-import { isError } from "../common/utils";
+import { isError } from '../common/utils';
 
 export interface Game {
 	fps: number;

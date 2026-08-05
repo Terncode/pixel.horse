@@ -68,5 +68,5 @@ export class CollectableController implements Controller {
 				this.pick(client, entity);
 			}
 		}
-	}
+	};
 }

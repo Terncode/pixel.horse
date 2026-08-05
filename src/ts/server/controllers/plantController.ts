@@ -25,8 +25,8 @@ export class PlantController implements Controller {
 	private interact: Interact = (entity, client) => {
 		this.world.removeEntity(entity, this.map);
 		removeItem(this.plants, entity);
-		this.config.onPick && this.config.onPick(entity, client);
-	}
+		this.config?.onPick?.(entity, client);
+	};
 	private nextSpawn = 0;
 	constructor(private world: World, private map: ServerMap, private config: PlantConfig) {
 	}

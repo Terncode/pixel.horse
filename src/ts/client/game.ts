@@ -338,7 +338,7 @@ export class PonyTownGame implements Game {
 	}
 	apply = (func: () => void) => {
 		return this.zone.run(func);
-	}
+	};
 	applyChanges = () => this.zone.run(() => { });
 	private getScale() {
 		const defaultScale = pixelRatio() > 1 ? 3 : 2;

@@ -56,7 +56,7 @@ export class Shader {
 
 		const attribs = vertexCode.match(/^attribute [a-zA-Z0-9_]+ ([a-zA-Z0-9_]+)/mg)!;
 
-		for (var i = 0; i < attribs.length; ++i) {
+		for (let i = 0; i < attribs.length; ++i) {
 			const [, name] = /attribute [a-zA-Z0-9_]+ ([a-zA-Z0-9_]+)/.exec(attribs[i])!;
 			gl.bindAttribLocation(program, i, name);
 		}

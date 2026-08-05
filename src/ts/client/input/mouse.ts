@@ -49,7 +49,7 @@ export class MouseController implements InputController {
 			this.manager.setValue(Key.MOUSE_X, Math.floor(e.clientX - rect.left));
 			this.manager.setValue(Key.MOUSE_Y, Math.floor(e.clientY - rect.top));
 		}
-	}
+	};
 	private mousedown = (e: MouseEvent) => {
 		e.preventDefault();
 		e.stopPropagation();
@@ -61,29 +61,29 @@ export class MouseController implements InputController {
 		if (button) {
 			this.manager.setValue(button, 1);
 		}
-	}
+	};
 	private mouseup = (e: MouseEvent) => {
 		const button = MOUSE_BUTTONS[e.button];
 
 		if (button) {
 			this.manager.setValue(button, 0);
 		}
-	}
+	};
 	private mousewheel: any = (e: WheelEvent) => {
 		this.manager.addValue(Key.MOUSE_WHEEL_X, clamp(e.deltaX, -1, 1));
 		this.manager.addValue(Key.MOUSE_WHEEL_Y, clamp(e.deltaY, -1, 1));
-	}
+	};
 	private contextmenu = (e: Event) => {
 		e.preventDefault();
 		e.stopPropagation();
-	}
+	};
 	private click = (e: Event) => {
 		e.preventDefault();
 		e.stopPropagation();
-	}
+	};
 	private blur = () => {
 		for (const button of MOUSE_BUTTONS) {
 			this.manager.setValue(button, 0);
 		}
-	}
+	};
 }

@@ -115,25 +115,25 @@ export function createWoodenFenceMaker(world: World, map: ServerMap) {
 		...repeat(2, entities.woodenFencePole4),
 		entities.woodenFencePole5,
 	], [
-			...repeat(5, entities.woodenFenceBeamH1),
-			...repeat(5, entities.woodenFenceBeamH2),
-			...repeat(5, entities.woodenFenceBeamH3),
-			entities.woodenFenceBeamH4,
-			entities.woodenFenceBeamH5,
-			entities.woodenFenceBeamH6,
-		], [
-			entities.woodenFenceBeamV1,
-			entities.woodenFenceBeamV2,
-			entities.woodenFenceBeamV3,
-		]);
+		...repeat(5, entities.woodenFenceBeamH1),
+		...repeat(5, entities.woodenFenceBeamH2),
+		...repeat(5, entities.woodenFenceBeamH3),
+		entities.woodenFenceBeamH4,
+		entities.woodenFenceBeamH5,
+		entities.woodenFenceBeamH6,
+	], [
+		entities.woodenFenceBeamV1,
+		entities.woodenFenceBeamV2,
+		entities.woodenFenceBeamV3,
+	]);
 }
 
 export function createStoneWallFenceMaker(world: World, map: ServerMap) {
 	return createFenceMaker(world, map, 2, [
 		entities.stoneWallPole1,
 	], [
-			entities.stoneWallBeamH1,
-		], [
-			entities.stoneWallBeamV1,
-		]);
+		entities.stoneWallBeamH1,
+	], [
+		entities.stoneWallBeamV1,
+	]);
 }

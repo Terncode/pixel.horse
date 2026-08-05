@@ -248,10 +248,10 @@ export class ChatBox implements AfterViewInit, OnDestroy {
 	private say(message: string, chatType: ChatType, entityId: number): boolean {
 		this.game.lastChatMessageType = chatType;
 		if (message.toLowerCase().startsWith('/shrug')) {
-			var rawMessage = message.substring(6);
+			let rawMessage = message.substring(6);
 			return !!this.game.send(server =>
 				server.say(entityId, ((rawMessage !== '') ? rawMessage + ' ' : '') + `¯\\_(ツ)_/¯`,
-				chatType));
+					chatType));
 		} else {
 			return !!this.game.send(server => server.say(entityId, message, chatType));
 		}

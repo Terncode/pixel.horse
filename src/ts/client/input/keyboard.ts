@@ -70,7 +70,7 @@ export class KeyboardController implements InputController {
 				this.stack.push(code);
 			}
 		}
-	}
+	};
 	private keyup = (e: KeyboardEvent) => {
 		let code = fixKeyCode(e.keyCode);
 
@@ -89,8 +89,8 @@ export class KeyboardController implements InputController {
 		}
 
 		removeItem(this.stack, code);
-	}
+	};
 	private blur = () => {
 		this.manager.clear();
-	}
+	};
 }

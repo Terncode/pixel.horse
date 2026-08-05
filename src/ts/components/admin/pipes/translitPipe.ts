@@ -7,7 +7,7 @@ import { transliterate } from 'transliteration';
 })
 export class TranslitPipe implements PipeTransform {
 	transform(value: string) {
-		if (!value || /^[a-z0-9-_.,\[\]!@#$%^&*{}|\/\\ ]+$/i.test(value))
+		if (!value || /^[a-z0-9-_.,[]!@#$%^&*{}|\/\\ ]+$/i.test(value))
 			return undefined;
 
 		const translit = transliterate(value);
