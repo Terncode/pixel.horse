@@ -3,6 +3,7 @@ import { Auth } from '../../../../common/adminInterfaces';
 import { oauthIcons, faGlobe } from '../../../../client/icons';
 
 @Component({
+	standalone: false,
 	selector: 'auth-info',
 	templateUrl: 'auth-info.pug',
 	styleUrls: ['auth-info.scss'],

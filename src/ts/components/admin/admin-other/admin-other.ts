@@ -12,6 +12,7 @@ interface Field {
 }
 
 @Component({
+	standalone: false,
 	selector: 'admin-other',
 	templateUrl: 'admin-other.pug',
 })

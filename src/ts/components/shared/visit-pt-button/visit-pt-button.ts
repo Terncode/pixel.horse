@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
+	standalone: false,
 	selector: 'visit-pt-button',
 	templateUrl: 'visit-pt-button.pug',
 	styleUrls: ['visit-pt-button.scss'],

@@ -7,6 +7,7 @@ import { removeItem } from '../../../common/utils';
 import { SettingsService } from '../../services/settingsService';
 
 @Component({
+	standalone: false,
 	selector: 'friends-box',
 	templateUrl: 'friends-box.pug',
 	styleUrls: ['friends-box.scss'],

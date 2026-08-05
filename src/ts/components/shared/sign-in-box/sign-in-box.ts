@@ -11,6 +11,7 @@ export function getProviderIcon(id: string) {
 }
 
 @Component({
+	standalone: false,
 	selector: 'sign-in-box',
 	templateUrl: 'sign-in-box.pug',
 	styleUrls: ['sign-in-box.scss'],

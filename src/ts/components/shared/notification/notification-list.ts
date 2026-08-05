@@ -5,6 +5,7 @@ import { faEllipsisV } from '../../../client/icons';
 const LIMIT = 8;
 
 @Component({
+	standalone: false,
 	selector: 'notification-list',
 	templateUrl: 'notification-list.pug',
 	styleUrls: ['notification-list.scss'],

@@ -87,6 +87,7 @@ function eyeSprite(e: PonyEye | undefined) {
 }
 
 @Component({
+	standalone: false,
 	selector: 'tools-animation',
 	templateUrl: 'tools-animation.pug',
 	styleUrls: ['tools-animation.scss'],

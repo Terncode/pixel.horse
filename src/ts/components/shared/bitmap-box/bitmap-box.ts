@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from
 import { parseColor, colorToCSS } from '../../../common/color';
 
 @Component({
+	standalone: false,
 	selector: 'bitmap-box',
 	templateUrl: 'bitmap-box.pug',
 	styleUrls: ['bitmap-box.scss'],

@@ -4,6 +4,7 @@ import { AdminModel } from '../../../services/adminModel';
 import { countryCodeToName } from '../../../../common/countries';
 
 @Component({
+	standalone: false,
 	selector: 'origin-info',
 	templateUrl: 'origin-info.pug',
 	styleUrls: ['origin-info.scss'],

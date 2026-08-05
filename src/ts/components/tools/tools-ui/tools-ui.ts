@@ -43,6 +43,7 @@ tails.forEach((t, i) => t ? t[0].label = labels[i] : undefined);
 const colors = Object.values(colorNames);
 
 @Component({
+	standalone: false,
 	selector: 'tools-ui',
 	templateUrl: 'tools-ui.pug',
 })

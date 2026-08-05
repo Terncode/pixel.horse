@@ -3,6 +3,7 @@ import { Point } from '../../../../common/interfaces';
 import { faChevronRight, faChevronLeft, faChevronDown, faChevronUp } from '../../../../client/icons';
 
 @Component({
+	standalone: false,
 	selector: 'tools-offset',
 	templateUrl: 'tools-offset.pug',
 	styleUrls: ['tools-offset.scss'],

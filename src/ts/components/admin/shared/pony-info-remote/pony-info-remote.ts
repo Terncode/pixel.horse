@@ -4,6 +4,7 @@ import { AdminModel } from '../../../services/adminModel';
 import { Character } from '../../../../common/adminInterfaces';
 
 @Component({
+	standalone: false,
 	selector: 'pony-info-remote',
 	templateUrl: 'pony-info-remote.pug',
 })

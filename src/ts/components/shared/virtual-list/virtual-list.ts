@@ -11,6 +11,7 @@ interface Context<T> {
 }
 
 @Component({
+	standalone: false,
 	selector: 'virtual-list',
 	template: '<div #padStart></div><ng-content></ng-content><div #padEnd></div>',
 	styleUrls: ['virtual-list.scss'],
@@ -27,6 +28,7 @@ export class VirtualList {
 }
 
 @Directive({
+	standalone: false,
 	selector: '[virtualFor][virtualForOf]',
 })
 export class VirtualFor<T> implements DoCheck, OnDestroy, AfterViewInit {

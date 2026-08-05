@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { emptyIcon } from '../../../client/icons';
 
 @Component({
+	standalone: false,
 	selector: 'menu-item',
 	templateUrl: 'menu-item.pug',
 	styleUrls: ['menu-item.scss'],

@@ -29,6 +29,7 @@ const ignoredErrors = [
 ];
 
 @Component({
+	standalone: false,
 	selector: 'play-box',
 	templateUrl: 'play-box.pug',
 	styleUrls: ['play-box.scss'],

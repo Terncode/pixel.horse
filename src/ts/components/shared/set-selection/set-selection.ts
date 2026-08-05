@@ -7,6 +7,7 @@ const FILLS = ['Orange', 'DodgerBlue', 'LimeGreen', 'Orchid', 'crimson', 'Aquama
 const OUTLINES = ['Chocolate', 'SteelBlue', 'ForestGreen', 'DarkOrchid', 'darkred', 'DarkTurquoise'];
 
 @Directive({
+	standalone: false,
 	selector: '[setOutlineHidden]',
 })
 export class SetOutlineHidden {
@@ -14,6 +15,7 @@ export class SetOutlineHidden {
 }
 
 @Component({
+	standalone: false,
 	selector: 'set-selection',
 	templateUrl: 'set-selection.pug',
 	styleUrls: ['set-selection.scss'],

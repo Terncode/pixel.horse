@@ -208,6 +208,7 @@ function findUserIndex(users: IndexEntryUser[], id: number, crc: number | undefi
 }
 
 @Component({
+	standalone: false,
 	selector: 'chat-log',
 	templateUrl: 'chat-log.pug',
 	styleUrls: ['chat-log.scss'],

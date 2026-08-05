@@ -6,6 +6,7 @@ import { AgDragEvent } from '../directives/agDrag';
 import { Key } from '../../../client/input/input';
 
 @Component({
+	standalone: false,
 	selector: 'slider-bar',
 	templateUrl: 'slider-bar.pug',
 	styleUrls: ['slider-bar.scss'],

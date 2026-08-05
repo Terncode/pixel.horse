@@ -5,6 +5,7 @@ import { isForbiddenName } from '../../../../common/security';
 import { AdminModel } from '../../../services/adminModel';
 
 @Component({
+	standalone: false,
 	selector: 'pony-info',
 	templateUrl: 'pony-info.pug',
 	styleUrls: ['pony-info.scss'],

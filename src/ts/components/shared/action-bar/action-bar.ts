@@ -10,6 +10,7 @@ import { last } from '../../../common/utils';
 import { faCog } from '../../../client/icons';
 
 @Component({
+	standalone: false,
 	selector: 'action-bar',
 	templateUrl: 'action-bar.pug',
 	styleUrls: ['action-bar.scss'],

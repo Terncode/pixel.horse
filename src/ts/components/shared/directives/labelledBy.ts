@@ -3,6 +3,7 @@ import { uniqueId } from 'lodash';
 import { findParentElement } from '../../../client/htmlUtils';
 
 @Directive({
+	standalone: false,
 	selector: '[labelledBy]',
 })
 export class LabelledBy implements OnInit {

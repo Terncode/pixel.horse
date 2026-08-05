@@ -5,6 +5,7 @@ import { contactEmail, contactDiscord } from '../../../client/data';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
+	standalone: false,
 	selector: 'help',
 	templateUrl: 'help.pug',
 	styleUrls: ['help.scss'],

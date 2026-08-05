@@ -3,6 +3,7 @@ import { IntervalUpdateService } from '../../services/intervalUpdateService';
 import { formatDistanceToNow } from 'date-fns';
 
 @Component({
+	standalone: false,
 	selector: 'from-now',
 	template: '<span></span>',
 	changeDetection: ChangeDetectionStrategy.OnPush,

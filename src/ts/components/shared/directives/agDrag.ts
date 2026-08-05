@@ -123,7 +123,7 @@ export function handleDrag(element: HTMLElement, emit: (event: AgDragEvent) => v
 	return () => handlers.forEach(f => f());
 }
 
-@Directive({ selector: '[agDrag]' })
+@Directive({ standalone: false, selector: '[agDrag]' })
 export class AgDrag implements OnInit, OnDestroy {
 	@Input('agDragRelative') relative: 'self' | 'parent' | undefined = undefined;
 	@Input('agDragPrevent') prevent = false;

@@ -12,6 +12,7 @@ export class DropdownOutletService {
 }
 
 @Component({
+	standalone: false,
 	selector: 'dropdown-outlet',
 	template: `<ng-template></ng-template>`,
 })
@@ -23,6 +24,7 @@ export class DropdownOutlet {
 }
 
 @Directive({
+	standalone: false,
 	selector: '[dropdownMenu]',
 })
 export class DropdownMenu {
@@ -108,6 +110,7 @@ export class DropdownMenu {
 }
 
 @Directive({
+	standalone: false,
 	selector: '[dropdown]',
 	exportAs: 'ag-dropdown',
 	host: {
@@ -201,6 +204,7 @@ export class Dropdown {
 }
 
 @Directive({
+	standalone: false,
 	selector: '[dropdownToggle]',
 	host: {
 		'aria-haspopup': 'true',

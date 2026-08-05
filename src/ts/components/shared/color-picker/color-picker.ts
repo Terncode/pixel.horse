@@ -7,6 +7,7 @@ import { faChevronDown } from '../../../client/icons';
 const SIZE = 175;
 
 @Component({
+	standalone: false,
 	selector: 'color-picker',
 	templateUrl: 'color-picker.pug',
 	styleUrls: ['color-picker.scss'],

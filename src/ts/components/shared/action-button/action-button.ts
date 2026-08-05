@@ -5,6 +5,7 @@ import { drawAction } from '../../../client/buttonActions';
 import { removeItem } from '../../../common/utils';
 
 @Component({
+	standalone: false,
 	selector: 'action-button',
 	templateUrl: 'action-button.pug',
 	styleUrls: ['action-button.scss'],

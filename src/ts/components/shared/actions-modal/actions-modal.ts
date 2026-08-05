@@ -23,6 +23,7 @@ function eyeSprite(e: PonyEye | undefined) {
 }
 
 @Component({
+	standalone: false,
 	selector: 'actions-modal',
 	templateUrl: 'actions-modal.pug',
 	styleUrls: ['actions-modal.scss'],

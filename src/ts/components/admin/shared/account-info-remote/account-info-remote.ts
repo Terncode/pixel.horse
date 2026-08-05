@@ -4,6 +4,7 @@ import { Subscription } from '../../../../common/interfaces';
 import { AdminModel } from '../../../services/adminModel';
 
 @Component({
+	standalone: false,
 	selector: 'account-info-remote',
 	templateUrl: 'account-info-remote.pug',
 })

@@ -4,6 +4,7 @@ import { AdminModel } from '../../../services/adminModel';
 import { OriginInfoBase } from '../../../../common/adminInterfaces';
 
 @Component({
+	standalone: false,
 	selector: 'origin-list-remote',
 	templateUrl: 'origin-list-remote.pug',
 })

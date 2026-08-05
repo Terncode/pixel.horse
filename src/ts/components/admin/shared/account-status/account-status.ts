@@ -4,6 +4,7 @@ import { Account, AccountStatus as IAccountStatus } from '../../../../common/adm
 import { faUserSecret } from '../../../../client/icons';
 
 @Component({
+	standalone: false,
 	selector: 'account-status',
 	templateUrl: 'account-status.pug',
 })

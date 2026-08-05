@@ -25,6 +25,7 @@ const DERP: Expression = {
 };
 
 @Component({
+	standalone: false,
 	selector: 'discord-pony',
 	templateUrl: 'discord-pony.pug',
 })

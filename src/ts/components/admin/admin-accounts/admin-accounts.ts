@@ -12,6 +12,7 @@ let currentPage = 0;
 let not = false;
 
 @Component({
+	standalone: false,
 	selector: 'admin-accounts',
 	templateUrl: 'admin-accounts.pug',
 })

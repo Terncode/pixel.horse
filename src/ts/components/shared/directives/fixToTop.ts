@@ -1,6 +1,7 @@
 import { Directive, ElementRef, Input, HostListener, HostBinding, Output, EventEmitter } from '@angular/core';
 
 @Directive({
+	standalone: false,
 	selector: '[fixToTop]',
 })
 export class FixToTop {

@@ -4,6 +4,7 @@ import { Model } from '../../services/model';
 import { hardReload } from '../../../client/clientUtils';
 
 @Component({
+	standalone: false,
 	selector: 'page-loader',
 	templateUrl: 'page-loader.pug',
 	styleUrls: ['page-loader.scss'],

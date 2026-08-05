@@ -5,6 +5,7 @@ import { getAge } from '../../../../common/adminUtils';
 const year = (new Date()).getFullYear();
 
 @Component({
+	standalone: false,
 	selector: 'account-tooltip',
 	templateUrl: 'account-tooltip.pug',
 })

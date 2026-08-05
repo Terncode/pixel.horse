@@ -5,6 +5,7 @@ import { partyLeaderIcon, offlineIcon } from '../../../client/icons';
 import { getPaletteInfo } from '../../../client/pony';
 
 @Component({
+	standalone: false,
 	selector: 'party-box',
 	templateUrl: 'party-box.pug',
 	styleUrls: ['party-box.scss'],

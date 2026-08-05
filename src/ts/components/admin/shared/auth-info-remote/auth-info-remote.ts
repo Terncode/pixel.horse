@@ -4,6 +4,7 @@ import { AdminModel } from '../../../services/adminModel';
 import { Auth } from '../../../../common/adminInterfaces';
 
 @Component({
+	standalone: false,
 	selector: 'auth-info-remote',
 	templateUrl: 'auth-info-remote.pug',
 })

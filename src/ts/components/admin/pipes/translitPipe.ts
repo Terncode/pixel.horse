@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { transliterate } from 'transliteration';
 
 @Pipe({
+	standalone: false,
 	name: 'translit',
 })
 export class TranslitPipe implements PipeTransform {

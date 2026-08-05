@@ -12,6 +12,7 @@ function visibleMembers(members: PartyMember[], max: number, start: number) {
 }
 
 @Component({
+	standalone: false,
 	selector: 'party-list',
 	templateUrl: 'party-list.pug',
 	styleUrls: ['party-list.scss'],

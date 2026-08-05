@@ -2,6 +2,7 @@ import { Component, Input, ChangeDetectionStrategy, EventEmitter, Output } from 
 import { faChevronRight, faChevronLeft, faChevronUp, faChevronDown } from '../../../../client/icons';
 
 @Component({
+	standalone: false,
 	selector: 'tools-xy',
 	templateUrl: 'tools-xy.pug',
 	styleUrls: ['tools-xy.scss'],

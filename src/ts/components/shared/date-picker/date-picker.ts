@@ -4,6 +4,7 @@ import { MONTH_NAMES_EN } from '../../../common/constants';
 import { getLocale } from '../../../client/clientUtils';
 
 @Component({
+	standalone: false,
 	selector: 'date-picker',
 	templateUrl: 'date-picker.pug',
 })

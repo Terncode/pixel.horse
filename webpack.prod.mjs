@@ -118,13 +118,8 @@ export default (args = {}) =>
 				],
 			},
 			plugins: [
-				new AngularWebpackPlugin({
+			new AngularWebpackPlugin({
 					tsconfig,
-					compilerOptions: {
-						angularCompilerOptions: {
-							entryModule: `src/ts/components/${entry}`,
-						},
-				 }
 				}),
 				(script === 'bootstrap' && !args.analyze) ? new WrapperPlugin({ test: /\.js$/, header: analytics }) : undefined,
 				args.analyze ? new BundleAnalyzerPlugin({ analyzerMode: 'static' }) : undefined,

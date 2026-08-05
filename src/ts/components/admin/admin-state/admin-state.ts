@@ -8,6 +8,7 @@ import { AdminModel } from '../../services/adminModel';
 import { faCog, faSlidersH } from '../../../client/icons';
 
 @Component({
+	standalone: false,
 	selector: 'admin-state',
 	templateUrl: 'admin-state.pug',
 	styleUrls: ['admin-state.scss'],

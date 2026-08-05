@@ -3,6 +3,7 @@ import { isParentOf, focusFirstElement, findFocusableElements } from '../../../c
 import { isMobile } from '../../../client/data';
 
 @Directive({
+	standalone: false,
 	selector: '[focusTrap]',
 })
 export class FocusTrap implements OnInit, OnDestroy {

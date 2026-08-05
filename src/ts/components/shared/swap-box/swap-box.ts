@@ -8,6 +8,7 @@ import { Model } from '../../services/model';
 // import { SWAP_TIMEOUT, SECOND } from '../../../common/constants';
 
 @Component({
+	standalone: false,
 	selector: 'swap-box',
 	templateUrl: 'swap-box.pug',
 	styleUrls: ['swap-box.scss'],

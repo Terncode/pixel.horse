@@ -9,6 +9,7 @@ let currentPage = 1;
 let query: FindPonyQuery = {};
 
 @Component({
+	standalone: false,
 	selector: 'admin-ponies',
 	templateUrl: 'admin-ponies.pug',
 	styleUrls: ['admin-ponies.scss'],

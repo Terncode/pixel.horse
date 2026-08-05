@@ -5,6 +5,7 @@ import { AdminModel } from '../../../services/adminModel';
 import { faInfo, faLock, faTrash, faEyeSlash, faArrowRight } from '../../../../client/icons';
 
 @Component({
+	standalone: false,
 	selector: 'auth-info-edit',
 	templateUrl: 'auth-info-edit.pug',
 })

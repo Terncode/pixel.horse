@@ -15,6 +15,7 @@ function toCredit(credit: Credit) {
 }
 
 @Component({
+	standalone: false,
 	selector: 'about',
 	templateUrl: 'about.pug',
 	styleUrls: ['about.scss'],

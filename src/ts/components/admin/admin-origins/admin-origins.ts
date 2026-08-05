@@ -4,6 +4,7 @@ import { faSync, faEraser, faClock, faUser, faChevronDown, faSpinner } from '../
 import { AdminModel } from '../../services/adminModel';
 
 @Component({
+	standalone: false,
 	selector: 'admin-origins',
 	templateUrl: 'admin-origins.pug',
 })

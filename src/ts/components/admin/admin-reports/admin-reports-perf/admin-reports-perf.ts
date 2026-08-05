@@ -26,6 +26,7 @@ const frameTime = 1000 / SERVER_FPS;
 const timePadding = 10; // ms
 
 @Component({
+	standalone: false,
 	selector: 'admin-reports-perf',
 	templateUrl: 'admin-reports-perf.pug',
 })

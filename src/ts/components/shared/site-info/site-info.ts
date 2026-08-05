@@ -4,6 +4,7 @@ import { toSocialSiteInfo } from '../../../client/clientUtils';
 import { getProviderIcon } from '../sign-in-box/sign-in-box';
 
 @Component({
+	standalone: false,
 	selector: 'site-info',
 	templateUrl: 'site-info.pug',
 	styleUrls: ['site-info.scss'],

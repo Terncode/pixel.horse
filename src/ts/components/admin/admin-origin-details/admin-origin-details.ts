@@ -4,6 +4,7 @@ import { Event } from '../../../common/adminInterfaces';
 import { AdminModel } from '../../services/adminModel';
 
 @Component({
+	standalone: false,
 	selector: 'admin-origin-details',
 	templateUrl: 'admin-origin-details.pug',
 })

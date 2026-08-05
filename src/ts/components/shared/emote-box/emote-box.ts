@@ -5,6 +5,7 @@ import { getCharacterSprite } from '../../../graphics/spriteFont';
 import { loadAndInitSpriteSheets } from '../../../client/loadSprites';
 
 @Component({
+	standalone: false,
 	selector: 'emote-box',
 	template: '<img #image class="emote-box pixelart" />',
 	styles: ['.emote-box { pointer-events: none; }'],

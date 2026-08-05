@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { faLock } from '../../../client/icons';
 
 @Component({
+	standalone: false,
 	selector: 'fill-outline',
 	templateUrl: 'fill-outline.pug',
 	styleUrls: ['fill-outline.scss'],

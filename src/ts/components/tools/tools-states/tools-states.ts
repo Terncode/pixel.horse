@@ -47,6 +47,7 @@ const defaultPositions: any = {
 };
 
 @Component({
+	standalone: false,
 	selector: 'tools-states',
 	templateUrl: 'tools-states.pug',
 	styleUrls: ['tools-states.scss'],

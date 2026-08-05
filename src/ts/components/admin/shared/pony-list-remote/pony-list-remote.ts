@@ -5,6 +5,7 @@ import { faTrash, faArrowRight } from '../../../../client/icons';
 import { Character, PonyIdDateName, DuplicateResult } from '../../../../common/adminInterfaces';
 
 @Component({
+	standalone: false,
 	selector: 'pony-list-remote',
 	templateUrl: 'pony-list-remote.pug',
 	styleUrls: ['pony-list-remote.scss'],

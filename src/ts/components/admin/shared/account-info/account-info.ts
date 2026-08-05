@@ -56,6 +56,7 @@ const alertExpires = [
 ];
 
 @Component({
+	standalone: false,
 	selector: 'account-info',
 	templateUrl: 'account-info.pug',
 	styleUrls: ['account-info.scss'],

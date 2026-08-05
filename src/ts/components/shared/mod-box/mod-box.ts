@@ -9,6 +9,7 @@ const ageLabels = ['', 'M', 'A', '', '', '[M]', '[A]'];
 const ageTitles = ['Not set', 'Minor', 'Adult', '', '', 'Minor (locked)', 'Adult (locked)'];
 
 @Component({
+	standalone: false,
 	selector: 'mod-box',
 	templateUrl: 'mod-box.pug',
 	styleUrls: ['mod-box.scss'],

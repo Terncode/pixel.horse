@@ -42,6 +42,7 @@ export interface ToolsMapInfo {
 }
 
 @Component({
+	standalone: false,
 	selector: 'tools-map',
 	templateUrl: 'tools-map.pug',
 })

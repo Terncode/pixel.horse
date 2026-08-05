@@ -9,6 +9,7 @@ import { SettingsService } from '../../services/settingsService';
 import { REQUEST_DATE_OF_BIRTH } from '../../../common/constants';
 
 @Component({
+	standalone: false,
 	selector: 'menu-bar',
 	templateUrl: 'menu-bar.pug',
 	styleUrls: ['menu-bar.scss'],

@@ -81,6 +81,7 @@ interface EntityData {
 }
 
 @Component({
+	standalone: false,
 	selector: 'tools-entity',
 	templateUrl: 'tools-entity.pug',
 })

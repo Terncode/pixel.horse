@@ -7,6 +7,7 @@ import { removeItem } from '../../../common/utils';
 import { Model } from '../../services/model';
 
 @Component({
+	standalone: false,
 	selector: 'invites-modal',
 	templateUrl: 'invites-modal.pug',
 })

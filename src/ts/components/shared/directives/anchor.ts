@@ -1,6 +1,7 @@
 import { Directive, OnInit, ElementRef } from '@angular/core';
 
 @Directive({
+	standalone: false,
 	selector: 'a[href]'
 })
 export class Anchor implements OnInit {

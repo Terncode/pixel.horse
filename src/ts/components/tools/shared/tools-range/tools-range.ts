@@ -3,6 +3,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { faChevronRight, faChevronLeft, faChevronUp, faChevronDown } from '../../../../client/icons';
 
 @Component({
+	standalone: false,
 	selector: 'tools-range',
 	templateUrl: 'tools-range.pug',
 	styleUrls: ['tools-range.scss'],

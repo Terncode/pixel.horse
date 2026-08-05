@@ -11,6 +11,7 @@ import {
 let state: BaseTableState;
 
 @Component({
+	standalone: false,
 	selector: 'admin-events',
 	templateUrl: 'admin-events.pug',
 })

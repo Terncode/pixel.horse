@@ -9,6 +9,7 @@ import { BLACK } from '../../../common/colors';
 import { Entity, Engine, EngineInfo, DebugFlags, tileTypeNames } from '../../../common/interfaces';
 
 @Component({
+	standalone: false,
 	selector: 'editor-box',
 	templateUrl: 'editor-box.pug',
 })

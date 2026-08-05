@@ -24,6 +24,7 @@ const EXCITED: Expression = {
 const MENO = 'DBWIzP8imd08//D19fVazSjcwf1GhLNEiMxENSovLy/NsIdJQDnGqYBiSztWQTM6LychEnE/KRX///9WPeE1HbSpBUEIIASwgEIAAAAAbIAgCFMY34AHAAjwgCMRQCVLY38IDhAAwmFBz4fAIxjKM6SjGlaxjWtYgjGI';
 
 @Component({
+	standalone: false,
 	selector: 'visit-pt-pony',
 	templateUrl: 'visit-pt-pony.pug',
 })

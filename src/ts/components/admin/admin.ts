@@ -17,6 +17,7 @@ export function popoverConfig() {
 }
 
 @Component({
+	standalone: false,
 	selector: 'pony-town-app',
 	templateUrl: 'admin.pug',
 	styleUrls: ['admin.scss'],

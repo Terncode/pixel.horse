@@ -4,6 +4,7 @@ import { Sprite, PonyInfo } from '../../../../common/interfaces';
 let openedPopover: ToolsFrame;
 
 @Component({
+	standalone: false,
 	selector: 'tools-frame',
 	templateUrl: 'tools-frame.pug',
 	styleUrls: ['tools-frame.scss'],

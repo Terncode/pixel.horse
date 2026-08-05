@@ -4,6 +4,7 @@ import { InstallService } from '../../services/installService';
 import { isMobile } from '../../../client/data';
 
 @Component({
+	standalone: false,
 	selector: 'install-button',
 	templateUrl: 'install-button.pug',
 	styleUrls: ['install-button.scss'],

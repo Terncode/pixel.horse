@@ -5,6 +5,7 @@ import { faLanguage, faTrash, faComment, faClipboard } from '../../../../client/
 import { getTranslationUrl } from '../../../../common/adminUtils';
 
 @Component({
+	standalone: false,
 	selector: 'events-table',
 	templateUrl: 'events-table.pug',
 	styleUrls: ['events-table.scss'],

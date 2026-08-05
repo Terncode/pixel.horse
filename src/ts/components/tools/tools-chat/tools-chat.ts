@@ -25,6 +25,7 @@ interface Message {
 }
 
 @Component({
+	standalone: false,
 	selector: 'tools-chat',
 	templateUrl: 'tools-chat.pug',
 })

@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { cleanName } from '../../../common/stringUtils';
 
 @Component({
+	standalone: false,
 	selector: 'account',
 	templateUrl: 'account.pug',
 	styleUrls: ['account.scss'],

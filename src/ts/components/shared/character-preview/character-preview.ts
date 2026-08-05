@@ -21,6 +21,7 @@ const DEFAULT_STATE = defaultPonyState();
 const DEFAULT_OPTIONS = defaultDrawPonyOptions();
 
 @Component({
+	standalone: false,
 	selector: 'character-preview',
 	template: '<canvas class="rounded" #canvas></canvas>',
 	styles: [`:host { display: block; } canvas { width: 100%; height: 100%; }`],

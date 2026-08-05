@@ -16,6 +16,7 @@ const paletteManager = new PaletteManager();
 const defaultPalette = paletteManager.add(DEFAULT_PALETTE);
 
 @Component({
+	standalone: false,
 	selector: 'tools-palette',
 	templateUrl: 'tools-palette.pug',
 })

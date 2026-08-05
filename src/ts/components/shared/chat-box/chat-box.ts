@@ -39,6 +39,7 @@ function isActionCommand(message: string) {
 }
 
 @Component({
+	standalone: false,
 	selector: 'chat-box',
 	templateUrl: 'chat-box.pug',
 	styleUrls: ['chat-box.scss'],

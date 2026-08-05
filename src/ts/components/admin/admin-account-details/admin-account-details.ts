@@ -23,6 +23,7 @@ const defaultDuplicatesLimit = 10;
 const year = (new Date()).getFullYear();
 
 @Component({
+	standalone: false,
 	selector: 'admin-account-details',
 	templateUrl: 'admin-account-details.pug',
 	styleUrls: ['admin-account-details.scss'],

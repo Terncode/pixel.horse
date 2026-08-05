@@ -26,6 +26,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 // } from '../../../generated/shaders';
 
 @Component({
+	standalone: false,
 	selector: 'tools-webgl',
 	templateUrl: 'tools-webgl.pug',
 })

@@ -14,6 +14,7 @@ import { isIgnored, isHidden, isFriend } from '../../../common/entityUtils';
 import { setFlag } from '../../../common/utils';
 
 @Component({
+	standalone: false,
 	selector: 'pony-box',
 	templateUrl: 'pony-box.pug',
 	styleUrls: ['pony-box.scss'],

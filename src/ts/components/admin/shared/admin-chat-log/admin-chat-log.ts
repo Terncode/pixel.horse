@@ -9,6 +9,7 @@ import { replaceSwears } from '../../../../client/adminHtmlUtils';
 import { addDays } from 'date-fns';
 
 @Component({
+	standalone: false,
 	selector: 'admin-chat-log',
 	templateUrl: 'admin-chat-log.pug',
 	styleUrls: ['admin-chat-log.scss'],

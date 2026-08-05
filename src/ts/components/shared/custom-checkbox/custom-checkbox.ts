@@ -2,6 +2,7 @@ import { Component, ChangeDetectionStrategy, Output, Input, EventEmitter } from 
 import { uniqueId } from 'lodash';
 
 @Component({
+	standalone: false,
 	selector: 'custom-checkbox',
 	templateUrl: 'custom-checkbox.pug',
 	styleUrls: ['custom-checkbox.scss'],

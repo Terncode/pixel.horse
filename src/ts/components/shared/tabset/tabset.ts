@@ -5,6 +5,7 @@ import { uniqueId } from 'lodash';
 import { Key } from '../../../client/input/input';
 
 @Directive({
+	standalone: false,
 	selector: '[tabTitle]'
 })
 export class TabTitle {
@@ -13,6 +14,7 @@ export class TabTitle {
 }
 
 @Directive({
+	standalone: false,
 	selector: '[tabContent]',
 })
 export class TabContent {
@@ -21,6 +23,7 @@ export class TabContent {
 }
 
 @Directive({
+	standalone: false,
 	selector: 'tab',
 })
 export class Tab {
@@ -33,6 +36,7 @@ export class Tab {
 }
 
 @Component({
+	standalone: false,
 	selector: 'tabset',
 	templateUrl: 'tabset.pug',
 })

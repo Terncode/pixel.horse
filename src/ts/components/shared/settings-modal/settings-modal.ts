@@ -13,6 +13,7 @@ import { faSlidersH, faCommentSlash, faGamepad, faImage, faDownload, faUpload, f
 import { saveAs } from 'file-saver';
 
 @Component({
+	standalone: false,
 	selector: 'settings-modal',
 	templateUrl: 'settings-modal.pug',
 	styleUrls: ['settings-modal.scss'],

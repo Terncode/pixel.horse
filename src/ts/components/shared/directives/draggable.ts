@@ -76,6 +76,7 @@ export class DraggableService {
 }
 
 @Component({
+	standalone: false,
 	selector: 'draggable-outlet',
 	template: `<div></div>`,
 	styles: [`:host { position: fixed; top: 0; left: 0; z-index: 10000; }`],
@@ -86,7 +87,7 @@ export class DraggableOutlet {
 	}
 }
 
-@Directive({ selector: '[draggableDrop]' })
+@Directive({ standalone: false, selector: '[draggableDrop]' })
 export class DraggableDrop<T> implements OnInit, OnDestroy {
 	@Input('draggablePad') pad = 0;
 	@Output('draggableDrop') drop = new EventEmitter<T>();
@@ -119,6 +120,7 @@ export class DraggableDrop<T> implements OnInit, OnDestroy {
 }
 
 @Directive({
+	standalone: false,
 	selector: '[draggableItem]',
 	host: {
 		'[style.touch-action]': `touchAction`,

@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
 import { faCheck } from '../../../client/icons';
 
 @Component({
+	standalone: false,
 	selector: 'check-box',
 	templateUrl: 'check-box.pug',
 	styleUrls: ['check-box.scss'],

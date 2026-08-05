@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Auth } from '../../../../common/adminInterfaces';
 
 @Component({
+	standalone: false,
 	selector: 'auth-list',
 	templateUrl: 'auth-list.pug',
 	styleUrls: ['auth-list.scss'],

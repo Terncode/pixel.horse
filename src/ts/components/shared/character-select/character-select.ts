@@ -12,6 +12,7 @@ import { delay } from '../../../common/utils';
 import { isMobile } from '../../../client/data';
 
 @Component({
+	standalone: false,
 	selector: 'character-select',
 	templateUrl: 'character-select.pug',
 	styleUrls: ['character-select.scss'],

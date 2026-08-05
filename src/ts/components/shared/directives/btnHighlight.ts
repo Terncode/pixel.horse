@@ -2,6 +2,7 @@ import { Directive, Input, Optional } from '@angular/core';
 import { NgModel } from '@angular/forms';
 
 @Directive({
+	standalone: false,
 	selector: '[btnHighlight]',
 	host: {
 		'[class.btn-default]': '!on',
@@ -19,6 +20,7 @@ export class BtnHighlight {
 }
 
 @Directive({
+	standalone: false,
 	selector: '[btnHighlightDanger]',
 	host: {
 		'[class.btn-default]': '!btnHighlightDanger',

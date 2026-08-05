@@ -4,6 +4,7 @@ import { hasFeatureFlag, featureFlagsChanged } from '../../../client/clientUtils
 import { Model } from '../../services/model';
 
 @Directive({
+	standalone: false,
 	selector: '[hasFeature]',
 })
 export class HasFeature implements AfterViewInit, OnDestroy {

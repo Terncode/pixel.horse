@@ -6,6 +6,7 @@ import { faBan } from '../../../client/icons';
 import { getPaletteInfo } from '../../../client/pony';
 
 @Component({
+	standalone: false,
 	selector: 'notification-item',
 	templateUrl: 'notification-item.pug',
 	styleUrls: ['notification-item.scss'],

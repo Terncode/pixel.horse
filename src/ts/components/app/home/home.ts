@@ -6,6 +6,7 @@ import { OAuthProvider, PonyObject } from '../../../common/interfaces';
 import { stand } from '../../../common/ponyAnimations';
 
 @Component({
+	standalone: false,
 	selector: 'home',
 	templateUrl: 'home.pug',
 	styleUrls: ['home.scss'],

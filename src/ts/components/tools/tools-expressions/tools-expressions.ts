@@ -13,6 +13,7 @@ import { paletteSpriteSheet } from '../../../generated/sprites';
 import { loadAndInitSpriteSheets } from '../../../client/loadSprites';
 
 @Component({
+	standalone: false,
 	selector: 'tools-expressions',
 	templateUrl: 'tools-expressions.pug',
 })

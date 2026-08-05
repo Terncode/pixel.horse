@@ -24,6 +24,7 @@ export function getRegionsBoundsCameraBased(_entity: Point, camera: Rect, region
 }
 
 @Component({
+	standalone: false,
 	selector: 'tools-regions',
 	templateUrl: 'tools-regions.pug',
 })

@@ -13,6 +13,7 @@ const extensions = {
 };
 
 @Component({
+	standalone: false,
 	selector: 'ua-info',
 	templateUrl: 'ua-info.pug',
 	styles: [`:host { display: inline-block; }`],

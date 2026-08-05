@@ -13,6 +13,7 @@ const ICONS = {
 };
 
 @Component({
+	standalone: false,
 	selector: 'ban-icon',
 	templateUrl: 'ban-icon.pug',
 	styleUrls: ['ban-icon.scss'],

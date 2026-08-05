@@ -7,6 +7,7 @@ import { focusElementAfterTimeout } from '../../../client/htmlUtils';
 const MAX = 999999;
 
 @Component({
+	standalone: false,
 	selector: 'sprite-selection',
 	templateUrl: 'sprite-selection.pug',
 	styleUrls: ['sprite-selection.scss'],

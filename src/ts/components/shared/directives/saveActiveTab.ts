@@ -4,6 +4,7 @@ import { Tabset } from '../tabset/tabset';
 import { StorageService } from '../../services/storageService';
 
 @Directive({
+	standalone: false,
 	selector: '[saveActiveTab]',
 })
 export class SaveActiveTab implements OnInit, OnDestroy {

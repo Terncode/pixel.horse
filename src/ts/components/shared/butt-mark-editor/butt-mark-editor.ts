@@ -10,6 +10,7 @@ export interface ButtMarkEditorState {
 }
 
 @Component({
+	standalone: false,
 	selector: 'butt-mark-editor',
 	templateUrl: 'butt-mark-editor.pug',
 })

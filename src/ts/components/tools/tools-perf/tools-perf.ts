@@ -13,6 +13,7 @@ import { includes as utilsIncludes } from '../../../common/utils';
 import { encodeString, encodeStringNew } from './methods';
 
 @Component({
+	standalone: false,
 	selector: 'tools-perf',
 	templateUrl: 'tools-perf.pug',
 })

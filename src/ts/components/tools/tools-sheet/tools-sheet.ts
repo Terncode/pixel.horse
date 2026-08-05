@@ -9,6 +9,7 @@ import { sheets, Sheet } from '../../../common/sheets';
 import { loadAndInitSpriteSheets } from '../../../client/loadSprites';
 
 @Component({
+	standalone: false,
 	selector: 'tools-sheet',
 	templateUrl: 'tools-sheet.pug',
 	styleUrls: ['tools-sheet.scss'],

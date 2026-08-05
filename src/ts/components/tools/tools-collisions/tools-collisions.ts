@@ -38,6 +38,7 @@ function toScreen(pt: Point) {
 }
 
 @Component({
+	standalone: false,
 	selector: 'tools-collisions',
 	templateUrl: 'tools-collisions.pug',
 })

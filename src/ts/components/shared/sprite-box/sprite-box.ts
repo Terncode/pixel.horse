@@ -22,6 +22,7 @@ function drawAll() {
 }
 
 @Component({
+	standalone: false,
 	selector: 'sprite-box',
 	templateUrl: 'sprite-box.pug',
 	styleUrls: ['sprite-box.scss'],

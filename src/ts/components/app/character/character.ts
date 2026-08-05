@@ -57,6 +57,7 @@ function eyeSprite(e: PonyEye | undefined) {
 }
 
 @Component({
+	standalone: false,
 	selector: 'character',
 	templateUrl: 'character.pug',
 	styleUrls: ['character.scss'],

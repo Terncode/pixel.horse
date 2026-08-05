@@ -334,11 +334,11 @@ if (argv.main) {
 }
 
 if (argv.beta) {
-	webpackArgs.push('--env.beta');
+	webpackArgs.push('--env', 'beta');
 }
 
 if (argv.timing) {
-	webpackArgs.push('--env.timing');
+	webpackArgs.push('--env', 'timing');
 }
 
 const webpackProd = npmScript(webpackScript, webpackArgs);

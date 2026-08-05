@@ -26,6 +26,7 @@ const options = defaultDrawPonyOptions();
 const state = defaultPonyState();
 
 @Component({
+	standalone: false,
 	selector: 'portrait-box',
 	templateUrl: 'portrait-box.pug',
 	styleUrls: ['portrait-box.scss'],

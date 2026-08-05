@@ -14,6 +14,7 @@ import { SettingsService } from '../../services/settingsService';
 import { Audio } from '../../services/audio';
 
 @Component({
+	standalone: false,
 	selector: 'settings-box',
 	templateUrl: 'settings-box.pug',
 	styleUrls: ['settings-box.scss'],

@@ -43,6 +43,7 @@ function comparePonies(a: PonyObject, b: PonyObject) {
 }
 
 @Component({
+	standalone: false,
 	selector: 'character-list',
 	templateUrl: 'character-list.pug',
 	styleUrls: ['character-list.scss'],

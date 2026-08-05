@@ -3,6 +3,7 @@ import { Subscription } from '../../../../common/interfaces';
 import { AdminModel } from '../../../services/adminModel';
 
 @Component({
+	standalone: false,
 	selector: 'auth-list-remote',
 	templateUrl: 'auth-list-remote.pug',
 	styleUrls: ['auth-list-remote.scss'],

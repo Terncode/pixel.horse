@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
+	standalone: false,
 	selector: 'on-off-switch',
 	templateUrl: 'on-off-switch.pug',
 	changeDetection: ChangeDetectionStrategy.OnPush,

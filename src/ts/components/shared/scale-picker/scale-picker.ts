@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { times } from 'lodash';
 
 @Component({
+	standalone: false,
 	selector: 'scale-picker',
 	templateUrl: 'scale-picker.pug',
 })

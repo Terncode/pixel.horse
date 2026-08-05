@@ -2,6 +2,7 @@ import { Directive, HostBinding } from '@angular/core';
 import { RouterLinkActive } from '@angular/router';
 
 @Directive({
+	standalone: false,
 	selector: '[linkCurrent]',
 })
 export class LinkCurrent {
