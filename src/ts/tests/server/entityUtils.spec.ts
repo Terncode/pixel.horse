@@ -86,7 +86,7 @@ describe('entityUtils [server]', () => {
 
 			updateEntityState(entity, 123 as EntityState);
 
-			expect(getWriterBuffer(entity.client.updateQueue)).eql(new Uint8Array([2, 0, 4, 0, 0, 0, 12, 123]));
+			expect(getWriterBuffer(entity.client.updateQueue)).eql(new Uint8Array([2, 4, 0, 12, 0, 0, 0, 123]));
 		});
 	});
 

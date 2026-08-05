@@ -259,7 +259,7 @@ describe('World', () => {
 		});
 
 		it('disconnects client after timeout', () => {
-			const client = mockClient({ isConnected: true });
+			const client = mockClient({ isConnected: () => true });
 			const disconnect = stub(client, 'disconnect');
 
 			world.kick(client);
@@ -269,7 +269,7 @@ describe('World', () => {
 		});
 
 		it('skips disconnecting if client already disconnected', () => {
-			const client = mockClient({ isConnected: false });
+			const client = mockClient({ isConnected: () => false });
 			const disconnect = stub(client, 'disconnect');
 
 			world.kick(client);

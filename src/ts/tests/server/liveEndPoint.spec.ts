@@ -56,7 +56,7 @@ describe('liveEndPoint', () => {
 	});
 
 	it('clears removed items after 10 minutes', () => {
-		const item = { _id: 'foo', remove: stub() };
+		const item = { _id: 'foo', deleteOne: stub() };
 		(stub(model, 'findById') as any).withArgs('foo').returns({ exec: () => Promise.resolve(item) });
 		clock.setSystemTime(10000);
 		stubFind([]);
@@ -173,16 +173,16 @@ describe('liveEndPoint', () => {
 
 	describe('removeItem()', () => {
 		describe('if item exists', () => {
-			let item: { _id: string; remove: SinonStub; };
+			let item: { _id: string; deleteOne: SinonStub; };
 
 			beforeEach(() => {
-				item = { _id: 'foo', remove: stub() };
+				item = { _id: 'foo', deleteOne: stub() };
 				(stub(model, 'findById') as any).withArgs('foo').returns({ exec: stub().resolves(item) });
 			});
 
 			it('removes item', () => {
 				return liveEndPoint.removeItem('foo')
-					.then(() => assert.calledOnce(item.remove));
+					.then(() => assert.calledOnce(item.deleteOne));
 			});
 
 			it('calls beforeDelete hook', () => {
@@ -206,16 +206,16 @@ describe('liveEndPoint', () => {
 		});
 
 		describe('if item does not exist', () => {
-			let item: { remove: SinonStub };
+			let item: { deleteOne: SinonStub; };
 
 			beforeEach(() => {
-				item = { remove: stub() };
+				item = { deleteOne: stub() };
 				(stub(model, 'findById') as any).withArgs('bar').returns({ exec: stub().resolves(null as any) });
 			});
 
 			it('does nothing if item does not exist', () => {
 				return liveEndPoint.removeItem('bar')
-					.then(() => assert.notCalled(item.remove));
+					.then(() => assert.notCalled(item.deleteOne));
 			});
 
 			it('does not call onDelete hook', () => {

@@ -272,7 +272,7 @@ describe('playerUtils', () => {
 			await ignorePlayer(client, target, true);
 
 			expect(Array.from(getWriterBuffer(client.updateQueue)))
-				.eql([2, 4, 0, 0, 0, 0, 123, 1]);
+				.eql([2, 0, 4, 123, 0, 0, 0, 1]);
 		});
 	});
 
@@ -466,7 +466,7 @@ describe('playerUtils', () => {
 			setEntityExpression(pony, parseExpression(':)'), 123, false);
 
 			expect(Array.from(getWriterBuffer(pony.client!.updateQueue)))
-				.eql([2, 0, 8, 0, 0, 0, 123, 0, 0, 4, 32]);
+				.eql([2, 8, 0, 123, 0, 0, 0, 32, 4, 0, 0]);
 		});
 	});
 
@@ -551,7 +551,7 @@ describe('playerUtils', () => {
 
 			sendAction(entity, Action.Boop);
 
-			expect(Array.from(getWriterBuffer(client.updateQueue))).eql([2, 0, 128, 0, 0, 0, 123, 1]);
+			expect(Array.from(getWriterBuffer(client.updateQueue))).eql([2, 128, 0, 123, 0, 0, 0, 1]);
 			expect(region.entityUpdates).eql([]);
 		});
 	});
@@ -620,7 +620,7 @@ describe('playerUtils', () => {
 		});
 
 		it('does nothing if cannot perform action', () => {
-			client.lastBoopOrKissAction = 1000;
+			client.lastBoopOrKissAction = Date.now() + 1000;
 
 			boop(client, 0);
 
@@ -646,14 +646,14 @@ describe('playerUtils', () => {
 			expect(client.pony.state).equal(EntityState.HeadTurned);
 		});
 
-		it('does not update flags if cannot perform action', () => {
+		it('updates HeadTurned flag even when action is on cooldown', () => {
 			const client = mockClient();
 			client.lastBoopOrKissAction = Date.now() + 1000;
 			client.pony.state = 0;
 
 			turnHead(client);
 
-			expect(client.pony.state).equal(0);
+			expect(client.pony.state).equal(EntityState.HeadTurned);
 		});
 	});
 

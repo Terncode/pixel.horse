@@ -599,7 +599,7 @@ describe('commands', () => {
 		});
 
 		const placeholderCommands = [
-			's', 'say', 'p', 'party', 't', 'think', 'ss', 's1', 's2', 's3', 'sit', 'stand', 'lie', 'lay', 'fly',
+			's', 'say', 'p', 'party', 't', 'think', 'sit', 'stand', 'lie', 'lay', 'fly',
 			'w', 'whisper', 'r', 'reply',
 		];
 

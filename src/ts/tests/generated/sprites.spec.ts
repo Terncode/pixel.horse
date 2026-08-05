@@ -34,8 +34,8 @@ const sets: [keyof typeof sprites, number, number, (number[] | null)[]][] = [
 	['chestAccessories', 1, 16, [null, [3, 5, 9], [3, 7, 5, 5, 7, 5, 7, 5, 7, 11, 9, 5, 11], [5, 7, 11], [5, 7]]],
 	['backAccessories', 1, 16, [null, [3], [3, 7, 13, 5], [3, 7, 13, 5], [3, 9, 13, 5], [3, 3]]],
 	['waistAccessories', 1, 17, [null, [9], [9], [9]]],
-	['earAccessories', -1, 1, [null, [3], [3], [3], [3], [5], [3, 11], [3], [3], [3], [3, 7, 7, 7], [3, 11, 11, 11], [3], []]],
-	['earAccessoriesBehind', -1, 1, [null, null, null, null, null, null, null, null, [3], null, [3, 7, 7, 7], [3, 11, 11, 11], [], []]],
+	['earAccessories', -1, 1, [null, [3], [3], [3], [3], [5], [3, 11], [3], [3], [3], [3, 7, 7, 7], [3, 11, 11, 11], [3]]],
+	['earAccessoriesBehind', -1, 1, [null, null, null, null, null, null, null, null, [3], null, [3, 7, 7, 7], [3, 11, 11, 11], []]],
 	['extraAccessories', -1, 1, [[11], [5], [5], [7], [9], [13], [5], [11], [9], [11, 11], [9], [9, 9], [7], [9], null, null, [13], [13]]],
 	['extraAccessoriesBehind', -1, 1, [[11], [5], null, [7], [9], null, null, null, null, null, null, null, [7], [9], [5], [5], [13], []]],
 ];

@@ -1,6 +1,6 @@
 import '../../lib';
 import { expect } from 'chai';
-import { assert, stub, SinonStub } from 'sinon';
+import { assert, stub, SinonStub, useFakeTimers } from 'sinon';
 import {
 	createUpdateAccount, UpdateAccount, createRemoveSite, RemoveSite, createUpdateSettings, UpdateSettings,
 	createGetAccountCharacters, GetAccountCharacters, GetAccountData, createGetAccountData, modCheck
@@ -224,12 +224,17 @@ describe('api account', () => {
 		});
 
 		it('logs birthday change', async () => {
+			const clock = useFakeTimers(new Date(2019, 5, 1));
 			const account = { _id: genObjectId(), name: 'bar', save: stub(), birthdate: new Date(12345) } as any;
 			findAccount.resolves(account);
 
-			await updateAccount(account, { name: 'bar', birthdate: '2000-02-03' });
+			try {
+				await updateAccount(account, { name: 'bar', birthdate: '2000-02-03' });
 
-			assert.calledWith(log, account._id, 'Changed birthdate 1970-01-01 (49yo) => 2000-02-03 (19yo)');
+				assert.calledWith(log, account._id, 'Changed birthdate 1970-01-01 (49yo) => 2000-02-03 (19yo)');
+			} finally {
+				clock.restore();
+			}
 		});
 	});
 

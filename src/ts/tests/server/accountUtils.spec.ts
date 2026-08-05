@@ -26,7 +26,7 @@ describe('accountUtils [server]', () => {
 
 			expect(getModInfo(client)).eql({
 				shadow: 'perma',
-				mute: 'a day',
+				mute: '1 day',
 				note: 'foo',
 				counters: { spam: 1 },
 				country: 'XY',

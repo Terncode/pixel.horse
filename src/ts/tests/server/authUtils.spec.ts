@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { stub, assert } from 'sinon';
 import { Types } from 'mongoose';
 import { updateAuthInfo } from '../../server/authUtils';
-import { auth, genId } from '../mocks';
+import { auth, genId, genObjectId } from '../mocks';
 import { Profile } from '../../common/interfaces';
 
 function profile(options: Partial<Profile>): Profile {
@@ -14,13 +14,14 @@ describe('authUtils', () => {
 	describe('updateAuthInfo()', () => {
 		it('updates url and name fields', async () => {
 			const updateAuth = stub();
-			const a = auth({ _id: new Types.ObjectId('bar') });
+			const id = genObjectId();
+			const a = auth({ _id: id });
 
 			await updateAuthInfo(updateAuth, a, profile({ username: 'foo', url: 'bar' }), undefined);
 
 			expect(a.name).eql('foo');
 			expect(a.url).eql('bar');
-			assert.calledWith(updateAuth, 'bar', { name: 'foo', url: 'bar' });
+			assert.calledWith(updateAuth, id, { name: 'foo', url: 'bar' });
 		});
 
 		it('updates email field', async () => {
@@ -33,20 +34,22 @@ describe('authUtils', () => {
 
 		it('updates email field (from empty)', async () => {
 			const updateAuth = stub();
-			const a = auth({ _id: new Types.ObjectId('bar') });
+			const id = genObjectId();
+			const a = auth({ _id: id });
 
 			await updateAuthInfo(updateAuth, a, profile({ emails: ['b', 'c'] }), undefined);
 
 			expect(a.emails).eql(['b', 'c']);
-			assert.calledWith(updateAuth, 'bar', { emails: ['b', 'c'] });
+			assert.calledWith(updateAuth, id, { emails: ['b', 'c'] });
 		});
 
 		it('saves updated auth', async () => {
 			const updateAuth = stub();
+			const id = genObjectId();
 
-			await updateAuthInfo(updateAuth, auth({ _id: new Types.ObjectId('bar') }), profile({ username: 'foo' }), undefined);
+			await updateAuthInfo(updateAuth, auth({ _id: id }), profile({ username: 'foo' }), undefined);
 
-			assert.calledWith(updateAuth, 'bar', { name: 'foo' });
+			assert.calledWith(updateAuth, id, { name: 'foo' });
 		});
 
 		it('updates account if passed account ID', async () => {
@@ -61,14 +64,14 @@ describe('authUtils', () => {
 		it('does not save auth if nothing changed', async () => {
 			const updateAuth = stub();
 
-			await updateAuthInfo(updateAuth, auth({ _id: new Types.ObjectId('bar'), name: 'foo' }), profile({ username: 'foo' }), undefined);
+			await updateAuthInfo(updateAuth, auth({ _id: genObjectId(), name: 'foo' }), profile({ username: 'foo' }), undefined);
 
 			assert.notCalled(updateAuth);
 		});
 
 		it('does nothing if email list is the same', async () => {
 			const updateAuth = stub();
-			const a = auth({ _id: new Types.ObjectId('bar'), emails: ['a', 'b'] });
+			const a = auth({ _id: genObjectId(), emails: ['a', 'b'] });
 
 			await updateAuthInfo(updateAuth, a, profile({ emails: ['b', 'a'] }), undefined);
 

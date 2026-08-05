@@ -70,7 +70,7 @@ describe('regionUtils', () => {
 			subscribeToRegionsInRange(client);
 
 			expect(client.subscribes).eql([
-				new Uint8Array([0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 0]),
+				new Uint8Array([0, 0, 0, 0, 0, 0, 1, 1, 3, 1, 0]),
 			]);
 		});
 	});

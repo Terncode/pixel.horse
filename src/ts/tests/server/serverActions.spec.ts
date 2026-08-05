@@ -204,7 +204,7 @@ describe('ServerActions', () => {
 			serverActions.select(123, SelectFlags.FetchEx);
 
 			expect(Array.from(getWriterBuffer(client.updateQueue)))
-				.eql([2, 0, 32, 0, 0, 0, 1, 129, 3, 102, 111, 111, 165]);
+				.eql([2, 32, 0, 1, 0, 0, 0, 129, 1, 102, 111, 111, 0, 165]);
 		});
 
 		it('does not send extra data for selected entity if fetch flag is false', () => {
@@ -234,10 +234,10 @@ describe('ServerActions', () => {
 			serverActions.select(123, SelectFlags.FetchEx);
 
 			expect(Array.from(getWriterBuffer(client.updateQueue))).eql([
-				2, 0, 32, 0, 0, 0, 1, 129, 7, 109, 111, 100, 73, 110, 102, 111, 134, 6, 115, 104, 97, 100, 111,
-				119, 0, 4, 109, 117, 116, 101, 69, 112, 101, 114, 109, 97, 4, 110, 111, 116, 101, 67, 98, 97,
-				114, 8, 99, 111, 117, 110, 116, 101, 114, 115, 128, 7, 99, 111, 117, 110, 116, 114, 121, 0, 7,
-				97, 99, 99, 111, 117, 110, 116, 76, 102, 111, 111, 98, 97, 114, 32, 91, 48, 97, 97, 93
+				2, 32, 0, 1, 0, 0, 0, 129, 1, 109, 111, 100, 73, 110, 102, 111, 0, 134, 1, 115, 104, 97, 100, 111,
+				119, 0, 0, 1, 109, 117, 116, 101, 0, 64, 112, 101, 114, 109, 97, 0, 1, 110, 111, 116, 101, 0, 64, 98,
+				97, 114, 0, 1, 99, 111, 117, 110, 116, 101, 114, 115, 0, 128, 1, 99, 111, 117, 110, 116, 114, 121, 0, 0,
+				1, 97, 99, 99, 111, 117, 110, 116, 0, 64, 102, 111, 111, 98, 97, 114, 32, 91, 48, 97, 97, 93, 0
 			]);
 		});
 	});
@@ -549,7 +549,7 @@ describe('ServerActions', () => {
 
 			await serverActions.otherAction(222, ModAction.Mute, 123);
 
-			assert.calledWith(system, 'Muted for (a few seconds) by Acc');
+			assert.calledWith(system, 'Muted for (less than a minute) by Acc');
 			assert.calledWith(accountService.update, target.accountId, { mute: Date.now() + 123 });
 		});
 
@@ -576,7 +576,7 @@ describe('ServerActions', () => {
 
 			await serverActions.otherAction(222, ModAction.Shadow, 123);
 
-			assert.calledWith(system, 'Shadowed for (a few seconds) by Acc');
+			assert.calledWith(system, 'Shadowed for (less than a minute) by Acc');
 			assert.calledWith(accountService.update, target.accountId, { shadow: Date.now() + 123 });
 		});
 
@@ -943,7 +943,7 @@ describe('ServerActions', () => {
 
 			serverActions.changeTile(1, 2, TileType.Dirt);
 
-			expect(getWriterBuffer(client.updateQueue)).eql(new Uint8Array([4, 0, 1, 0, 2, 1]));
+			expect(getWriterBuffer(client.updateQueue)).eql(new Uint8Array([4, 1, 0, 2, 0, 1]));
 		});
 
 		it('does nothing if invalid tile type', () => {

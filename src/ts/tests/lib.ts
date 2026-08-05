@@ -1,10 +1,13 @@
 /// <reference path="../../typings/my.d.ts" />
 
+import '@angular/compiler';
 import '../server/boot';
 import * as mongoose from 'mongoose';
 import * as fs from 'fs';
 import * as path from 'path';
 import { deleteAsync } from 'del';
+
+const mongooseInstance = (mongoose as any).default ?? mongoose;
 import { once, mapValues, noop } from 'lodash';
 import { spawnSync } from 'child_process';
 import { createStubInstance, SinonStubbedInstance, stub } from 'sinon';
@@ -16,10 +19,12 @@ import { pathTo } from '../server/paths';
 import { loadImage, loadImageSync, createCanvas } from '../server/canvasUtilsNode';
 import { loadAndInitSheets } from '../client/loadSprites';
 
-require('chai').use(require('chai-as-promised'));
+import * as chai from 'chai';
+const chaiAsPromised = require('chai-as-promised') as any;
+chai.use(chaiAsPromised.default ?? chaiAsPromised);
 
-(mongoose as any).models = {};
-(mongoose as any).modelSchemas = {};
+(mongooseInstance as any).models = {};
+(mongooseInstance as any).modelSchemas = {};
 (global as any).TESTS = true;
 (global as any).TOOLS = true;
 function PerformanceDate(...args: any[]) {
