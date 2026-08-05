@@ -25,7 +25,7 @@ ng-template(#searchTooltip)
 
 .d-block.d-sm-flex.justify-content-end
 	.table-loader.text-muted.flex-grow-1.text-left(*ngIf="loading")
-		fa-icon.mr-1([icon]="spinnerIcon" [spin]="true")
+		fa-icon.mr-1([icon]="spinnerIcon" animation="spin")
 		| Loading...
 	strong.text-muted.mr-3(style="margin-top: 6px")
 		| {{totalItems > 900000000 ? '---' : totalItems}}

@@ -43,7 +43,7 @@ ng-template(#duplicatesPopover)
 			fa-icon.mr-1([icon]="filterIcon")
 			| filters
 	.d-block.d-sm-flex.mt-2
-		fa-icon.text-muted.mr-3(*ngIf="loading" [icon]="spinnerIcon" [spin]="true" size="2x" style="margin-top: 3px")
+		fa-icon.text-muted.mr-3(*ngIf="loading" [icon]="spinnerIcon" animation="spin" size="2x" style="margin-top: 3px")
 		strong.text-muted.mr-3(style="margin-top: 6px")
 			| {{totalItems === 99999999 ? '' : totalItems}}
 		pagination(

@@ -41,7 +41,7 @@ nav.navbar.navbar-expand.justify-content-end(role="navigation")
 						| Sign out
 
 		.text-muted(*ngIf="loading" style="font-size: 20px; padding: 10px 20px;")
-			fa-icon([icon]="spinnerIcon" [fixedWidth]="true" [spin]="true")
+			fa-icon([icon]="spinnerIcon" [fixedWidth]="true" animation="spin")
 
 		form.navbar-form.ml-2(*ngIf="!loading && !account")
 			.button-group.dropdown(dropdown)

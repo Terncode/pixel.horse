@@ -3,7 +3,7 @@
 	.d-flex.justify-content-between
 		.admin-initializing
 			div(*ngIf="loading")
-				fa-icon.mr-1([icon]="spinnerIcon" [spin]="true")
+				fa-icon.mr-1([icon]="spinnerIcon" animation="spin")
 				| {{loading}}...
 
 		menu-bar([loading]="model.loading" [account]="model.account" (signOut)="signOut()")

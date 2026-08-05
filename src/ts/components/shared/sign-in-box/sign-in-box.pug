@@ -34,7 +34,7 @@
 
 	div(*ngIf="local")
 		div(*ngIf="mocks === undefined")
-			fa-icon([icon]="spinnerIcon" [fixedWidth]="true" [spin]="true")
+			fa-icon([icon]="spinnerIcon" [fixedWidth]="true" animation="spin")
 			| Loading mock logins
 		.btn-group.dropdown(dropdown *ngIf="mocks !== undefined")
 			button.btn.btn-lg.btn-dark.dropdown-toggle(dropdownToggle)

@@ -36,7 +36,7 @@
 		button.btn.btn-lg.btn-success.text-ellipsis.flex-grow-1(
 			#playButton (click)="joining ? cancel() : play()" [disabled]="!canPlay && !joining")
 			div(*ngIf="joining")
-				fa-icon.mr-1([icon]="spinnerIcon" [spin]="true")
+				fa-icon.mr-1([icon]="spinnerIcon" animation="spin")
 				| Cancel
 			div(*ngIf="!joining && server")
 				| #[strong {{label || 'Play'}}] on #[span {{server.name}}]

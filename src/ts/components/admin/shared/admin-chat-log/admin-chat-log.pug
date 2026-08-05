@@ -5,7 +5,7 @@ div(*ngIf="open || !canClose")
 			span.text-muted.ml-1
 				| ({{date ? date.label : 'none'}})
 			span.text-muted.ml-1(*ngIf="loading")
-				fa-icon([icon]="spinnerIcon" [spin]="true")
+				fa-icon([icon]="spinnerIcon" animation="spin")
 		.form-inline
 			ng-content
 			form.d-inline-block((submit)="searchChat(searchInput.value)")

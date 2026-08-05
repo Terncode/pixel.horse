@@ -55,7 +55,7 @@ div(*ngIf="account")
 				h5 Status
 				div
 					button.btn.btn-xs.btn-default.ml-1((click)="clearSessions()" title="Sign out user" [disabled]="clearingSessions")
-						fa-icon([icon]="clearingSessions ? spinnerIcon : signOutIcon" [fixedWidth]="true" [spin]="clearingSessions")
+						fa-icon([icon]="clearingSessions ? spinnerIcon : signOutIcon" [fixedWidth]="true" [animation]="clearingSessions ? 'spin' : undefined")
 					button.btn.btn-xs.btn-default.ml-1((click)="showAccountData()" title="Fetch account data (in console)")
 						fa-icon([icon]="consoleIcon" [fixedWidth]="true")
 					button.btn.btn-xs.btn-default.ml-1((click)="accountStatus.refresh()" title="Refresh status")
@@ -216,7 +216,7 @@ div(*ngIf="account")
 			.d-flex.justify-content-between.align-items-start
 				h5
 					| Duplicates #[span.text-muted ({{duplicates?.length}})]
-					fa-icon.text-muted.ml-1(*ngIf="loadingDuplicates" [icon]="spinnerIcon" [fixedWidth]="true" [spin]="true")
+					fa-icon.text-muted.ml-1(*ngIf="loadingDuplicates" [icon]="spinnerIcon" [fixedWidth]="true" animation="spin")
 				div
 					button.btn.btn-xs.btn-default((click)="clearOriginsFromDuplicates()" title="Remove all origins older than 14 days from all duplicates")
 						fa-icon.mr-1([icon]="trashIcon")

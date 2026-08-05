@@ -1,5 +1,5 @@
 .page-loader.text-muted.text-center.text-large(*ngIf="loading || updating")
-	fa-icon([icon]="spinnerIcon" [fixedWidth]="true" [spin]="true")
+	fa-icon([icon]="spinnerIcon" [fixedWidth]="true" animation="spin")
 
 	div(*ngIf="updating")
 		p.page-updating.text-muted Updating...
