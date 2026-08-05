@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, provideZoneChangeDetection } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -91,6 +91,7 @@ export const routes: Routes = [
 		ToolsApp,
 	],
 	providers: [
+		provideZoneChangeDetection(),
 		ErrorReporter,
 	],
 	bootstrap: [ToolsApp],

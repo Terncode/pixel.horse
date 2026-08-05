@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ElementRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ElementRef, ChangeDetectionStrategy } from '@angular/core';
 import { uniqueId } from 'lodash';
 import { ColorExtra } from '../../../common/interfaces';
 import { Key } from '../../../client/input/input';
@@ -7,6 +7,7 @@ import { focusElementAfterTimeout } from '../../../client/htmlUtils';
 const MAX = 999999;
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'sprite-selection',
 	templateUrl: 'sprite-selection.pug',

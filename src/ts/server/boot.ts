@@ -4,9 +4,9 @@ require('source-map-support').install();
 
 import 'core-js/stable/promise/finally';
 import 'reflect-metadata';
-import * as Bluebird from 'bluebird';
-import * as fs from 'fs';
-import * as yargs from 'yargs';
+import Bluebird from 'bluebird';
+import fs from 'fs';
+import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import { noop } from 'lodash';
 

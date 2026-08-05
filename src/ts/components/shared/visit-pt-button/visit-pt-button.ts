@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'visit-pt-button',
 	templateUrl: 'visit-pt-button.pug',

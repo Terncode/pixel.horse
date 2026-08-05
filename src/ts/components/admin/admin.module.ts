@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, provideZoneChangeDetection } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -131,6 +131,7 @@ export const routes: Routes = [
 		AdminApp,
 	],
 	providers: [
+		provideZoneChangeDetection(),
 		ErrorReporter,
 	],
 	bootstrap: [AdminApp],

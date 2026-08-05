@@ -1,6 +1,5 @@
 import {
-	Component, Input, ElementRef, AfterViewInit, OnDestroy, NgZone, ViewChild, OnChanges, HostListener
-} from '@angular/core';
+	Component, Input, ElementRef, AfterViewInit, OnDestroy, NgZone, ViewChild, OnChanges, HostListener, ChangeDetectionStrategy } from '@angular/core';
 import { PonyInfo, PonyState } from '../../../common/interfaces';
 import { toPalette } from '../../../common/ponyInfo';
 import { GRASS_COLOR, TRANSPARENT } from '../../../common/colors';
@@ -21,6 +20,7 @@ const DEFAULT_STATE = defaultPonyState();
 const DEFAULT_OPTIONS = defaultDrawPonyOptions();
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'character-preview',
 	template: '<canvas class="rounded" #canvas></canvas>',

@@ -1,6 +1,6 @@
 import { escapeRegExp } from 'lodash';
 import { ErrorHandler, getMethods } from 'ag-sockets';
-import * as Rollbar from 'rollbar';
+import Rollbar from 'rollbar';
 import { IClient } from '../serverInterfaces';
 import { logger } from '../logger';
 import { isUserError, reportUserError2 } from '../userError';

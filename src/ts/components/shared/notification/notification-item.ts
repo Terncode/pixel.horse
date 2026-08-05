@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { PlayerAction, Notification, NotificationFlags, EntityPlayerState } from '../../../common/interfaces';
 import { PonyTownGame } from '../../../client/game';
 import { hasFlag, setFlag } from '../../../common/utils';
@@ -6,6 +6,7 @@ import { faBan } from '../../../client/icons';
 import { getPaletteInfo } from '../../../client/pony';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'notification-item',
 	templateUrl: 'notification-item.pug',

@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AccountSettings, BrowserSettings, GraphicsQuality } from '../../../common/interfaces';
 import { SettingsService } from '../../services/settingsService';
@@ -13,6 +13,7 @@ import { faSlidersH, faCommentSlash, faGamepad, faImage, faDownload, faUpload, f
 import { saveAs } from 'file-saver';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'settings-modal',
 	templateUrl: 'settings-modal.pug',

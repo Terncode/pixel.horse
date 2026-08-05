@@ -1,9 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Origin, BannedMuted } from '../../../../common/adminInterfaces';
 import { AdminModel } from '../../../services/adminModel';
 import { countryCodeToName } from '../../../../common/countries';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'origin-info',
 	templateUrl: 'origin-info.pug',

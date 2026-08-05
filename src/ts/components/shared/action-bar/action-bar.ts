@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, ElementRef, TemplateRef } from '@angular/core';
+import { Component, Input, ViewChild, ElementRef, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ButtonAction } from '../../../common/interfaces';
 import { PonyTownGame } from '../../../client/game';
@@ -10,6 +10,7 @@ import { last } from '../../../common/utils';
 import { faCog } from '../../../client/icons';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'action-bar',
 	templateUrl: 'action-bar.pug',

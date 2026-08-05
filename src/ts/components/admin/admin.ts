@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { TooltipConfig } from 'ngx-bootstrap/tooltip';
 import { PopoverConfig } from 'ngx-bootstrap/popover';
@@ -17,6 +17,7 @@ export function popoverConfig() {
 }
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'pony-town-app',
 	templateUrl: 'admin.pug',

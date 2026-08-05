@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { compact } from 'lodash';
 import { getCols, getRows, createPsd, savePsd, drawPsd } from '../sheetExport';
 import { saveCanvas } from '../../../common/canvasUtils';
@@ -9,6 +9,7 @@ import { sheets, Sheet } from '../../../common/sheets';
 import { loadAndInitSpriteSheets } from '../../../client/loadSprites';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'tools-sheet',
 	templateUrl: 'tools-sheet.pug',

@@ -1,4 +1,4 @@
-import * as fs from 'fs';
+import fs from 'fs';
 import { format } from 'date-fns';
 import {
 	AdminState, eventFields, BaseValues, UpdateOrigin, UserCountStats, AccountDetails, SupporterInvite,

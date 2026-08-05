@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectionStrategy } from '@angular/core';
 // import { range, sample } from 'lodash';
 // import { PonyState, Palette, Sprite } from '../../../common/interfaces';
 // import { startGameLoop } from '../../../client/gameLoop';
@@ -26,6 +26,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 // } from '../../../generated/shaders';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'tools-webgl',
 	templateUrl: 'tools-webgl.pug',

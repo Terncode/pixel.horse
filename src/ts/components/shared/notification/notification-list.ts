@@ -1,10 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Notification } from '../../../common/interfaces';
 import { faEllipsisV } from '../../../client/icons';
 
 const LIMIT = 8;
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'notification-list',
 	templateUrl: 'notification-list.pug',

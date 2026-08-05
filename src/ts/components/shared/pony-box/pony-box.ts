@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { PlayerAction, Pony, EntityPlayerState, Entity } from '../../../common/interfaces';
 import { getPaletteInfo } from '../../../client/pony';
 import { Model } from '../../services/model';
@@ -14,6 +14,7 @@ import { isIgnored, isHidden, isFriend } from '../../../common/entityUtils';
 import { setFlag } from '../../../common/utils';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'pony-box',
 	templateUrl: 'pony-box.pug',

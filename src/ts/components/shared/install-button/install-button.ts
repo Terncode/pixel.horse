@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { faTimes } from '../../../client/icons';
 import { InstallService } from '../../services/installService';
 import { isMobile } from '../../../client/data';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'install-button',
 	templateUrl: 'install-button.pug',

@@ -1,9 +1,10 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, ChangeDetectionStrategy } from '@angular/core';
 import { AdminModel } from '../../../services/adminModel';
 import { Account, AccountStatus as IAccountStatus } from '../../../../common/adminInterfaces';
 import { faUserSecret } from '../../../../client/icons';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'account-status',
 	templateUrl: 'account-status.pug',

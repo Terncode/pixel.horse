@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, HostListener } from '@angular/core';
+import { Component, Input, Output, EventEmitter, HostListener, ChangeDetectionStrategy } from '@angular/core';
 import { AccountData, OAuthProvider } from '../../../common/interfaces';
 import { signUpProviders, signInProviders } from '../../../client/data';
 import { getProviderIcon } from '../sign-in-box/sign-in-box';
@@ -9,6 +9,7 @@ import { SettingsService } from '../../services/settingsService';
 import { REQUEST_DATE_OF_BIRTH } from '../../../common/constants';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'menu-bar',
 	templateUrl: 'menu-bar.pug',

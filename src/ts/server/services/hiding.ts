@@ -1,4 +1,4 @@
-import * as fs from 'fs';
+import fs from 'fs';
 import { Subject } from 'rxjs';
 import { HIDE_LIMIT, MINUTE } from '../../common/constants';
 import { NotificationFlags } from '../../common/interfaces';

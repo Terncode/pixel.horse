@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Event } from '../../../common/adminInterfaces';
 import { AdminModel } from '../../services/adminModel';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'admin-origin-details',
 	templateUrl: 'admin-origin-details.pug',

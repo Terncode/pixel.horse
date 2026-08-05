@@ -1,4 +1,4 @@
-import { Component, Input, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, EventEmitter, Output, ViewChild, ElementRef, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { PonyObject } from '../../../common/interfaces';
 import { PLAYER_NAME_MAX_LENGTH } from '../../../common/constants';
@@ -12,6 +12,7 @@ import { delay } from '../../../common/utils';
 import { isMobile } from '../../../client/data';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'character-select',
 	templateUrl: 'character-select.pug',

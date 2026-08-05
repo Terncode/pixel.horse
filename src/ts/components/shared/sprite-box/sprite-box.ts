@@ -1,6 +1,5 @@
 import {
-	Component, Input, AfterViewInit, ViewChild, ElementRef, NgZone, DoCheck, IterableDiffers, IterableDiffer, OnChanges
-} from '@angular/core';
+	Component, Input, AfterViewInit, ViewChild, ElementRef, NgZone, DoCheck, IterableDiffers, IterableDiffer, OnChanges, ChangeDetectionStrategy } from '@angular/core';
 import { Rect, Sprite, ColorExtra, Palette } from '../../../common/interfaces';
 import { parseColor, colorToCSS } from '../../../common/color';
 import { mockPaletteManager, toColorList, getColorsFromSet } from '../../../common/ponyInfo';
@@ -22,6 +21,7 @@ function drawAll() {
 }
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'sprite-box',
 	templateUrl: 'sprite-box.pug',

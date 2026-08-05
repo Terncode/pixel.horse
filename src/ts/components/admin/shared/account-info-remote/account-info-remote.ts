@@ -1,9 +1,10 @@
-import { Component, Input, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { Account } from '../../../../common/adminInterfaces';
 import { Subscription } from '../../../../common/interfaces';
 import { AdminModel } from '../../../services/adminModel';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'account-info-remote',
 	templateUrl: 'account-info-remote.pug',

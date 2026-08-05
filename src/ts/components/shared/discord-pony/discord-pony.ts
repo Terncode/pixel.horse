@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { defaultExpression } from '../../../common/ponyUtils';
 import { defaultPonyState } from '../../../common/ponyHelpers';
 import { DISCORD_PONY } from '../../../common/constants';
@@ -25,6 +25,7 @@ const DERP: Expression = {
 };
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'discord-pony',
 	templateUrl: 'discord-pony.pug',

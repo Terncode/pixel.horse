@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { fromPairs } from 'lodash';
 import { faHome } from '../../../client/icons';
 import { ponyStates, } from '../../../common/ponyStates';
@@ -47,6 +47,7 @@ const defaultPositions: any = {
 };
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'tools-states',
 	templateUrl: 'tools-states.pug',

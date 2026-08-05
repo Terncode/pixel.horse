@@ -1,9 +1,10 @@
-import { Component, Input, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { Subscription } from '../../../../common/interfaces';
 import { AdminModel } from '../../../services/adminModel';
 import { Character } from '../../../../common/adminInterfaces';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'pony-info-remote',
 	templateUrl: 'pony-info-remote.pug',

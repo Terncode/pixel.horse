@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { faSpinner } from '../../../client/icons';
 import { Model } from '../../services/model';
 import { hardReload } from '../../../client/clientUtils';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'page-loader',
 	templateUrl: 'page-loader.pug',

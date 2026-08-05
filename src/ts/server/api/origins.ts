@@ -1,4 +1,4 @@
-import * as Bluebird from 'bluebird';
+import Bluebird from 'bluebird';
 import { difference } from 'lodash';
 import { DAY } from '../../common/constants';
 import { fromNow } from '../../common/utils';

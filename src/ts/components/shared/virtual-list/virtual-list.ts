@@ -1,7 +1,6 @@
 import {
 	Directive, DoCheck, Input, ViewContainerRef, TemplateRef, IterableDiffers, IterableDiffer,
-	EmbeddedViewRef, Component, ElementRef, ViewChild, NgZone, OnDestroy, ChangeDetectorRef, AfterViewInit
-} from '@angular/core';
+	EmbeddedViewRef, Component, ElementRef, ViewChild, NgZone, OnDestroy, ChangeDetectorRef, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
 
 interface Context<T> {
 	$implicit: T;
@@ -11,6 +10,7 @@ interface Context<T> {
 }
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'virtual-list',
 	template: '<div #padStart></div><ng-content></ng-content><div #padEnd></div>',

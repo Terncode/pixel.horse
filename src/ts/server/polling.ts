@@ -1,5 +1,5 @@
-import * as fs from 'fs';
-import * as Bluebird from 'bluebird';
+import fs from 'fs';
+import Bluebird from 'bluebird';
 import {
 	InternalGameServerState, BannedMuted, InternalLoginServerState, SupporterFlags
 } from '../common/adminInterfaces';

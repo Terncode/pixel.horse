@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { saveCanvas, disableImageSmoothing, createCanvas } from '../../../common/canvasUtils';
 import { tileHeight, tileWidth, REGION_SIZE } from '../../../common/constants';
@@ -42,6 +42,7 @@ export interface ToolsMapInfo {
 }
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'tools-map',
 	templateUrl: 'tools-map.pug',

@@ -1,7 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { emptyIcon } from '../../../client/icons';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'menu-item',
 	templateUrl: 'menu-item.pug',

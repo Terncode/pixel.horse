@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import * as Rollbar from 'rollbar';
+import Rollbar from 'rollbar';
 import { Person, rollbarCheckIgnore, isIgnoredError } from '../../common/rollbar';
 import { RollbarService } from './rollbarErrorHandler';
 import { ErrorReporter } from './errorReporter';

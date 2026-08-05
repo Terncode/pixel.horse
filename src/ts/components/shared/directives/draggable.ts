@@ -1,4 +1,4 @@
-import { Component, Directive, Input, Output, EventEmitter, ElementRef, OnInit, Injectable, OnDestroy } from '@angular/core';
+import { Component, Directive, Input, Output, EventEmitter, ElementRef, OnInit, Injectable, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { noop } from 'lodash';
 import { AgDragEvent, handleDrag } from './agDrag';
 import { clamp, setTransform, removeItem, pointInRect } from '../../../common/utils';
@@ -76,6 +76,7 @@ export class DraggableService {
 }
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'draggable-outlet',
 	template: `<div></div>`,

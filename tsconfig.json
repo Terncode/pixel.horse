@@ -10,6 +10,8 @@
 		"pretty": true,
 		"module": "commonjs",
 		"moduleResolution": "node",
+		"ignoreDeprecations": "6.0",
+		"types": ["*"],
 		"baseUrl": ".",
 		"paths": {
 			"@angular/common/http": ["node_modules/@angular/common/types/http.d.ts"],
@@ -41,5 +43,8 @@
 		"tools",
 		"src/scripts",
 		"node_modules"
-	]
+	],
+	"angularCompilerOptions": {
+		"strictTemplates": false
+	}
 }

@@ -1,9 +1,10 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { times, formatISODate, parseISODate, createValidBirthDate } from '../../../common/utils';
 import { MONTH_NAMES_EN } from '../../../common/constants';
 import { getLocale } from '../../../client/clientUtils';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'date-picker',
 	templateUrl: 'date-picker.pug',

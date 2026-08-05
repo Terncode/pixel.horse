@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AgDragEvent } from '../../shared/directives/agDrag';
 import { Rect, Point } from '../../../common/interfaces';
 import { roundPosition } from '../../../common/positionUtils';
@@ -38,6 +38,7 @@ function toScreen(pt: Point) {
 }
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'tools-collisions',
 	templateUrl: 'tools-collisions.pug',

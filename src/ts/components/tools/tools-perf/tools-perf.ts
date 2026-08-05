@@ -1,4 +1,4 @@
-import { Component, NgZone } from '@angular/core';
+import { Component, NgZone, ChangeDetectionStrategy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { isEqual, range, random, times } from 'lodash';
 import { parseColorWithAlpha, parseColorFast, colorToHexRGB } from '../../../common/color';
@@ -13,6 +13,7 @@ import { includes as utilsIncludes } from '../../../common/utils';
 import { encodeString, encodeStringNew } from './methods';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'tools-perf',
 	templateUrl: 'tools-perf.pug',

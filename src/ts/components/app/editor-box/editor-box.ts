@@ -1,4 +1,4 @@
-import { Component, NgZone } from '@angular/core';
+import { Component, NgZone, ChangeDetectionStrategy } from '@angular/core';
 import { uniq } from 'lodash';
 import { faEdit, faCog, faDrawPolygon, faTrash, emptyIcon, faCheck } from '../../../client/icons';
 import { PonyTownGame, engines } from '../../../client/game';
@@ -9,6 +9,7 @@ import { BLACK } from '../../../common/colors';
 import { Entity, Engine, EngineInfo, DebugFlags, tileTypeNames } from '../../../common/interfaces';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'editor-box',
 	templateUrl: 'editor-box.pug',

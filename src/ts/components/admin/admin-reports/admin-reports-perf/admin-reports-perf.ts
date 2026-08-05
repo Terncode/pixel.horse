@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, ChangeDetectionStrategy } from '@angular/core';
 import { AdminModel } from '../../../services/adminModel';
 import { TimingEntry, TimingEntryType, WorldPerfStats, defaultWorldPerfStats } from '../../../../common/adminInterfaces';
 import { findById, pointInRect, clamp } from '../../../../common/utils';
@@ -26,6 +26,7 @@ const frameTime = 1000 / SERVER_FPS;
 const timePadding = 10; // ms
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'admin-reports-perf',
 	templateUrl: 'admin-reports-perf.pug',

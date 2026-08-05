@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { RequestStats, OriginStats, OtherStats } from '../../../common/adminInterfaces';
 import { faSync, faEraser, faClock, faUser, faChevronDown, faSpinner } from '../../../client/icons';
 import { AdminModel } from '../../services/adminModel';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'admin-origins',
 	templateUrl: 'admin-origins.pug',

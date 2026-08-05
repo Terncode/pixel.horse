@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, OnDestroy } from '@angular/core';
+import { Component, HostListener, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { flatMap, dropRightWhile, compact } from 'lodash';
@@ -87,6 +87,7 @@ function eyeSprite(e: PonyEye | undefined) {
 }
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'tools-animation',
 	templateUrl: 'tools-animation.pug',

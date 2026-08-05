@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { toPalette } from '../../../common/ponyInfo';
 import { decompressPonyString } from '../../../common/compressPony';
 import { PonyTownGame } from '../../../client/game';
@@ -7,6 +7,7 @@ import { removeItem } from '../../../common/utils';
 import { Model } from '../../services/model';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'invites-modal',
 	templateUrl: 'invites-modal.pug',

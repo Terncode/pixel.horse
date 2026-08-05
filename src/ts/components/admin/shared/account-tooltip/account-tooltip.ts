@@ -1,10 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Account } from '../../../../common/adminInterfaces';
 import { getAge } from '../../../../common/adminUtils';
 
 const year = (new Date()).getFullYear();
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'account-tooltip',
 	templateUrl: 'account-tooltip.pug',

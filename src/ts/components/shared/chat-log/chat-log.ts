@@ -1,6 +1,5 @@
 import {
-	Component, ViewChild, ElementRef, NgZone, AfterViewInit, OnDestroy, HostListener, Output, EventEmitter, DoCheck
-} from '@angular/core';
+	Component, ViewChild, ElementRef, NgZone, AfterViewInit, OnDestroy, HostListener, Output, EventEmitter, DoCheck, ChangeDetectionStrategy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { clamp, escapeRegExp } from 'lodash';
 import { PonyTownGame } from '../../../client/game';
@@ -208,6 +207,7 @@ function findUserIndex(users: IndexEntryUser[], id: number, crc: number | undefi
 }
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'chat-log',
 	templateUrl: 'chat-log.pug',

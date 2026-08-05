@@ -1,6 +1,5 @@
 import {
-	Component, Directive, TemplateRef, Input, ContentChild, ContentChildren, QueryList, Output, EventEmitter
-} from '@angular/core';
+	Component, Directive, TemplateRef, Input, ContentChild, ContentChildren, QueryList, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { uniqueId } from 'lodash';
 import { Key } from '../../../client/input/input';
 
@@ -36,6 +35,7 @@ export class Tab {
 }
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'tabset',
 	templateUrl: 'tabset.pug',

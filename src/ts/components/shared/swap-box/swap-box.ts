@@ -1,4 +1,4 @@
-import { Component, NgZone, ViewChild } from '@angular/core';
+import { Component, NgZone, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { PonyTownGame } from '../../../client/game';
 import { PonyObject, Action } from '../../../common/interfaces';
 import { Dropdown } from '../directives/dropdown';
@@ -8,6 +8,7 @@ import { Model } from '../../services/model';
 // import { SWAP_TIMEOUT, SECOND } from '../../../common/constants';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'swap-box',
 	templateUrl: 'swap-box.pug',

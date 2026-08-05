@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { fromNow } from '../../../common/utils';
 import { Event, ChatEvent } from '../../../common/adminInterfaces';
 import { AdminModel } from '../../services/adminModel';
@@ -11,6 +11,7 @@ import {
 let state: BaseTableState;
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'admin-events',
 	templateUrl: 'admin-events.pug',

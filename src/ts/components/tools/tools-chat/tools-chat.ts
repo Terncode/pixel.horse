@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
 import {
 	drawSpeechBaloon, drawNamePlate, createCommonPalettes, drawBaloon, DrawNameFlags
 } from '../../../graphics/graphicsUtils';
@@ -25,6 +25,7 @@ interface Message {
 }
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'tools-chat',
 	templateUrl: 'tools-chat.pug',

@@ -1,9 +1,10 @@
-import { Component, Input, Output, EventEmitter, ElementRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ElementRef, ChangeDetectionStrategy } from '@angular/core';
 import { Sprite, PonyInfo } from '../../../../common/interfaces';
 
 let openedPopover: ToolsFrame;
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'tools-frame',
 	templateUrl: 'tools-frame.pug',

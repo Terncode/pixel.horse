@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { fill } from 'lodash';
 import { PonyInfo } from '../../../common/interfaces';
 import { CM_SIZE } from '../../../common/constants';
@@ -10,6 +10,7 @@ export interface ButtMarkEditorState {
 }
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'butt-mark-editor',
 	templateUrl: 'butt-mark-editor.pug',

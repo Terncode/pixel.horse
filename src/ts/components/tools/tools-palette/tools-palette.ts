@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import * as sprites from '../../../generated/sprites';
 import { setPaletteManager } from '../../../common/mixins';
 import { parseColor, colorToCSS } from '../../../common/color';
@@ -16,6 +16,7 @@ const paletteManager = new PaletteManager();
 const defaultPalette = paletteManager.add(DEFAULT_PALETTE);
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'tools-palette',
 	templateUrl: 'tools-palette.pug',

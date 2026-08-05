@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import {
 	createButtionActionActions, expressionButtonAction, createButtonCommandActions,
@@ -23,6 +23,7 @@ function eyeSprite(e: PonyEye | undefined) {
 }
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'actions-modal',
 	templateUrl: 'actions-modal.pug',

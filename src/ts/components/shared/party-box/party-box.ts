@@ -1,10 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { PartyMember } from '../../../common/interfaces';
 import { PonyTownGame } from '../../../client/game';
 import { partyLeaderIcon, offlineIcon } from '../../../client/icons';
 import { getPaletteInfo } from '../../../client/pony';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'party-box',
 	templateUrl: 'party-box.pug',

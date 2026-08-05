@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import {
 	GameServerState, SERVER_SETTINGS, LOGIN_SERVER_SETTINGS, ServerStats, RequestStats,
 	UserCountStats, Stats, StatsTable
@@ -8,6 +8,7 @@ import { AdminModel } from '../../services/adminModel';
 import { faCog, faSlidersH } from '../../../client/icons';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'admin-state',
 	templateUrl: 'admin-state.pug',

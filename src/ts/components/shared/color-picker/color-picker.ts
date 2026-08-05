@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { clamp } from '../../../common/utils';
 import { parseColorFast, colorToCSS, colorFromHSVA, colorToHSVA, colorToHexRGB } from '../../../common/color';
 import { AgDragEvent } from '../directives/agDrag';
@@ -7,6 +7,7 @@ import { faChevronDown } from '../../../client/icons';
 const SIZE = 175;
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'color-picker',
 	templateUrl: 'color-picker.pug',

@@ -1,4 +1,4 @@
-import { Component, ElementRef, NgZone, AfterViewInit, ViewChild, OnDestroy, Input } from '@angular/core';
+import { Component, ElementRef, NgZone, AfterViewInit, ViewChild, OnDestroy, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ChatType, isPartyChat, Entity, FakeEntity } from '../../../common/interfaces';
 import { SAY_MAX_LENGTH } from '../../../common/constants';
@@ -39,6 +39,7 @@ function isActionCommand(message: string) {
 }
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'chat-box',
 	templateUrl: 'chat-box.pug',

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { debounce } from 'lodash';
 import { Account } from '../../../common/adminInterfaces';
@@ -12,6 +12,7 @@ let currentPage = 0;
 let not = false;
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'admin-accounts',
 	templateUrl: 'admin-accounts.pug',

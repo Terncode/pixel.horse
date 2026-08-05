@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, ElementRef } from '@angular/core';
+import { Component, Input, OnDestroy, ElementRef, ChangeDetectionStrategy } from '@angular/core';
 import { AdminModel } from '../../../services/adminModel';
 import { Account } from '../../../../common/adminInterfaces';
 import { ChatDate, createChatDate, createDateRange } from '../../../../common/adminUtils';
@@ -9,6 +9,7 @@ import { replaceSwears } from '../../../../client/adminHtmlUtils';
 import { addDays } from 'date-fns';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'admin-chat-log',
 	templateUrl: 'admin-chat-log.pug',

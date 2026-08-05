@@ -1,10 +1,11 @@
-import { Component, OnDestroy, Input } from '@angular/core';
+import { Component, OnDestroy, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Auth, DuplicateResult } from '../../../../common/adminInterfaces';
 import { Subscription } from '../../../../common/interfaces';
 import { AdminModel } from '../../../services/adminModel';
 import { faInfo, faLock, faTrash, faEyeSlash, faArrowRight } from '../../../../client/icons';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'auth-info-edit',
 	templateUrl: 'auth-info-edit.pug',

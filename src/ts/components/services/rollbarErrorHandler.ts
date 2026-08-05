@@ -1,5 +1,5 @@
 import { ErrorHandler, Injectable, Injector, InjectionToken } from '@angular/core';
-import * as Rollbar from 'rollbar';
+import Rollbar from 'rollbar';
 import { version } from '../../client/data';
 import { HASH } from '../../generated/hash';
 import { ROLLBAR_ENV, ROLLBAR_TOKEN } from '../../generated/rollbarConfig';

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ServerInfo, AccountDataFlags } from '../../../common/interfaces';
 import { RequestError, delay, includes, hasFlag } from '../../../common/utils';
 import {
@@ -29,6 +29,7 @@ const ignoredErrors = [
 ];
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'play-box',
 	templateUrl: 'play-box.pug',

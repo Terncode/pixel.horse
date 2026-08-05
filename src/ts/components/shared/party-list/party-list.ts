@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, OnDestroy } from '@angular/core';
+import { Component, HostListener, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { PartyMember } from '../../../common/interfaces';
 import { PARTY_LIMIT } from '../../../common/constants';
@@ -12,6 +12,7 @@ function visibleMembers(members: PartyMember[], max: number, start: number) {
 }
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'party-list',
 	templateUrl: 'party-list.pug',

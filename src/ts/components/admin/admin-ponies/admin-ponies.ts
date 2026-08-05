@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { isEqual, debounce } from 'lodash';
 import { Character, FindPonyQuery } from '../../../common/adminInterfaces';
 import { AdminModel } from '../../services/adminModel';
@@ -9,6 +9,7 @@ let currentPage = 1;
 let query: FindPonyQuery = {};
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'admin-ponies',
 	templateUrl: 'admin-ponies.pug',

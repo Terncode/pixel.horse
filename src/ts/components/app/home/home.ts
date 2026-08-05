@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Model, getPonyTag } from '../../services/model';
 import { defaultPonyState } from '../../../common/ponyHelpers';
 import { GameService } from '../../services/gameService';
@@ -6,6 +6,7 @@ import { OAuthProvider, PonyObject } from '../../../common/interfaces';
 import { stand } from '../../../common/ponyAnimations';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'home',
 	templateUrl: 'home.pug',

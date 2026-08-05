@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, ViewChild, ElementRef, OnInit, Input, NgZone } from '@angular/core';
+import { Component, Output, EventEmitter, ViewChild, ElementRef, OnInit, Input, NgZone, ChangeDetectionStrategy } from '@angular/core';
 import { uniq } from 'lodash';
 import { Key } from '../../../client/input/input';
 import { PonyObject } from '../../../common/interfaces';
@@ -43,6 +43,7 @@ function comparePonies(a: PonyObject, b: PonyObject) {
 }
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'character-list',
 	templateUrl: 'character-list.pug',

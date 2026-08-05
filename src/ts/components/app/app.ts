@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, HostListener, ViewChild, ElementRef, TemplateRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, ViewChild, ElementRef, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { TooltipConfig } from 'ngx-bootstrap/tooltip';
 import { PopoverConfig } from 'ngx-bootstrap/popover';
@@ -28,6 +28,7 @@ export function popoverConfig() {
 }
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'pony-town-app',
 	templateUrl: 'app.pug',

@@ -1,7 +1,6 @@
 import {
 	Directive, HostListener, Input, Output, EventEmitter, TemplateRef, ViewContainerRef, ContentChild,
-	Renderer2, ElementRef, EmbeddedViewRef, Component, Injectable
-} from '@angular/core';
+	Renderer2, ElementRef, EmbeddedViewRef, Component, Injectable, ChangeDetectionStrategy } from '@angular/core';
 import { uniqueId } from 'lodash';
 import { focusFirstElement } from '../../../client/htmlUtils';
 
@@ -12,6 +11,7 @@ export class DropdownOutletService {
 }
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'dropdown-outlet',
 	template: `<ng-template></ng-template>`,

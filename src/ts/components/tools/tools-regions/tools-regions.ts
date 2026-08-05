@@ -1,5 +1,5 @@
 import { times, fill, clamp } from 'lodash';
-import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
+import { Component, OnInit, HostListener, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { rect } from '../../../common/rect';
 import { AgDragEvent } from '../../shared/directives/agDrag';
 import { updateCamera, centerCameraOn, isAreaVisible, createCamera } from '../../../common/camera';
@@ -24,6 +24,7 @@ export function getRegionsBoundsCameraBased(_entity: Point, camera: Rect, region
 }
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'tools-regions',
 	templateUrl: 'tools-regions.pug',

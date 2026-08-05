@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone, TemplateRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, NgZone, TemplateRef, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { random } from 'lodash';
 import { OFFLINE_PONY, CM_SIZE, SUPPORTER_PONY, DEFAULT_CHATLOG_OPACITY } from '../../../common/constants';
@@ -43,6 +43,7 @@ tails.forEach((t, i) => t ? t[0].label = labels[i] : undefined);
 const colors = Object.values(colorNames);
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'tools-ui',
 	templateUrl: 'tools-ui.pug',

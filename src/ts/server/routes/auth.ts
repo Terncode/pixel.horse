@@ -1,5 +1,5 @@
 import { Router, Request, Response, RequestHandler } from 'express';
-import * as passport from 'passport';
+import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { remove } from 'lodash';
 import { MINUTE } from '../../common/constants';

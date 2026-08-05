@@ -1,7 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Auth } from '../../../../common/adminInterfaces';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'auth-list',
 	templateUrl: 'auth-list.pug',

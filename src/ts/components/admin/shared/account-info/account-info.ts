@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, OnInit, TemplateRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { compact } from 'lodash';
 import { DAY, MINUTE, HOUR } from '../../../../common/constants';
@@ -56,6 +56,7 @@ const alertExpires = [
 ];
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'account-info',
 	templateUrl: 'account-info.pug',

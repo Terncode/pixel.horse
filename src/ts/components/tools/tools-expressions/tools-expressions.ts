@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { PonyInfo, PonyState } from '../../../common/interfaces';
 import { toPalette, createDefaultPony, syncLockedPonyInfo } from '../../../common/ponyInfo';
 import { defaultPonyState, defaultDrawPonyOptions } from '../../../common/ponyHelpers';
@@ -13,6 +13,7 @@ import { paletteSpriteSheet } from '../../../generated/sprites';
 import { loadAndInitSpriteSheets } from '../../../client/loadSprites';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'tools-expressions',
 	templateUrl: 'tools-expressions.pug',

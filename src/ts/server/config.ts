@@ -1,5 +1,5 @@
 import { ServerConfig } from '../common/adminInterfaces';
-import * as yargs from 'yargs';
+import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 
 const argv = (yargs as any)(hideBin(process.argv))

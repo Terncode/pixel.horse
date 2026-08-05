@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { emojis } from '../../../common/emoji';
 import { faArrowLeft, faArrowRight, faArrowUp, faArrowDown } from '../../../client/icons';
 import { contactEmail, contactDiscord } from '../../../client/data';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'help',
 	templateUrl: 'help.pug',

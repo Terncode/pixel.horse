@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, HostListener, ElementRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { findLastIndex, compact } from 'lodash';
 import { removeItem, containsPoint, isKeyEventInvalid, cloneDeep, att } from '../../../common/utils';
 import * as sprites from '../../../generated/sprites';
@@ -81,6 +81,7 @@ interface EntityData {
 }
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'tools-entity',
 	templateUrl: 'tools-entity.pug',

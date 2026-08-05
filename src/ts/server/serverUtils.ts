@@ -1,4 +1,4 @@
-import * as fs from 'fs';
+import fs from 'fs';
 import { exec, ExecOptions } from 'child_process';
 import { noop } from 'lodash';
 import { Server } from 'ag-sockets';

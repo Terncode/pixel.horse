@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { clamp } from 'lodash';
 import { PLAYER_NAME_MAX_LENGTH, PLAYER_DESC_MAX_LENGTH } from '../../../common/constants';
 import {
@@ -57,6 +57,7 @@ function eyeSprite(e: PonyEye | undefined) {
 }
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'character',
 	templateUrl: 'character.pug',

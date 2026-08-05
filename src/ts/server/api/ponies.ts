@@ -1,4 +1,4 @@
-import * as Bluebird from 'bluebird';
+import Bluebird from 'bluebird';
 import { escapeRegExp } from 'lodash';
 import { FindPonyQuery } from '../../common/adminInterfaces';
 import { updateCharacterCount, getCharacterLimit } from '../accountUtils';

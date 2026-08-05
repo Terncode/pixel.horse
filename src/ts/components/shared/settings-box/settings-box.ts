@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, NgZone, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, NgZone, ViewChild, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
@@ -14,6 +14,7 @@ import { SettingsService } from '../../services/settingsService';
 import { Audio } from '../../services/audio';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'settings-box',
 	templateUrl: 'settings-box.pug',

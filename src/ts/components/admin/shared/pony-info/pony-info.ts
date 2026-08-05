@@ -1,10 +1,11 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, ChangeDetectionStrategy } from '@angular/core';
 import { hasFlag } from '../../../../common/utils';
 import { Character, CharacterFlags } from '../../../../common/adminInterfaces';
 import { isForbiddenName } from '../../../../common/security';
 import { AdminModel } from '../../../services/adminModel';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'pony-info',
 	templateUrl: 'pony-info.pug',

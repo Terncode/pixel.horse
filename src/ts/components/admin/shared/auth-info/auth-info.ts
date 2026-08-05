@@ -1,8 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Auth } from '../../../../common/adminInterfaces';
 import { oauthIcons, faGlobe } from '../../../../client/icons';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'auth-info',
 	templateUrl: 'auth-info.pug',

@@ -1,4 +1,4 @@
-import * as Promise from 'bluebird';
+import Promise from 'bluebird';
 import { Model } from 'mongoose';
 import { remove, noop } from 'lodash';
 import { ITEM_LIMIT, LiveResponse, BaseValues } from '../common/adminInterfaces';

@@ -31,6 +31,7 @@ declare const TESTS: boolean;
 
 declare module '*.json';
 declare module 'connect-mongo';
+declare module 'zone.js/plugins/long-stack-trace-zone';
 
 declare module 'passport-google-oauth20' { export const Strategy: any; }
 declare module 'passport-twitter' { export const Strategy: any; }

@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { faCog, faUserFriends, faUserPlus, faUserCog, faCircle } from '../../../client/icons';
 import { Model, Friend } from '../../services/model';
 import { PonyTownGame } from '../../../client/game';
@@ -7,6 +7,7 @@ import { removeItem } from '../../../common/utils';
 import { SettingsService } from '../../services/settingsService';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'friends-box',
 	templateUrl: 'friends-box.pug',

@@ -1,10 +1,11 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { Account, Event, SERVER_LABELS, ChatEvent } from '../../../../common/adminInterfaces';
 import { AdminModel } from '../../../services/adminModel';
 import { faLanguage, faTrash, faComment, faClipboard } from '../../../../client/icons';
 import { getTranslationUrl } from '../../../../common/adminUtils';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'events-table',
 	templateUrl: 'events-table.pug',

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { emojis } from '../../../common/emoji';
 import { getUrl } from '../../../client/rev';
 import { CREDITS, CONTRIBUTORS, Credit } from '../../../client/credits';
@@ -15,6 +15,7 @@ function toCredit(credit: Credit) {
 }
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'about',
 	templateUrl: 'about.pug',

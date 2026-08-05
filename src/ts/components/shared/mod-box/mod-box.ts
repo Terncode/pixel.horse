@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { ModAction, Pony } from '../../../common/interfaces';
 import { TIMEOUTS } from '../../../common/constants';
 import { Model } from '../../services/model';
@@ -9,6 +9,7 @@ const ageLabels = ['', 'M', 'A', '', '', '[M]', '[A]'];
 const ageTitles = ['Not set', 'Minor', 'Adult', '', '', 'Minor (locked)', 'Adult (locked)'];
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'mod-box',
 	templateUrl: 'mod-box.pug',

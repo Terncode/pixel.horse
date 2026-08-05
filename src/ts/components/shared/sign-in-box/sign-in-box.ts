@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { signUpProviders, signInProviders, local } from '../../../client/data';
 import { emptyIcon, oauthIcons } from '../../../client/icons';
 import { OAuthProvider } from '../../../common/interfaces';
@@ -11,6 +11,7 @@ export function getProviderIcon(id: string) {
 }
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'sign-in-box',
 	templateUrl: 'sign-in-box.pug',

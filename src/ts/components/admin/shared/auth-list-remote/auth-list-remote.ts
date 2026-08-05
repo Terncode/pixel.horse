@@ -1,8 +1,9 @@
-import { Component, Input, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { Subscription } from '../../../../common/interfaces';
 import { AdminModel } from '../../../services/adminModel';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'auth-list-remote',
 	templateUrl: 'auth-list-remote.pug',

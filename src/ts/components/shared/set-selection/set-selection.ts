@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnChanges, Directive, Optional } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, Directive, Optional, ChangeDetectionStrategy } from '@angular/core';
 import { clamp } from 'lodash';
 import { SpriteSet, ColorExtraSets, ColorExtraSet } from '../../../common/interfaces';
 import { getColorCount } from '../../../common/spriteUtils';
@@ -15,6 +15,7 @@ export class SetOutlineHidden {
 }
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false,
 	selector: 'set-selection',
 	templateUrl: 'set-selection.pug',
