@@ -10,6 +10,18 @@
 		"pretty": true,
 		"module": "commonjs",
 		"moduleResolution": "node",
+		"baseUrl": ".",
+		"paths": {
+			"@angular/common/http": ["node_modules/@angular/common/types/http.d.ts"],
+			"@angular/platform-browser/animations": ["node_modules/@angular/platform-browser/types/animations.d.ts"],
+			"@angular/cdk/drag-drop": ["node_modules/@angular/cdk/types/drag-drop.d.ts"],
+			"ngx-bootstrap/popover": ["node_modules/ngx-bootstrap/popover/types/ngx-bootstrap-popover.d.ts"],
+			"ngx-bootstrap/modal": ["node_modules/ngx-bootstrap/modal/types/ngx-bootstrap-modal.d.ts"],
+			"ngx-bootstrap/tooltip": ["node_modules/ngx-bootstrap/tooltip/types/ngx-bootstrap-tooltip.d.ts"],
+			"ngx-bootstrap/buttons": ["node_modules/ngx-bootstrap/buttons/types/ngx-bootstrap-buttons.d.ts"],
+			"ngx-bootstrap/typeahead": ["node_modules/ngx-bootstrap/typeahead/types/ngx-bootstrap-typeahead.d.ts"],
+			"ngx-bootstrap/pagination": ["node_modules/ngx-bootstrap/pagination/types/ngx-bootstrap-pagination.d.ts"]
+		},
 		"importHelpers": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
