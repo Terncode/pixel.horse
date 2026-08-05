@@ -9,13 +9,13 @@
 		tab(title="Actions" [icon]="actionsIcon")
 			.action-columns(*tabContent)
 				.d-flex.align-items-center.mb-2(*ngFor="let a of actions")
-					action-button.mb-0.mr-2([draggableItem]="a" [action]="a" [shadow]="false")
+					action-button.mb-0.me-2([draggableItem]="a" [action]="a" [shadow]="false")
 					b {{a.title}}
 
 		tab(title="Expressions" [icon]="expressionsIcon")
 			div(*tabContent)
 				.d-flex.mb-3
-					action-button.mb-0.mr-sm-4(
+					action-button.mb-0.me-sm-4(
 						[draggableItem]="emoteAction" [action]="emoteAction" [shadow]="false" (draggableDrop)="drop($event)")
 					.sub-tabset.nav.nav-pills.mb-0
 						button.btn-unstyled.nav-link([class.active]="activeTab === 'right-eye'" (click)="activeTab = 'right-eye'") Right eye
@@ -58,37 +58,37 @@
 							[invisible]="tabIndex !== 1 || activeTab !== 'extra'"
 							[circle]="coatFill" [reverseExtra]="true" (selectedChange)="changed(lockEyes)")
 						.d-flex.flex-wrap.mt-3
-							label.text-muted.mr-3 Other options
+							label.text-muted.me-3 Other options
 							custom-checkbox([(checked)]="blush" (checkedChange)="changed(lockEyes)") Blush
-							custom-checkbox.ml-4([(checked)]="sleeping" (checkedChange)="changed(lockEyes)") Sleeping
-							custom-checkbox.ml-4([(checked)]="tears" (checkedChange)="changed(lockEyes)") Tears
-							custom-checkbox.ml-4([(checked)]="crying" (checkedChange)="changed(lockEyes)") Crying
-							custom-checkbox.ml-4([(checked)]="hearts" (checkedChange)="changed(lockEyes)") Hearts
+							custom-checkbox.ms-4([(checked)]="sleeping" (checkedChange)="changed(lockEyes)") Sleeping
+							custom-checkbox.ms-4([(checked)]="tears" (checkedChange)="changed(lockEyes)") Tears
+							custom-checkbox.ms-4([(checked)]="crying" (checkedChange)="changed(lockEyes)") Crying
+							custom-checkbox.ms-4([(checked)]="hearts" (checkedChange)="changed(lockEyes)") Hearts
 
 		tab(title="Chat" [icon]="chatIcon")
 			.action-columns(*tabContent)
 				.d-flex.align-items-center.mb-2(*ngFor="let a of commands")
-					action-button.mb-0.mr-2([draggableItem]="a" [action]="a" [shadow]="false")
+					action-button.mb-0.me-2([draggableItem]="a" [action]="a" [shadow]="false")
 					b {{a.title}}
 
 		tab(title="Options" [icon]="optionsIcon")
 			div(*tabContent)
-				button.btn.btn-outline-secondary.mr-2.mb-2((click)="resetToDefault()")
+				button.btn.btn-outline-secondary.me-2.mb-2((click)="resetToDefault()")
 					| Reset to default actions
-				button.btn.btn-outline-secondary.mr-2.mb-2((click)="clearActionBar()")
+				button.btn.btn-outline-secondary.me-2.mb-2((click)="clearActionBar()")
 					| Clear action bar
-				button.btn.btn-outline-secondary.mr-2.mb-2((click)="undo()")
+				button.btn.btn-outline-secondary.me-2.mb-2((click)="undo()")
 					| Undo
-				button.btn.btn-outline-secondary.mr-2.mb-2((click)="export()")
+				button.btn.btn-outline-secondary.me-2.mb-2((click)="export()")
 					| Export actions
-				button.btn.btn-outline-secondary.mr-2.mb-2((click)="importFile.click()")
+				button.btn.btn-outline-secondary.me-2.mb-2((click)="importFile.click()")
 					| Import actions
 				input.d-none(#importFile type="file" (change)="import(importFile.files[0])")
 
 		tab(*ngIf="dev" title="Dev" [icon]="devIcon")
 			div(*tabContent)
 				.d-flex.mb-3
-					action-button.mb-0.mr-4(
+					action-button.mb-0.me-4(
 						[draggableItem]="entityAction" [action]="entityAction" [shadow]="false" (draggableDrop)="drop($event)")
 					input.form-control(
 						placeholder="entity name" [(ngModel)]="entityName" (ngModelChange)="updateEntity()" style="max-width: 200px;")

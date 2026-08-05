@@ -1,5 +1,5 @@
 ng-template(#searchTooltip)
-	.text-left.help-tooltip
+	.text-start.help-tooltip
 		div: em search by:
 		div name:&lt;account_name&gt; #[em - account name]
 		div note:&lt;note_text&gt; #[em - note contents]
@@ -20,31 +20,31 @@ ng-template(#duplicatesPopover)
 
 .d-block.d-sm-flex
 	input.form-control.form-control-sm.admin-search(type="search" placeholder="search" [(ngModel)]="search")
-	.btn-group.btn-group-sm.ml-1
+	.btn-group.btn-group-sm.ms-1
 		button.btn.btn-default((click)="refresh(true)")
 			fa-icon([icon]="syncIcon" size="lg")
 		button.btn(btnCheckbox [(ngModel)]="autoRefresh" [btnHighlight]="autoRefresh")
 			| auto
-	.btn-group.btn-group-sm.ml-1
+	.btn-group.btn-group-sm.ms-1
 		button.btn.btn-sm.btn-danger(
 			*ngIf="duplicateEntries?.length" [popover]="duplicatesPopover" [outsideClick]="true"
 			placement="bottom" containerClass="popover-wide")
 			| Duplicates ({{duplicateEntries.length}})
 		button.btn.btn-sm.btn-danger((click)="refreshDuplicates()" title="Refresh duplicates")
 			fa-icon([icon]="syncIcon" size="lg")
-	.btn-group.btn-group-sm.ml-1(btnRadioGroup [(ngModel)]="showOnly")
+	.btn-group.btn-group-sm.ms-1(btnRadioGroup [(ngModel)]="showOnly")
 		button.btn(*ngFor="let f of filters" [btnRadio]="f" [btnHighlight]="showOnly === f") {{f}}
-	button.btn.btn-sm.ml-1((click)="not = !not" [btnHighlight]="not") not
-	button.btn.btn-sm.btn-default.ml-2((click)="createAccount()") create account
+	button.btn.btn-sm.ms-1((click)="not = !not" [btnHighlight]="not") not
+	button.btn.btn-sm.btn-default.ms-2((click)="createAccount()") create account
 
 .d-block.d-sm-flex.justify-content-between.align-items-start
-	.pl-1([tooltip]="searchTooltip" placement="bottom" containerClass="tooltip-pre" style="width: 280px;")
+	.ps-1([tooltip]="searchTooltip" placement="bottom" containerClass="tooltip-pre" style="width: 280px;")
 		small.text-muted
-			fa-icon.mr-1([icon]="filterIcon")
+			fa-icon.me-1([icon]="filterIcon")
 			| filters
 	.d-block.d-sm-flex.mt-2
-		fa-icon.text-muted.mr-3(*ngIf="loading" [icon]="spinnerIcon" animation="spin" size="2x" style="margin-top: 3px")
-		strong.text-muted.mr-3(style="margin-top: 6px")
+		fa-icon.text-muted.me-3(*ngIf="loading" [icon]="spinnerIcon" animation="spin" size="2x" style="margin-top: 3px")
+		strong.text-muted.me-3(style="margin-top: 6px")
 			| {{totalItems === 99999999 ? '' : totalItems}}
 		pagination(
 			[totalItems]="totalItems" [itemsPerPage]="itemsPerPage" [(ngModel)]="currentPage"

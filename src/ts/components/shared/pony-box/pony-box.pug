@@ -17,39 +17,39 @@
 
 				.dropdown-menu(*dropdownMenu)
 					button.dropdown-item((click)="toggleIgnore()")
-						fa-icon.mr-2([icon]="ignoreIcon" [fixedWidth]="true")
+						fa-icon.me-2([icon]="ignoreIcon" [fixedWidth]="true")
 						| {{isIgnored(pony) ? 'Unignore player' : 'Ignore player'}}
-						fa-icon.ml-1(*ngIf="isIgnored(pony)" [icon]="checkIcon")
+						fa-icon.ms-1(*ngIf="isIgnored(pony)" [icon]="checkIcon")
 					button.dropdown-item((click)="hidePlayer(1)")
-						fa-icon.mr-2([icon]="hideIcon" [fixedWidth]="true")
+						fa-icon.me-2([icon]="hideIcon" [fixedWidth]="true")
 						| Hide player #[span.text-muted (24 hours)]
 					button.dropdown-item((click)="hidePlayer(0)")
-						fa-icon.mr-2([icon]="hideIcon" [fixedWidth]="true")
+						fa-icon.me-2([icon]="hideIcon" [fixedWidth]="true")
 						| Hide player #[span.text-muted (permanent)]
 
 					.dropdown-divider
 					button.dropdown-item((click)="sendMessageTo()")
-						fa-icon.mr-2([icon]="messageIcon" [fixedWidth]="true")
+						fa-icon.me-2([icon]="messageIcon" [fixedWidth]="true")
 						| Send whisper
 					button.dropdown-item(*ngIf="!isFriend(pony)" (click)="addFriend()")
-						fa-icon.mr-2.text-success([icon]="addFriendIcon" [fixedWidth]="true")
+						fa-icon.me-2.text-success([icon]="addFriendIcon" [fixedWidth]="true")
 						| Send friend request
 					div(*ngIf="isFriend(pony)" style="position: relative;")
 						button.dropdown-item((click)="removingFriend = true; $event.stopPropagation()")
-							fa-icon.mr-2.text-danger([icon]="removeFriendIcon" [fixedWidth]="true")
+							fa-icon.me-2.text-danger([icon]="removeFriendIcon" [fixedWidth]="true")
 							| Remove from friends
 						.remove-confirmation.px-2.d-flex.justify-content-center(*ngIf="removingFriend")
 							button.btn.btn-sm.btn-outline-success.flex-grow-1((click)="removingFriend = false; $event.stopPropagation()")
 								| Cancel
-							button.btn.btn-sm.btn-outline-danger.flex-grow-1.ml-1((click)="removeFriend()")
+							button.btn.btn-sm.btn-outline-danger.flex-grow-1.ms-1((click)="removeFriend()")
 								| Confirm remove
 
 					div(*ngIf="canInviteToSupporterServers")
 						h6.dropdown-header Supporter options
 						button.dropdown-item((click)="inviteToSupporterServers()")
-							fa-icon.mr-2.text-success([icon]="starIcon" [fixedWidth]="true")
+							fa-icon.me-2.text-success([icon]="starIcon" [fixedWidth]="true")
 							| Invite to supporter servers
-							fa-icon.ml-1(*ngIf="isInvitedToSupporterServers" [icon]="checkIcon")
+							fa-icon.ms-1(*ngIf="isInvitedToSupporterServers" [icon]="checkIcon")
 
 			.btn-group.btn-group-shadow(*ngIf="canInviteToParty || canRemoveFromParty || canPromoteToLeader")
 				button.btn.btn-xs.btn-default(*ngIf="canInviteToParty" (click)="inviteToParty()" tooltip="Invite to party")

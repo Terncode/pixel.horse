@@ -13,5 +13,6 @@ export class CustomCheckbox {
 	@Input() help = '';
 	@Input() checked = false;
 	@Output() checkedChange = new EventEmitter<boolean>();
+	id = uniqueId('custom-checkbox-');
 	helpId = uniqueId('custom-checkbox-help-');
 }

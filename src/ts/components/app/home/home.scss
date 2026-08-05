@@ -3,7 +3,7 @@
 .home-logo {
 	width: 574px;
 
-	@include media-breakpoint-down(sm) {
+	@include media-breakpoint-down(md) {
 		width: 287px;
 	}
 }
@@ -12,7 +12,7 @@
 	max-width: 400px;
 	margin-top: 50px;
 
-	@include media-breakpoint-down(md) {
+	@include media-breakpoint-down(lg) {
 		margin-top: 15px;
 	}
 }
@@ -20,7 +20,7 @@
 .heading {
 	margin-bottom: 50px;
 		
-	@include media-breakpoint-down(sm) {
+	@include media-breakpoint-down(md) {
 		margin-bottom: 20px;
 	}
 }

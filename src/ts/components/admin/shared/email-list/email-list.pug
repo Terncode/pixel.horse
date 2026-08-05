@@ -2,5 +2,5 @@ div(*ngIf="emails && emails.length")
 	.account-email.text-muted(*ngFor="let e of emails | slice:0:limit")
 		| {{e}}
 	div(*ngIf="hasMore")
-		a.text-muted.ml-1.text-nowrap((click)="showMore()")
+		a.text-muted.ms-1.text-nowrap((click)="showMore()")
 			small ({{emails.length - limit}} more)

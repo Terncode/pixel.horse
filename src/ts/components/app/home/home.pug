@@ -6,7 +6,7 @@ div(*ngIf="!playing")
 		page-loader
 
 		div(*ngIf="!loading")
-			h1.sr-only(focusTitle) Home
+			h1.visually-hidden(focusTitle) Home
 
 			.form-group(*ngIf="authError")
 				.alert.alert-danger(role="alert")

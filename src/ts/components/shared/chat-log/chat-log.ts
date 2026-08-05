@@ -109,7 +109,7 @@ export function createChatLogLineDOM(clickLabel: ClickHandler, clickName: ClickH
 			line.index = element('span', 'chat-line-time-index', [line.indexText = textNode('')]),
 		]),
 		line.label = element(
-			'span', 'chat-line-label mr-1', [line.labelText = textNode('')], undefined, { click: () => clickLabel(line.entry) }),
+			'span', 'chat-line-label me-1', [line.labelText = textNode('')], undefined, { click: () => clickLabel(line.entry) }),
 		line.prefixText = textNode(''),
 		line.name = element('span', 'chat-line-name', [
 			textNode('['),

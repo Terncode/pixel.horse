@@ -2,8 +2,8 @@
 	.mb-2
 		a.btn.btn-default(routerLink="/")
 			fa-icon([icon]="homeIcon")
-		button.btn.btn-default.ml-1((click)="run()") run test
-		button.btn.btn-default.ml-1((click)="stats()") run stats
-		button.btn.btn-default.ml-1(*ngFor="let test of tests" (click)="test.func()") {{test.name}}
+		button.btn.btn-default.ms-1((click)="run()") run test
+		button.btn.btn-default.ms-1((click)="stats()") run stats
+		button.btn.btn-default.ms-1(*ngFor="let test of tests" (click)="test.func()") {{test.name}}
 	pre.rounded.p-3(style="color: white; background: #222;")
 		| {{output}}

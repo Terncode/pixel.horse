@@ -23,25 +23,25 @@ ng-template(#modal)
 						.mb-3
 							.form-group.mb-2.d-flex.align-items-center
 								check-box([(checked)]="customOutlines")
-								check-box.ml-2([(checked)]="checked" [icon]="heartIcon")
-								check-box.ml-2([(checked)]="checked" [icon]="lockIcon" [disabled]="true")
-								label.ml-2
+								check-box.ms-2([(checked)]="checked" [icon]="heartIcon")
+								check-box.ms-2([(checked)]="checked" [icon]="lockIcon" [disabled]="true")
+								label.ms-2
 									| check box
-									span.badge.badge-success.ml-2(*ngIf="checked") checked
+									span.badge.badge-success.ms-2(*ngIf="checked") checked
 							.form-group
 								button.btn.btn-default(btnCheckbox [(ngModel)]="checked") btnCheckbox
-								.btn-group.ml-2(btnRadioGroup [(ngModel)]="radio")
+								.btn-group.ms-2(btnRadioGroup [(ngModel)]="radio")
 									button.btn.btn-default(btnRadio="a") a
 									button.btn.btn-default(btnRadio="b") b
 									button.btn.btn-default(btnRadio="c") c
-								span.ml-2 btnRadio: {{radio}}
+								span.ms-2 btnRadio: {{radio}}
 
 						h3 Slider
 						.mb-3
 							.form-group
 								label
 									span#slider-label music volume:
-									span.text-muted.ml-1 {{slider}}
+									span.text-muted.ms-1 {{slider}}
 							.form-group
 								slider-bar([(value)]="slider" [step]="1" labelledBy="slider-label")
 							.form-group
@@ -63,15 +63,15 @@ ng-template(#modal)
 						.mb-3
 							.form-group
 								fa-icon.supporter-1([icon]="starIcon" size="lg")
-								fa-icon.supporter-2.ml-1([icon]="starIcon" size="lg")
-								fa-icon.supporter-3.ml-1([icon]="starIcon" size="lg")
+								fa-icon.supporter-2.ms-1([icon]="starIcon" size="lg")
+								fa-icon.supporter-3.ms-1([icon]="starIcon" size="lg")
 
 						h3 External links
 						.mb-3
 							.form-group
 								a(href="http://google.com/") should open in new tab
 
-					.ml-5(style="width: 400px;")
+					.ms-5(style="width: 400px;")
 						h3 Character preview
 						.mb-3
 							character-preview([pony]="pony" name="Offline Pony" [tag]="selected.tag")
@@ -93,14 +93,14 @@ ng-template(#modal)
 									.dropdown-item aaa
 									.dropdown-item bbb
 									.dropdown-item ccc
-							.dropdown.ml-1(dropdown [autoClose]="autoCloseDropdown")
+							.dropdown.ms-1(dropdown [autoClose]="autoCloseDropdown")
 								button.btn.btn-default.dropdown-toggle(dropdownToggle)
 									| 2nd one
 								.dropdown-menu(*dropdownMenu)
 									.dropdown-item 111
 									.dropdown-item 222
 									.dropdown-item 333
-							.btn-group.ml-1(btnRadioGroup [(ngModel)]="autoCloseDropdown")
+							.btn-group.ms-1(btnRadioGroup [(ngModel)]="autoCloseDropdown")
 								button.btn([btnRadio]="true" [btnHighlight]="autoCloseDropdown === true") true
 								button.btn([btnRadio]="false" [btnHighlight]="autoCloseDropdown === false") false
 								button.btn([btnRadio]="'outsideClick'" [btnHighlight]="autoCloseDropdown === 'outsideClick'") outsideClick
@@ -117,7 +117,7 @@ ng-template(#modal)
 								tab(title="D" [disabled]="true")
 									ng-template(tabContent) ddd
 
-					.ml-5(style="width: 400px;")
+					.ms-5(style="width: 400px;")
 						h3 Bitmap box
 						.mb-3
 							bitmap-box([bitmap]="pony.cm" tool="brush" [color]="color" [width]="cmSize" [height]="cmSize")
@@ -145,7 +145,7 @@ ng-template(#modal)
 							.form-group
 								party-list(style="position: absolute;")
 
-					.ml-5(style="width: 400px")
+					.ms-5(style="width: 400px")
 						h3 Pony box
 						.mb-3
 							.form-group.py-4
@@ -178,11 +178,11 @@ ng-template(#modal)
 						.mb-3
 							.form-group.d-flex
 								portrait-box([pony]="pal")
-								portrait-box.ml-2([pony]="pal" size="medium")
-								portrait-box.ml-2([pony]="pal" size="small")
-								portrait-box.ml-2([pony]="pal" size="small" [noBorder]="true" [flip]="true")
+								portrait-box.ms-2([pony]="pal" size="medium")
+								portrait-box.ms-2([pony]="pal" size="small")
+								portrait-box.ms-2([pony]="pal" size="small" [noBorder]="true" [flip]="true")
 
-					.ml-5(style="width: 400px")
+					.ms-5(style="width: 400px")
 						h3 Settings box
 						.mb-3
 							div(style="position: relative")
@@ -202,11 +202,11 @@ ng-template(#modal)
 					.mt-2
 						button.btn.btn-default((click)="addMessage(chatlog, 'some message')")
 							| Add message
-						button.btn.btn-default.ml-1((click)="addMessage(chatlog, 'some 🍎 message')")
+						button.btn.btn-default.ms-1((click)="addMessage(chatlog, 'some 🍎 message')")
 							| Add emote message
-						button.btn.btn-default.ml-1((click)="addWhisper(chatlog, 'some whisper message')")
+						button.btn.btn-default.ms-1((click)="addWhisper(chatlog, 'some whisper message')")
 							| Add whisper
-						button.btn.ml-1((click)="spamChat(chatlog)" [btnHighlight]="spamChatInterval")
+						button.btn.ms-1((click)="spamChat(chatlog)" [btnHighlight]="spamChatInterval")
 							| Spam chat
 						slider-bar([(value)]="chatlogOpacity" style="width: 300px")
 						span {{chatlogOpacity / 100 | percent}}
@@ -249,10 +249,10 @@ ng-template(#modal)
 								.text-muted(style="width: 100px") {{angle | number:'0.0-0'}} deg
 							.form-group.d-flex.align-items-center
 								label.mb-0 horizontal tile height:
-								.text-muted.ml-2 {{horizontalTileHeight}} px
+								.text-muted.ms-2 {{horizontalTileHeight}} px
 							.form-group.d-flex.align-items-center
 								label.mb-0 vertical tile height:
-								.text-muted.ml-2 {{verticalTileHeight}} px
+								.text-muted.ms-2 {{verticalTileHeight}} px
 
 		tab(title="Virtual list")
 			ng-template(tabContent)
@@ -279,7 +279,7 @@ ng-template(#modal)
 								
 					div(style="margin: 50px;")
 						button.btn.btn-default((click)="virtualItems2.push({ name: 'An item ' + virtualItems2.length })") Add
-						button.btn.btn-default.ml-1((click)="virtualItems2.pop()") Remove
-						button.btn.btn-default.ml-1((click)="virtualItems2.push(virtualItems2.shift())") Move
+						button.btn.btn-default.ms-1((click)="virtualItems2.pop()") Remove
+						button.btn.btn-default.ms-1((click)="virtualItems2.push(virtualItems2.shift())") Move
 
 #range-indicator

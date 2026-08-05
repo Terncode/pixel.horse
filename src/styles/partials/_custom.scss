@@ -10,7 +10,7 @@
 // links
 
 a.text-muted {
-  @include hover {
+  &:hover {
     color: $link-hover-color !important;
   }
 }
@@ -67,6 +67,22 @@ code {
 	@include badge-variant($forbidden);
 }
 
+.badge-primary {
+	@include badge-variant($primary);
+}
+
+.badge-success {
+	@include badge-variant($success);
+}
+
+.badge-warning {
+	@include badge-variant($warning);
+}
+
+.badge-danger {
+	@include badge-variant($danger);
+}
+
 // dropdown / popover
 
 .dropdown-toggle > .fa-caret-down {
@@ -79,17 +95,19 @@ code {
 	bottom: 100%;
 }
 
-.dropdown-menu-right {
-	right: 0;
-	left: auto;
-}
-
 .dropdown-menu-nipple-right {
 	@include nipple(11px);
 }
 
 .dropdown-menu, .popover-body {
   color: $inverse-color;
+}
+
+// BS5 only right-aligns .dropdown-menu-end via popper ([data-bs-popper]); the custom
+// ag-dropdown has no popper, so restore the v4 right-alignment behavior.
+.dropdown-menu-end {
+	right: 0;
+	left: auto;
 }
 
 .dropdown-item, .dropdown-item:active {
@@ -140,7 +158,8 @@ code {
 }
 
 .btn-xs {
-  @include button-size($btn-padding-y-xs, $btn-padding-x-xs, $font-size-xs, $line-height-xs, $border-radius-xs);
+  @include button-size($btn-padding-y-xs, $btn-padding-x-xs, $font-size-xs, $border-radius-xs);
+  --bs-btn-line-height: #{$line-height-xs};
 }
 
 .btn-dark {
@@ -155,15 +174,65 @@ code {
   }
 }
 
-@each $color, $value in $theme-colors {
+// close button (v4 compat, dropped in v5 in favor of .btn-close)
+
+.close {
+	float: right;
+	font-size: $font-size-base * 1.5;
+	font-weight: $font-weight-bold;
+	line-height: 1;
+	color: $black;
+	text-shadow: 0 1px 0 #fff;
+	opacity: 0.5;
+
+	&:hover {
+		color: $black;
+		text-decoration: none;
+		opacity: 0.75;
+	}
+
+	&:not(:disabled):not(.disabled):focus {
+		outline: none;
+	}
+
+	&:disabled,
+	&.disabled {
+		pointer-events: none;
+		opacity: 0.25;
+	}
+
+	@at-root button#{&} {
+		padding: 0;
+		background-color: transparent;
+		border: 0;
+	}
+}
+
+	@each $color, $value in $theme-colors {
   .btn-group, .input-group-append, .input-group-prepend {
 		> .btn-#{$color}:not(:last-child) {
-			border-right-color: darken($value, 10%);
+			border-end-color: darken($value, 10%);
 		}
 
 		> .btn-#{$color}:not(:first-child) {
-			border-left-color: darken($value, 10%);
+			border-start-color: darken($value, 10%);
 		}
+	}
+}
+
+// v4 solid buttons used color-yiq (150 threshold) → white text on the bright theme
+// colors; BS5 color-contrast (min ratio 4.5) flips them to black. Restore white text.
+@each $name in primary, success, info, warning, danger, patreon, discord {
+	.btn-#{$name} {
+		--bs-btn-color: #fff;
+		--bs-btn-hover-color: #fff;
+		--bs-btn-active-color: #fff;
+		--bs-btn-disabled-color: #fff;
+	}
+
+	.btn-outline-#{$name} {
+		--bs-btn-hover-color: #fff;
+		--bs-btn-active-color: #fff;
 	}
 }
 
@@ -183,6 +252,102 @@ code {
 }
 
 // form
+
+label {
+	margin-bottom: 0.5rem;
+}
+
+// v4 .form-group (removed in BS5); the .form-inline context overrides margin to 0 below
+.form-group {
+	margin-bottom: 1rem;
+}
+
+.form-select {
+	--bs-form-select-bg-img: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23ddd' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+}
+
+.form-inline {
+	display: flex;
+	flex-flow: row wrap;
+	align-items: center;
+
+	.form-check {
+		width: 100%;
+	}
+
+	label {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin-bottom: 0;
+	}
+
+	.form-group {
+		display: flex;
+		flex: 0 0 auto;
+		flex-flow: row wrap;
+		align-items: center;
+		margin-bottom: 0;
+	}
+
+	.form-control {
+		display: inline-block;
+		width: auto;
+		vertical-align: middle;
+	}
+
+	.input-group {
+		width: auto;
+	}
+}
+
+.input-group-prepend,
+.input-group-append {
+	display: flex;
+
+	.btn {
+		position: relative;
+		z-index: 2;
+
+		&:focus {
+			z-index: 3;
+		}
+	}
+
+	.btn + .btn {
+		margin-left: -1px;
+	}
+}
+
+.input-group-prepend {
+	margin-right: -1px;
+}
+
+.input-group-append {
+	margin-left: -1px;
+}
+
+.input-group-sm > .input-group-prepend > .btn,
+.input-group-sm > .input-group-append > .btn {
+	padding: $input-padding-y-sm $input-padding-x-sm;
+	font-size: 0.875rem;
+	line-height: 1.5;
+	border-radius: 2px;
+}
+
+.input-group > .input-group-prepend > .btn,
+.input-group > .input-group-append:not(:last-child) > .btn,
+.input-group > .input-group-append:last-child > .btn:not(:last-child):not(.dropdown-toggle) {
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
+.input-group > .input-group-append > .btn,
+.input-group > .input-group-prepend:not(:first-child) > .btn,
+.input-group > .input-group-prepend:first-child > .btn:not(:first-child) {
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+}
 
 .form-control[disabled] {
 	color: $input-disabled-color;
@@ -338,14 +503,9 @@ tabset.fixed-height {
 
 // custom controls
 
-.custom-control-label {
-	vertical-align: middle;
-}
-
-.modal-checkboxes {
-	.custom-checkbox > .custom-control-label {
-		&::before, &::after {
-			margin-top: 2px;
-		}
+.form-check {
+	.form-check-label {
+		vertical-align: middle;
+		line-height: 1.4rem;
 	}
 }

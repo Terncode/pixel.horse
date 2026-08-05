@@ -126,6 +126,7 @@ b, strong, th {
 
 .tooltip.tooltip-pony {
 	opacity: 1;
+	--bs-tooltip-color: #333;
 
 	.tooltip-inner {
 		max-width: 300px;
@@ -134,11 +135,11 @@ b, strong, th {
 		border-radius: 7px;
 	}
 
-	&.bs-tooltip-top .arrow::before {
+	&.bs-tooltip-top .tooltip-arrow::before {
 		border-top-color: #eee;
 	}
 
-	&.bs-tooltip-bottom .arrow::before {
+	&.bs-tooltip-bottom .tooltip-arrow::before {
 		border-bottom-color: #eee;
 	}
 }
@@ -240,7 +241,7 @@ b, strong, th {
 	}
 
 	.server-safe {
-		color: theme-color('success');
+		color: $success;
 	}
 
 	.server-test {
@@ -394,5 +395,5 @@ b, strong, th {
 }
 
 @each $color, $value in $theme-colors {
-  @include table-row-variant($color, fade-out(theme-color-level($color, 6), 0.8));
+  @include table-variant($color, fade-out(tint-color($value, 48%), 0.8));
 }

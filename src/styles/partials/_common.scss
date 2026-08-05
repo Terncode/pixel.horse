@@ -113,7 +113,7 @@ character-preview {
 	height: 400px;
 	border-radius: $border-radius-lg;
 
-	@include media-breakpoint-down(sm) {
+	@include media-breakpoint-down(md) {
 		width: 280px;
 		height: 280px;
 	}
@@ -129,7 +129,7 @@ character-preview {
 }
 
 .list-rules {
-	color: theme-color(danger) !important;
+	color: $danger !important;
 	font-weight: 600;
 }
 
@@ -138,7 +138,7 @@ character-preview {
 }
 
 .accessories-tabset .nav-link {
-	@include media-breakpoint-down(lg) {
+	@include media-breakpoint-down(xl) {
 		padding-left: 10px;
 		padding-right: 10px;
 	}

@@ -4,7 +4,7 @@ ng-template(#tooltip)
 		.character-tooltip-indicator(*ngIf="isBadCM") &bull;
 		.character-tooltip-date
 			from-now([time]="pony?.lastUsed")
-			span.ml-1(*ngIf="pony?.deleted") [deleted]
+			span.ms-1(*ngIf="pony?.deleted") [deleted]
 
 span.cursor-pointer.badge(
 	[ngClass]="labelClass" [class.deleted]="pony?.deleted" [class.badge-highlight]="highlight" (click)="click()"

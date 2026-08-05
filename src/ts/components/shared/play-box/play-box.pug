@@ -22,11 +22,11 @@
 		| Please install a different browser to be able to play the game.
 
 .form-group(*ngIf="model.missingBirthdate && !birthdateSet && requestBirthdate")
-	.alert.alert-warning.text-left(role="alert")
+	.alert.alert-warning.text-start(role="alert")
 		label(for="birthdate")
 			| Set your date of birth
 		date-picker([(date)]="birthdate")
-		.mt-2.text-right
+		.mt-2.text-end
 			button.btn.btn-default.px-4((click)="saveBirthdate()") Save
 		p.mb-0.mt-2
 			| Please fill-in your #[b date of birth] in order to not lose access to the game in future updates.
@@ -36,7 +36,7 @@
 		button.btn.btn-lg.btn-success.text-ellipsis.flex-grow-1(
 			#playButton (click)="joining ? cancel() : play()" [disabled]="!canPlay && !joining")
 			div(*ngIf="joining")
-				fa-icon.mr-1([icon]="spinnerIcon" animation="spin")
+				fa-icon.me-1([icon]="spinnerIcon" animation="spin")
 				| Cancel
 			div(*ngIf="!joining && server")
 				| #[strong {{label || 'Play'}}] on #[span {{server.name}}]
@@ -48,21 +48,21 @@
 	.dropdown-menu.w-100(*dropdownMenu style="overflow: hidden")
 		button.dropdown-item(*ngFor="let s of servers" (click)="server = s; playButton.focus()")
 			div
-				.float-right(style="position: relative;")
-					.text-unsafe(*ngIf="s.offline") #[span.sr-only server] offline
-					.text-muted(*ngIf="!s.offline") online #[span.sr-only players] ({{s.online}})
-				.flag.mr-2(*ngFor="let f of s.countryFlags" [ngClass]="'flag-' + f")
-				fa-icon.text-muted.mr-2(*ngIf="!hasFlag(s)" [icon]="getIcon(s)" size="lg")
+				.float-end(style="position: relative;")
+					.text-unsafe(*ngIf="s.offline") #[span.visually-hidden server] offline
+					.text-muted(*ngIf="!s.offline") online #[span.visually-hidden players] ({{s.online}})
+				.flag.me-2(*ngFor="let f of s.countryFlags" [ngClass]="'flag-' + f")
+				fa-icon.text-muted.me-2(*ngIf="!hasFlag(s)" [icon]="getIcon(s)" size="lg")
 				strong {{s.name}}
 			.text-muted.text-wrap {{s.desc}}
 
-.form-group.text-left.text-muted.server-alert(*ngIf="server?.alert === '18+'")
-	fa-icon.float-left.p-2([icon]="warningIcon" size="2x")
+.form-group.text-start.text-muted.server-alert(*ngIf="server?.alert === '18+'")
+	fa-icon.float-start.p-2([icon]="warningIcon" size="2x")
 	| By playing on this server you confirm that you are over 18 years old and you take no issue
 	| with seeing adult topics.
 
-.form-group.text-left.text-info.server-alert(*ngIf="server?.alert === 'test'")
-	fa-icon.float-left.p-2([icon]="infoIcon" size="2x")
+.form-group.text-start.text-info.server-alert(*ngIf="server?.alert === 'test'")
+	fa-icon.float-start.p-2([icon]="infoIcon" size="2x")
 	| Supporter test server: Here you can try experimental and unfinished features that we're working on.
 	| Keep in mind everything is subject to change.
 
@@ -85,7 +85,7 @@
 
 .form-group(*ngIf="isBrowserOutdated")
 	.alert.alert-warning(role="alert")
-		button.close.float-right((click)="dismissOutdatedBrowser()" aria-label="Close" style="font-size: 20px;") &times;
+		button.close.float-end((click)="dismissOutdatedBrowser()" aria-label="Close" style="font-size: 20px;") &times;
 		| Your browser is outdated and is known to have issues running pixel.horse.
 		| Make sure you have latest version installed.
 
@@ -115,7 +115,7 @@
 	.alert.alert-danger(role="alert")
 		| {{error}}
 
-.form-group.text-left.text-large(*ngIf="server")
+.form-group.text-start.text-large(*ngIf="server")
 	h5 Server rules
 	p.text-muted.list-rules
 		| {{server.desc}}

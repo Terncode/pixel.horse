@@ -14,7 +14,7 @@
 				[style.border-bottom-color]="p.color"
 				title="Sign in using {{p.name}}")
 				fa-icon([icon]="icon(p.id)" [fixedWidth]="true" size="lg")
-				.sr-only Sign in or sign up using {{p.name}}
+				.visually-hidden Sign in or sign up using {{p.name}}
 
 	div(*ngIf="signInProviders.length")
 		.sign-in-heading
@@ -30,7 +30,7 @@
 				[style.border-bottom-color]="p.color"
 				title="Sign in using {{p.name}}")
 				fa-icon([icon]="icon(p.id)" [fixedWidth]="true" size="lg")
-				.sr-only Sign in using {{p.name}}
+				.visually-hidden Sign in using {{p.name}}
 
 	div(*ngIf="local")
 		div(*ngIf="mocks === undefined")

@@ -6,7 +6,7 @@ ng-template(#timeoutTooltip)
 		fa-icon([icon]="icon" [fixedWidth]="true" [ngClass]="className")
 		fa-icon.text-alert.ban-icon-timer(*ngIf="isTimedOut" [icon]="clockIcon" [fixedWidth]="true")
 
-	.dropdown-menu.dropdown-menu-right(*dropdownMenu)
+	.dropdown-menu.dropdown-menu-end(*dropdownMenu)
 		a.dropdown-item((click)="clear()")
 			| clear #[b {{type}}]
 		a.dropdown-item((click)="perma()")

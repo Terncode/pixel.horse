@@ -4,7 +4,7 @@ ng-template(#popover)
 		.small.text-muted.mb-1(*ngIf="notification.note")
 			| {{notification.note}}
 	div
-		button.btn.btn-xs.btn-outline-danger.float-right(
+		button.btn.btn-xs.btn-outline-danger.float-end(
 			*ngIf="ignoreButton" (click)="ignore()" tooltip="Ignore this player")
 			fa-icon([icon]="banIcon")
 		.notification-buttons

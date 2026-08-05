@@ -89,3 +89,14 @@
 		left: -6px;
 	}
 }
+
+@mixin alert-variant($background, $border, $color) {
+	--bs-alert-bg: #{$background};
+	--bs-alert-border-color: #{$border};
+	--bs-alert-color: #{$color};
+}
+
+@mixin badge-variant($bg) {
+	color: color-contrast($bg);
+	background-color: $bg;
+}

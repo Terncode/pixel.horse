@@ -2,17 +2,17 @@
 	button.game-button.px-2((click)="toggleEditor()")
 		fa-icon([icon]="editIcon")
 
-	.d-flex.align-items-start.pl-2.pt-1(*ngIf="hasEditor")
+	.d-flex.align-items-start.ps-2.pt-1(*ngIf="hasEditor")
 		.dropdown-menu.p-0(*ngIf="hasSelectedEntities" style="display: block; width: 500px; position: absolute; top: 36px; left: 0;")
 			.px-2
 				//- name
 				div
 					.row.form-group.mb-2
 						label.col-12.col-form-label
-							.float-right
-								button.btn.btn-xs.btn-dark.ml-1((click)="showEntitiesInfo()" title="Show info")
+							.float-end
+								button.btn.btn-xs.btn-dark.ms-1((click)="showEntitiesInfo()" title="Show info")
 									| info
-								button.btn.btn-xs.btn-danger.ml-1((click)="deleteEntities()" title="Delete entities")
+								button.btn.btn-xs.btn-danger.ms-1((click)="deleteEntities()" title="Delete entities")
 									fa-icon([icon]="deleteIcon")
 							| {{entityName}}
 
@@ -70,7 +70,7 @@
 					a.dropdown-item(*ngFor="let e of editorEntities" (click)="editorEntity = e")
 						| {{e}}
 
-		.dropdown.ml-1(dropdown)
+		.dropdown.ms-1(dropdown)
 			button.btn.btn-sm.btn-default.dropdown-toggle(dropdownToggle)
 				fa-icon([icon]="cogIcon")
 			.dropdown-menu(*dropdownMenu)
@@ -83,21 +83,21 @@
 				div(*ngIf="dev")
 					h6.dropdown-header Show (numpad 4)
 					a.dropdown-item(*ngFor="let field of showFields" (click)="toggleShow(field); $event.stopPropagation()")
-						fa-icon.mr-1([icon]="isShow(field) ? checkIcon : emptyIcon" [fixedWidth]="true")
+						fa-icon.me-1([icon]="isShow(field) ? checkIcon : emptyIcon" [fixedWidth]="true")
 						| {{field}}
 
-		button.btn.btn-sm.btn-default.ml-1(
+		button.btn.btn-sm.btn-default.ms-1(
 			[btnHighlight]="selectingEntities" (click)="toggleSelecting()" title="Select entities")
 			fa-icon([icon]="selectIcon")
 
-		.dropdown.ml-1(dropdown)
+		.dropdown.ms-1(dropdown)
 			button.btn.btn-sm.btn-default.dropdown-toggle(dropdownToggle)
 				| tile: {{tiles[editorTile + 1]}}
 			.dropdown-menu(*dropdownMenu)
 				a.dropdown-item(*ngFor="let t of tiles; let i = index" (click)="editorTile = i - 1")
 					| {{t}}
 
-		.dropdown.ml-1(dropdown)
+		.dropdown.ms-1(dropdown)
 			button.btn.btn-sm.btn-default.dropdown-toggle(dropdownToggle)
 				| brush: {{editor.brushSize}}
 			.dropdown-menu(*dropdownMenu)
@@ -108,7 +108,7 @@
 				a.dropdown-item((click)="editor.brushSize = 5") 5
 				a.dropdown-item((click)="editor.brushSize = 6") 6
 
-		.dropdown.ml-1(dropdown [autoClose]="false")
+		.dropdown.ms-1(dropdown [autoClose]="false")
 			button.btn.btn-sm.btn-default.dropdown-toggle(dropdownToggle)
 				| global
 			.dropdown-menu(*dropdownMenu style="width: 400px")
@@ -125,14 +125,14 @@
 						.col-7.py-2
 							slider-bar([(value)]="shadowOpacity" [min]="0" [max]="255")
 
-		.dropdown.ml-1(dropdown)
+		.dropdown.ms-1(dropdown)
 			button.btn.btn-sm.btn-default.dropdown-toggle(dropdownToggle)
 				| engine
 			.dropdown-menu(*dropdownMenu)
 				a.dropdown-item(*ngFor="let e of engines" (click)="setEngine(e)" [class.active]="isActiveEngine(e)")
 					| {{e.name}}
 
-		.btn.btn-sm.btn-default.disabled.ml-1(*ngIf="hasElevation")
+		.btn.btn-sm.btn-default.disabled.ms-1(*ngIf="hasElevation")
 			| elevation: {{editorElevation}}
-		.btn.btn-sm.btn-default.disabled.ml-1(*ngIf="hasElevation")
+		.btn.btn-sm.btn-default.disabled.ms-1(*ngIf="hasElevation")
 			| special: {{editorSpecial}}

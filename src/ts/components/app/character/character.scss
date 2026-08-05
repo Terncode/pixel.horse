@@ -28,7 +28,7 @@
 	background: $grass-color;
 	border-radius: $border-radius-lg;
 
-	@include media-breakpoint-down(sm) {
+	@include media-breakpoint-down(md) {
 		width: 280px;
 		height: 280px;
 	}
@@ -49,7 +49,7 @@
 	justify-content: space-between;
 
 	> .lock-box {
-		@include media-breakpoint-down(xs) {
+		@include media-breakpoint-down(sm) {
 			margin-right: 0;
 			margin-bottom: 5px;
 		}

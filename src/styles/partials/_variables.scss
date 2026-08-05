@@ -75,8 +75,6 @@ $chat-colors: (
 	whisper-announcement: $chat-whisper
 );
 
-$enable-print-styles: false;
-
 $spacer: 16px;
 
 // body
@@ -91,6 +89,9 @@ $dark-bg: darken($body-bg, 7%);
 // links
 $link-color: #d88856;
 $link-hover-color: lighten($link-color, 15%);
+// v4 had no default underline; BS5 defaults to underline.
+$link-decoration: none;
+$link-hover-decoration: underline;
 
 // fonts
 // $font-family-sans-serif: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -123,6 +124,7 @@ $nav-tabs-link-active-color: #eee;
 $nav-link-hover-bg: fade-out(#000, 0.7);
 
 // components
+$border-radius: 4px;
 $border-radius-base: 3px;
 $border-radius-lg: 4px;
 $border-radius-sm: 2px;
@@ -131,8 +133,10 @@ $border-radius-xs: 2px;
 // buttons
 $input-btn-focus-color: rgba($focus-color, .3);
 $input-focus-border-color: lighten($focus-color, 10);
-$input-btn-padding-y-sm: .375rem;
-$input-btn-padding-x-sm: .65rem;
+$btn-padding-y-sm: .375rem;
+$btn-padding-x-sm: .65rem;
+$input-padding-y-sm: .375rem;
+$input-padding-x-sm: .65rem;
 $btn-padding-x-xs: 5px;
 $btn-padding-y-xs: 1px;
 $font-size-xs: 0.858rem;
@@ -140,7 +144,25 @@ $line-height-xs: 17px;
 $btn-default-color: #333;
 
 // dropdown
+$dropdown-bg: #fff;
+$dropdown-color: $inverse-color;
+$dropdown-link-color: $inverse-color;
+$dropdown-link-hover-color: darken($inverse-color, 5%);
 $dropdown-link-disabled-color: #a6acb1;
+
+// popover (v4 had white popovers; BS5.3 defaults $popover-bg to the body bg)
+$popover-bg: #fff;
+$popover-header-bg: #fff;
+$popover-header-color: $inverse-color;
+$popover-border-color: rgba(0, 0, 0, .2);
+
+// tooltip (BS5.3 ties tooltip colors to body/emphasis; keep dark bg + light text)
+$tooltip-bg: var(--bs-body-bg);
+$tooltip-color: var(--bs-body-color);
+
+// emphasis (BS5.3 defaults to black; the dark theme needs light emphasis text for
+// tables, navbar, nav active states and list-group hover)
+$body-emphasis-color: $body-color;
 
 // forms
 $input-bg: #222;
@@ -150,16 +172,14 @@ $input-disabled-color: darken($input-color, 35%);
 $input-border-color: $border-color;
 
 // custom controls
-$custom-control-indicator-focus-box-shadow: 0 0 0 3px rgba($focus-color, .5);
-$custom-control-indicator-size: 1.2rem;
-// $custom-control-gutter: 1.7rem;
-$custom-control-indicator-checked-bg: $secondary;
-$custom-control-indicator-checked-disabled-bg: rgba($secondary, .5);
-$custom-control-label-disabled-color: $text-muted;
-$custom-control-indicator-active-bg: rgba($secondary, .6);
-$custom-control-indicator-checked-color: white;
-$custom-control-indicator-bg-size: 65% 65%;
-$custom-control-indicator-border-color: $border-color;
+$form-check-input-width: 1.2em;
+$form-check-input-border: 1px solid $border-color;
+$form-check-input-checked-color: white;
+$form-check-input-checked-bg-color: $secondary;
+$form-check-input-checked-border-color: $secondary;
+$form-check-input-focus-box-shadow: 0 0 0 3px rgba($focus-color, .5);
+$form-check-input-disabled-opacity: .5;
+$form-check-label-disabled-opacity: .5;
 
 // modals
 $modal-content-bg: $dark-bg;
@@ -168,7 +188,8 @@ $modal-header-border-color: #444;
 $modal-footer-border-color: $modal-header-border-color;
 
 // tables
-$table-sm-cell-padding: 0.4rem;
+$table-cell-padding-y-sm: 0.4rem;
+$table-cell-padding-x-sm: 0.4rem;
 $table-border-color: #6c757d;
 $table-hover-bg: #3a3a3a;
 
@@ -205,3 +226,4 @@ $flag-green: #00aa00;
 @import "../../../node_modules/bootstrap/scss/functions";
 @import "../../../node_modules/bootstrap/scss/variables";
 @import "../../../node_modules/bootstrap/scss/mixins";
+@import "mixins";

@@ -3,36 +3,36 @@
 		a.btn.btn-default(routerLink="/")
 			fa-icon([icon]="homeIcon")
 	.form-group
-		label.control-label.ml-2 horizontal:
-		.btn-group.dropdown.ml-1(dropdown)
+		label.control-label.ms-2 horizontal:
+		.btn-group.dropdown.ms-1(dropdown)
 			button.btn.btn-default.dropdown-toggle(dropdownToggle style="width: 140px;")
 				| {{horizontal}}
 			.dropdown-menu(*dropdownMenu)
 				a.dropdown-item(*ngFor="let f of fields" (click)="horizontal = f; redraw();") {{f}}
 
 	.form-group
-		label.control-label.ml-2 vertical:
-		.btn-group.dropdown.ml-1(dropdown)
+		label.control-label.ms-2 vertical:
+		.btn-group.dropdown.ms-1(dropdown)
 			button.btn.btn-default.dropdown-toggle(dropdownToggle style="width: 140px;")
 				| {{vertical}}
 			.dropdown-menu(*dropdownMenu)
 				a.dropdown-item(*ngFor="let f of fields" (click)="vertical = f; redraw();") {{f}}
 
 	.form-group
-		label.control-label.ml-2 coat:
-		color-picker.color-picker-inline.ml-1([(color)]="coat" (colorChange)="redraw()")
+		label.control-label.ms-2 coat:
+		color-picker.color-picker-inline.ms-1([(color)]="coat" (colorChange)="redraw()")
 
 	.form-group
-		label.control-label.ml-2 hair:
-		color-picker.color-picker-inline.ml-1([(color)]="hair" (colorChange)="redraw()")
+		label.control-label.ms-2 hair:
+		color-picker.color-picker-inline.ms-1([(color)]="hair" (colorChange)="redraw()")
 
 	.form-group
-		label.control-label.ml-2 just head
-		check-box.check-box-inline.ml-1([(checked)]="justHead" (checkedChange)="redraw()")
+		label.control-label.ms-2 just head
+		check-box.check-box-inline.ms-1([(checked)]="justHead" (checkedChange)="redraw()")
 
 	.form-group
-		label.control-label.ml-2
-		.btn-group.dropdown.ml-1(dropdown)
+		label.control-label.ms-2
+		.btn-group.dropdown.ms-1(dropdown)
 			button.btn.btn-default.dropdown-toggle(dropdownToggle)
 				| &times;{{scale}}
 			.dropdown-menu(*dropdownMenu)

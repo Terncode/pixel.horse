@@ -1,15 +1,15 @@
 .d-flex.align-items-center.mb-1
 	auth-info.flex-grow-1([auth]="auth" [showName]="true")
 	small.text-muted
-		from-now.mr-1([time]="auth?.lastUsed")
+		from-now.me-1([time]="auth?.lastUsed")
 	.btn-group.dropdown(dropdown)
 		button.btn.btn-xs.btn-default(dropdownToggle title="Assign to another account")
 			fa-icon([icon]="assignIcon" [fixedWidth]="true")
 		.dropdown-menu(*dropdownMenu)
 			button.dropdown-item(*ngFor="let d of duplicates" (click)="assignTo(d.account)")
 				span.text-muted assign to
-				account-info-remote.ml-1([accountId]="d.account" [basic]="true")
-	.btn-group.ml-1
+				account-info-remote.ms-1([accountId]="d.account" [basic]="true")
+	.btn-group.ms-1
 		button.btn.btn-xs.btn-default((click)="showAuthData(auth)" title="Show more data")
 			fa-icon([icon]="infoIcon" [fixedWidth]="true")
 		button.btn.btn-xs((click)="toggleAuthBanned(auth)" [btnHighlight]="auth?.banned || false"

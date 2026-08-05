@@ -3,11 +3,11 @@ a(*ngIf="auth?.url" [href]="auth?.url" target="_blank" rel="noopener noreferrer"
 span(*ngIf="!auth?.url" [title]="name")
 	fa-icon([icon]="icon" [fixedWidth]="true")
 span(*ngIf="showName")
-	span.ml-1(*ngIf="name")
+	span.ms-1(*ngIf="name")
 		| {{name}}
-		em.text-muted.ml-1
+		em.text-muted.ms-1
 			| {{name | translit}}
-	span.text-muted.ml-1(*ngIf="!name")
+	span.text-muted.ms-1(*ngIf="!name")
 		| &lt;no name&gt;
-	span.badge.badge-success.ml-1(*ngIf="pledged")
+	span.badge.badge-success.ms-1(*ngIf="pledged")
 		| ${{pledged}}

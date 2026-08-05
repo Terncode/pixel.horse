@@ -12,7 +12,7 @@
 }
 
 .col-outline {
-	@include media-breakpoint-down(xs) {
+	@include media-breakpoint-down(sm) {
 		padding-top: 0.5rem;
 	}
 }

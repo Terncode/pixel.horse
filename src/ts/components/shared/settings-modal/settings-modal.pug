@@ -32,7 +32,7 @@
 				.form-group
 					label#graphics-quality-label Graphics quality
 					div
-						slider-bar.mr-2.mb-2(
+						slider-bar.me-2.mb-2(
 							[(value)]="browser.graphicsQuality" [min]="0" [max]="maxGraphicsQuality" [step]="1"
 							style="max-width: 300px" labelledBy="graphics-quality-label")
 						| {{graphicsQualityText}}
@@ -82,14 +82,14 @@
 				.form-group
 					label#chatlog-opacity-label Chatlog background opacity
 					div
-						slider-bar.mr-2(
+						slider-bar.me-2(
 							[(value)]="account.chatlogOpacity" style="max-width: 300px" labelledBy="chatlog-opacity-label")
 						| {{(account.chatlogOpacity / 100) | percent}}
 					small.form-text.text-muted.mt-0 Changes chatlog background to make it more readable or less obtrusive.
 				.form-group
 					label#chatlog-range-label Chatlog range
 					div
-						slider-bar.mr-2(
+						slider-bar.me-2(
 							[(value)]="account.chatlogRange" [min]="minChatlogRange" [max]="maxChatlogRange" [step]="1"
 							(valueChange)="updateChatlogRange($event)" (changed)="finishChatlogRange()"
 							style="max-width: 300px" labelledBy="chatlog-range-label")
@@ -141,5 +141,5 @@
 	.flex-grow-1
 	button.btn.btn-wide.btn-outline-secondary((click)="cancel()")
 		| Cancel
-	button.btn.btn-wide.btn-outline-secondary.ml-2((click)="ok()")
+	button.btn.btn-wide.btn-outline-secondary.ms-2((click)="ok()")
 		| OK

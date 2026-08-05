@@ -29,11 +29,11 @@ $bar-border-radius: $bar-height * 0.5;
 		background: darken($slider-bg, 20%);
 
 		.slider-bar-fill {
-			background: darken($progress-bg, 20%);
+			background: darken($slider-fill, 20%);
 		}
 
 		.slider-bar-control {
-			background: darken(theme-color('default'), 20%);
+			background: darken($default, 20%);
 		}
 	}
 }
@@ -66,7 +66,7 @@ $bar-border-radius: $bar-height * 0.5;
 	width: $bar-control-size;
 	height: $bar-control-size;
 	border-radius: 50%;
-	background: theme-color('default');
+	background: $default;
 	box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
 	
 	:host:focus & {

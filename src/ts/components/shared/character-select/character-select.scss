@@ -7,7 +7,7 @@
 }
 
 character-list {
-	@include media-breakpoint-down(sm) {
+	@include media-breakpoint-down(md) {
 		left: auto;
 		right: 0;
 	}

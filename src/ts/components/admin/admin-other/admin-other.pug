@@ -10,7 +10,7 @@
 				textarea.form-control([(ngModel)]="field.value" rows="4" style="width: 400px;")
 			.form-group
 				button.btn.btn-primary(type="button" (click)="saveFields()") Save
-				button.btn.btn-default.ml-1(type="button" (click)="resetFields()") Reset
+				button.btn.btn-default.ms-1(type="button" (click)="resetFields()") Reset
 
 	.col-6
 		h2.text-danger PATREON WARNING:
@@ -34,4 +34,4 @@
 					| {{suspiciousPoniesError}}
 			.form-group
 				button.btn.btn-primary((click)="saveSuspiciousPonies()") Save
-				button.btn.btn-default.ml-1((click)="resetSuspiciousPonies()") Reset
+				button.btn.btn-default.ms-1((click)="resetSuspiciousPonies()") Reset

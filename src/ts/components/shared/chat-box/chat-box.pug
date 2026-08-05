@@ -9,7 +9,7 @@
 				ul
 					li(*ngFor="let e of emotes" (click)="addEmoji(e.symbol)"
 					)
-						span.emote-sample.mr-2
+						span.emote-sample.me-2
 							emote-box([emote]="e.names[0]")
 
 		emote-box.game-button.chat-emoji-button([emote]="btnEmoji" (click)="toggleEmojiBox()" (mouseenter)="onMouseEnterEmojiButton($event)")

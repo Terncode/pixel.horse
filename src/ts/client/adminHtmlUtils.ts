@@ -19,7 +19,7 @@ export function createSupporterChanges(entries: LogEntry[]): SupporterChange[] {
 		const current = changes[i];
 
 		if (current.date.getMonth() !== prev.date.getMonth()) {
-			current.class += ' border-left border-success pl-2';
+			current.class += ' border-start border-success ps-2';
 		}
 
 		if (current.added && prev.added) {

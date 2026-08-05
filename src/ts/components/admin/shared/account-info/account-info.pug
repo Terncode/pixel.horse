@@ -11,10 +11,10 @@ ng-template(#noteTooltip)
 	div {{account.note}}
 
 ng-template(#alertTooltip)
-	.text-left
+	.text-start
 		small.text-muted
 			| expires in
-			from-now.ml-1([time]="alert.expires")
+			from-now.ms-1([time]="alert.expires")
 		div {{alert.message}}
 
 ng-template(#supporterTooltip)
@@ -23,18 +23,18 @@ ng-template(#supporterTooltip)
 		| declined: #[from-now([time]="declined")] ago | {{declined | date:'MMM d'}}
 
 ng-template(#flagsTooltip)
-	.text-left
+	.text-start
 		div(*ngFor="let c of counters")
-			span.text-muted.mr-1 {{c.label}}:
+			span.text-muted.me-1 {{c.label}}:
 			span {{getCounter(c.name)}}
 		br(*ngIf="account.flags || account.supporter")
 		div(*ngFor="let f of flags")
 			span(*ngIf="hasFlag(f.value)")
-				fa-icon.mr-1([icon]="checkIcon")
+				fa-icon.me-1([icon]="checkIcon")
 				| {{f.label}}
 		div(*ngFor="let f of supporterFlags")
 			span(*ngIf="hasSupporterFlag(f.value)")
-				fa-icon.mr-1([icon]="checkIcon")
+				fa-icon.me-1([icon]="checkIcon")
 				| {{f.label}}
 
 ng-template(#alertModal)
@@ -44,35 +44,35 @@ ng-template(#alertModal)
 	.modal-body.modal-checkboxes
 		.form-group
 			label Predefined: 
-			.btn-group.ml-2
+			.btn-group.ms-2
 				button.btn.btn-sm.btn-default(*ngFor="let a of predefinedAlerts" (click)="alertMessage = a.message")
 					| {{a.name}}
 		.form-group
 			textarea.form-control([(ngModel)]="alertMessage" autofocus rows="4")
 		.form-group
 			label Expire in
-			.btn-group.ml-2(btnRadioGroup [(ngModel)]="alertExpire")
+			.btn-group.ms-2(btnRadioGroup [(ngModel)]="alertExpire")
 				button.btn.btn-sm.btn-default(*ngFor="let e of alertExpires" [btnRadio]="e" [btnHighlight]="alertExpire === e")
 					| {{e.name}}
 	.modal-footer.d-flex
 		.flex-grow-1
 		button.btn.btn-outline-secondary((click)="cancelAlert()")
 			| Cancel
-		button.btn.btn-outline-secondary.ml-2((click)="confirmAlert()")
+		button.btn.btn-outline-secondary.ms-2((click)="confirmAlert()")
 			| Set
 
 //- component
 
 .account-info(*ngIf="account" [class.outdated]="isInactive")
-	span.badge.badge-admin.badge-duplicates.mr-1(
+	span.badge.badge-admin.badge-duplicates.me-1(
 		*ngIf="showDuplicates && duplicates" title="Duplicates" [class.none]="duplicates.count === 0")
 		| {{duplicates.count}}
-		fa-icon.ml-1(*ngIf="duplicates.browserId" [icon]="duplicateBrowserIdIcon")
-		fa-icon.ml-1(*ngIf="duplicates.emails" [icon]="duplicateEmailIcon")
-		fa-icon.ml-1(*ngIf="duplicates.name" [icon]="duplicateNameIcon")
-		fa-icon.ml-1(*ngIf="duplicates.perma" [icon]="duplicatePermaIcon")
+		fa-icon.ms-1(*ngIf="duplicates.browserId" [icon]="duplicateBrowserIdIcon")
+		fa-icon.ms-1(*ngIf="duplicates.emails" [icon]="duplicateEmailIcon")
+		fa-icon.ms-1(*ngIf="duplicates.name" [icon]="duplicateNameIcon")
+		fa-icon.ms-1(*ngIf="duplicates.perma" [icon]="duplicatePermaIcon")
 
-	a.account-info-name.mr-1(
+	a.account-info-name.me-1(
 		[routerLink]="['/accounts', account._id]"
 		[tooltip]="accountTooltip"
 		[placement]="popoverPlacement || 'top'"
@@ -111,18 +111,18 @@ ng-template(#alertModal)
 	span.dropdown(dropdown autoClose="outsideClick")
 		a.icon-button.cursor-pointer.dropdown-toggle.no-arrow(dropdownToggle [tooltip]="flagsTooltip")
 			fa-icon([icon]="flagIcon" [fixedWidth]="true" [ngClass]="flagClass")
-		.dropdown-menu(*dropdownMenu [class.dropdown-menu-right]="!popoverPlacement")
+		.dropdown-menu(*dropdownMenu [class.dropdown-menu-end]="!popoverPlacement")
 			a.dropdown-item(*ngFor="let f of flags" (click)="toggleFlag(f.value)")
-				fa-icon.mr-1([icon]="checkIcon" [fixedWidth]="true" [class.invisible]="!hasFlag(f.value)")
+				fa-icon.me-1([icon]="checkIcon" [fixedWidth]="true" [class.invisible]="!hasFlag(f.value)")
 				| {{f.label}}
 			.dropdown-divider
 			a.dropdown-item(*ngFor="let f of supporterFlags" (click)="toggleSupporterFlag(f.value)")
-				fa-icon.mr-1([icon]="checkIcon" [fixedWidth]="true" [class.invisible]="!hasSupporterFlag(f.value)")
+				fa-icon.me-1([icon]="checkIcon" [fixedWidth]="true" [class.invisible]="!hasSupporterFlag(f.value)")
 				| {{f.label}}
 			.dropdown-item
 				.d-flex.justify-content-between
 					div
-						fa-icon.mr-1([icon]="checkIcon" [fixedWidth]="true" [class.invisible]="!hasAnySupporter")
+						fa-icon.me-1([icon]="checkIcon" [fixedWidth]="true" [class.invisible]="!hasAnySupporter")
 						| supporter
 					.btn-group.supporter-buttons
 						button.btn.btn-xs.btn-info([class.active]="isSupporter(0)" (click)="setSupporter(0)") none
@@ -132,7 +132,7 @@ ng-template(#alertModal)
 			.dropdown-item
 				.d-flex.justify-content-between
 					div
-						fa-icon.mr-1([icon]="checkIcon" [fixedWidth]="true" [class.invisible]="!hasPastSupporter")
+						fa-icon.me-1([icon]="checkIcon" [fixedWidth]="true" [class.invisible]="!hasPastSupporter")
 						| past supporter
 					.btn-group.supporter-buttons
 						button.btn.btn-xs.btn-info([class.active]="isForcePastSupporter" (click)="toggleForcePastSupporter()") force
@@ -149,7 +149,7 @@ ng-template(#alertModal)
 	span.dropdown(dropdown)
 		a.icon-button.cursor-pointer.dropdown-toggle.no-arrow(dropdownToggle [tooltip]="alert ? alertTooltip : undefined")
 			fa-icon.text-muted([icon]="cogIcon" [fixedWidth]="true" [class.text-present]="alert")
-		.dropdown-menu.dropdown-menu-right(*dropdownMenu)
+		.dropdown-menu.dropdown-menu-end(*dropdownMenu)
 			a.dropdown-item((click)="kick()")
 				| kick
 			a.dropdown-item((click)="report()")

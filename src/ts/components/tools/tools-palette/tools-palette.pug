@@ -4,17 +4,17 @@
 			a.btn.btn-default(routerLink="/")
 				fa-icon([icon]="homeIcon")
 		.form-group
-			scale-picker.ml-1([(scale)]="scale" (scaleChange)="redraw()")
+			scale-picker.ms-1([(scale)]="scale" (scaleChange)="redraw()")
 
-	.float-left.mr-2
+	.float-start.me-2
 		canvas(#canvas width=512 height=512)
 
-	.float-left
+	.float-start
 		.form-group.form-inline
 			label.text-muted sprite:
-			input.form-control.ml-1([(ngModel)]="spriteName" (change)="spriteChanged()" style="width: 200px;"
+			input.form-control.ms-1([(ngModel)]="spriteName" (change)="spriteChanged()" style="width: 200px;"
 			                        [typeahead]="sprites" (typeaheadOnSelect)="spriteChanged()")
-			button.btn.btn-default.ml-1((click)="loadPalette()")
+			button.btn.btn-default.ms-1((click)="loadPalette()")
 				| load palette
 
 		div

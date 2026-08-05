@@ -24,7 +24,7 @@ table.table.table-fixed.table-striped.table-hover.table-sm.table-ellipsis
 					fa-icon([icon]="clipboardIcon")
 				.text-muted.event-desc.pre-line(*ngIf="e.desc")
 					span([innerHTML]="e.descHTML")
-					a.text-muted.ml-1([href]="translateUrl(e)" target="_blank" title="translate")
+					a.text-muted.ms-1([href]="translateUrl(e)" target="_blank" title="translate")
 						fa-icon([icon]="langIcon")
 			td.col-account
 				account-info-remote(#accountInfo [accountId]="e.account" [showDuplicates]="true")
@@ -35,17 +35,17 @@ table.table.table-fixed.table-striped.table-hover.table-sm.table-ellipsis
 			td.col-origin
 				origin-info-remote([originIP]="e.origin?.ip")
 			td.col-actions.text-nowrap
-				button.btn.btn-xs.btn-danger.mr-1((click)="remove(e)" title="Remove event")
+				button.btn.btn-xs.btn-danger.me-1((click)="remove(e)" title="Remove event")
 					fa-icon([icon]="trashIcon")
 				.btn-group.dropdown(dropdown)
 					button.btn.btn-xs.btn-default(
 						(click)="onShowChat($event, e, accountInfo.account)" [disabled]="!e.account" title="Show chat log")
 						fa-icon([icon]="commentIcon")
 					button.btn.btn-xs.btn-default.dropdown-toggle(dropdownToggle)
-					.dropdown-menu.dropdown-menu-right(*dropdownMenu)
+					.dropdown-menu.dropdown-menu-end(*dropdownMenu)
 						a.dropdown-item((click)="removeAll(e)")
-							fa-icon.mr-1([icon]="trashIcon" [fixedWidth]="true")
+							fa-icon.me-1([icon]="trashIcon" [fixedWidth]="true")
 							| Remove all #[strong {{e.message}}]
 						a.dropdown-item((click)="onAddChat(e, accountInfo.account)")
-							fa-icon.mr-1([icon]="commentIcon" [fixedWidth]="true")
+							fa-icon.me-1([icon]="commentIcon" [fixedWidth]="true")
 							| Add to chat log

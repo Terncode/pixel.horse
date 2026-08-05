@@ -1,4 +1,4 @@
-.sr-only(#ariaAnnounce aria-live="assertive")
+.visually-hidden(#ariaAnnounce aria-live="assertive")
 
 .character-list([class.character-list-searchable]="searchable" [class.in-game]="inGame")
 
@@ -9,9 +9,9 @@
 			#searchInput type="search" [placeholder]="placeholder" [(ngModel)]="search" (input)="updatePonies()"
 			autocomplete="nope")
 		.input-group-append(*ngIf="tags.length" #tagsDropdown="ag-dropdown" dropdown)
-			button.btn.btn-secondary.rounded-right(dropdownToggle title="Search by tags")
+			button.btn.btn-secondary.rounded-end(dropdownToggle title="Search by tags")
 				fa-icon([icon]="hashIcon")
-			.dropdown-menu.dropdown-menu-right.shadow.tag-list(*dropdownMenu)
+			.dropdown-menu.dropdown-menu-end.shadow.tag-list(*dropdownMenu)
 				button.dropdown-item(*ngFor="let tag of tags" (click)="search = tag; tagsDropdown.close(); updatePonies()")
 					| {{tag}}
 

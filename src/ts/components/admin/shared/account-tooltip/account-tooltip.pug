@@ -1,7 +1,7 @@
-.text-left
+.text-start
 	div
 		| {{account.name || '[none]'}} [{{account._id | slice:-3}}]
-		auth-list-remote.ml-1(*ngIf="!extendedAuths" [accountId]="account._id")
+		auth-list-remote.ms-1(*ngIf="!extendedAuths" [accountId]="account._id")
 	.text-muted
 		em {{account.name | translit}}
 	div(*ngIf="extendedAuths")
@@ -12,16 +12,16 @@
 		| ({{account.emails.length - 3}} more)
 	div
 		span.text-muted created:
-		from-now.ml-1([time]="account.createdAt")
+		from-now.ms-1([time]="account.createdAt")
 	div
 		span.text-muted last visit:
-		from-now.ml-1([time]="account.lastVisit")
+		from-now.ms-1([time]="account.lastVisit")
 	div
 		span.text-muted ponies:
-		span.ml-1 {{account.characterCount}}
+		span.ms-1 {{account.characterCount}}
 	div
 		span.text-muted age:
-		span.ml-1([class.text-strike]="account.birthyear") {{age}}
-		span.ml-1 {{forceAge}}
+		span.ms-1([class.text-strike]="account.birthyear") {{age}}
+		span.ms-1 {{forceAge}}
 	div
 		account-status([account]="account")

@@ -4,7 +4,7 @@
 	.col-sm-7.mb-1
 		button.btn.btn-primary((click)="clearCM()" title="Clear all")
 			fa-icon([icon]="trashIcon" [fixedWidth]="true")
-		.btn-group.ml-1(btnRadioGroup [(ngModel)]="state.brushType")
+		.btn-group.ms-1(btnRadioGroup [(ngModel)]="state.brushType")
 			button.btn.btn-primary(btnRadio="eraser" title="Eraser")
 				fa-icon([icon]="eraserIcon" [fixedWidth]="true")
 			button.btn.btn-primary(btnRadio="eyedropper" title="Eyedropper")

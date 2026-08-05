@@ -3,14 +3,14 @@ ng-template(#notePopover)
 		cols="20" rows="8" agAutoFocus [(ngModel)]="note" (keydown.escape)="blur()" (blur)="blur()")
 
 ng-template(#tooltip)
-	.text-left.text-pre
+	.text-start.text-pre
 		div(*ngIf="hasCounters")
 			span.text-muted spam:
-			span.ml-1 {{counters?.spam || 0}}
-			span.text-muted.ml-1 swearing:
-			span.ml-1 {{counters?.swears || 0}}
-			span.text-muted.ml-1 timeouts:
-			span.ml-1 {{counters?.timeouts || 0}}
+			span.ms-1 {{counters?.spam || 0}}
+			span.text-muted.ms-1 swearing:
+			span.ms-1 {{counters?.swears || 0}}
+			span.text-muted.ms-1 timeouts:
+			span.ms-1 {{counters?.timeouts || 0}}
 		div {{note}}
 
 .btn-group.btn-group-xs.btn-group-shadow(*ngIf="check?.hgf?.bvc?.wer?.ngf")
@@ -22,11 +22,11 @@ ng-template(#tooltip)
 			fa-icon([icon]="moreIcon")
 		.dropdown-menu(*dropdownMenu)
 			a.dropdown-item((click)="report()")
-				fa-icon.mr-1([icon]="flagIcon" [fixedWidth]="true")
+				fa-icon.me-1([icon]="flagIcon" [fixedWidth]="true")
 				| Report
 			h6.dropdown-header Other options
 			a.dropdown-item(*ngFor="let a of check.actions" (click)="modAction(a.action)")
-				fa-icon.mr-1.text-danger([icon]="dangerIcon" [fixedWidth]="true")
+				fa-icon.me-1.text-danger([icon]="dangerIcon" [fixedWidth]="true")
 				| {{a.name}}
 
 	.btn-group(
@@ -46,7 +46,7 @@ ng-template(#tooltip)
 	.btn-group.dropdown(dropdown [tooltip]="muteTooltip")
 		button.btn.btn-xs(dropdownToggle [ngClass]="className(mute)")
 			fa-icon([icon]="muteIcon")
-		.dropdown-menu.dropdown-menu-right(*dropdownMenu)
+		.dropdown-menu.dropdown-menu-end(*dropdownMenu)
 			a.dropdown-item((click)="setMute(0)")
 				| clear #[b mute]
 			a.dropdown-item((click)="setMute(-1)")
@@ -58,7 +58,7 @@ ng-template(#tooltip)
 	.btn-group.dropdown(dropdown [tooltip]="shadowTooltip")
 		button.btn.btn-xs(dropdownToggle [ngClass]="className(shadow)")
 			fa-icon([icon]="hideIcon")
-		.dropdown-menu.dropdown-menu-right(*dropdownMenu)
+		.dropdown-menu.dropdown-menu-end(*dropdownMenu)
 			a.dropdown-item((click)="setShadow(0)")
 				| clear #[b shadow]
 			a.dropdown-item((click)="setShadow(-1)")
@@ -72,4 +72,4 @@ ng-template(#tooltip)
 
 .pony-mod-account(*ngIf="account")
 	| {{account}}
-	span.text-smuted.ml-1 [{{country || '??'}}]
+	span.text-smuted.ms-1 [{{country || '??'}}]

@@ -1,5 +1,5 @@
 ng-template(#descriptionTooltip)
-	.text-left
+	.text-start
 		p Description and tags help you organize and search for your ponies.
 		p Use # tags to be able to quickly find specific ponies like #oc #winter or #unicorn
 		p
@@ -10,8 +10,8 @@ page-loader(*ngIf="!playing")
 
 .row(*ngIf="!playing && !loading")
 	.col-lg-6.text-center
-		h1.sr-only(focusTitle) Characters
-		h2.sr-only Character selection
+		h1.visually-hidden(focusTitle) Characters
+		h2.visually-hidden Character selection
 		.mx-auto(style="max-width: 400px;")
 			discord-button.mb-3
 			visit-pt-button.mb-3
@@ -27,16 +27,16 @@ page-loader(*ngIf="!playing")
 			.form-group.text-center
 				button.btn.btn-lg.btn-default([disabled]="!canDuplicate" (click)="duplicate()" aria-label="Duplicate character")
 					| Duplicate
-				button.btn.btn-lg.btn-default.ml-2([disabled]="!canRevert" (click)="revert()" aria-label="Revert changes")
+				button.btn.btn-lg.btn-default.ms-2([disabled]="!canRevert" (click)="revert()" aria-label="Revert changes")
 					| Revert
-				button.btn.btn-lg.btn-default.ml-2([disabled]="!canSave" (click)="save()" aria-label="Save character")
+				button.btn.btn-lg.btn-default.ms-2([disabled]="!canSave" (click)="save()" aria-label="Save character")
 					| Save
 
 			play-box(label="Save & Play" [(error)]="error")
 			play-notice
 
 	.col-lg-6.character-tabs([setOutlineHidden]="!customOutlines" [class.character-tab-warning]="updateWarning")
-		h2.sr-only Character customization
+		h2.visually-hidden Character customization
 		tabset(type="pills" *ngIf="loaded" saveActiveTab="character-active-tab" label="Character customization")
 			tab(title="body")
 				.character-tab(*tabContent)
@@ -71,8 +71,8 @@ page-loader(*ngIf="!playing")
 						label.col-sm-4.col-form-label Export/Import options
 						.col-sm-8
 							button.btn.btn-sm.btn-default((click)="exportPony()") Export pony
-							button.btn.btn-sm.btn-default.ml-1((click)="exportPonies()") Export all ponies
-							button.btn.btn-sm.btn-default.ml-1((click)="importFile.click()") Import ponies
+							button.btn.btn-sm.btn-default.ms-1((click)="exportPonies()") Export all ponies
+							button.btn.btn-sm.btn-default.ms-1((click)="importFile.click()") Import ponies
 							input.d-none(#importFile type="file" (change)="importPonies(importFile.files[0])")
 
 					.row.form-group
@@ -81,18 +81,18 @@ page-loader(*ngIf="!playing")
 							.dropdown.btn-group(dropdown)
 								button.btn.btn-default.dropdown-toggle(
 									dropdownToggle aria-labelledby="social-site-label" aria-describedby="social-site-help")
-									fa-icon.mr-1(
+									fa-icon.me-1(
 										*ngIf="site?.icon" [icon]="icon(site.icon)" [fixedWidth]="true" [style.color]="site.color"
 										size="lg" [attr.aria-label]="site.icon")
 									strong {{site?.name}}
 								.dropdown-menu(*dropdownMenu)
 									a.dropdown-item(*ngFor="let s of sites" (click)="site = s")
-										fa-icon.mr-1(
+										fa-icon.me-1(
 											*ngIf="s.icon" [icon]="icon(s.icon)" [fixedWidth]="true" [style.color]="s.color"
 											size="lg" [attr.aria-label]="s.icon")
 										strong {{s.name}}
 
-							.dropdown.btn-group.ml-1(dropdown *ngIf="tags.length > 1")
+							.dropdown.btn-group.ms-1(dropdown *ngIf="tags.length > 1")
 								button.btn.btn-default.dropdown-toggle(dropdownToggle aria-label="Show tag")
 									span.badge(*ngIf="tag.id" [ngClass]="'badge-' + tag.className") {{tag.id}}
 									strong(*ngIf="!tag.id") {{tag.name}}
@@ -107,7 +107,7 @@ page-loader(*ngIf="!playing")
 					.row.form-group
 						label.col-sm-4.col-form-label(for="description")
 							| Description
-							fa-icon.text-muted.ml-2([icon]="infoIcon" [tooltip]="descriptionTooltip" containerClass="tooltip-desc")
+							fa-icon.text-muted.ms-2([icon]="infoIcon" [tooltip]="descriptionTooltip" containerClass="tooltip-desc")
 						.col-sm-8
 							input.form-control#description(
 								[(ngModel)]="pony.desc" placeholder="example: with a hat #oc #winter" [maxlength]="maxDescLength")
@@ -125,7 +125,7 @@ page-loader(*ngIf="!playing")
 								.input-group-append.dropdown(*ngIf="canSaveFiles" dropdown)
 									button.btn.btn-default.dropdown-toggle(dropdownToggle *ngIf="canExport" aria-label="Export / Import")
 										fa-icon([icon]="codeIcon")
-									.dropdown-menu.dropdown-menu-right(*dropdownMenu)
+									.dropdown-menu.dropdown-menu-end(*dropdownMenu)
 										a.dropdown-item((click)="export()") export all
 										a.dropdown-item((click)="import()") import data
 										a.dropdown-item((click)="testSize()") print compressed
@@ -137,7 +137,7 @@ page-loader(*ngIf="!playing")
 										fa-icon([icon]="saveIcon")
 									button.btn.btn-default.dropdown-toggle(dropdownToggle style="min-width: 80px")
 										strong {{animations[activeAnimation]().name}}
-									.dropdown-menu.dropdown-menu-right(*dropdownMenu)
+									.dropdown-menu.dropdown-menu-end(*dropdownMenu)
 										a.dropdown-item(*ngFor="let a of animations; let i = index" (click)="setActiveAnimation(i)")
 											| {{a().name}}
 
@@ -382,7 +382,7 @@ page-loader(*ngIf="!playing")
 							.accessory-tab(*tabContent)
 								.form-group.d-flex.justify-content-center.pt-2
 									custom-checkbox([(checked)]="previewExtra") show preview
-									em.text-muted.ml-2
+									em.text-muted.ms-2
 										| (you have to enable these accessories in-game)
 								set-selection(
 									label="Extra accessories" [set]="info.extraAccessory" [sets]="extraAccessories"

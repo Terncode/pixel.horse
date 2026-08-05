@@ -3,7 +3,7 @@
 	.d-flex.justify-content-between
 		.admin-initializing
 			div(*ngIf="loading")
-				fa-icon.mr-1([icon]="spinnerIcon" animation="spin")
+				fa-icon.me-1([icon]="spinnerIcon" animation="spin")
 				| {{loading}}...
 
 		menu-bar([loading]="model.loading" [account]="model.account" (signOut)="signOut()")
@@ -20,5 +20,5 @@
 
 .admin-error(*ngIf="model.error")
 	.alert.alert-danger
-		button.close.ml-2((click)="model.error = null") &times;
+		button.close.ms-2((click)="model.error = null") &times;
 		| {{model.error}}

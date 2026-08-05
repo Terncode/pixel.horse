@@ -34,15 +34,15 @@
 		.app-version
 			| version #[b {{version}}]
 
-		.text-right
+		.text-end
 			.d-flex.flex-wrap
-				//- .text-nowrap.mr-2
+				//- .text-nowrap.me-2
 					| &copy; 2019-{{date | date:'yyyy'}}
-					|  #[a.text-muted.mr-1([href]="twitterLink" target="_blank") {{copyright}}] | 
+					|  #[a.text-muted.me-1([href]="twitterLink" target="_blank") {{copyright}}] | 
 				.text-nowrap
-					a.text-muted.mr-2(*ngIf="twitterLink" [href]="twitterLink" target="_blank" title="Twitter")
+					a.text-muted.me-2(*ngIf="twitterLink" [href]="twitterLink" target="_blank" title="Twitter")
 						fa-icon([icon]="twitterIcon" [fixedWidth]="true")
-					a.text-muted.mr-2(*ngIf="contactEmail" href="mailto:{{contactEmail}}" target="_blank" title="Email")
+					a.text-muted.me-2(*ngIf="contactEmail" href="mailto:{{contactEmail}}" target="_blank" title="Email")
 						fa-icon([icon]="emailIcon" [fixedWidth]="true")
 			div
 				a.text-muted.privacy-policy(href="/privacypolicy.html" target="_blank" rel="noopener") privacy policy

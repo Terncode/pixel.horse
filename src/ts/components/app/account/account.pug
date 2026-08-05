@@ -16,7 +16,7 @@ h1(focusTitle) Account settings
 			.form-group
 				label(for="birthdate")
 					| Date of birth
-					fa-icon.ml-1.text-danger(*ngIf="showAccountAlert" [icon]="alertIcon" title="Missing field value")
+					fa-icon.ms-1.text-danger(*ngIf="showAccountAlert" [icon]="alertIcon" title="Missing field value")
 				date-picker([(date)]="data.birthdate")
 			.form-group(*ngIf="accountError")
 				.alert.alert-danger
@@ -24,7 +24,7 @@ h1(focusTitle) Account settings
 			.form-group(*ngIf="accountSaved")
 				.alert.alert-success
 					| Changes saved
-			.form-group.text-right
+			.form-group.text-end
 				button.btn.btn-default(type="submit" [disabled]="!canSubmit" style="min-width: 100px;")
 					| {{saveButtonText}}
 
@@ -40,8 +40,8 @@ h1(focusTitle) Account settings
 				ul.list-unstyled
 					li.item-connected-account.d-flex.justify-content-between(*ngFor="let s of sites")
 						a([href]="s.url" target="_blank" rel="noopener noreferrer")
-							fa-icon.mr-1([icon]="icon(s.icon)" [fixedWidth]="true")
-							b #[span.sr-only {{s.icon}}] {{s.name}}
+							fa-icon.me-1([icon]="icon(s.icon)" [fixedWidth]="true")
+							b #[span.visually-hidden {{s.icon}}] {{s.name}}
 						button.btn.btn-sm.btn-danger(*ngIf="sites.length > 1" (click)="removeSite(s)" [disabled]="removingSite")
 							| remove
 
@@ -57,8 +57,8 @@ h1(focusTitle) Account settings
 						| connect another social site to this account
 					.dropdown-menu(*dropdownMenu)
 						button.dropdown-item(*ngFor="let p of providers" (click)="connectSite(p)")
-							fa-icon.mr-1([icon]="icon(p.id)" [fixedWidth]="true")
-							| #[span.sr-only {{p.name}}] {{p.name}}
+							fa-icon.me-1([icon]="icon(p.id)" [fixedWidth]="true")
+							| #[span.visually-hidden {{p.name}}] {{p.name}}
 
 			.form-group(*ngIf="mergeError")
 				.alert.alert-danger
@@ -79,11 +79,11 @@ h1(focusTitle) Account settings
 	.col-md-6
 		div(style="margin-bottom: 100px;")
 			.form-group
-				.float-right
+				.float-end
 					span.text-muted Page: {{page + 1}}
-					button.btn.btn-sm.btn-outline-secondary.ml-2((click)="page = page - 1; pageChanged()" [disabled]="!hides || page === 0")
+					button.btn.btn-sm.btn-outline-secondary.ms-2((click)="page = page - 1; pageChanged()" [disabled]="!hides || page === 0")
 						| Previous page
-					button.btn.btn-sm.btn-outline-secondary.ml-1((click)="page = page + 1; pageChanged()" [disabled]="!hides || hides.length < hidesPerPage")
+					button.btn.btn-sm.btn-outline-secondary.ms-1((click)="page = page + 1; pageChanged()" [disabled]="!hides || hides.length < hidesPerPage")
 						| Next page
 				h3 Hidden players
 
@@ -94,6 +94,6 @@ h1(focusTitle) Account settings
 				.text-muted.text-center.p-4(*ngIf="!hides.length") no hidden players
 				li.item-connected-account.d-flex.align-items-center(*ngFor="let h of hides")
 					b.flex-grow-1 {{h.name}}
-					span.text-muted.mr-2 hidden {{h.date}}
+					span.text-muted.me-2 hidden {{h.date}}
 					button.btn.btn-sm.btn-danger((click)="unhidePlayer(h)")
 						| unhide player

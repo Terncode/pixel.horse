@@ -18,7 +18,7 @@ h1(focusTitle) Help
 			ul.spaced-list
 				li
 					b movement
-					.pl-2.mb-1.
+					.ps-2.mb-1.
 						Use
 						#[kbd-key(title="up arrow key"): fa-icon([icon]="upIcon")]
 						#[kbd-key(title="left arrow key"): fa-icon([icon]="leftIcon")]
@@ -36,7 +36,7 @@ h1(focusTitle) Help
 						Hold #[kbd-key(title="shift key") shift] to walk slowly.
 				li
 					b chat
-					.pl-2.mb-1.
+					.ps-2.mb-1.
 						Use #[kbd-key(title="enter key") enter]
 						or #[kbd-key.gamepad.gamepad-blue(title="Gamepad X button") X]
 						to open chat box and send a message.
@@ -167,7 +167,7 @@ h1(focusTitle) Help
 			.emotes
 				ul
 					li(*ngFor="let e of emotes")
-						span.emote-sample.mr-2
+						span.emote-sample.me-2
 							emote-box([emote]="e")
 						| :{{e}}:
 
