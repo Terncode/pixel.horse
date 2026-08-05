@@ -5,7 +5,6 @@ import TerserPlugin from 'terser-webpack-plugin';
 import WrapperPlugin from 'wrapper-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { AngularWebpackPlugin } from '@ngtools/webpack';
-import linkerPlugin from '@angular/compiler-cli/linker/babel';
 import common from './webpack.common.mjs';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
@@ -71,13 +70,8 @@ export default (args = {}) =>
 					{
 						test: /\.m?js$/,
 						use: {
-						  loader: 'babel-loader',
-						  options: {
-								plugins: [linkerPlugin],
-								compact: false,
-								cacheDirectory: true,
-						  }
-						}
+							loader: path.resolve(__dirname, 'tools/angular-linker-loader.mjs'),
+						},
 					},
 					{
 						test: /\.[jt]sx?$/,
