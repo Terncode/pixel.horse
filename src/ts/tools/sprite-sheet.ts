@@ -2,7 +2,6 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { times } from 'lodash';
 import { Sprite, Rect } from './types';
-import { findByIndex } from './common';
 import { removeItem } from '../common/utils';
 import { createExtCanvas, saveCanvas } from './canvas-utils';
 
@@ -37,13 +36,18 @@ function isIdenticalData(a: ImageData, b: ImageData) {
 	return true;
 }
 
-function isIdenticalChannel(a: Sprite | undefined, b: Sprite | undefined, channel: number) {
+function isIdenticalChannel(a: ExtSprite | undefined, b: ExtSprite | undefined, channel: number) {
 	if (!a || !b || a.w !== b.w || a.h !== b.h) {
 		return false;
 	}
 
-	const adata = a.image.getContext('2d')!.getImageData(a.ox, a.oy, a.w, a.h);
-	const bdata = b.image.getContext('2d')!.getImageData(b.ox, b.oy, b.w, b.h);
+	const adata = a.data;
+	const bdata = b.data;
+
+	if (!adata || !bdata) {
+		return false;
+	}
+
 	const length = (adata.width * adata.height * 4) | 0;
 	const adat = adata.data;
 	const bdat = bdata.data;
@@ -121,7 +125,7 @@ function getIndex(x: number, y: number, outputWidth: number) {
 	return ((x | 0) + (((y | 0) * outputWidth) | 0)) | 0;
 }
 
-function isEmpty(x: number, y: number, w: number, h: number, outputWidth: number, taken: Uint8Array) {
+function isEmpty(x: number, y: number, w: number, h: number, outputWidth: number, lines: Line[][]) {
 	outputWidth = outputWidth | 0;
 
 	if (((x + w) | 0) > outputWidth || ((y + h) | 0) > outputWidth) {
@@ -129,10 +133,24 @@ function isEmpty(x: number, y: number, w: number, h: number, outputWidth: number
 	}
 
 	for (let iy = 0; iy < h; iy++) {
-		for (let ix = 0; ix < w; ix++) {
-			if (taken[getIndex((ix + x) | 0, (iy + y) | 0, outputWidth)] !== 0) {
-				return false;
+		const spans = lines[y + iy];
+		let found = false;
+
+		for (let i = 0; i < spans.length; i++) {
+			const span = spans[i];
+
+			if (span.start > x) { // spans are sorted and non-overlapping
+				break;
 			}
+
+			if (x + w <= span.start + span.length) {
+				found = true;
+				break;
+			}
+		}
+
+		if (!found) {
+			return false;
 		}
 	}
 
@@ -146,10 +164,9 @@ interface Line {
 
 interface Taken {
 	lines: Line[][];
-	data: Uint8Array; // TODO: remove completely, just use lines
 }
 
-function getFirstFree(outputWidth: number, width: number, height: number, { data, lines }: Taken) {
+function getFirstFree(outputWidth: number, width: number, height: number, { lines }: Taken) {
 	const maxY = (outputWidth - height) | 0;
 
 	for (let y = 0; y < maxY; y = (y + 1) | 0) {
@@ -161,7 +178,7 @@ function getFirstFree(outputWidth: number, width: number, height: number, { data
 			const end = (start + span.length - width) | 0;
 
 			for (let x = start; x < end; x = (x + 1) | 0) {
-				if (isEmpty(x, y, width, height, outputWidth, data)) {
+				if (isEmpty(x, y, width, height, outputWidth, lines)) {
 					return { x, y, layer: 0 };
 				}
 			}
@@ -175,7 +192,7 @@ function getFirstFreePacked(outputWidth: number, width: number, height: number, 
 	const maxY = outputWidth - height;
 
 	for (let layer = 0; layer < takens.length; layer = (layer + 1) | 0) {
-		const { data, lines } = takens[layer];
+		const { lines } = takens[layer];
 
 		for (let y = 0; y < maxY; y = (y + 1) | 0) {
 			const spans = lines[y];
@@ -186,7 +203,7 @@ function getFirstFreePacked(outputWidth: number, width: number, height: number, 
 				const end = (start + span.length - width) | 0;
 
 				for (let x = start | 0; x < end; x = (x + 1) | 0) {
-					if (isEmpty(x, y, width, height, outputWidth, data)) {
+					if (isEmpty(x, y, width, height, outputWidth, lines)) {
 						return { x, y, layer };
 					}
 				}
@@ -211,16 +228,11 @@ function positionSprite(sprite: ExtSprite, outputWidth: number, taken: Taken[], 
 	const right = x + w;
 
 	for (let il = 0; il < layers; il++) {
-		const { data, lines } = taken[il + layer];
+		const { lines } = taken[il + layer];
 
 		for (let iy = 0; iy < sprite.h; iy++) {
 			const yy = y + iy;
 			const spans = lines[yy];
-
-			for (let ix = 0; ix < sprite.w; ix++) {
-				const xx = x + ix;
-				data[getIndex(xx, yy, outputWidth)] = 1;
-			}
 
 			for (let i = 0; i < spans.length; i++) {
 				const span = spans[i];
@@ -254,35 +266,17 @@ function positionSprite(sprite: ExtSprite, outputWidth: number, taken: Taken[], 
 						spans.splice(i + 1, 0, { start: right, length: end - right });
 					}
 				}
-
-				// let start = span.start;
-				// let lineMoved = false;
-
-				// for (let ix = 0; ix < sprite.w; ix++) {
-				// 	const xx = x + ix;
-				// 	data[getIndex(xx, yy, outputWidth)] = 1;
-
-				// 	if (xx === start) {
-				// 		start++;
-				// 		lineMoved = true;
-				// 	}
-				// }
-
-				// if (lineMoved) {
-				// 	for (let x = start; x < outputWidth && data[getIndex(x, yy, outputWidth)] !== 0; x++) {
-				// 		start++;
-				// 	}
-
-				// 	span.start = start;
-				// 	span.length = outputWidth - start;
-				// }
 			}
 		}
 	}
 }
 
-function hasShading(s: Sprite) {
-	const data = s.image.getContext('2d')!.getImageData(s.ox, s.oy, s.w, s.h);
+function hasShading(s: ExtSprite) {
+	const data = s.data;
+
+	if (!data) {
+		return false;
+	}
 
 	for (let y = 0; y < data.height; y++) {
 		for (let x = 0; x < data.width; x++) {
@@ -305,6 +299,18 @@ function getSpriteImageData(s: ExtSprite): ImageData | undefined {
 	return { width, height, data } as ImageData;
 }
 
+function getDataHash(data: ImageData): number {
+	const bytes = data.data;
+	const length = bytes.length | 0;
+	let hash = 0x811c9dc5;
+
+	for (let i = 0; i < length; i++) {
+		hash = Math.imul(hash ^ bytes[i], 0x01000193);
+	}
+
+	return hash >>> 0;
+}
+
 export function createSpriteSheet(name: string, images: ExtSprite[], log: boolean, size: number, bg?: string, pack = false) {
 	const maxLayers = 4;
 	const sprites = images.slice();
@@ -323,16 +329,27 @@ export function createSpriteSheet(name: string, images: ExtSprite[], log: boolea
 	sprites
 		.forEach(s => s.data = getSpriteImageData(s));
 
+	const seen: Map<string, ExtSprite[]> = new Map();
+
 	sprites
-		.forEach((s, i) => {
-			if (s.w && s.h) {
-				for (let j = 0; j < i; j++) {
-					if (!s.duplicateOf && isIdenticalSprite(sprites[j], s)) {
-						s.duplicateOf = sprites[j];
+		.forEach(s => {
+			if (s.w && s.h && s.data) {
+				const key = `${s.w}x${s.h}|${getDataHash(s.data)}`;
+				const candidates = seen.get(key);
+
+				if (candidates) {
+					const duplicate = candidates.find(c => isIdenticalSprite(c, s));
+
+					if (duplicate) {
+						s.duplicateOf = duplicate;
 						deduplicated++;
-						//console.log('duplicate', sprite.name, '==', sprites[j].name);
-						break;
 					}
+					else {
+						candidates.push(s);
+					}
+				}
+				else {
+					seen.set(key, [s]);
 				}
 			}
 		});
@@ -378,7 +395,6 @@ export function createSpriteSheet(name: string, images: ExtSprite[], log: boolea
 
 	const taken: Taken[] = times(maxLayers, () => ({
 		lines: times(outputWidth, () => [{ start: 0, length: outputWidth }]),
-		data: new Uint8Array(outputWidth * outputWidth),
 	}));
 
 	sprites
@@ -439,17 +455,17 @@ export function createSpriteSheet(name: string, images: ExtSprite[], log: boolea
 		const alphaData = alphaContext.getImageData(0, 0, image.width, image.height);
 
 		sprites
-			.filter(s => !s.duplicateOf && s.w && s.h)
+			.filter(s => !s.duplicateOf && s.w && s.h && s.data)
 			.forEach(s => {
 				if (s.layer === 3) {
-					drawChannel(s.image, alphaData, 0, 0, s.ox, s.oy, s.x, s.y, s.w, s.h);
+					drawChannel(s.data!, alphaData, 0, 0, s.x, s.y, s.w, s.h);
 				}
 				else {
-					drawChannel(s.image, data, 0, s.layer || 0, s.ox, s.oy, s.x, s.y, s.w, s.h);
+					drawChannel(s.data!, data, 0, s.layer || 0, s.x, s.y, s.w, s.h);
 				}
 
 				if (s.shade) {
-					drawChannel(s.image, data, 1, 1, s.ox, s.oy, s.x, s.y, s.w, s.h);
+					drawChannel(s.data!, data, 1, 1, s.x, s.y, s.w, s.h);
 				}
 			});
 
@@ -462,23 +478,35 @@ export function createSpriteSheet(name: string, images: ExtSprite[], log: boolea
 			.forEach(s => context.drawImage(s.image, s.ox, s.oy, s.w, s.h, s.x, s.y, s.w, s.h));
 	}
 
+	const byIndex = new Map<number, ExtSprite>();
+
+	sprites.forEach(s => {
+		if (s.index != null) {
+			byIndex.set(s.index, s);
+		}
+	});
+
 	return {
-		sprites: images.map((_, index) => findByIndex(sprites, index) || null),
+		sprites: images.map((_, index) => byIndex.get(index) || null),
 		image,
 		alpha,
 	};
 }
 
 function drawChannel(
-	src: HTMLCanvasElement, dst: ImageData, srcChannel: number, dstChannel: number,
-	sx: number, sy: number, dx: number, dy: number, w: number, h: number
+	src: ImageData, dst: ImageData, srcChannel: number, dstChannel: number,
+	dx: number, dy: number, w: number, h: number
 ) {
-	const srcData = src.getContext('2d')!.getImageData(sx, sy, w, h);
+	const srcData = src.data;
+	const srcWidth = src.width | 0;
+	const dstWidth = dst.width | 0;
 
 	for (let y = 0; y < h; y++) {
+		const sOffset = ((y * srcWidth) * 4 + srcChannel) | 0;
+		const dOffset = ((((y + dy) * dstWidth) + dx) * 4 + dstChannel) | 0;
+
 		for (let x = 0; x < w; x++) {
-			dst.data[((x + dx) + (y + dy) * dst.width) * 4 + dstChannel] =
-				srcData.data[(x + y * srcData.width) * 4 + srcChannel];
+			dst.data[dOffset + (x * 4) | 0] = srcData[sOffset + (x * 4) | 0];
 		}
 	}
 }

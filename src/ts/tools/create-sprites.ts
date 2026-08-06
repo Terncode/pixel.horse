@@ -52,6 +52,58 @@ const getPngs = (directory: string) => fs.readdirSync(directory).filter(isPng);
 const getFrames = (layers: Layer[]) => layers.filter(nameMatches(/^frame/)).sort(compareLayers);
 const ponyPsd = (name: string) => openPsd(path.join(ponyPath, name));
 
+// profiling / progress logging
+
+interface ProfileStep {
+	name: string;
+	elapsed: number;
+}
+
+let spritesLog = false;
+let profileStart = 0;
+const profileSteps: ProfileStep[] = [];
+
+function formatTime(ms: number) {
+	return ms >= 1000 ? `${(ms / 1000).toFixed(1)}s` : `${ms}ms`;
+}
+
+function logStep<T>(name: string, fn: () => T, log = spritesLog): T {
+	const start = Date.now();
+
+	if (log) {
+		const total = formatTime(start - profileStart);
+		console.log(`[sprites] ${name}... (${total} elapsed)`);
+	}
+
+	const result = fn();
+	const elapsed = Date.now() - start;
+	profileSteps.push({ name, elapsed });
+
+	if (log) {
+		console.log(`[sprites] ${name}: ${formatTime(elapsed)}`);
+	}
+
+	return result;
+}
+
+function printProfile() {
+	if (!spritesLog) {
+		return;
+	}
+
+	const total = profileSteps.reduce((sum, step) => sum + step.elapsed, 0);
+	const maxNameLength = profileSteps.length ? Math.max(...profileSteps.map(step => step.name.length)) : 0;
+
+	console.log(`\n[sprites] profile:`);
+
+	for (const { name, elapsed } of profileSteps) {
+		const percent = total ? ((elapsed / total) * 100).toFixed(1) : '0.0';
+		console.log(`[sprites]   ${formatTime(elapsed).padStart(7)} (${percent}%)  ${name.padEnd(maxNameLength)}`);
+	}
+
+	console.log(`[sprites]   ${formatTime(total).padStart(7)} (100.0%)  ${'TOTAL'.padEnd(maxNameLength)}`);
+}
+
 function openPng(fileName: string) {
 	return imageToCanvas(loadImage(fileName));
 }
@@ -1055,36 +1107,42 @@ function createResult(): Result {
 	};
 }
 
-function createPonySprites(result: Result) {
-	getEyesFromPsd(result, ponyPsd('eyes.psd'), ponyPsd('irises.psd'));
-	getMuzzlesFromPsd(result, ponyPsd('muzzles.psd'));
-	getBlushFromPsd(result, ponyPsd('blush.psd'));
-	getPonyShadowsAndSelection(result, ponyPsd('shadows.psd'));
-
-	result.objects2.cms = addCMSprite(result.sprites, false);
-	result.objects2.cmsFlip = addCMSprite(result.sprites, true);
+function createPonySprites(result: Result, log: boolean) {
+	logStep('eyes', () => {
+		getEyesFromPsd(result, ponyPsd('eyes.psd'), ponyPsd('irises.psd'));
+	}, log);
+	logStep('muzzles', () => getMuzzlesFromPsd(result, ponyPsd('muzzles.psd')), log);
+	logStep('blush', () => getBlushFromPsd(result, ponyPsd('blush.psd')), log);
+	logStep('shadows', () => getPonyShadowsAndSelection(result, ponyPsd('shadows.psd')), log);
+	logStep('cms', () => {
+		result.objects2.cms = addCMSprite(result.sprites, false);
+		result.objects2.cmsFlip = addCMSprite(result.sprites, true);
+	}, log);
 
 	sheets
 		.filter(s => 'name' in s && !!s.file && !s.skipImport)
-		.forEach(s => importSprites(result, s as Sheet));
+		.forEach(s => {
+			const sheet = s as Sheet;
+			logStep(`import ${sheet.name}`, () => importSprites(result, sheet), log);
+		});
 
 	// const bug = getFramesFromPSD(result, ponyPsd('fly-bug.psd'));
 	// result.objects2['wings: AnimatedSprites'].slice(3)
 	// 	.forEach((frame: any, i: number) => frame[1] = [pegasus[i]]);
 
-	getTreesFromPsds(result, path.join(sourcePath, 'trees'));
-	getObjectsFromPsds(result, path.join(sourcePath, 'objects'));
+	logStep('trees', () => getTreesFromPsds(result, path.join(sourcePath, 'trees')), log);
+	logStep('objects', () => getObjectsFromPsds(result, path.join(sourcePath, 'objects')), log);
 
-	createButtons(result, path.join(sourcePath, 'buttons'));
-	createAnimations(result, path.join(sourcePath, 'animations'));
-	createOtherSprites(result, path.join(sourcePath, 'sprites'));
-	createOtherSpritesPalette(result, path.join(sourcePath, 'sprites-palette'));
-	createIcons(result, path.join(sourcePath, 'icons'));
-	createOtherSpritesAnimations(result, path.join(sourcePath, 'sprites-animations'));
-	createEmoteAnimations(result, path.join(sourcePath, 'emotes'));
-	createWalls(result, path.join(sourcePath, 'walls'));
+	logStep('buttons', () => createButtons(result, path.join(sourcePath, 'buttons')), log);
+	logStep('animations', () => createAnimations(result, path.join(sourcePath, 'animations')), log);
+	logStep('sprites', () => createOtherSprites(result, path.join(sourcePath, 'sprites')), log);
+	logStep('sprites-palette', () => createOtherSpritesPalette(result, path.join(sourcePath, 'sprites-palette')), log);
+	logStep('icons', () => createIcons(result, path.join(sourcePath, 'icons')), log);
+	logStep('sprites-animations', () => createOtherSpritesAnimations(result, path.join(sourcePath, 'sprites-animations')), log);
+	logStep('emotes', () => createEmoteAnimations(result, path.join(sourcePath, 'emotes')), log);
+	logStep('walls', () => createWalls(result, path.join(sourcePath, 'walls')), log);
 
-	createPixelSprites(result);
+	logStep('pixel sprites', () => createPixelSprites(result), log);
 }
 
 interface WallConfig {
@@ -1329,15 +1387,7 @@ const SUPPORTER1 = 0xf86754ff;
 const SUPPORTER2_BANDS = [0xffdfc1ff, 0xffcd99ff, 0xff9f3bff, 0xd97e09ff];
 const SUPPORTER3_BANDS = [0xffffffff, 0xfffda4ff, 0xffea3bff, 0xfdbb0bff];
 
-export function createSprites(log: boolean) {
-	mkdir(destPath);
-	mkdir(generatedPath);
-
-	const result = createResult();
-
-	createPonySprites(result);
-	createTileSprites(result);
-
+function createFonts(result: Result) {
 	const mainFont = fontCanvas('main.psd');
 	const mainEmoji = fontCanvas('emoji.psd');
 	const tinyFont = fontCanvas('tiny.psd');
@@ -1368,10 +1418,44 @@ export function createSprites(log: boolean) {
 	const monoFontSpritesPal = createFont(stripedMonoFont, 8, 9,
 		canvas => addSprite(result.sprites, canvas, undefined, smallFontPalette), { noChinese: true, mono: 4, onlyBase: true });
 
-	const lights = createLights(result, path.join(sourcePath, 'lights'));
+	return {
+		emojiPalette,
+		fonts: {
+			font: fontSprites,
+			emoji: emojiSprites,
+			fontSmall: smallFontSprites,
+			fontMono: monoFontSprites,
+		},
+		fontsPal: {
+			fontPal: fontSpritesPal,
+			emojiPal: emojiSpritesPal,
+			fontSmallPal: smallFontSpritesPal,
+			fontMonoPal: monoFontSpritesPal,
+		},
+	};
+}
 
-	const ponySheet = createSpriteSheet('ponySheet', result.images.map(imageToSprite), log, 1024);
-	const ponySheet2 = createSpriteSheet('ponySheet2', result.sprites, log, 1024, 'black', true);
+export function createSprites(log: boolean) {
+	spritesLog = log;
+	profileStart = Date.now();
+	profileSteps.length = 0;
+
+	mkdir(destPath);
+	mkdir(generatedPath);
+
+	const result = createResult();
+
+	createPonySprites(result, log);
+	logStep('tiles', () => createTileSprites(result), log);
+
+	const { fonts, fontsPal, emojiPalette } = logStep('fonts', () => createFonts(result), log);
+
+	const lights = logStep('lights', () => createLights(result, path.join(sourcePath, 'lights')), log);
+
+	const ponySheet = logStep(
+		'pack ponySheet', () => createSpriteSheet('ponySheet', result.images.map(imageToSprite), log, 1024), log);
+	const ponySheet2 = logStep(
+		'pack ponySheet2', () => createSpriteSheet('ponySheet2', result.sprites, log, 1024, 'black', true), log);
 
 	fixPixelRect(ponySheet.sprites, result.objects, 'pixelRect', 'pixel');
 	fixPixelRect(ponySheet2.sprites, result.objects2, 'pixelRect2', 'pixel2');
@@ -1395,18 +1479,8 @@ export function createSprites(log: boolean) {
 		paletteSprites: ponySheet2.sprites,
 		result,
 		palettes,
-		fonts: {
-			font: fontSprites,
-			emoji: emojiSprites,
-			fontSmall: smallFontSprites,
-			fontMono: monoFontSprites,
-		},
-		fontsPal: {
-			fontPal: fontSpritesPal,
-			emojiPal: emojiSpritesPal,
-			fontSmallPal: smallFontSpritesPal,
-			fontMonoPal: monoFontSpritesPal,
-		},
+		fonts,
+		fontsPal,
 		namedPalettes: {
 			defaultPalette: 0,
 			emojiPalette: addPalette(emojiPalette),
@@ -1423,15 +1497,17 @@ export function createSprites(log: boolean) {
 		},
 	};
 
-	createSpritesTS(path.join(generatedPath, 'sprites.ts'), spritesConfig);
+	logStep('generate sprites.ts', () => createSpritesTS(path.join(generatedPath, 'sprites.ts'), spritesConfig), log);
 
 	// Other exports
-	saveCanvasAsRaw(path.join(outputPath, 'pony2.raw'), ponySheet2.image);
+	logStep('save raw', () => saveCanvasAsRaw(path.join(outputPath, 'pony2.raw'), ponySheet2.image), log);
+
+	printProfile();
 }
 
 if (require.main === module) {
 	const start = Date.now();
-	createSprites(true);
+	createSprites(false);
 	const time = ((Date.now() - start) / 1000).toFixed(2);
 	console.log(`[sprites] done: ${time}s, stats: { w: ${0}-${maxW} h: ${0}-${maxH} ox: ${minOX}-${maxOX} oy: ${minOY}-${maxOY} }`);
 }
