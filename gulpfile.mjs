@@ -84,6 +84,33 @@ const cleanAdmin = () => deleteAsync([
 	'dist/browser/assets-admin',
 ]);
 
+const cleanAll = () => deleteAsync([
+	'node_modules',
+	'dist',
+	'dist/**',
+	'build',
+	'build/**',
+	'build-snapshot',
+	'build-snapshot/**',
+	'logs',
+	'logs/**',
+	'settings',
+	'settings/**',
+	'.cache',
+	'.cache/**',
+	'src/ts/generated/*',
+	'!src/ts/generated/gamepad-template.ts',
+	'!src/ts/generated/gamepad-mappings.ts',
+	'assets/images/pony.png',
+	'assets/images/pony2.png',
+	'assets/images/pony2a.png',
+	'config.json',
+	'.idea',
+	'.idea/**',
+	'.vs',
+	'.vs/**',
+]);
+
 const manifest = cb => {
 	const json = {
 		name: config.title,
@@ -407,9 +434,8 @@ const spritesTask = argv.sprites ? sprites : empty;
 // dirs, different inputs), so they can run in parallel with each other and with
 // the assets/sass branch. webpack is the long pole, so assets/sass are hidden
 // behind it. sw + size must wait for all of them.
-const build = gulp.series(clean, setProd, gulp.parallel(
+const build = gulp.series(clean, setProd, gulp.series(assets, sassTasks), gulp.parallel(
 	gulp.series(codegen, gulp.parallel(ts, webpackProd)),
-	gulp.series(assets, sassTasks)
 ), sw, size);
 const admin = gulp.series(cleanAdmin, setProd, sassAdmin, ts, webpackAdmin);
 const dev = gulp.series(clean, spritesTask, common, gulp.parallel(serverDev, watch, watchTools));
@@ -418,6 +444,7 @@ export {
 	music,
 	admin,
 	build,
+	cleanAll as clean,
 	dev,
 	sprites,
 	patchWebWorkerTask as patchWebWorker,

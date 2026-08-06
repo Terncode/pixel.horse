@@ -26,6 +26,7 @@
     "webpack-stats": "npm run webpack-prod -- --env debug --json > stats.json",
     "webpack-verbose": "npm run webpack-prod -- --verbose",
     "wds": "webpack-dev-server --config webpack.dev.mjs --progress --color --port 8091",
+    "clean": "gulp clean",
     "build": "gulp build",
     "build-sprites": "npm run ts-tools && gulp sprites && npm run build",
     "build-beta": "npm run build -- --beta --tools",
