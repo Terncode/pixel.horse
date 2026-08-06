@@ -103,7 +103,9 @@ export function mockClient(fields: any = {}): IClient {
 		camera: createCamera(),
 		reportInviteLimit() { },
 		disconnect() { },
-		isConnected() { return true; },
+		isConnected() {
+			return true;
+		},
 		...fields,
 	};
 

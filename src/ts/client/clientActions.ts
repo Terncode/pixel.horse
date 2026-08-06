@@ -51,7 +51,9 @@ export class ClientActions extends ClientActionsTemplate {
 		this.apply(() => this.gameService.disconnected());
 	}
 	invalidVersion() {
-		DEVELOPMENT && !TESTS && console.error('Invalid version');
+		if (DEVELOPMENT && !TESTS) {
+			console.error('Invalid version');
+		}
 	}
 	// @Method({ binary: [Bin.U32] })
 	queue(place: number) {
@@ -182,7 +184,9 @@ export class ClientActions extends ClientActionsTemplate {
 				this.game.nextFriendsCRC = 0;
 				break;
 			default:
-				DEVELOPMENT && !TESTS && console.error(`actionParam: Invalid action: ${action}`);
+				if (DEVELOPMENT && !TESTS) {
+					console.error(`actionParam: Invalid action: ${action}`);
+				}
 		}
 	}
 	// @Method({ binary: [Bin.U8] }>)

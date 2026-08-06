@@ -60,7 +60,8 @@ export class ModelSubscriber<T> {
 			if (subscription.value !== undefined) {
 				callback(subscription.value);
 			}
-		} else {
+		}
+		else {
 			this.socket.server.subscribe(this.type, id);
 			this.subscriptions.set(id, {
 				value: this.defaultValue,

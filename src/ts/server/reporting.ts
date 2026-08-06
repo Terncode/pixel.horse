@@ -51,7 +51,8 @@ export const createReportSwears =
 					.then(() => {
 						if (timeout) {
 							reporter.system('Timed out for swearing', msg, !!settings.reportSwears);
-						} else if (!(isMuted(account) || shadowed)) {
+						}
+						else if (!(isMuted(account) || shadowed)) {
 							reporter.warn('Swearing', msg);
 						}
 					}), reporter.error);
@@ -78,7 +79,8 @@ export const createReportForbidden =
 					if (newAccount || settings.autoBanSwearing) {
 						handlePromise(timeoutAccount(accountId, fromNow(duration))
 							.then(() => reporter.system('Timed out for forbidden messages', msg)), reporter.error);
-					} else {
+					}
+					else {
 						reporter.warn('Forbidden messages', msg);
 					}
 				}

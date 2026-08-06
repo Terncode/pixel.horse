@@ -44,8 +44,9 @@ export class PerfController implements Controller {
 		}
 	}
 	initialize() {
-		if (this.initialized)
+		if (this.initialized) {
 			return;
+		}
 
 		const world = this.world;
 		const map = world.getMainMap();
@@ -106,9 +107,11 @@ export class PerfController implements Controller {
 			for (const entity of this.entities) {
 				if ((entity.vy > 0 && entity.y > limitBottom) || (entity.vy < 0 && entity.y < this.limitTop)) {
 					updateEntityVelocity(entity, entity.vx, -entity.vy, now);
-				} else if ((entity.vx > 0 && entity.x > limitRight) || (entity.vx < 0 && entity.x < this.limitLeft)) {
+				}
+				else if ((entity.vx > 0 && entity.x > limitRight) || (entity.vx < 0 && entity.x < this.limitLeft)) {
 					updateEntityVelocity(entity, -entity.vx, entity.vy, now);
-				} else if (Math.random() < 0.1) {
+				}
+				else if (Math.random() < 0.1) {
 					updateEntityVelocity(entity, randomVelocity(), randomVelocity(), now);
 				}
 

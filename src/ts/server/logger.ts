@@ -88,9 +88,11 @@ export function chat(
 
 	if (ignored) {
 		mod = '[ignored]';
-	} else if (isMutedOrShadowed(client)) {
+	}
+	else if (isMutedOrShadowed(client)) {
 		mod = '[muted]';
-	} else if (client.accountSettings.ignorePublicChat && isPublicChat(type)) {
+	}
+	else if (client.accountSettings.ignorePublicChat && isPublicChat(type)) {
 		mod = '[ignorepub]';
 	}
 

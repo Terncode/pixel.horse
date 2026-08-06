@@ -26,7 +26,9 @@ export class AuthListRemote implements OnDestroy {
 			this._accountId = value;
 			this.auths = [];
 			this.loading = true;
-			this.subscription && this.subscription.unsubscribe();
+			if (this.subscription) {
+				this.subscription.unsubscribe();
+			}
 			this.subscription = value ? this.model.accountAuths.subscribe(value, auths => {
 				this.auths = auths || [];
 				this.loading = false;
@@ -34,6 +36,8 @@ export class AuthListRemote implements OnDestroy {
 		}
 	}
 	ngOnDestroy() {
-		this.subscription && this.subscription.unsubscribe();
+		if (this.subscription) {
+			this.subscription.unsubscribe();
+		}
 	}
 }

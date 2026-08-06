@@ -134,7 +134,8 @@ export function mixBounds(x: number, y: number, w: number, h: number): MixinEnti
 export function mixServerFlags(flags: ServerFlags): MixinEntity {
 	if (SERVER) {
 		return base => base.serverFlags! |= flags;
-	} else {
+	}
+	else {
 		return () => { };
 	}
 }
@@ -180,7 +181,9 @@ export function doodadSet(name: string, sprite: PaletteRenderable, ox: number, o
 
 // placeholder entity
 
-registerMix(n('null'), () => { throw new Error('Invalid type (0)'); });
+registerMix(n('null'), () => {
+	throw new Error('Invalid type (0)');
+});
 
 // entities
 

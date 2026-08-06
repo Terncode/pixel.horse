@@ -69,7 +69,8 @@ export function updateTreehidingEntities(
 		for (const entity of entities) {
 			moveRandomly(map, entity, speed, 0.02, timestamp);
 		}
-	} else if (entities.length) {
+	}
+	else if (entities.length) {
 		// head to tree and disappear
 		const trees = findTrees(map);
 
@@ -81,7 +82,8 @@ export function updateTreehidingEntities(
 			if (distanceXY(e.x, e.y, e.targetTree.x, e.targetTree.y + offsetY) < 0.1) {
 				entities.splice(i, 1);
 				world.removeEntity(e, map);
-			} else {
+			}
+			else {
 				moveTowards(e, e.targetTree.x, e.targetTree.y + offsetY, speed, timestamp);
 			}
 		}

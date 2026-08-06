@@ -25,7 +25,9 @@ export class RollbarErrorReporter extends ErrorReporter {
 		}
 	}
 	reportError(error: any, data?: any) {
-		DEVELOPMENT && console.error(error, data);
+		if (DEVELOPMENT) {
+			console.error(error, data);
+		}
 
 		if (this.rollbar && !isIgnoredError(error)) {
 			this.rollbar.error(error, data);

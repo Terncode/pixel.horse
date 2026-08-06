@@ -92,7 +92,8 @@ export class ContextSpriteBatch extends BaseStateBatch implements PaletteSpriteB
 				drawImageNormal(
 					this.sheetData, this.data, this.transform, this.globalAlpha,
 					color, s.x, s.y, s.w, s.h, x + s.ox, y + s.oy, s.w, s.h);
-			} else {
+			}
+			else {
 				drawImagePalette(
 					this.sheetData, this.data, this.transform, this.globalAlpha,
 					this.ignoreColor, this.disableShading,
@@ -117,7 +118,8 @@ export class ContextSpriteBatch extends BaseStateBatch implements PaletteSpriteB
 				this.sheetData, this.data, this.transform, this.globalAlpha,
 				colorOrType, sxOrColor, syOrPalette as number,
 				swOrSx, shOrSy, dxOrSw, dyOrSh, dwOrDx, dhOrDy);
-		} else {
+		}
+		else {
 			drawImagePalette(
 				this.sheetData, this.data, this.transform, this.globalAlpha,
 				this.ignoreColor, this.disableShading,
@@ -155,8 +157,9 @@ function drawRect(
 		console.error('Transform not supported');
 	}
 
-	if (!dst)
+	if (!dst) {
 		return;
+	}
 
 	x = Math.round(x + transform[4]);
 	y = Math.round(y + transform[5]);
@@ -172,14 +175,16 @@ function drawRect(
 	w += min(0, dst.width - (x + w));
 	h += min(0, dst.height - (y + h));
 
-	if (w <= 0 && h <= 0)
+	if (w <= 0 && h <= 0) {
 		return;
+	}
 
 	const { r, g, b, a } = colorToRGBA(color);
 	const alpha = (globalAlpha * a) | 0;
 
-	if (alpha === 0)
+	if (alpha === 0) {
 		return;
+	}
 
 	const dstData = dst.data;
 	const dstWidth = dst.width | 0;
@@ -197,15 +202,17 @@ function drawImageNormal(
 	tint: number, sx: number, sy: number, sw: number, sh: number,
 	dx: number, dy: number, dw: number, dh: number
 ) {
-	if (sw !== dw || sh !== dh)
+	if (sw !== dw || sh !== dh) {
 		throw new Error('Different dimentions not supported');
+	}
 
 	if (DEVELOPMENT && !isTranslation(transform)) {
 		console.error('Transform not supported');
 	}
 
-	if (!src || !dst)
+	if (!src || !dst) {
 		return;
+	}
 
 	dx = Math.round(dx + transform[4]);
 	dy = Math.round(dy + transform[5]);
@@ -226,8 +233,9 @@ function drawImageNormal(
 	w += min(0, src.width - (sx + w), dst.width - (dx + w));
 	h += min(0, src.height - (sy + h), dst.height - (dy + h));
 
-	if (w <= 0 && h <= 0)
+	if (w <= 0 && h <= 0) {
 		return;
+	}
 
 	const { r, g, b, a } = colorToRGBA(tint);
 	const alpha = (globalAlpha * a) | 0;
@@ -262,8 +270,9 @@ function drawImagePalette(
 	type: number, tint: number, palette: Palette | undefined,
 	sx: number, sy: number, sw: number, sh: number, dx: number, dy: number, dw: number, dh: number
 ) {
-	if (sw !== dw || sh !== dh)
+	if (sw !== dw || sh !== dh) {
 		throw new Error('Different dimentions not supported');
+	}
 
 	if (DEVELOPMENT && !isTranslation(transform)) {
 		console.error('Transform not supported');
@@ -273,8 +282,9 @@ function drawImagePalette(
 		palette = commonPalettes.defaultPalette;
 	}
 
-	if (!src || !dst)
+	if (!src || !dst) {
 		return;
+	}
 
 	dx = Math.round(dx + transform[4]);
 	dy = Math.round(dy + transform[5]);
@@ -295,8 +305,9 @@ function drawImagePalette(
 	w += min(0, src.width - (sx + w), dst.width - (dx + w));
 	h += min(0, src.height - (sy + h), dst.height - (dy + h));
 
-	if (w <= 0 && h <= 0)
+	if (w <= 0 && h <= 0) {
 		return;
+	}
 
 	const { r, g, b, a } = colorToRGBA(tint);
 	const alpha = (globalAlpha * a) | 0;
@@ -338,7 +349,8 @@ function blendPrecise(dstData: Uint8ClampedArray, dst0: number, r: number, g: nu
 		dstData[dst0 + 1] = g;
 		dstData[dst0 + 2] = b;
 		dstData[dst0 + 3] = alpha;
-	} else {
+	}
+	else {
 		const dstAlpha = (0xff - alpha) | 0;
 		dstData[dst0] = ((((r * alpha) | 0) / 255) | 0) + ((((dstData[dst0] * dstAlpha) | 0) / 255) | 0);
 		dstData[dst0 + 1] = ((((g * alpha) | 0) / 255) | 0) + ((((dstData[dst0 + 1] * dstAlpha) | 0) / 255) | 0);

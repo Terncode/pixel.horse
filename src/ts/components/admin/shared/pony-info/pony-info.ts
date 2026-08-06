@@ -25,9 +25,11 @@ export class PonyInfo implements OnChanges {
 		if (this.pony) {
 			if (isForbiddenName(this.pony.name)) {
 				this.labelClass = 'badge-forbidden';
-			} else if (hasFlag(this.pony.flags, CharacterFlags.BadCM)) {
+			}
+			else if (hasFlag(this.pony.flags, CharacterFlags.BadCM)) {
 				this.labelClass = 'badge-danger';
-			} else {
+			}
+			else {
 				this.labelClass = 'badge-none';
 			}
 		}

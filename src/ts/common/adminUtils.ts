@@ -31,9 +31,11 @@ export function compareAuths(a: Auth, b: Auth) {
 
 	if (aDeleted && !bDeleted) {
 		return 1;
-	} else if (!aDeleted && bDeleted) {
+	}
+	else if (!aDeleted && bDeleted) {
 		return -1;
-	} else {
+	}
+	else {
 		return compareByName(a, b);
 	}
 }
@@ -82,7 +84,8 @@ export function filterAccounts(items: Account[], search: string, showOnly: strin
 	if (filter) {
 		if (not) {
 			items = items.filter(i => !filter(i));
-		} else {
+		}
+		else {
 			items = items.filter(filter);
 		}
 	}
@@ -106,20 +109,27 @@ export function createFilter(search: string): (account: Account) => boolean {
 	}
 
 	function filter(account: Account): boolean {
-		if (account._id === search)
+		if (account._id === search) {
 			return true;
-		if (test(account.name))
+		}
+		if (test(account.name)) {
 			return true;
-		if (test(account.note))
+		}
+		if (test(account.note)) {
 			return true;
-		if (account.roles && account.roles.some(test))
+		}
+		if (account.roles && account.roles.some(test)) {
 			return true;
-		if (account.emails && account.emails.some(test))
+		}
+		if (account.emails && account.emails.some(test)) {
 			return true;
-		if (account.auths && account.auths.some(testAuth))
+		}
+		if (account.auths && account.auths.some(testAuth)) {
 			return true;
-		if (account.merges && account.merges.some(testMerge))
+		}
+		if (account.merges && account.merges.some(testMerge)) {
 			return true;
+		}
 
 		return false;
 	}
@@ -165,8 +175,9 @@ export function createPotentialDuplicatesFilter(getAccountsByBrowserId: (id: str
 	return i => {
 		const name = i.nameLower;
 
-		if (name === 'anonymous' || !i.lastBrowserId)
+		if (name === 'anonymous' || !i.lastBrowserId) {
 			return false;
+		}
 
 		const accounts = getAccountsByBrowserId(i.lastBrowserId);
 
@@ -187,15 +198,20 @@ export function createFilter2(showOnly: string): ((account: Account) => boolean)
 
 	if (showOnly === 'banned') {
 		return hasAnyBan;
-	} else if (showOnly === 'timed out') {
+	}
+	else if (showOnly === 'timed out') {
 		return i => !!((i.mute && i.mute > now) || (i.shadow && i.shadow > now) || (i.ban && i.ban > now));
-	} else if (showOnly === 'with flags') {
+	}
+	else if (showOnly === 'with flags') {
 		return i => !!i.flags;
-	} else if (showOnly === 'notes') {
+	}
+	else if (showOnly === 'notes') {
 		return i => !!i.note;
-	} else if (showOnly === 'supporters') {
+	}
+	else if (showOnly === 'supporters') {
 		return i => !!(i.patreon || i.supporter || i.supporterDeclinedSince);
-	} else {
+	}
+	else {
 		return undefined;
 	}
 }
@@ -206,7 +222,8 @@ export function getPotentialDuplicates(account: Account, getAccountsByBrowserId:
 
 	if (accounts !== undefined && accounts.length > 1 && name !== 'anonymous') {
 		return accounts.filter(a => a !== account && a.nameLower === name);
-	} else {
+	}
+	else {
 		return [];
 	}
 }
@@ -214,18 +231,24 @@ export function getPotentialDuplicates(account: Account, getAccountsByBrowserId:
 // duplicates
 
 export function compareDuplicates(a: DuplicateBase, b: DuplicateBase): number {
-	if (a.note !== b.note)
+	if (a.note !== b.note) {
 		return b.note - a.note;
-	if (a.emails !== b.emails)
+	}
+	if (a.emails !== b.emails) {
 		return b.emails - a.emails;
-	if (a.name !== b.name)
+	}
+	if (a.name !== b.name) {
 		return b.name - a.name;
-	if (a.browserId !== b.browserId)
+	}
+	if (a.browserId !== b.browserId) {
 		return a.browserId ? -1 : 1;
-	if (a.origins !== b.origins)
+	}
+	if (a.origins !== b.origins) {
 		return b.origins - a.origins;
-	if (a.ponies !== b.ponies)
+	}
+	if (a.ponies !== b.ponies) {
 		return (b.ponies ? b.ponies.length : 0) - (a.ponies ? a.ponies.length : 0);
+	}
 	return b.lastVisit.getTime() - a.lastVisit.getTime();
 }
 
@@ -236,7 +259,8 @@ export function emailName(email: string): string {
 export function createEmailMatcher(emails: string[]): ((email: string) => boolean) | undefined {
 	if (!emails || !emails.length) {
 		return undefined;
-	} else {
+	}
+	else {
 		const match = emails.map(emailName).map(escapeRegExp).join('|');
 		const regex = new RegExp(`^(?:${match})@`, 'i');
 		return email => regex.test(email);
@@ -296,7 +320,8 @@ export function duplicatesCollector(duplicates: string[]) {
 	return (item: string) => {
 		if (set.has(item)) {
 			duplicates.push(item);
-		} else {
+		}
+		else {
 			set.add(item);
 		}
 	};
@@ -393,7 +418,8 @@ export function addToMap<T>(map: Map<string, T[]>, key: string, item: T) {
 
 	if (items) {
 		items.push(item);
-	} else {
+	}
+	else {
 		map.set(key, [item]);
 	}
 }
@@ -426,7 +452,8 @@ export function createIdStore() {
 
 		if (result) {
 			return result;
-		} else {
+		}
+		else {
 			idsMap.set(id, id);
 			return id;
 		}

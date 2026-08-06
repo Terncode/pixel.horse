@@ -77,7 +77,8 @@ export class VirtualFor<T> implements DoCheck, OnDestroy, AfterViewInit {
 			if (!this.differ && value) {
 				try {
 					this.differ = this.differs.find(value).create();
-				} catch {
+				}
+				catch {
 					throw new Error(`Cannot find a differ`);
 				}
 			}
@@ -130,7 +131,8 @@ export class VirtualFor<T> implements DoCheck, OnDestroy, AfterViewInit {
 					view.context.$implicit = null!;
 					view.context._currentIndex = index;
 					viewContainer.insert(view, i);
-				} else {
+				}
+				else {
 					const context: Context<T> = { $implicit: null!, index: -1, count: -1, _currentIndex: index };
 					view = viewContainer.createEmbeddedView(this.template, context, i);
 				}

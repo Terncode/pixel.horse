@@ -95,8 +95,11 @@ export function disposeTexture(gl: WebGL | undefined, texture: Texture2D | undef
 		if (gl && texture) {
 			gl.deleteTexture(texture.handle);
 		}
-	} catch (e) {
-		DEVELOPMENT && console.error(e);
+	}
+	catch (e) {
+		if (DEVELOPMENT) {
+			console.error(e);
+		}
 	}
 
 	return undefined;

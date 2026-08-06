@@ -24,8 +24,9 @@ export type Move = ReturnType<typeof createMove>;
 export const createMove =
 	(teleportCounter: CounterService<void>) =>
 		(client: IClient, now: number, a: number, b: number, c: number, d: number, e: number, settings: GameServerSettings) => {
-			if (client.loading || client.fixingPosition || client.isSwitchingMap)
+			if (client.loading || client.fixingPosition || client.isSwitchingMap) {
 				return;
+			}
 
 			const connectionDuration = (now - client.connectedTime) >>> 0;
 			const pony = client.pony;
@@ -33,16 +34,19 @@ export const createMove =
 			const v = dirToVector(dir);
 			const speed = flagsToSpeed(flags);
 
-			if (checkOutsideMap(client, x, y))
+			if (checkOutsideMap(client, x, y)) {
 				return;
+			}
 
 			setupCamera(client.camera, camera.x, camera.y, camera.w, camera.h, client.map);
 
-			if (checkLagging(client, time, connectionDuration, settings))
+			if (checkLagging(client, time, connectionDuration, settings)) {
 				return;
+			}
 
-			if (checkTeleporting(client, x, y, time, settings, teleportCounter))
+			if (checkTeleporting(client, x, y, time, settings, teleportCounter)) {
 				return;
+			}
 
 			if (!isStaticCollision(pony, client.map, true)) {
 				client.safeX = pony.x;
@@ -61,9 +65,12 @@ export const createMove =
 						client.reporter.systemLog(`Fixed colliding (${x} ${y}) -> (${pony.x} ${pony.y})`);
 					}
 
-					DEVELOPMENT && !TESTS && logger.warn(`Fixing position due to collision`);
+					if (DEVELOPMENT && !TESTS) {
+						logger.warn(`Fixing position due to collision`);
+					}
 					fixPosition(pony, client.map, client.safeX, client.safeY, false);
-				} else {
+				}
+				else {
 					pony.x = x;
 					pony.y = y;
 				}
@@ -142,8 +149,9 @@ function checkLagging(client: IClient, time: number, connectionTime: number, set
 function checkTeleporting(
 	client: IClient, x: number, y: number, time: number, settings: GameServerSettings, counter: CounterService<void>
 ): boolean {
-	if (!client.lastTime)
+	if (!client.lastTime) {
 		return false;
+	}
 
 	const pony = client.pony;
 	const borderX = 0.5;

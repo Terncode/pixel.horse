@@ -17,14 +17,19 @@ export async function loadSettings() {
 	try {
 		const json = await readFileAsync(settingsPath, 'utf8');
 		return JSON.parse(json) as Settings;
-	} catch (e) {
+	}
+	catch (e) {
 		if ((e as NodeJS.ErrnoException).code === 'ENOENT') {
 			try {
 				await mkdirAsync(paths.pathTo('settings'));
-			} catch (e2) {
-				if ((e2 as NodeJS.ErrnoException).code !== 'EEXIST') throw e;
 			}
-		} else {
+			catch (e2) {
+				if ((e2 as NodeJS.ErrnoException).code !== 'EEXIST') {
+					throw e;
+				}
+			}
+		}
+		else {
 			console.error('Error reading settings file: ' + e);
 		}
 
@@ -44,7 +49,8 @@ export async function updateSettings(update: Partial<Settings>) {
 
 	try {
 		settings = await loadSettings();
-	} catch { }
+	}
+	catch { }
 
 	Object.assign(settings, update);
 	await saveSettings(settings);
@@ -55,5 +61,6 @@ export async function reloadSettings() {
 	try {
 		const current = await loadSettings();
 		Object.assign(settings, current);
-	} catch { }
+	}
+	catch { }
 }

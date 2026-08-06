@@ -82,13 +82,16 @@ export class SettingsBox implements OnInit, OnDestroy {
 			.subscribe(text => {
 				if (this.dropdown.isOpen) {
 					this.zone.run(() => this.time = text);
-				} else {
+				}
+				else {
 					this.time = text;
 				}
 			});
 	}
 	ngOnDestroy() {
-		this.subscription && this.subscription.unsubscribe();
+		if (this.subscription) {
+			this.subscription.unsubscribe();
+		}
 	}
 	toggleVolume() {
 		this.volume = this.volume === 0 ? 50 : 0;

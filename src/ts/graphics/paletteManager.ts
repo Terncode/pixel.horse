@@ -106,7 +106,8 @@ export class PaletteManager implements IPaletteManager {
 				while (!this.arrange(this.dirty)) {
 					if (this.size < MAX_SIZE) {
 						this.initializeTexture(gl, this.size * 2);
-					} else {
+					}
+					else {
 						throw new Error('Exceeded maximum palettes limit');
 					}
 				}
@@ -159,10 +160,12 @@ export class PaletteManager implements IPaletteManager {
 		try {
 			if (!this.paletteTexture) {
 				this.paletteTexture = createEmptyTexture(gl, true, size, size, gl.RGBA, gl.UNSIGNED_BYTE);
-			} else if (this.paletteTexture.width !== size) {
+			}
+			else if (this.paletteTexture.width !== size) {
 				resizeTexture(gl, this.paletteTexture, size, size);
 			}
-		} catch (e) {
+		}
+		catch (e) {
 			throw new Error(`Failed to create/resize texture (${size})${isErrorAlike(e) ? ` ${e.stack}` : ''}`);
 		}
 
@@ -210,8 +213,9 @@ export class PaletteManager implements IPaletteManager {
 		return true;
 	}
 	private updateTexture(gl: WebGLRenderingContext) {
-		if (!this.paletteTexture || this.dirtyMinY > this.dirtyMaxY)
+		if (!this.paletteTexture || this.dirtyMinY > this.dirtyMaxY) {
 			return;
+		}
 
 		const width = this.size;
 		const height = (this.dirtyMaxY - this.dirtyMinY) + 1;
@@ -223,8 +227,9 @@ export class PaletteManager implements IPaletteManager {
 			for (let i = 0; i < palettes.length; i++) {
 				const { x, y, colors } = palettes[i];
 
-				if (y < this.dirtyMinY || y > this.dirtyMaxY)
+				if (y < this.dirtyMinY || y > this.dirtyMaxY) {
 					continue;
+				}
 
 				let offset = (x + (y - this.dirtyMinY) * width) << 2;
 

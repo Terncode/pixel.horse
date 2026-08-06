@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import '../lib';
 import { expect } from 'chai';
 import { parseExpression, expression } from '../../common/expressionUtils';
@@ -16,7 +17,8 @@ describe('expressionUtils', () => {
 			it(JSON.stringify(input), () => {
 				if (expected) {
 					expect(parseExpression(input)).eql(toExpression(expected));
-				} else {
+				}
+				else {
 					expect(parseExpression(input)).undefined;
 				}
 			});

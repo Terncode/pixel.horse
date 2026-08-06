@@ -43,7 +43,8 @@ export function compressTiles(tiles: Uint8Array): Uint8Array {
 				if (i === (tiles.length - 1)) {
 					write(count | 0b1000, bitsPerRun);
 					write(types.indexOf(value), bitsPerTile);
-				} else {
+				}
+				else {
 					i++;
 
 					if (value === tiles[i]) {
@@ -56,7 +57,8 @@ export function compressTiles(tiles: Uint8Array): Uint8Array {
 
 						write(count, bitsPerRun);
 						write(types.indexOf(value), bitsPerTile);
-					} else {
+					}
+					else {
 						let last = tiles[i];
 						let last2 = last;
 						let pushLast = true;
@@ -71,10 +73,12 @@ export function compressTiles(tiles: Uint8Array): Uint8Array {
 								count--;
 								pushLast = false;
 								break;
-							} else if (count === 0b111) {
+							}
+							else if (count === 0b111) {
 								i -= 1;
 								break;
-							} else {
+							}
+							else {
 								values.push(last);
 								count++;
 								last = last2;
@@ -110,7 +114,8 @@ export function decompressTiles(data: Uint8Array): Uint8Array {
 
 	if (types.length === 1) {
 		result.fill(types[0]);
-	} else {
+	}
+	else {
 		const bitsPerTile = getBitsForNumber(typesCount);
 		const bitsPerRun = 4;
 
@@ -125,7 +130,8 @@ export function decompressTiles(data: Uint8Array): Uint8Array {
 					result[i] = types[entry];
 					i++;
 				}
-			} else {
+			}
+			else {
 				const count = value & 0b0111;
 
 				for (let j = 0; j < count; j++) {

@@ -47,9 +47,11 @@ export class SetSelection implements OnChanges {
 
 		if (pat && !pat.colors) {
 			return 0;
-		} else if (pat) {
+		}
+		else if (pat) {
 			return getColorCount(pat);
-		} else {
+		}
+		else {
 			return this.nonLockable ? 1 : 0;
 		}
 	}

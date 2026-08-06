@@ -47,8 +47,9 @@ export class WallController implements Controller {
 		};
 
 		const updateCorner = (x: number, y: number) => {
-			if (x < 0 || y < 0 || x >= width || y >= height)
+			if (x < 0 || y < 0 || x >= width || y >= height) {
 				return;
+			}
 
 			const top = this.top;
 			const isOutside = x === 0 || y <= top || x === map.width || this.isTall(x, y);
@@ -66,38 +67,46 @@ export class WallController implements Controller {
 		};
 
 		this.toggleWall = (x, y, type) => {
-			if (x < 0 || y < 0 || x >= width || y >= height)
+			if (x < 0 || y < 0 || x >= width || y >= height) {
 				return;
+			}
 
-			if (this.lockedTiles.has(`${x},${y}:${type}`))
+			if (this.lockedTiles.has(`${x},${y}:${type}`)) {
 				return;
+			}
 
 			const walls = type === TileType.WallH ? hWalls : vWalls;
 			const entity = getAt(walls, x, y);
 			const top = this.top;
 
-			if (type === TileType.WallH && x === (width - 1))
+			if (type === TileType.WallH && x === (width - 1)) {
 				return;
+			}
 
-			if (type === TileType.WallV && y === (height - 1))
+			if (type === TileType.WallV && y === (height - 1)) {
 				return;
+			}
 
 			if (this.lockOuterWalls) {
-				if (type === TileType.WallH && (y <= top || y === (width - 1)))
+				if (type === TileType.WallH && (y <= top || y === (width - 1))) {
 					return;
-				if (type === TileType.WallV && (x === 0 || x === (height - 1) || y < top))
+				}
+				if (type === TileType.WallV && (x === 0 || x === (height - 1) || y < top)) {
 					return;
+				}
 			}
 
 			if (entity) {
 				world.removeEntity(entity, map);
 				setAt(walls, x, y, undefined);
-			} else {
+			}
+			else {
 				if (type === TileType.WallH) {
 					const ctor = (y <= top || this.isTall(x, y)) ?
 						wallH : (x === 0 ? wallCutL : (x === (width - 2) ? wallCutR : wallHShort));
 					setAt(walls, x, y, world.addEntity(ctor(x + 0.5, y + yOffset), map));
-				} else {
+				}
+				else {
 					const ctor = (x === 0 || x === (width - 1) || this.isTall(x, y)) ? wallV : wallVShort;
 					setAt(walls, x, y, world.addEntity(ctor(x, y + 0.5), map));
 				}

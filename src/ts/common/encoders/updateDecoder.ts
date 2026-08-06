@@ -90,8 +90,9 @@ export function decodeUpdate(data: Uint8Array): DecodedRegionUpdate {
 }
 
 export function readOneUpdate(reader: BinaryReader): DecodedUpdate | undefined {
-	if (reader.offset >= reader.view.byteLength)
+	if (reader.offset >= reader.view.byteLength) {
 		return undefined;
+	}
 
 	const flags = readUint16(reader);
 

@@ -91,7 +91,8 @@ function drawChars(
 		if (code === LINEFEED) {
 			currentX = x;
 			y += font.letterHeight + lineSpacing;
-		} else {
+		}
+		else {
 			const charWidth = drawChar(batch, font, code, color, currentX, y, options);
 			currentX += (monospace ? font.letterWidth : charWidth) + font.letterSpacing;
 		}
@@ -180,7 +181,8 @@ function measureChars(chars: Uint32Array, length: number, font: SpriteFont): { w
 			maxW = Math.max(maxW, w);
 			w = 0;
 			lines++;
-		} else {
+		}
+		else {
 			if (w) {
 				w += font.letterSpacing;
 			}
@@ -233,18 +235,21 @@ function drawChar(
 		if (!skipEmote) {
 			if (isPaletteSpriteBatch(batch)) {
 				batch.drawSprite(emote, emoteColor, options.emojiPalette, px, py);
-			} else {
+			}
+			else {
 				batch.drawSprite(emote, emoteColor, px, py);
 			}
 		}
 
 		return emote.w + emote.ox;
-	} else {
+	}
+	else {
 		const c = getChar(font, code);
 
 		if (isPaletteSpriteBatch(batch)) {
 			batch.drawSprite(c, color, options.palette, px, py);
-		} else {
+		}
+		else {
 			batch.drawSprite(c, color, px, py);
 		}
 

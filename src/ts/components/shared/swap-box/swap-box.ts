@@ -28,7 +28,9 @@ export class SwapBox {
 	swapPony(pony: PonyObject) {
 		this.game.send(server => server.actionParam(Action.SwapCharacter, pony.id));
 		setTimeout(() => {
-			this.dropdown && this.dropdown.close();
+			if (this.dropdown) {
+				this.dropdown.close();
+			}
 			pony.lastUsed = (new Date()).toISOString();
 			this.model.sortPonies();
 		});

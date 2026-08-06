@@ -1,4 +1,5 @@
-/* tslint:disable:max-line-length */
+/* eslint-disable max-len */
+
 import { compareCanvases, loadSprites, loadImageAsCanvas, clearCompareResults } from '../lib';
 import * as path from 'path';
 import { TRANSPARENT, blushColor, WHITE } from '../../common/colors';
@@ -147,7 +148,8 @@ function drawPonyCanvas(bg: number, info: PalettePonyInfo, state: PonyState, opt
 		context.scale(-1, 1);
 		context.drawImage(canvas, -canvas.width, 0);
 		return flipped;
-	} else {
+	}
+	else {
 		return canvas;
 	}
 }

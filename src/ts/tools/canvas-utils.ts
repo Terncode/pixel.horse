@@ -51,8 +51,9 @@ export function mirrorCanvas(canvas: ExtCanvas, offsetX = 0) {
 }
 
 export function padCanvas(canvas: ExtCanvas, left: number, top: number, right = 0, bottom = 0, bg?: string) {
-	if (left === 0 && top === 0 && right === 0 && bottom === 0)
+	if (left === 0 && top === 0 && right === 0 && bottom === 0) {
 		return canvas;
+	}
 
 	const result = createExtCanvas(
 		canvas.width + left + right, canvas.height + top + bottom, `${canvas.info} (pad ${left} ${top} ${right} ${bottom})`);
@@ -83,8 +84,9 @@ export function mergeCanvases(...canvases: (ExtCanvas | undefined)[]): ExtCanvas
 export function reverseMaskCanvas(canvas: ExtCanvas): ExtCanvas;
 export function reverseMaskCanvas(canvas: ExtCanvas | undefined): ExtCanvas | undefined;
 export function reverseMaskCanvas(canvas: ExtCanvas | undefined) {
-	if (!canvas)
+	if (!canvas) {
 		return undefined;
+	}
 
 	const result = createExtCanvas(canvas.width, canvas.height, `${canvas.info} reversed mask`);
 	const context = result.getContext('2d')!;
@@ -98,8 +100,9 @@ export function reverseMaskCanvas(canvas: ExtCanvas | undefined) {
 export function maskCanvas(canvas: ExtCanvas, mask: ExtCanvas): ExtCanvas;
 export function maskCanvas(canvas: ExtCanvas | undefined, mask: ExtCanvas | undefined): ExtCanvas | undefined;
 export function maskCanvas(canvas: ExtCanvas | undefined, mask: ExtCanvas | undefined) {
-	if (!canvas || !mask)
+	if (!canvas || !mask) {
 		return undefined;
+	}
 
 	const result = createExtCanvas(canvas.width, canvas.height, `${canvas.info} masked by ${mask.info}`);
 	const context = result.getContext('2d')!;
@@ -127,8 +130,9 @@ export function colorCanvas(canvas: ExtCanvas | undefined, color: string): ExtCa
 export function copyCanvas(canvas: ExtCanvas): ExtCanvas;
 export function copyCanvas(canvas: ExtCanvas | undefined): ExtCanvas | undefined;
 export function copyCanvas(canvas: ExtCanvas | undefined): ExtCanvas | undefined {
-	if (!canvas)
+	if (!canvas) {
 		return undefined;
+	}
 
 	const newCanvas = createExtCanvas(canvas.width, canvas.height, `${canvas.info} (copy)`);
 	newCanvas.getContext('2d')!.drawImage(canvas, 0, 0);
@@ -172,8 +176,11 @@ export function isCanvasEmpty(canvas: ExtCanvas | undefined): boolean {
 export function saveCanvas(filePath: string, canvas: HTMLCanvasElement) {
 	try {
 		fs.mkdirSync(path.dirname(filePath), { recursive: true });
-	} catch (e) {
-		if ((e as NodeJS.ErrnoException).code !== 'EEXIST') throw e;
+	}
+	catch (e) {
+		if ((e as NodeJS.ErrnoException).code !== 'EEXIST') {
+			throw e;
+		}
 	}
 
 	fs.writeFileSync(filePath, canvas.toBuffer());

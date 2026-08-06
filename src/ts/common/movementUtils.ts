@@ -36,9 +36,11 @@ export function flagsToSpeed(flags: EntityState): number {
 
 	if (state === EntityState.PonyTrotting) {
 		return PONY_SPEED_TROT;
-	} else if (state === EntityState.PonyWalking) {
+	}
+	else if (state === EntityState.PonyWalking) {
 		return PONY_SPEED_WALK;
-	} else {
+	}
+	else {
 		return 0;
 	}
 }

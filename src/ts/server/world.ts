@@ -101,7 +101,8 @@ export class World {
 					!this.maps.some(m => m.id === client.map.id && m.instance === client.party!.id)
 				) {
 					client.map.instance = client.party.id;
-				} else {
+				}
+				else {
 					refreshMap(this, client);
 				}
 			}
@@ -125,8 +126,9 @@ export class World {
 		this.updateWorldState();
 	}
 	setTile(map: ServerMap, x: number, y: number, type: TileType) {
-		if (!BETA && map.tilesLocked)
+		if (!BETA && map.tilesLocked) {
 			return;
+		}
 
 		if (x >= 0 && y >= 0 && x < map.width && y < map.height && !isTileLocked(map, x, y) && type !== getTile(map, x, y)) {
 			setTile(map, x, y, type);
@@ -212,8 +214,11 @@ export class World {
 
 		if (map) {
 			this.removeEntity(entity, map);
-		} else {
-			DEVELOPMENT && logger.error(`Missing map for entity`);
+		}
+		else {
+			if (DEVELOPMENT) {
+				logger.error(`Missing map for entity`);
+			}
 		}
 	}
 	// map
@@ -222,12 +227,16 @@ export class World {
 	}
 	switchToMap(client: IClient, map: ServerMap, x: number, y: number) {
 		if (client.map === map) {
-			DEVELOPMENT && logger.error(`Switching to the same map`);
+			if (DEVELOPMENT) {
+				logger.error(`Switching to the same map`);
+			}
 			return;
 		}
 
 		if (this.mapSwitchQueue.some(x => x.client === client)) {
-			DEVELOPMENT && logger.error(`Already in map switch queue`);
+			if (DEVELOPMENT) {
+				logger.error(`Already in map switch queue`);
+			}
 			return;
 		}
 
@@ -413,12 +422,15 @@ export class World {
 			const total = updateQueue.offset + regionUpdates.length + saysQueue.length + unsubscribes.length + subscribes.length;
 
 			if (total !== 0) {
-				if (updateQueue.offset > 0)
+				if (updateQueue.offset > 0) {
 					clientsWithAdds++;
-				if (regionUpdates.length > 0)
+				}
+				if (regionUpdates.length > 0) {
 					clientsWithUpdates++;
-				if (saysQueue.length > 0)
+				}
+				if (saysQueue.length > 0) {
 					clientsWithSays++;
+				}
 				totalSays += saysQueue.length;
 
 				setupTiming(client);
@@ -613,7 +625,8 @@ export class World {
 			client.pony.id = reserved.id;
 			this.reservedIdsByKey.delete(client.accountId);
 			this.reservedIds.delete(reserved.id);
-		} else {
+		}
+		else {
 			client.pony.id = this.getNewEntityId();
 		}
 
@@ -679,7 +692,8 @@ export class World {
 				if (!c.friends.has(client.accountId)) {
 					reloadFriends(c).catch(e => logger.error(e));
 				}
-			} else if (c.friends.has(client.accountId)) {
+			}
+			else if (c.friends.has(client.accountId)) {
 				reloadFriends(c).catch(e => logger.error(e));
 			}
 		}
@@ -711,7 +725,8 @@ export class World {
 	getClientByEntityId(entityId: number) {
 		if (entityId === 0) {
 			return undefined;
-		} else {
+		}
+		else {
 			const byPonyId = (c: IClient) => c.pony.id === entityId;
 			return this.clients.find(byPonyId) || this.offlineClients.find(byPonyId);
 		}
@@ -783,7 +798,8 @@ export class World {
 
 			if (force) {
 				client.disconnect(true);
-			} else {
+			}
+			else {
 				setTimeout(() => {
 					if (client.isConnected()) {
 						client.disconnect(true);
@@ -832,7 +848,8 @@ export class World {
 		if (oldAccount.shadow !== newAccount.shadow) {
 			if (isShadowed(newAccount)) {
 				this.shadow(client);
-			} else if (isShadowed(oldAccount)) {
+			}
+			else if (isShadowed(oldAccount)) {
 				sendAcl(client);
 				this.kick(client, 'kick (unshadow)');
 				return;
@@ -894,7 +911,8 @@ export function refreshMap(world: World, client: IClient) {
 
 	if (map) {
 		world.switchToMap(client, map, client.pony.x, client.pony.y);
-	} else {
+	}
+	else {
 		logger.warn(`Missing map: ${client.map.id}`);
 	}
 }
@@ -906,7 +924,8 @@ export function goToMap(world: World, client: IClient, id: string, spawn?: strin
 		const area = spawn && map.spawns.get(spawn) || map.spawnArea;
 		const { x, y } = randomPoint(area);
 		world.switchToMap(client, map, x, y);
-	} else {
+	}
+	else {
 		logger.warn(`Missing map: ${id}`);
 	}
 }
@@ -947,10 +966,12 @@ function findOrCreateMapForClient(world: World, id: string, client: IClient) {
 
 	if (map) {
 		return map;
-	} else {
+	}
+	else {
 		if (client.party) {
 			return findOrCreateMapInstance(world, id, client.party.id);
-		} else {
+		}
+		else {
 			return findOrCreateMapInstance(world, id, client.accountId);
 		}
 	}
@@ -970,7 +991,8 @@ function updateClientCamera(client: IClient) {
 		client.lastCameraW = camera.w;
 		client.lastCameraH = camera.h;
 		return true;
-	} else {
+	}
+	else {
 		return false;
 	}
 }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { stubClass, resetStubMethods } from '../../lib';
 import { bufferCount, first } from 'rxjs/operators';
 import { expect } from 'chai';

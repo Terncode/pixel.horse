@@ -42,8 +42,9 @@ if (DEVELOPMENT) {
 	}
 
 	for (const { type } of entities) {
-		if (type === 0)
+		if (type === 0) {
 			continue;
+		}
 
 		const entity = createAnEntity(type, 0, 0, 0, {}, mockPaletteManager, defaultWorldState);
 		const name = getEntityTypeName(type);

@@ -1,9 +1,9 @@
+/* eslint-disable */
 import '../lib';
 import { expect } from 'chai';
 import { map } from 'lodash';
 import * as sprites from '../../generated/sprites';
 
-/* tslint:disable */
 const sets: [keyof typeof sprites, number, number, (number[] | null)[]][] = [
 	// name, index, frames, expected patterns colors counts
 	// ['topManes', -1, 1, [null, [3, 13, 13, 7, 5, 5], [3, 11, 11, 7, 5, 5], [3, 13, 13, 5, 5, 7], [3, 11, 11, 7, 5, 5], [3, 9, 9, 7, 5], [3, 11, 9, 7, 5, 5], [3, 9, 9, 7, 5, 5], [3, 11, 11, 7, 5, 5], [3, 13, 13, 7, 5], [3, 13, 13, 7, 5, 5, 13], [3, 9, 11, 5, 5], [3, 9, 9, 7, 5, 5], [3, 9, 7, 5, 5], [3, 11, 9, 7, 5], [3, 11, 7, 5, 5], [3, 7], [3, 11, 9, 7, 5, 5], [3, 13, 13, 7, 5, 5], [3, 9, 13, 7, 5, 5], [3, 11, 11, 7, 5, 5], [3, 13, 13, 7, 5, 5], [3, 13, 13, 7, 5, 5, 9], [3, 11, 13, 7, 5, 5], [3, 13, 11, 7, 5, 5], [3, 7, 5, 13, 5]]],

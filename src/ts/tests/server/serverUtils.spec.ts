@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import '../lib';
 import { stub, assert, SinonStub } from 'sinon';
 import { expect } from 'chai';

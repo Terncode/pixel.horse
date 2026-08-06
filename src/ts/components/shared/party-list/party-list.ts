@@ -49,7 +49,9 @@ export class PartyList implements OnInit, OnDestroy {
 		this.resized();
 	}
 	ngOnDestroy() {
-		this.subscription && this.subscription.unsubscribe();
+		if (this.subscription) {
+			this.subscription.unsubscribe();
+		}
 	}
 	isMe(member: PartyMember) {
 		return this.game.player && this.game.player.id === member.id;
@@ -64,7 +66,8 @@ export class PartyList implements OnInit, OnDestroy {
 			while (this.start > 0 && this.members.length <= this.start) {
 				this.start = 0;
 			}
-		} else {
+		}
+		else {
 			this.members = [];
 			this.start = 0;
 		}

@@ -14,7 +14,8 @@ export const urlRegexTexts = [
 export function trimRepeatedLetters(test: string): string {
 	if (test.length > MAX_REPEATS && (/^.?(.)\1+$/u.test(test) || /^.?(..)\1+$/u.test(test))) {
 		return test.substr(0, MAX_REPEATS) + '…';
-	} else {
+	}
+	else {
 		return test;
 	}
 }

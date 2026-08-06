@@ -65,15 +65,19 @@ function createNewAccount(profile: Profile, options: CreateAccountOptions) {
 	if (!options.canCreateAccounts) {
 		throw new UserError(
 			'Creating accounts is temporarily disabled, try again later');
-	} else if (options.connectOnly) {
+	}
+	else if (options.connectOnly) {
 		throw new UserError(connectOnlySocialError);
-	} else if (options.creationLocked) {
+	}
+	else if (options.creationLocked) {
 		throw new UserError(
 			'Could not create account, try again later', { log: `account creation blocked by ACL (${options.ip})` });
-	} else if (profile.suspended) {
+	}
+	else if (profile.suspended) {
 		throw new UserError(
 			'Cannot create new account using suspended social site account', { log: 'account creation blocked by suspended' });
-	} else {
+	}
+	else {
 		return new Account();
 	}
 }
@@ -84,17 +88,21 @@ async function hasDuplicatesAtOrigin(account: IAccount, ip: string) {
 	const duplicates: IAccount[] = await Account.find(query, '_id ban mute shadow flags name').lean().exec();
 
 	return duplicates.some(({ _id, ban = 0, mute = 0, shadow = 0, flags = 0, name }) => {
-		if (_id.toString() === account._id.toString())
+		if (_id.toString() === account._id.toString()) {
 			return false;
+		}
 
-		if (ban === -1 || ban > now || mute === -1 || mute > now || shadow === -1 || shadow > now)
+		if (ban === -1 || ban > now || mute === -1 || mute > now || shadow === -1 || shadow > now) {
 			return true;
+		}
 
-		if (hasFlag(flags, AccountFlags.CreatingDuplicates))
+		if (hasFlag(flags, AccountFlags.CreatingDuplicates)) {
 			return true;
+		}
 
-		if (name === account.name)
+		if (name === account.name) {
 			return true;
+		}
 
 		return false;
 	});
@@ -112,7 +120,8 @@ async function checkNewAccount(account: IAccount, options: CreateAccountOptions)
 					options.warn(account._id, `Potential duplicate`);
 				}
 			}
-		} catch (e) {
+		}
+		catch (e) {
 			options.warn(account._id, `Error when checking new account`, isErrorAlike(e) ? e.message : undefined);
 		}
 	});
@@ -166,7 +175,8 @@ export async function findOrCreateAccount(auth: IAuth, profile: Profile, options
 		await account.save();
 		system(account._id, `created account "${account.name}"`);
 		checkNewAccount(account, options);
-	} else {
+	}
+	else {
 		const { name, emails, lastVisit, lastUserAgent, lastBrowserId } = account;
 		await Account.updateOne({ _id: account._id }, { name, emails, lastVisit, lastUserAgent, lastBrowserId }).exec();
 	}
@@ -182,7 +192,8 @@ export function checkIfNotAdmin(account: IAccount, message: string) {
 	if (isAdmin(account)) {
 		logger.warn(`Cannot perform this action on admin user (${message})`);
 		throw new Error('Cannot perform this action on admin user');
-	} else {
+	}
+	else {
 		return account;
 	}
 }

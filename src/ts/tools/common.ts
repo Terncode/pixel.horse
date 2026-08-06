@@ -44,7 +44,8 @@ export function cartesian(...args: any[]) {
 export function mkdir(dirpath: string) {
 	try {
 		fs.mkdirSync(dirpath);
-	} catch { }
+	}
+	catch { }
 }
 
 const isDirectory = (dir: string) => fs.lstatSync(dir).isDirectory();
@@ -105,8 +106,9 @@ export function spawnAsync(command: string, args?: string[]) {
 // canvas
 
 export function getCanvas(layer: Layer | undefined): ExtCanvas | undefined {
-	if (!layer)
+	if (!layer) {
 		return undefined;
+	}
 
 	const canvas = layer.canvas;
 
@@ -158,7 +160,8 @@ export function addImage(images: HTMLCanvasElement[], canvas: HTMLCanvasElement)
 		// TODO: remove duplicated
 		images.push(canvas);
 		return images.length - 1;
-	} else {
+	}
+	else {
 		return 0;
 	}
 }

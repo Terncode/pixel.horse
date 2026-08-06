@@ -146,7 +146,9 @@ export class PlayBox implements OnInit {
 							this.errorReporter.reportError(e, { status: e.status, text: e.text });
 						}
 
-						DEVELOPMENT && console.error(e);
+						if (DEVELOPMENT) {
+							console.error(e);
+						}
 					}
 				})
 				.finally(() => this.joining = false)

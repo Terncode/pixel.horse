@@ -124,13 +124,15 @@ export async function getChat(search: string, date: string, caseInsensitive: boo
 	try {
 		if (!search) {
 			return '';
-		} else if (date === 'all') {
+		}
+		else if (date === 'all') {
 			const { stdout } = await execAsync(`for f in ${paths.pathTo('logs')}/*.log; do `
 				+ `echo "$f" | grep -o '[0-9]*';`
 				+ `cat "$f" | grep ${flags}"${query}";`
 				+ `done`, options);
 			return stdout;
-		} else {
+		}
+		else {
 			let lines = 8192;
 			let more = '';
 
@@ -138,7 +140,8 @@ export async function getChat(search: string, date: string, caseInsensitive: boo
 				try {
 					const log = await fetchChatlog(lines);
 					return more + log;
-				} catch (e) {
+				}
+				catch (e) {
 					if (isErrorAlike(e) && e.message !== 'stdout maxBuffer exceeded') {
 						throw e;
 					}
@@ -150,7 +153,8 @@ export async function getChat(search: string, date: string, caseInsensitive: boo
 
 			return '<error size exceeded>';
 		}
-	} catch (e) {
+	}
+	catch (e) {
 		console.error('Failed to fetch chatlog: ', e);
 		return '<error>';
 	}
@@ -191,7 +195,8 @@ export async function clearSessions(accountId: string) {
 					clearIds.push(session._id.toString());
 				}
 			}
-		} catch (e) {
+		}
+		catch (e) {
 			logger.error('Error when clearing session', e, session._id, session.session);
 		}
 	});
@@ -210,7 +215,8 @@ export async function getUserCounts(): Promise<UserCountStats[]> {
 		const content = await fs.readFileAsync(statsFile, 'utf8');
 		const lines = content.trim().split(/\n/);
 		return lines.map(line => JSON.parse(line));
-	} catch {
+	}
+	catch {
 		return [];
 	}
 }
@@ -264,7 +270,8 @@ export async function getOtherStats(service: AdminService): Promise<OtherStats> 
 	for (const auth of service.auths.items) {
 		if (!auth.account) {
 			authsWithEmptyAccount++;
-		} else if (!service.accounts.get(auth.account)) {
+		}
+		else if (!service.accounts.get(auth.account)) {
 			authsWithMissingAccount++;
 		}
 	}

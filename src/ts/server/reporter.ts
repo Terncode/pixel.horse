@@ -31,7 +31,8 @@ const createLogEvent =
 						}
 
 						return Event.updateOne({ _id: event._id }, { desc: event.desc, count: event.count + 1 }).exec();
-					} else {
+					}
+					else {
 					 	return Event.create({ server, account, pony, type, message, origin, desc }) as any;
 					}
 				})
@@ -86,7 +87,9 @@ export function createReporter(server: ServerConfig, account?: ID, pony?: ID, or
 		},
 		systemLog(message: string) {
 			system(accountId, message);
-			DEVELOPMENT && logger.log(message);
+			if (DEVELOPMENT) {
+				logger.log(message);
+			}
 		},
 		setPony(newPony: any) {
 			pony = newPony;

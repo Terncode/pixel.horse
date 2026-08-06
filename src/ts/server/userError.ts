@@ -31,7 +31,8 @@ function report(message: string, info: UserErrorInfo, reporter: Reporter | undef
 
 	if (keys.length === 1 && keys[0] === 'log') {
 		logger.log(info.log);
-	} else {
+	}
+	else {
 		if (reporter) {
 			reporter.warn((info.error && info.error.message) || info.message || message || '<no message>', info.desc);
 		}

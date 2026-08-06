@@ -39,7 +39,9 @@ export class PonyListRemote implements OnDestroy {
 			this.ponies = [];
 			this.ponyInfos = [];
 			this.loading = true;
-			this.subscription && this.subscription.unsubscribe();
+			if (this.subscription) {
+				this.subscription.unsubscribe();
+			}
 			this.subscription = value ? this.model.accountPonies.subscribe(value, (x = []) => {
 				this.ponyInfos = x;
 				this.updatePonies();
@@ -48,7 +50,9 @@ export class PonyListRemote implements OnDestroy {
 		}
 	}
 	ngOnDestroy() {
-		this.subscription && this.subscription.unsubscribe();
+		if (this.subscription) {
+			this.subscription.unsubscribe();
+		}
 	}
 	remove(characterId: string) {
 		if (confirm('Are you sure?')) {

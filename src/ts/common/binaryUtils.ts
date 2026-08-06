@@ -10,10 +10,12 @@ export function writeBinary(write: (writer: BinaryWriter) => void): Uint8Array {
 		try {
 			write(writer);
 			break;
-		} catch (e) {
+		}
+		catch (e) {
 			if (e instanceof RangeError || isDataViewError(e)) {
 				resizeWriter(writer);
-			} else {
+			}
+			else {
 				throw e;
 			}
 		}
@@ -23,7 +25,9 @@ export function writeBinary(write: (writer: BinaryWriter) => void): Uint8Array {
 }
 
 export function decodeString(value: DataView | null, offset: number, length: number): string | null {
-	if (value == null) return null;
+	if (value == null) {
+		return null;
+	}
 
 	let result = '';
 	const end = offset + length;
@@ -34,14 +38,16 @@ export function decodeString(value: DataView | null, offset: number, length: num
 
 		if ((byte1 & 0x80) === 0) {
 			code = byte1;
-		} else if ((byte1 & 0xe0) === 0xc0) {
+		}
+		else if ((byte1 & 0xe0) === 0xc0) {
 			const byte2 = continuationByte(value, i++, end);
 			code = ((byte1 & 0x1f) << 6) | byte2;
 
 			if (code < 0x80) {
 				throw Error('Invalid continuation byte');
 			}
-		} else if ((byte1 & 0xf0) === 0xe0) {
+		}
+		else if ((byte1 & 0xf0) === 0xe0) {
 			const byte2 = continuationByte(value, i++, end);
 			const byte3 = continuationByte(value, i++, end);
 			code = ((byte1 & 0x0f) << 12) | (byte2 << 6) | byte3;
@@ -53,7 +59,8 @@ export function decodeString(value: DataView | null, offset: number, length: num
 			if (code >= 0xd800 && code <= 0xdfff) {
 				throw Error(`Lone surrogate U+${code.toString(16).toUpperCase()} is not a scalar value`);
 			}
-		} else if ((byte1 & 0xf8) === 0xf0) {
+		}
+		else if ((byte1 & 0xf8) === 0xf0) {
 			const byte2 = continuationByte(value, i++, end);
 			const byte3 = continuationByte(value, i++, end);
 			const byte4 = continuationByte(value, i++, end);
@@ -62,7 +69,8 @@ export function decodeString(value: DataView | null, offset: number, length: num
 			if (code < 0x010000 || code > 0x10ffff) {
 				throw Error('Invalid continuation byte');
 			}
-		} else {
+		}
+		else {
 			throw Error('Invalid UTF-8 detected');
 		}
 
@@ -79,13 +87,16 @@ export function decodeString(value: DataView | null, offset: number, length: num
 }
 
 function continuationByte(buffer: DataView, index: number, end: number): number {
-	if (index >= end) throw Error('Invalid byte index');
+	if (index >= end) {
+		throw Error('Invalid byte index');
+	}
 
 	const continuationByte = buffer.getUint8(index);
 
 	if ((continuationByte & 0xC0) === 0x80) {
 		return continuationByte & 0x3F;
-	} else {
+	}
+	else {
 		throw Error('Invalid continuation byte');
 	}
 }
@@ -99,8 +110,9 @@ export function encodeString(string?: string | null) {
 }
 
 export function getStringLengthWithLength(value?: string | null) {
-	if (value == null)
+	if (value == null) {
 		return 1;
+	}
 	const len = stringLengthInBytes(value);
 	return getLength(len) + len;
 }
@@ -134,7 +146,8 @@ function forEachCharacter(value: string, callback: (code: number) => void) {
 					callback(((code & 0x3ff) << 10) + (extra & 0x3ff) + 0x10000);
 				}
 			}
-		} else {
+		}
+		else {
 			callback(code);
 		}
 	}
@@ -143,11 +156,14 @@ function forEachCharacter(value: string, callback: (code: number) => void) {
 function charLengthInBytes(code: number): number {
 	if ((code & 0xffffff80) === 0) {
 		return 1;
-	} else if ((code & 0xfffff800) === 0) {
+	}
+	else if ((code & 0xfffff800) === 0) {
 		return 2;
-	} else if ((code & 0xffff0000) === 0) {
+	}
+	else if ((code & 0xffff0000) === 0) {
 		return 3;
-	} else {
+	}
+	else {
 		return 4;
 	}
 }

@@ -31,11 +31,13 @@ function drawEntities(batch: PaletteSpriteBatch, entities: Entity[], camera: Cam
 				batch.depth = -batch.depth;
 				drawPonyEntity(batch, entity as Pony, options);
 				entitiesDrawn++;
-			} else if (entity.draw !== undefined) {
+			}
+			else if (entity.draw !== undefined) {
 				entity.draw(batch, options);
 				entitiesDrawn++;
 			}
-		} else {
+		}
+		else {
 			if (entity.type === PONY_TYPE) {
 				const pony = entity as Pony;
 
@@ -62,7 +64,8 @@ export function drawEntityLights(batch: SpriteBatch, entities: Entity[], camera:
 		if (isBoundsVisible(camera, entity.lightBounds, entity.x, entity.y) && (!isHidden(entity) || drawHidden)) {
 			if (entity.type === PONY_TYPE) {
 				drawPonyEntityLight(batch, entity as Pony, options);
-			} else {
+			}
+			else {
 				entity.drawLight!(batch, options);
 			}
 			++drawn;
@@ -85,7 +88,8 @@ export function drawEntityLightSprites(batch: SpriteBatch, entities: Entity[], c
 			batch.depth = entity.depth;
 			if (entity.type === PONY_TYPE) {
 				drawPonyEntityLightSprite(batch, entity as Pony, options);
-			} else {
+			}
+			else {
 				entity.drawLightSprite!(batch, options);
 			}
 			++drawn;
@@ -100,7 +104,8 @@ export function hasDrawLight(entity: Entity) {
 		const pony = entity as Pony;
 		return (pony.ponyState.holding !== undefined && pony.ponyState.holding.drawLight !== undefined) ||
 			((pony.state & EntityState.Magic) !== 0);
-	} else {
+	}
+	else {
 		return entity.drawLight !== undefined;
 	}
 }
@@ -109,7 +114,8 @@ export function hasLightSprite(entity: Entity) {
 	if (entity.type === PONY_TYPE) {
 		const pony = entity as Pony;
 		return (pony.ponyState.holding !== undefined && pony.ponyState.holding.drawLightSprite !== undefined);
-	} else {
+	}
+	else {
 		return entity.drawLightSprite !== undefined;
 	}
 }
@@ -118,25 +124,39 @@ export function drawMap(
 	batch: PaletteSpriteBatch, map: WorldMap, camera: Camera, player: Pony,
 	options: DrawOptions, tileSets: TileSets, selectedEntities: Entity[],
 ) {
-	TIMING && timeStart('forEachRegion');
+	if (TIMING) {
+		timeStart('forEachRegion');
+	}
 	batch.depth = 1.0;
 	if (BETA && options.engine === Engine.Whiteness) {
 		batch.drawRect(WHITE, 0, 0, toScreenX(map.width), toScreenY(map.height));
-	} else if (BETA && options.engine === Engine.LayeredTiles) {
+	}
+	else if (BETA && options.engine === Engine.LayeredTiles) {
 		forEachRegion(map, region => drawTilesNew(batch, region, camera, map, tileSets, options));
-	} else {
+	}
+	else {
 		forEachRegion(map, region => drawTiles(batch, region, camera, map, tileSets, options));
 	}
-	TIMING && timeEnd();
+	if (TIMING) {
+		timeEnd();
+	}
 
-	TIMING && timeStart('sortEntities');
+	if (TIMING) {
+		timeStart('sortEntities');
+	}
 	sortEntities(map.entitiesDrawable);
-	TIMING && timeEnd();
+	if (TIMING) {
+		timeEnd();
+	}
 
-	TIMING && timeStart('drawEntities');
+	if (TIMING) {
+		timeStart('drawEntities');
+	}
 	const entitiesDrawn = drawEntities(batch, map.entitiesDrawable, camera, options);
 	batch.depth = 1.0;
-	TIMING && timeEnd();
+	if (TIMING) {
+		timeEnd();
+	}
 
 	if (BETA || TOOLS) {
 		forEachRegion(map, region => drawTilesDebugInfo(batch, region, camera, options));
@@ -179,10 +199,18 @@ function drawDebugHelpers(batch: PaletteSpriteBatch, entities: Entity[], options
 
 	for (const e of entities) {
 		batch.globalAlpha = 0.3;
-		show.bounds && drawBounds(batch, e, e.bounds, ORANGE);
-		show.cover && drawBounds(batch, e, e.coverBounds, BLUE);
-		show.interact && drawBounds(batch, e, e.interactBounds, PURPLE);
-		show.trigger && drawWorldBounds(batch, e, e.triggerBounds, CYAN);
+		if (show.bounds) {
+			drawBounds(batch, e, e.bounds, ORANGE);
+		}
+		if (show.cover) {
+			drawBounds(batch, e, e.coverBounds, BLUE);
+		}
+		if (show.interact) {
+			drawBounds(batch, e, e.interactBounds, PURPLE);
+		}
+		if (show.trigger) {
+			drawWorldBounds(batch, e, e.triggerBounds, CYAN);
+		}
 
 		if (show.collider) {
 			batch.globalAlpha = 0.5;
@@ -224,16 +252,19 @@ function drawDebugInWater(batch: PaletteSpriteBatch, map: WorldMap, camera: Came
 		const cameraTop = camera.actualY;
 		const cameraBottom = camera.actualY + camera.h;
 
-		if (sx > cameraRight || sy > cameraBottom || (sx + w) < cameraLeft || (sy + h) < cameraTop)
+		if (sx > cameraRight || sy > cameraBottom || (sx + w) < cameraLeft || (sy + h) < cameraTop) {
 			return;
+		}
 
 		for (let y = 0; y < h; y++) {
-			if ((sy + y + 1) < cameraTop || (sy + y) > cameraBottom)
+			if ((sy + y + 1) < cameraTop || (sy + y) > cameraBottom) {
 				continue;
+			}
 
 			for (let x = 0; x < w; x++) {
-				if ((sx + x + 1) < cameraLeft || (sx + x) > cameraRight)
+				if ((sx + x + 1) < cameraLeft || (sx + x) > cameraRight) {
 					continue;
+				}
 
 				const tx = x;
 
@@ -263,16 +294,19 @@ function drawDebugCollider(batch: PaletteSpriteBatch, map: WorldMap, camera: Cam
 		const cameraTop = camera.actualY;
 		const cameraBottom = camera.actualY + camera.h;
 
-		if (sx > cameraRight || sy > cameraBottom || (sx + w) < cameraLeft || (sy + h) < cameraTop)
+		if (sx > cameraRight || sy > cameraBottom || (sx + w) < cameraLeft || (sy + h) < cameraTop) {
 			return;
+		}
 
 		for (let y = 0; y < h; y++) {
-			if ((sy + y + 1) < cameraTop || (sy + y) > cameraBottom)
+			if ((sy + y + 1) < cameraTop || (sy + y) > cameraBottom) {
 				continue;
+			}
 
 			for (let x = 0; x < w; x++) {
-				if ((sx + x + 1) < cameraLeft || (sx + x) > cameraRight)
+				if ((sx + x + 1) < cameraLeft || (sx + x) > cameraRight) {
 					continue;
+				}
 
 				const tx = x;
 

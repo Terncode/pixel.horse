@@ -48,7 +48,8 @@ export class EventsTable {
 	onShowChat(e: MouseEvent, event: Event, account: Account | undefined) {
 		if (e.shiftKey) {
 			this.addChat.emit({ event, account });
-		} else {
+		}
+		else {
 			this.showChat.emit({ event, account });
 		}
 	}

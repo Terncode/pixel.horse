@@ -130,7 +130,8 @@ export function handleUpdateEntity(game: PonyTownGame, update: DecodedUpdate) {
 						}
 					}
 				}
-			} else if (distanceXY(entity.x, entity.y, x, y) > 8) {
+			}
+			else if (distanceXY(entity.x, entity.y, x, y) > 8) {
 				log(`Fixing player position (${entity.x}, ${entity.y}) => (${x}, ${y})`);
 				entity.x = x;
 				entity.y = y;
@@ -163,7 +164,8 @@ export function handleUpdateEntity(game: PonyTownGame, update: DecodedUpdate) {
 
 			if (entity.fake) {
 				(entity as Pony).palettePonyInfo = decodePonyInfo(ponyInfo, mockPaletteManager);
-			} else {
+			}
+			else {
 				updatePonyInfoWithPoof(game, entity, ponyInfo, crc);
 			}
 		}
@@ -173,7 +175,8 @@ export function handleUpdateEntity(game: PonyTownGame, update: DecodedUpdate) {
 		}
 
 		applyIfSelected(game, id);
-	} else {
+	}
+	else {
 		log(`handleUpdateEntity: missing entity: ${id}`);
 	}
 }
@@ -315,7 +318,8 @@ export function handleUpdates(game: PonyTownGame, updates: Uint8Array) {
 
 				if (region) {
 					handleAddEntity(game, region, update, false);
-				} else {
+				}
+				else {
 					log(`handleUpdates (add): missing region at ${x} ${y}`);
 				}
 				break;
@@ -353,7 +357,8 @@ export function updatePonyInfoWithPoof(game: PonyTownGame, entity: Entity, info:
 	if (entity && isPony(entity)) {
 		if (isHidden(entity)) {
 			update(entity);
-		} else {
+		}
+		else {
 			playEffect(game, entity, poof2.type);
 			setTimeout(() => update(entity), 100);
 		}
@@ -365,7 +370,8 @@ export function handleRemoveEntity(game: PonyTownGame, id: number) {
 
 	if (entity) {
 		removeEntity(game.map, entity);
-	} else {
+	}
+	else {
 		log(`handleRemoveEntity: Missing entity: ${id}`);
 	}
 
@@ -441,21 +447,26 @@ export function handleAction(game: PonyTownGame, id: number, action: Action) {
 			default:
 				log(`handleAction: Invalid action: ${action}`);
 		}
-	} else {
+	}
+	else {
 		log(`handleAction: Missing entity: ${id}`);
 	}
 }
 
 export function playEffect(game: PonyTownGame, target: Entity, type: number) {
-	if (isHidden(target))
+	if (isHidden(target)) {
 		return;
+	}
 
 	try {
 		const entity = createAnEntity(type, 0, target.x, target.y, {}, game.paletteManager, game);
 		addEntity(game.map, entity);
 		setTimeout(() => removeEntityDirectly(game.map, entity), 1000);
-	} catch (e) {
-		DEVELOPMENT && console.error(e);
+	}
+	catch (e) {
+		if (DEVELOPMENT) {
+			console.error(e);
+		}
 	}
 }
 
@@ -554,7 +565,8 @@ export function containsFilteredWords(message: string, filter: string | undefine
 		if (filter) {
 			const words = compact(filter.replace(/[,]/g, ' ').split(/[\r\n\t ]+/g).map(x => x.trim()));
 			cachedRegex = new RegExp(`(^| )(${words.map(escapeRegExp).join('|')})($| )`, 'i');
-		} else {
+		}
+		else {
 			cachedRegex = undefined;
 		}
 
@@ -569,8 +581,11 @@ export function handleSays(game: PonyTownGame, id: number, message: string, type
 
 	if (entity) {
 		handleSay(game, entity, message, type);
-	} else {
-		DEVELOPMENT && console.warn('incomplete say');
+	}
+	else {
+		if (DEVELOPMENT) {
+			console.warn('incomplete say');
+		}
 		game.incompleteSays.push({ id, message, type, time: Date.now() });
 		game.send(server => server.actionParam2(Action.RequestEntityInfo, id));
 	}
@@ -589,32 +604,41 @@ function isFriendEntityId(game: PonyTownGame, id: number) {
 }
 
 function shouldShowChatMessage(game: PonyTownGame, entity: Entity | FakeEntity, message: string, type: MessageType): boolean {
-	if (entity === game.player)
+	if (entity === game.player) {
 		return true;
+	}
 
-	if (isWhisperTo(type))
+	if (isWhisperTo(type)) {
 		return true;
+	}
 
-	if (isWhisper(type) && isFriendEntityId(game, entity.id))
+	if (isWhisper(type) && isFriendEntityId(game, entity.id)) {
 		return true;
+	}
 
-	if (isPublicMessage(type) && !entity.fake && !isChatVisible(game.camera, entity))
+	if (isPublicMessage(type) && !entity.fake && !isChatVisible(game.camera, entity)) {
 		return false;
+	}
 
-	if (isNonIgnorableMessage(type))
+	if (isNonIgnorableMessage(type)) {
 		return true;
+	}
 
-	if (game.settings.account.filterCyrillic && containsCyrillic(message))
+	if (game.settings.account.filterCyrillic && containsCyrillic(message)) {
 		return false;
+	}
 
-	if (game.settings.account.ignorePublicChat && isPublicMessage(type))
+	if (game.settings.account.ignorePublicChat && isPublicMessage(type)) {
 		return false;
+	}
 
-	if (isWhisper(type) && game.settings.account.ignoreNonFriendWhispers)
+	if (isWhisper(type) && game.settings.account.ignoreNonFriendWhispers) {
 		return false;
+	}
 
-	if (containsFilteredWords(message, game.settings.account.filterWords))
+	if (containsFilteredWords(message, game.settings.account.filterWords)) {
 		return false;
+	}
 
 	return true;
 }
@@ -624,30 +648,36 @@ function isChatInRange(entity: Entity, player: Entity | undefined, range: number
 }
 
 function shouldShowChatMessageInChatlog(game: PonyTownGame, entity: Entity | FakeEntity, type: MessageType) {
-	if (entity.type !== PONY_TYPE)
+	if (entity.type !== PONY_TYPE) {
 		return false;
+	}
 
-	if (entity.fake)
+	if (entity.fake) {
 		return true;
+	}
 
-	if (!isPublicMessage(type))
+	if (!isPublicMessage(type)) {
 		return true;
+	}
 
-	if (!isChatInRange(entity, game.player, game.settings.account.chatlogRange))
+	if (!isChatInRange(entity, game.player, game.settings.account.chatlogRange)) {
 		return false;
+	}
 
 	return true;
 }
 
 export function handleSay(game: PonyTownGame, entity: Entity | FakeEntity, message: string, type: MessageType) {
-	if (!shouldShowChatMessage(game, entity, message, type))
+	if (!shouldShowChatMessage(game, entity, message, type)) {
 		return;
+	}
 
 	if (type === MessageType.Dismiss || message === '.') {
 		if (!entity.fake && entity.says) {
 			dismissSays(entity.says);
 		}
-	} else {
+	}
+	else {
 		const bubbleEntity = isWhisperTo(type) ? game.player : entity;
 
 		if (bubbleEntity && !bubbleEntity.fake && game.map.entitiesById.has(bubbleEntity.id)) {
@@ -677,7 +707,8 @@ export function handleEntityInfo(game: PonyTownGame, id: number, name: string, c
 			game.incompleteSays.splice(i, 1);
 			const entity: FakeEntity = { fake: true, type: PONY_TYPE, id, name, crc };
 			handleSay(game, entity, say.message, say.type);
-		} else {
+		}
+		else {
 			i++;
 		}
 	}
@@ -697,9 +728,11 @@ export function subscribeRegion(game: PonyTownGame, data: Uint8Array) {
 export function filterEntityName({ settings, worldFlags }: PonyTownGame, name: string | undefined, nameBad: boolean) {
 	if (name && nameBad && (settings.account.filterSwearWords || hasFlag(worldFlags, WorldStateFlags.Safe))) {
 		return repeat('*', name.length);
-	} else if (name && containsFilteredWords(name, settings.account.filterWords)) {
+	}
+	else if (name && containsFilteredWords(name, settings.account.filterWords)) {
 		return repeat('?', name.length);
-	} else {
+	}
+	else {
 		return name;
 	}
 }
@@ -722,7 +755,8 @@ function createEntityOrPony(
 		}
 
 		return entity;
-	} else {
+	}
+	else {
 		const entity = createAnEntity(type, id, x, y, options, game.paletteManager, game);
 
 		entity.state = state;
@@ -744,8 +778,9 @@ function updateEntityOptionsInternal(entity: Entity, options: Partial<EntityOrPo
 }
 
 export function handleUpdateFriends(game: PonyTownGame, friends: FriendStatusData[], removeMissing: boolean) {
-	if (!game.model.friends)
+	if (!game.model.friends) {
 		return;
+	}
 
 	for (const { accountId, accountName, status, entityId, name, info, crc, nameBad = false } of friends) {
 		let friend = game.model.friends.find(f => f.accountId === accountId);
@@ -754,7 +789,8 @@ export function handleUpdateFriends(game: PonyTownGame, friends: FriendStatusDat
 			if (friend) {
 				removeItem(game.model.friends, friend);
 			}
-		} else {
+		}
+		else {
 			if (!friend) {
 				friend = {
 					accountId,
@@ -817,7 +853,9 @@ export function handleUpdateFriends(game: PonyTownGame, friends: FriendStatusDat
 			}
 		}
 
-		DEVELOPMENT && console.log('Refreshing friend list');
+		if (DEVELOPMENT) {
+			console.log('Refreshing friend list');
+		}
 	}
 
 	game.model.friends.sort(compareFriends);

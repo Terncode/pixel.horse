@@ -118,7 +118,10 @@ export function disposeShaderProgramData(gl: WebGLRenderingContext, data: Shader
 		if (gl) {
 			gl.deleteProgram(data.program);
 		}
-	} catch (e) {
-		DEVELOPMENT && console.error(e);
+	}
+	catch (e) {
+		if (DEVELOPMENT) {
+			console.error(e);
+		}
 	}
 }

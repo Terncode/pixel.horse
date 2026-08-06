@@ -61,7 +61,8 @@ export class CollectableController implements Controller {
 		if (this.check(client)) {
 			if (client.shadowed) {
 				pushRemoveEntityToClient(client, entity);
-			} else {
+			}
+			else {
 				remove(this.items, e => e === entity);
 				this.world.removeEntity(entity, this.map);
 				this.generateItem();

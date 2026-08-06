@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { Component, OnInit, OnDestroy, Input, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { defaultExpression } from '../../../common/ponyUtils';
 import { defaultPonyState } from '../../../common/ponyHelpers';
@@ -81,18 +82,21 @@ export class VisitPTPony implements OnInit, OnDestroy {
 				this.state.headAnimation = undefined;
 				this.state.headAnimationFrame = 0;
 				this.characterPreview.blink();
-			} else {
+			}
+			else {
 				this.state.headAnimation = this.headAnimation;
 				this.state.headAnimationFrame = frame % this.headAnimation.frames.length;
 			}
-		} else {
+		}
+		else {
 			this.state.headAnimation = undefined;
 
 			if (this.expression) {
 				if (Math.random() < 0.01) {
 					this.expression = undefined;
 				}
-			} else {
+			}
+			else {
 				if (Math.random() < 0.005) {
 					this.expression = BLEP;
 				}
@@ -106,7 +110,8 @@ export class VisitPTPony implements OnInit, OnDestroy {
 				this.bodyAnimation = undefined;
 				this.state.animation = stand;
 				this.state.animationFrame = 0;
-			} else {
+			}
+			else {
 				this.state.animation = this.bodyAnimation;
 				this.state.animationFrame = frame % this.bodyAnimation.frames.length;
 			}

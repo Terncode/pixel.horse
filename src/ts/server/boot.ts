@@ -1,5 +1,6 @@
 /// <reference path="../../typings/my.d.ts" />
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 require('source-map-support').install();
 
 import 'core-js/stable/promise/finally';

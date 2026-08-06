@@ -46,7 +46,8 @@ export function socketOptions(): ClientOptions {
 		const buffer = toByteArray(options);
 		const reader = createBinaryReader(buffer);
 		return readObject(reader);
-	} else {
+	}
+	else {
 		throw new Error('Missing socket options');
 	}
 }

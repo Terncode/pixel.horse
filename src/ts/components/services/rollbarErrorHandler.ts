@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { ErrorHandler, Injectable, Injector, InjectionToken } from '@angular/core';
 import Rollbar from 'rollbar';
 import { version } from '../../client/data';
@@ -34,7 +35,8 @@ export const RollbarService = new InjectionToken<Rollbar>('rollbar');
 export function rollbarFactory() {
 	if (DEVELOPMENT) {
 		return undefined;
-	} else {
+	}
+	else {
 		const rollbar = Rollbar.init(rollbarConfig);
 		rollbar.configure({ checkIgnore: rollbarCheckIgnore });
 		return rollbar;

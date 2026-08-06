@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { stubClass, resetStubMethods } from '../lib';
 import { NgZone } from '@angular/core';
 import { Subject } from 'rxjs';

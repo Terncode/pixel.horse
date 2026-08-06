@@ -9,18 +9,21 @@ export class StorageService {
 			if (typeof localStorage === 'undefined') {
 				this.data = new Map();
 			}
-		} catch {
+		}
+		catch {
 			this.data = new Map();
 		}
 	}
 	getItem(key: string) {
 		if (this.data) {
 			return this.data.get(key);
-		} else {
+		}
+		else {
 			try {
 				const value = localStorage.getItem(key);
 				return value == null ? undefined : value;
-			} catch {
+			}
+			catch {
 				return undefined;
 			}
 		}
@@ -29,7 +32,8 @@ export class StorageService {
 		try {
 			localStorage.setItem(key, data);
 			this.data = undefined;
-		} catch {
+		}
+		catch {
 			if (!this.data) {
 				this.data = new Map();
 			}
@@ -40,25 +44,30 @@ export class StorageService {
 	removeItem(key: string) {
 		if (this.data) {
 			this.data.delete(key);
-		} else {
+		}
+		else {
 			try {
 				localStorage.removeItem(key);
-			} catch { }
+			}
+			catch { }
 		}
 	}
 	clear() {
 		if (this.data) {
 			this.data.clear();
-		} else {
+		}
+		else {
 			try {
 				localStorage.clear();
-			} catch { }
+			}
+			catch { }
 		}
 	}
 	getJSON<T>(key: string, defaultValue: T): T {
 		try {
 			return JSON.parse(this.getItem(key) || '');
-		} catch {
+		}
+		catch {
 			return defaultValue;
 		}
 	}
@@ -77,7 +86,8 @@ export class StorageService {
 	setBoolean(key: string, value: boolean) {
 		if (value) {
 			this.setItem(key, 'true');
-		} else {
+		}
+		else {
 			this.removeItem(key);
 		}
 	}

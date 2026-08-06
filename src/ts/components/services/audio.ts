@@ -76,7 +76,8 @@ function fadeOut(track: Track, id: number, volume: number) {
 			howl
 				.fade(volume, 0, 1000, id)
 				.once('fade', () => howl.pause(id).stop(id), id);
-		} else {
+		}
+		else {
 			howl
 				.volume(0, id)
 				.pause(id)
@@ -124,7 +125,8 @@ export class Audio {
 		if (this.playing) {
 			if (this.instance) {
 				this.setInstanceVolume(this.instance, this.volume);
-			} else if (this.volume) {
+			}
+			else if (this.volume) {
 				this.playRandomTrack();
 			}
 		}
@@ -137,12 +139,14 @@ export class Audio {
 				if (this.volume) {
 					if (this.instance) {
 						this.resumeInstance(this.instance);
-					} else {
+					}
+					else {
 						this.playRandomTrack();
 					}
 				}
 			}
-		} catch (e) {
+		}
+		catch (e) {
 			console.error(e);
 		}
 	}
@@ -150,10 +154,12 @@ export class Audio {
 		if (FADE_TRACKS) {
 			if (this.playing && this.volume) {
 				this.playRandomTrack();
-			} else {
+			}
+			else {
 				this.play();
 			}
-		} else {
+		}
+		else {
 			this.play();
 		}
 	}
@@ -175,15 +181,15 @@ export class Audio {
 	private switchToTrack(track: Track) {
 		if (this.instance && this.instance.track === track) {
 			return false;
-		} else {
+		}
+		else {
 			this.stopInstance(this.instance);
 			this.instance = this.playTrack(track);
 			return true;
 		}
 	}
 	playRandomTrack() {
-		while (!this.switchToTrack(sample(this.tracks)!))
-			;
+		while (!this.switchToTrack(sample(this.tracks)!)) {}
 
 		this.loops = random(4, 7);
 	}
@@ -215,7 +221,8 @@ export class Audio {
 
 			if (volume && !howl.playing(instance.id)) {
 				howl.play(instance.id);
-			} else if (!volume && howl.playing(instance.id)) {
+			}
+			else if (!volume && howl.playing(instance.id)) {
 				howl.pause(instance.id);
 			}
 		}
@@ -243,7 +250,8 @@ export class Audio {
 
 			if (this.volume && this.playing) {
 				this.playRandomTrack();
-			} else {
+			}
+			else {
 				this.stopInstance(this.instance);
 			}
 		}

@@ -16,9 +16,11 @@ function getSortTag(pony: PonyObject) {
 function sortTagToNumber(tag: string) {
 	if (tag === 'top') {
 		return -1;
-	} else if (tag === 'end') {
+	}
+	else if (tag === 'end') {
 		return 999999999;
-	} else {
+	}
+	else {
 		return +tag;
 	}
 }
@@ -33,11 +35,14 @@ function comparePonies(a: PonyObject, b: PonyObject) {
 
 	if (aTag && bTag) {
 		return (sortTagToNumber(aTag) - sortTagToNumber(bTag)) || fallbackComparePonies(a, b);
-	} else if (aTag) {
+	}
+	else if (aTag) {
 		return aTag === 'end' ? 1 : -1;
-	} else if (bTag) {
+	}
+	else if (bTag) {
 		return bTag === 'end' ? -1 : 1;
-	} else {
+	}
+	else {
 		return fallbackComparePonies(a, b);
 	}
 }
@@ -93,20 +98,25 @@ export class CharacterList implements OnInit {
 				e.stopPropagation();
 				this.search = '';
 				this.updatePonies();
-			} else {
+			}
+			else {
 				this.closed();
 			}
-		} else if (e.keyCode === Key.ENTER) {
+		}
+		else if (e.keyCode === Key.ENTER) {
 			const pony = this.ponies[this.selectedIndex];
 
 			if (pony) {
 				this.select(pony);
-			} else {
+			}
+			else {
 				this.closed();
 			}
-		} else if (e.keyCode === Key.UP) {
+		}
+		else if (e.keyCode === Key.UP) {
 			this.setSelectedIndex(this.selectedIndex <= 0 ? (this.ponies.length - 1) : (this.selectedIndex - 1));
-		} else if (e.keyCode === Key.DOWN) {
+		}
+		else if (e.keyCode === Key.DOWN) {
 			this.setSelectedIndex(this.selectedIndex === (this.ponies.length - 1) ? 0 : (this.selectedIndex + 1));
 		}
 	}
@@ -141,7 +151,8 @@ export class CharacterList implements OnInit {
 					const text = `${pony.name} ${pony.desc || ''}`.toLowerCase();
 					return matchesWords(text, words);
 				}).sort(comparePonies);
-			} else {
+			}
+			else {
 				this.ponies = this.model.ponies.slice().sort(comparePonies);
 			}
 
@@ -166,7 +177,8 @@ export class CharacterList implements OnInit {
 
 			if (pony) {
 				this.setPreview(pony);
-			} else if (this.previewPony) {
+			}
+			else if (this.previewPony) {
 				this.unsetPreview(this.previewPony);
 			}
 		});

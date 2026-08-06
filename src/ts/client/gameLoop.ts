@@ -45,7 +45,8 @@ export function startGameLoop(game: Game, onError = (e: Error) => console.error(
 			if (draw) {
 				game.draw();
 			}
-		} catch (e) {
+		}
+		catch (e) {
 			if (isError(e)) {
 				onError(e);
 			}
@@ -80,7 +81,8 @@ export function startGameLoop(game: Game, onError = (e: Error) => console.error(
 		.then(() => {
 			if (cancelled) {
 				throw new Error('Cancelled (loop)');
-			} else {
+			}
+			else {
 				game.init();
 				handle = requestAnimationFrame(onFrame);
 				backup = setTimeout(onTimer, 1000 / 10);

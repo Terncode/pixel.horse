@@ -307,13 +307,15 @@ const ALL_LOCKED = array(MAX_COLORS, true);
 export function precompressSet<T>(
 	set: SpriteSet<T> | undefined, def: SetDefinition, customOutlines: boolean, defaultColor: T, addColor: (color: T) => number
 ): PrecompressedSet | undefined {
-	if (!set)
+	if (!set) {
 		return undefined;
+	}
 
 	const type = clamp(toInt(set.type), 0, def.sets.length - 1);
 
-	if (type === 0 && !def.preserveOnZero)
+	if (type === 0 && !def.preserveOnZero) {
 		return undefined;
+	}
 
 	const patterns = at(def.sets, type);
 	const pattern = clamp(toInt(set.pattern), 0, patterns ? patterns.length - 1 : 0);
@@ -321,8 +323,9 @@ export function precompressSet<T>(
 	const colors = Math.max(getColorCount(sprite), def.minColors || 0);
 
 	/* istanbul ignore next */
-	if (type === 0 && pattern === 0 && colors === 0)
+	if (type === 0 && pattern === 0 && colors === 0) {
 		return undefined;
+	}
 
 	const fillLocks = compressLockSet(set.lockFills, colors);
 	const fills = precompressColorSet(set.fills, colors, fillLocks, defaultColor, addColor);
@@ -355,7 +358,8 @@ function precompressFields<TDef extends FieldDefinition<TResult>, TValue, TResul
 	return trimRight(defs.map(def => {
 		if (def.dontSave || (def.omit && def.omit(data))) {
 			return defaultValue;
-		} else {
+		}
+		else {
 			return encode(data[def.name], def);
 		}
 	}));
@@ -512,7 +516,8 @@ export function readSet(
 		const outlineLocks = customOutlines ? read(colors) : 0;
 		const outlines = customOutlines ? readTimes(read, colors - countBits(outlineLocks), colorBits) : [];
 		return { type, pattern, colors, fillLocks, fills, outlineLocks, outlines };
-	} else {
+	}
+	else {
 		return undefined;
 	}
 }

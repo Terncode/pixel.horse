@@ -207,9 +207,11 @@ export const createKick =
 			if (accountId) {
 				clearTokensForAccount(accountId);
 				return world.kickByAccount(accountId);
-			} else if (characterId) {
+			}
+			else if (characterId) {
 				return world.kickByCharacter(characterId);
-			} else {
+			}
+			else {
 				return false;
 			}
 		};
@@ -296,13 +298,15 @@ function getSupportStats(world: World): StatsTable {
 	for (const client of world.clients) {
 		if (client.supportsWasm) {
 			wasmYes++;
-		} else {
+		}
+		else {
 			wasmNo++;
 		}
 
 		if (client.supportsLetAndConst) {
 			letAndConstYes++;
-		} else {
+		}
+		else {
 			letAndConstNo++;
 		}
 	}

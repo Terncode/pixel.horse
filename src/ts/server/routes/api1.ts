@@ -30,10 +30,12 @@ export default function (server: ServerConfig, settings: Settings) {
 				}
 
 				return await getAccountData(account);
-			} finally {
+			}
+			finally {
 				requests--;
 			}
-		} else {
+		}
+		else {
 			return { limit: true };
 		}
 	}
@@ -50,7 +52,8 @@ export default function (server: ServerConfig, settings: Settings) {
 
 		if (!account || (settings.blockWebView && isWebView && includes(blockApps, requestedWith))) {
 			handleJSON(server, req, res, null);
-		} else {
+		}
+		else {
 			handleJSON(server, req, res, handleAccountRequest(account, userAgent, browserId));
 		}
 	});

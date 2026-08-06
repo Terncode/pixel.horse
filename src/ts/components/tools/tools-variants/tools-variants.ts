@@ -88,7 +88,8 @@ export class ToolsVariants implements OnInit {
 
 				if (this.justHead) {
 					viewContext.drawImage(buffer, 0, 0, 55, 45, x * 45 - 10, y * 45, 55, 45);
-				} else {
+				}
+				else {
 					viewContext.drawImage(buffer, x * 60 - 10, y * 60);
 				}
 			}

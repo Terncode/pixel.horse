@@ -12,7 +12,8 @@ export function createPool<T>(count: number, createNew: () => T, reset: (value: 
 		if (existing) {
 			reset(existing);
 			return existing;
-		} else {
+		}
+		else {
 			return createNew();
 		}
 	};
@@ -21,7 +22,8 @@ export function createPool<T>(count: number, createNew: () => T, reset: (value: 
 		if (pool.length < count) {
 			pool.push(value);
 			return true;
-		} else {
+		}
+		else {
 			return false;
 		}
 	};

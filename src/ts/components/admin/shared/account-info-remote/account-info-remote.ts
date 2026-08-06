@@ -20,7 +20,9 @@ export class AccountInfoRemote implements OnDestroy {
 	constructor(private model: AdminModel) {
 	}
 	ngOnDestroy() {
-		this.subscription && this.subscription.unsubscribe();
+		if (this.subscription) {
+			this.subscription.unsubscribe();
+		}
 	}
 	get accountId() {
 		return this._accountId;

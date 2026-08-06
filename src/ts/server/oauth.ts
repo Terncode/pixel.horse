@@ -106,15 +106,20 @@ export const providers = providerList.filter(p => !!p.auth);
 export function getProfileUrl(profile: OAuthProfile): string | undefined {
 	if (profile.provider === 'twitter') {
 		return `https://twitter.com/${profile.username}`;
-	} else if (profile.provider === 'tumblr') {
+	}
+	else if (profile.provider === 'tumblr') {
 		return `http://${profile.username}.tumblr.com/`;
-	} else if (profile.provider === 'facebook') {
+	}
+	else if (profile.provider === 'facebook') {
 		return `http://www.facebook.com/${profile.id}`;
-	} else if (profile.provider === 'discord') {
+	}
+	else if (profile.provider === 'discord') {
 		return undefined;
-	} else if (profile._json.attributes && profile._json.attributes.url) { // patreon
+	}
+	else if (profile._json.attributes && profile._json.attributes.url) { // patreon
 		return profile._json.attributes.url;
-	} else {
+	}
+	else {
 		return profile.profileUrl || profile._json.url;
 	}
 }
@@ -124,29 +129,37 @@ export function getProfileEmails(profile: OAuthProfile): string[] {
 		// TODO: diagnose why we aren't receiving the email from Discord
 		// for now, we just won't attempt to record an email if we don't receive one
 		return profile.email ? [profile.email] : [];
-	} else if (profile.emails && profile.emails.length) {
+	}
+	else if (profile.emails && profile.emails.length) {
 		return profile.emails.map(e => e.value);
-	} else if (profile._json && profile._json.attributes && profile._json.attributes.email) { // patreon
+	}
+	else if (profile._json && profile._json.attributes && profile._json.attributes.email) { // patreon
 		return [profile._json.attributes.email];
-	} else {
+	}
+	else {
 		return [];
 	}
 }
 
 export function getProfileUsername(profile: OAuthProfile): string | undefined {
-	if (profile.provider === 'discord') return `${profile.username}#${profile.discriminator}`;
+	if (profile.provider === 'discord') {
+		return `${profile.username}#${profile.discriminator}`;
+	}
 	return profile.username || profile.displayName || getProfileNameInternal(profile.name);
 }
 
 export function getProfileName(profile: OAuthProfile): string | undefined {
-	if (profile.provider === 'discord') return `${profile.username}#${profile.discriminator}`;
+	if (profile.provider === 'discord') {
+		return `${profile.username}#${profile.discriminator}`;
+	}
 	return profile.displayName || profile.username || getProfileNameInternal(profile.name);
 }
 
 function getProfileNameInternal(name: OAuthProfileName | undefined): string | undefined {
 	if (!name || isString(name)) {
 		return name;
-	} else {
+	}
+	else {
 		return `${name.givenName} ${name.familyName}`.trim();
 	}
 }

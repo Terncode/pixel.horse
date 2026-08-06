@@ -52,7 +52,8 @@ export class HasFeature implements AfterViewInit, OnDestroy {
 
 			if (show) {
 				this.ref = this.ref || this.viewContainer.createEmbeddedView(this.templateRef);
-			} else {
+			}
+			else {
 				this.viewContainer.clear();
 				this.ref = undefined;
 			}

@@ -58,8 +58,9 @@ export interface Command {
 }
 
 function hasRoleNull(client: IClient, role: string) {
-	if (!role || hasRole(client.account, role))
+	if (!role || hasRole(client.account, role)) {
 		return true;
+	}
 
 	return (role === 'sup1' && (client.supporterLevel >= 1 || client.isMod)) ||
 		(role === 'sup2' && (client.supporterLevel >= 2 || client.isMod)) ||
@@ -263,15 +264,18 @@ export function createCommands(world: World): Command[] {
 
 		// house
 		command(['savehouse'], '/savehouse - saves current house setup', '', async ({ }, client) => {
-			if (!isValidMapForEditing(client.map, client, true, false))
+			if (!isValidMapForEditing(client.map, client, true, false)) {
 				return;
+			}
 
 			client.lastMapLoadOrSave = Date.now();
 
 			const savedMap = JSON.stringify(saveMap(client.map,
 				{ saveTiles: true, saveEntities: true, saveWalls: true, saveOnlyEditableEntities: true }));
 
-			DEVELOPMENT && console.log(savedMap);
+			if (DEVELOPMENT) {
+				console.log(savedMap);
+			}
 
 			client.account.savedMap = savedMap;
 			await Account.updateOne({ _id: client.accountId }, { savedMap }).exec();
@@ -280,11 +284,13 @@ export function createCommands(world: World): Command[] {
 			client.reporter.systemLog(`Saved house`);
 		}),
 		command(['loadhouse'], '/loadhouse - loads saved house setup', '', ({ world }, client) => {
-			if (!isValidMapForEditing(client.map, client, true, true))
+			if (!isValidMapForEditing(client.map, client, true, true)) {
 				return;
+			}
 
-			if (!client.account.savedMap)
+			if (!client.account.savedMap) {
 				return saySystem(client, 'No saved map state');
+			}
 
 			client.lastMapLoadOrSave = Date.now();
 
@@ -295,8 +301,9 @@ export function createCommands(world: World): Command[] {
 			client.reporter.systemLog(`Loaded house`);
 		}),
 		command(['resethouse'], '/resethouse - resets house setup to original state', '', ({ }, client) => {
-			if (!isValidMapForEditing(client.map, client, true, true))
+			if (!isValidMapForEditing(client.map, client, true, true)) {
 				return;
+			}
 
 			client.lastMapLoadOrSave = Date.now();
 
@@ -309,8 +316,9 @@ export function createCommands(world: World): Command[] {
 			client.reporter.systemLog(`Reset house`);
 		}),
 		command(['lockhouse'], '/lockhouse - prevents other people from changing the house', '', ({ }, client) => {
-			if (!isValidMapForEditing(client.map, client, false, true))
+			if (!isValidMapForEditing(client.map, client, false, true)) {
 				return;
+			}
 
 			client.map.editingLocked = true;
 
@@ -318,8 +326,9 @@ export function createCommands(world: World): Command[] {
 			client.reporter.systemLog(`House locked`);
 		}),
 		command(['unlockhouse'], '/unlockhouse - enables editing by other people', '', ({ }, client) => {
-			if (!isValidMapForEditing(client.map, client, false, true))
+			if (!isValidMapForEditing(client.map, client, false, true)) {
 				return;
+			}
 
 			client.map.editingLocked = false;
 
@@ -327,8 +336,9 @@ export function createCommands(world: World): Command[] {
 			client.reporter.systemLog(`House unlocked`);
 		}),
 		command(['removetoolbox'], '/removetoolbox - removes toolbox from the house', '', ({ world }, client) => {
-			if (!isValidMapForEditing(client.map, client, true, true))
+			if (!isValidMapForEditing(client.map, client, true, true)) {
 				return;
+			}
 
 			client.lastMapLoadOrSave = Date.now();
 
@@ -338,8 +348,9 @@ export function createCommands(world: World): Command[] {
 			client.reporter.systemLog(`Toolbox removed`);
 		}),
 		command(['restoretoolbox'], '/restoretoolbox - restores toolbox to the house', '', ({ }, client) => {
-			if (!isValidMapForEditing(client.map, client, true, true))
+			if (!isValidMapForEditing(client.map, client, true, true)) {
 				return;
+			}
 
 			client.lastMapLoadOrSave = Date.now();
 
@@ -420,7 +431,8 @@ export function createCommands(world: World): Command[] {
 
 			if (season === undefined) {
 				throw new UserError('invalid season');
-			} else {
+			}
+			else {
 				world.setSeason(season, holiday === undefined ? world.holiday : holiday);
 			}
 		}),
@@ -429,7 +441,8 @@ export function createCommands(world: World): Command[] {
 
 			if (weather === undefined) {
 				throw new UserError('invalid weather');
-			} else {
+			}
+			else {
 				updateMapState(client.map, { weather });
 			}
 		}),
@@ -484,12 +497,14 @@ export function createCommands(world: World): Command[] {
 				if (interval) {
 					clearInterval(interval);
 					interval = undefined;
-				} else {
+				}
+				else {
 					interval = setInterval(() => {
 						if (includes(world.clients, client)) {
 							const message = range(random(1, 10)).map(() => randomString(random(1, 10))).join(' ');
 							sayToEveryone(client, message, message, MessageType.Chat, settings);
-						} else {
+						}
+						else {
 							clearInterval(interval);
 						}
 					}, 100);
@@ -522,7 +537,8 @@ export function createCommands(world: World): Command[] {
 				const { id, type, x, y, options } = entity;
 				const info = { id, type: getEntityTypeName(type), x, y, options };
 				saySystem(client, JSON.stringify(info, null, 2));
-			} else {
+			}
+			else {
 				saySystem(client, 'undefined');
 			}
 		}),
@@ -562,13 +578,16 @@ export const createRunCommand =
 			try {
 				if (func && hasRoleNull(client, func.role)) {
 					func.handler(context, client, args, type, target, settings);
-				} else {
+				}
+				else {
 					return false;
 				}
-			} catch (e) {
+			}
+			catch (e) {
 				if (isUserError(e)) {
 					saySystem(client, e.message);
-				} else {
+				}
+				else {
 					throw e;
 				}
 			}
@@ -605,7 +624,8 @@ export function parseCommand(text: string, type: ChatType): { command?: string; 
 		if (chatType !== undefined) {
 			if (chatType === ChatType.Think) {
 				type = type === ChatType.Party ? ChatType.PartyThink : ChatType.Think;
-			} else {
+			}
+			else {
 				type = chatType;
 			}
 

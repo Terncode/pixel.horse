@@ -68,8 +68,11 @@ export function initWebGLResources(gl: WebGLRenderingContext, paletteManager: Pa
 	try {
 		createFrameBuffer(gl, frameBuffer, camera.w, camera.h, true, null);
 		createFrameBuffer(gl, frameBuffer2, camera.w, camera.h, false, frameBuffer.depthStencilRenderbuffer);
-	} catch (e) {
-		DEVELOPMENT && console.warn(e);
+	}
+	catch (e) {
+		if (DEVELOPMENT) {
+			console.warn(e);
+		}
 		failedFBO = true;
 		failedDepthBuffer = true;
 	}

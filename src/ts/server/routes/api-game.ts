@@ -20,12 +20,14 @@ export default function (server: ServerConfig, settings: Settings, config: Confi
 	app.post('/game/join', offline, limit(60, 5 * 60), hash, validAccount, wrap(server, async req => {
 		if (inQueue > 100) {
 			return {};
-		} else {
+		}
+		else {
 			try {
 				inQueue++;
 				const { ponyId, serverId, version, url, alert } = req.body;
 				return await joinGame(req.user as IAccount, ponyId, serverId, version, url, alert, getOrigin(req));
-			} finally {
+			}
+			finally {
 				inQueue--;
 			}
 		}

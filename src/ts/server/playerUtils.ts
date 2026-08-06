@@ -222,18 +222,21 @@ export function removeIgnore(target: IClient, accountId: string) {
 export const createIgnorePlayer =
 	(updateAccount: UpdateAccount, handlePromise = handlePromiseDefault) =>
 		(client: IClient, target: IClient, ignored: boolean) => {
-			if (target.accountId === client.accountId)
+			if (target.accountId === client.accountId) {
 				return;
+			}
 
 			const id = client.accountId;
 			const is = isIgnored(client, target);
 
-			if (ignored === is)
+			if (ignored === is) {
 				return;
+			}
 
 			if (ignored) {
 				addIgnore(target, id);
-			} else {
+			}
+			else {
 				removeIgnore(target, id);
 			}
 
@@ -295,7 +298,8 @@ export function setEntityExpression(
 
 	if (expression && timeout) {
 		entity.exprTimeout = Date.now() + timeout;
-	} else {
+	}
+	else {
 		entity.exprTimeout = undefined;
 	}
 
@@ -345,14 +349,19 @@ export function interactWith(client: IClient, target: ServerEntity | undefined) 
 
 		if (target.interact && (!target.interactRange || distance(pony, target) < target.interactRange)) {
 			target.interact(target, client);
-		} else if (target.triggerBounds && target.trigger) {
+		}
+		else if (target.triggerBounds && target.trigger) {
 			if (containsPointWitBorder(target.x, target.y, target.triggerBounds, pony.x, pony.y, 3)) {
 				target.trigger(target, client);
-			} else {
-				DEVELOPMENT && console.warn(`outside trigger bounds ` +
-					`(bounds: ${target.x} ${target.y} ${JSON.stringify(target.triggerBounds)} point: ${pony.x} ${pony.y})`);
 			}
-		} else if (target.interactAction) {
+			else {
+				if (DEVELOPMENT) {
+					console.warn(`outside trigger bounds ` +
+					`(bounds: ${target.x} ${target.y} ${JSON.stringify(target.triggerBounds)} point: ${pony.x} ${pony.y})`);
+				}
+			}
+		}
+		else if (target.interactAction) {
 			switch (target.interactAction) {
 				case InteractAction.Toolbox: {
 					switchTool(client, false);
@@ -361,7 +370,8 @@ export function interactWith(client: IClient, target: ServerEntity | undefined) 
 				case InteractAction.GiveLantern: {
 					if (client.pony.options!.hold === entities.lanternOn.type) {
 						unholdItem(pony);
-					} else {
+					}
+					else {
 						holdItem(pony, entities.lanternOn.type);
 					}
 					break;
@@ -438,7 +448,8 @@ function boopEntity(client: IClient, rect: Rect, isOnlyBooping: boolean) {
 		if (entity) {
 			if (entity.boop) {
 				entity.boop(client);
-			} else if (!isOnlyBooping && entity.type === PONY_TYPE) {
+			}
+			else if (!isOnlyBooping && entity.type === PONY_TYPE) {
 				const clientHold = client.pony.options!.hold || 0;
 
 				if (isHoldingGrapes(entity) && clientHold !== grapeGreen.type && clientHold !== grapePurple.type) {
@@ -449,10 +460,12 @@ function boopEntity(client: IClient, rect: Rect, isOnlyBooping: boolean) {
 
 						if (index === (purpleGrapeTypes.length - 1)) {
 							unholdItem(entity);
-						} else {
+						}
+						else {
 							holdItem(entity, purpleGrapeTypes[index + 1]);
 						}
-					} else {
+					}
+					else {
 						let index = greenGrapeTypes.indexOf(entity.options!.hold || 0);
 
 						if (index !== -1) {
@@ -460,7 +473,8 @@ function boopEntity(client: IClient, rect: Rect, isOnlyBooping: boolean) {
 
 							if (index === (greenGrapeTypes.length - 1)) {
 								unholdItem(entity);
-							} else {
+							}
+							else {
 								holdItem(entity, greenGrapeTypes[index + 1]);
 							}
 						}
@@ -525,7 +539,8 @@ function checkSuspiciousSitting(client: IClient) {
 			client.reporter.warn(`Suspicious sitting`);
 			client.sitCount = 0;
 		}
-	} else {
+	}
+	else {
 		client.sitCount = 1;
 	}
 
@@ -682,7 +697,8 @@ export function getNextToyOrExtra(client: IClient) {
 
 	if (extra) {
 		return { extra: false, toy: 0 };
-	} else {
+	}
+	else {
 		for (let i = toys.findIndex(t => t.type === toy) + 1; i < toys.length; i++) {
 			const type = toys[i].type;
 
@@ -821,7 +837,8 @@ export function execAction(client: IClient, action: Action, settings: GameServer
 		default:
 			if (isExpressionAction(action)) {
 				expressionAction(client, action);
-			} else {
+			}
+			else {
 				throw new Error(`Invalid action (${action})`);
 			}
 			break;
@@ -835,7 +852,8 @@ export function switchTool(client: IClient, reverse: boolean) {
 
 	if (index === unholdIndex) {
 		unholdItem(client.pony);
-	} else {
+	}
+	else {
 		const newIndex = reverse ? (index === -1 ? tools.length - 1 : index - 1) : ((index + 1) % tools.length);
 		const tool = tools[newIndex];
 		holdItem(client.pony, tool.type);

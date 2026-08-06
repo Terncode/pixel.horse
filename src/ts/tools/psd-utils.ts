@@ -20,10 +20,12 @@ export function openPsd(filePath: string) {
 			logMissingFeatures: true,
 		});
 		return toPsd(psd, name, dir);
-	} catch (e) {
+	}
+	catch (e) {
 		if (isErrorAlike(e)) {
 			console.error(`Failed to load: ${filePath}: ${e.message}`);
-		} else {
+		}
+		else {
 			console.error(e);
 		}
 		throw e;
@@ -52,8 +54,9 @@ function toLayer({ name, canvas, left, top, children }: PsdLayer, width: number,
 function fixCanvas(
 	canvas: HTMLCanvasElement | undefined, width: number, height: number, left: number, top: number, info: string
 ) {
-	if (!canvas)
+	if (!canvas) {
 		return undefined;
+	}
 
 	const result = createExtCanvas(width, height, info);
 	result.getContext('2d')!.drawImage(canvas, left, top);

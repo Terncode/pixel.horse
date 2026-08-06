@@ -106,7 +106,8 @@ export class DraggableDrop<T> implements OnInit, OnDestroy {
 
 		if (active) {
 			element.classList.add('draggable-hover');
-		} else {
+		}
+		else {
 			element.classList.remove('draggable-hover');
 		}
 	}
@@ -185,7 +186,9 @@ export class DraggableItem<T> implements OnInit, OnDestroy {
 
 			for (let i = 0; i < src.length; i++) {
 				const context = dst.item(i).getContext('2d');
-				context && context.drawImage(src.item(i), 0, 0);
+				if (context) {
+					context.drawImage(src.item(i), 0, 0);
+				}
 			}
 
 			this.service.startMove(this.draggable, this.item!);
@@ -197,7 +200,8 @@ export class DraggableItem<T> implements OnInit, OnDestroy {
 				this.draggable!.parentNode!.removeChild(this.draggable!);
 				this.draggable = undefined;
 				this.service.endMove();
-			} else {
+			}
+			else {
 				const x = clamp(this.startX + e.dx, 0, window.innerWidth - this.width);
 				const y = clamp(this.startY + e.dy, 0, window.innerHeight - this.height);
 				setTransform(this.draggable, `translate3d(${x}px, ${y}px, 0px)`);

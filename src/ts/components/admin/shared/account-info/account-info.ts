@@ -134,11 +134,14 @@ export class AccountInfo implements OnInit, OnChanges {
 
 		if (this.account.flags) {
 			return 'text-banned';
-		} else if (!counters && !this.account.supporter) {
+		}
+		else if (!counters && !this.account.supporter) {
 			return 'text-muted';
-		} else if (counters && ((counters.spam || 0) > 100 || (counters.swears || 0) > 10)) {
+		}
+		else if (counters && ((counters.spam || 0) > 100 || (counters.swears || 0) > 10)) {
 			return 'text-alert';
-		} else {
+		}
+		else {
 			return 'text-present';
 		}
 	}
@@ -190,7 +193,9 @@ export class AccountInfo implements OnInit, OnChanges {
 		this.alertModalRef = this.modalService.show(this.alertModal, { ignoreBackdropClick: true });
 	}
 	cancelAlert() {
-		this.alertModalRef && this.alertModalRef.hide();
+		if (this.alertModalRef) {
+			this.alertModalRef.hide();
+		}
 		this.alertModalRef = undefined;
 	}
 	confirmAlert() {
@@ -206,7 +211,8 @@ export class AccountInfo implements OnInit, OnChanges {
 
 			if (cached && cached.generatedAt > threshold.getTime()) {
 				this.duplicates = cached;
-			} else {
+			}
+			else {
 				this.model.getAllDuplicatesQuickInfo(account._id)
 					.then(duplicates => {
 						if (duplicates) {

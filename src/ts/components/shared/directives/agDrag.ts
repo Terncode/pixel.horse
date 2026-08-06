@@ -89,7 +89,9 @@ export function handleDrag(element: HTMLElement, emit: (event: AgDragEvent) => v
 			send(lastEvent, 'end');
 			window.removeEventListener(events.move, move);
 			window.removeEventListener(events.up, up);
-			events.up2 && window.removeEventListener(events.up2, up);
+			if (events.up2) {
+				window.removeEventListener(events.up2, up);
+			}
 			window.removeEventListener('blur', end);
 			dragging = false;
 		}
@@ -106,7 +108,9 @@ export function handleDrag(element: HTMLElement, emit: (event: AgDragEvent) => v
 
 				window.addEventListener(events.move, move);
 				window.addEventListener(events.up, up);
-				events.up2 && window.addEventListener(events.up2, up);
+				if (events.up2) {
+					window.addEventListener(events.up2, up);
+				}
 				window.addEventListener('blur', end);
 				e.stopPropagation();
 

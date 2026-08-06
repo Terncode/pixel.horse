@@ -232,7 +232,8 @@ export function positionClover(map: ServerMap) {
 			y: patch.y + bounds.y / tileHeight + random(0, bounds.h / tileHeight, true),
 		};
 		return position;
-	} else {
+	}
+	else {
 		return randomPosition(map);
 	}
 }
@@ -246,8 +247,9 @@ export function createBunny(waypoints: Point[]) {
 	let sleepUntil = 0;
 
 	entity.serverUpdate = (_delta, now) => {
-		if (sleepUntil > now)
+		if (sleepUntil > now) {
 			return;
+		}
 
 		const { x, y } = waypoints[waypoint];
 		const reachedX = Math.abs(entity.x - x) < 0.2;
@@ -260,21 +262,26 @@ export function createBunny(waypoints: Point[]) {
 			if (rand < 0.1) {
 				setEntityAnimation(entity, BunnyAnimation.Clean);
 				sleepUntil = now + 2;
-			} else if (rand < 0.2) {
+			}
+			else if (rand < 0.2) {
 				setEntityAnimation(entity, BunnyAnimation.Look);
 				sleepUntil = now + 2;
-			} else if (rand < 0.3) {
+			}
+			else if (rand < 0.3) {
 				setEntityAnimation(entity, BunnyAnimation.Blink);
 				sleepUntil = now + 2;
-			} else if (rand < 0.6) {
+			}
+			else if (rand < 0.6) {
 				setEntityAnimation(entity, BunnyAnimation.Sit);
 				sleepUntil = now + 2;
-			} else {
+			}
+			else {
 				waypoint = (waypoint + 1) % waypoints.length;
 				setEntityAnimation(entity, BunnyAnimation.Sit);
 				sleepUntil = now + random(0.2, 2, true);
 			}
-		} else {
+		}
+		else {
 			const vx = reachedX ? 0 : (x < entity.x ? -bunnySpeed : bunnySpeed);
 			const vy = reachedY ? 0 : (y < entity.y ? -bunnySpeed : bunnySpeed);
 
@@ -287,7 +294,8 @@ export function createBunny(waypoints: Point[]) {
 
 	if (DEVELOPMENT && false) {
 		return [entity, ...waypoints.map(({ x, y }) => entities.routePole(x, y))];
-	} else {
+	}
+	else {
 		return [entity];
 	}
 }

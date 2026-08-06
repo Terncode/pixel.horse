@@ -78,11 +78,13 @@ export class PartyService {
 
 				if (newLeader) {
 					this.promoteLeader(client, newLeader);
-				} else {
+				}
+				else {
 					this.destroyParty(party);
 				}
 			}, LEADER_TIMEOUT);
-		} else {
+		}
+		else {
 			const pendingParty = this.parties.find(p => p.pending.some(x => x.client === client));
 
 			if (pendingParty) {
@@ -94,8 +96,9 @@ export class PartyService {
 	remove(leader: IClient, client: IClient) {
 		const party = leader.party;
 
-		if (!party || party.leader !== leader)
+		if (!party || party.leader !== leader) {
 			return;
+		}
 
 		if (includes(party.clients, client)) {
 			removeItem(party.clients, client);
@@ -108,7 +111,8 @@ export class PartyService {
 			client.updateParty(undefined);
 			this.sendPartyUpdateToAll(party);
 			this.partyChanged.next(client);
-		} else {
+		}
+		else {
 			const pending = party.pending.find(p => p.client === client);
 
 			if (pending) {
@@ -129,33 +133,42 @@ export class PartyService {
 
 		if (can === LimiterResult.LimitReached) {
 			return saySystem(leader, 'Reached invite rejection limit');
-		} else if (can !== LimiterResult.Yes) {
+		}
+		else if (can !== LimiterResult.Yes) {
 			return saySystem(leader, 'Cannot invite');
 		}
 
-		if (client.shadowed)
+		if (client.shadowed) {
 			return saySystem(leader, 'Cannot invite');
+		}
 
-		if (hasFlag(leader.account.flags, AccountFlags.BlockPartyInvites))
+		if (hasFlag(leader.account.flags, AccountFlags.BlockPartyInvites)) {
 			return saySystem(leader, 'Cannot invite');
+		}
 
-		if (party && party.leader !== leader)
+		if (party && party.leader !== leader) {
 			return saySystem(leader, 'You need to be party leader');
+		}
 
-		if (party && (party.clients.length + party.pending.length) >= PARTY_LIMIT)
+		if (party && (party.clients.length + party.pending.length) >= PARTY_LIMIT) {
 			return saySystem(leader, 'Party is full');
+		}
 
-		if (client.party)
+		if (client.party) {
 			return saySystem(leader, 'Already in a party');
+		}
 
-		if (party && party.pending.some(p => p.client === client))
+		if (party && party.pending.some(p => p.client === client)) {
 			return saySystem(leader, 'Already invited');
+		}
 
-		if (client.accountSettings.ignorePartyInvites && !isFriend(client, leader))
+		if (client.accountSettings.ignorePartyInvites && !isFriend(client, leader)) {
 			return saySystem(leader, 'Cannot invite');
+		}
 
-		if (this.parties.reduce((sum, p) => sum + p.pending.filter(x => x.client === client).length, 0) >= INVITE_LIMIT)
+		if (this.parties.reduce((sum, p) => sum + p.pending.filter(x => x.client === client).length, 0) >= INVITE_LIMIT) {
 			return saySystem(leader, 'Too many pending invites');
+		}
 
 		const partyExisted = !!leader.party;
 
@@ -164,8 +177,9 @@ export class PartyService {
 		}
 
 		/* istanbul ignore next */
-		if (!party)
+		if (!party) {
 			throw new Error(`Party not created`);
+		}
 
 		const notificationId = this.addInviteNotification(client, leader, party);
 
@@ -194,20 +208,25 @@ export class PartyService {
 	promoteLeader(leader: IClient, client: IClient) {
 		const party = leader.party;
 
-		if (!party)
+		if (!party) {
 			return;
+		}
 
-		if (leader === client)
+		if (leader === client) {
 			return;
+		}
 
-		if (client.offline)
+		if (client.offline) {
 			return saySystem(leader, 'Player is offline');
+		}
 
-		if (party.leader !== leader)
+		if (party.leader !== leader) {
 			return saySystem(leader, 'You need to be party leader');
+		}
 
-		if (!includes(party.clients, client))
+		if (!includes(party.clients, client)) {
 			return saySystem(leader, 'Not in the party');
+		}
 
 		party.leader = client;
 		this.sendPartyUpdateToAll(party);
@@ -224,7 +243,8 @@ export class PartyService {
 				if ((now - party.cleanup) > (10 * SECOND)) {
 					this.destroyParty(party);
 				}
-			} else if (party.cleanup !== undefined) {
+			}
+			else if (party.cleanup !== undefined) {
 				party.cleanup = undefined;
 			}
 		}

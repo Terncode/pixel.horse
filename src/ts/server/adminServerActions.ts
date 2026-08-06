@@ -98,7 +98,8 @@ export class AdminServerActions implements IAdminServerActions, SocketServer {
 
 		if (index !== -1) {
 			this.updates[index].update = update;
-		} else {
+		}
+		else {
 			this.updates.push({ type, id, update });
 		}
 
@@ -114,8 +115,9 @@ export class AdminServerActions implements IAdminServerActions, SocketServer {
 	subscribe(type: ModelTypes, id: string) {
 		const key = `${type}:${id}`;
 
-		if (this.subscriptions.has(key))
+		if (this.subscriptions.has(key)) {
 			return;
+		}
 
 		if (type === 'ponies') {
 			if (!this.adminService.ponies.get(id)) {
@@ -127,13 +129,17 @@ export class AdminServerActions implements IAdminServerActions, SocketServer {
 
 		if (type === 'accountAuths') {
 			subscription = this.adminService.subscribeToAccountAuths(id, update => this.pushUpdate(type, id, update));
-		} else if (type === 'accountOrigins') {
+		}
+		else if (type === 'accountOrigins') {
 			subscription = this.adminService.subscribeToAccountOrigins(id, update => this.pushUpdate(type, id, update));
-		} else if (type === 'accountPonies') {
+		}
+		else if (type === 'accountPonies') {
 			subscription = this.adminService.subscribeToAccountPonies(id, update => this.pushUpdate(type, id, update));
-		} else if (type in this.adminService) {
+		}
+		else if (type in this.adminService) {
 			subscription = this.adminService[type].subscribe(id, (id, update) => this.pushUpdate(type, id, update));
-		} else {
+		}
+		else {
 			throw new Error(`Invalid model type (${type})`);
 		}
 
@@ -152,7 +158,8 @@ export class AdminServerActions implements IAdminServerActions, SocketServer {
 
 			if (type === 'ponies') {
 				this.adminService.cleanupPony(id);
-			} else if (type === 'accountPonies') {
+			}
+			else if (type === 'accountPonies') {
 				this.adminService.cleanupPoniesList(id);
 			}
 		}
@@ -266,7 +273,8 @@ export class AdminServerActions implements IAdminServerActions, SocketServer {
 	async clearOrigins(count: number, andHigher: boolean, options: ClearOrignsOptions) {
 		if (!this.adminService.loaded) {
 			throw new Error('Not loaded yet');
-		} else {
+		}
+		else {
 			await clearOrigins(this.adminService, count, andHigher, options);
 		}
 	}
@@ -274,7 +282,8 @@ export class AdminServerActions implements IAdminServerActions, SocketServer {
 	async clearOriginsForAccounts(accounts: string[], options: ClearOrignsOptions) {
 		if (!this.adminService.loaded) {
 			throw new Error('Not loaded yet');
-		} else {
+		}
+		else {
 			await clearOriginsForAccounts(this.adminService, accounts, options);
 		}
 	}
@@ -392,7 +401,8 @@ export class AdminServerActions implements IAdminServerActions, SocketServer {
 	async setAge(accountId: string, age: number) {
 		if (age === -1) {
 			await Account.updateOne({ _id: accountId }, { $unset: { birthyear: 1 } }).exec();
-		} else {
+		}
+		else {
 			const birthyear = (new Date()).getFullYear() - age;
 			await Account.updateOne({ _id: accountId }, { birthyear }).exec();
 		}
@@ -479,7 +489,8 @@ export class AdminServerActions implements IAdminServerActions, SocketServer {
 		if (origin && origin.ip && origin.country) {
 			await addOrigin(accountId, origin);
 			system(accountId, `Added origin (${JSON.stringify(origin)}) ${this.by()}`);
-		} else {
+		}
+		else {
 			throw new Error('Invalid origin');
 		}
 	}

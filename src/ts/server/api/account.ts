@@ -243,9 +243,11 @@ export const createRemoveSite =
 
 			if (!auth || auth.disabled) {
 				throw new UserError('Social account not found');
-			} else if (auths === 1) {
+			}
+			else if (auths === 1) {
 				throw new UserError('Cannot remove your only one social account');
-			} else {
+			}
+			else {
 				log(account._id, `removed auth: ${auth.name} [${auth._id}]`);
 				await Auth.updateOne({ _id: auth._id }, { disabled: true }).exec();
 			}

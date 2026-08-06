@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { stubClass, resetStubMethods } from '../lib';
 import { Subject } from 'rxjs';
 import { expect } from 'chai';
@@ -34,7 +35,9 @@ describe('World', () => {
 		client = mockClient();
 		world = new World(
 			{ flags: {} } as any, partyService as any, friendsService as any, hidingService as any,
-			notifications, getSettings, liveSettings, { stats() { return {}; } } as any);
+			notifications, getSettings, liveSettings, { stats() {
+				return {};
+			} } as any);
 		world.maps.push(map = createServerMap('', 0, 1, 1));
 		client.map = world.getMainMap();
 	});

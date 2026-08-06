@@ -97,11 +97,13 @@ export const createSay =
 			const { command, args, type } = parseCommand(text, chatType);
 			const whisper = type === ChatType.Whisper;
 
-			if (!command && !args)
+			if (!command && !args) {
 				return;
+			}
 
-			if (whisper && client === target)
+			if (whisper && client === target) {
 				return;
+			}
 
 			const forbidden = command == null && isPublicChat(type) && isForbiddenMessage(args);
 
@@ -120,29 +122,34 @@ export const createSay =
 							checkSpam(client, text, settings);
 						}
 					}
-				} else {
+				}
+				else {
 					const expression = parseExpression(text.substr(1), true);
 
 					if (expression) {
 						setEntityExpression(client.pony, expression);
-					} else {
+					}
+					else {
 						saySystem(client, 'Invalid command');
 					}
 				}
-			} else {
+			}
+			else {
 				const message = args;
 				const think = type === ChatType.Think || type === ChatType.PartyThink;
 				const expression = (think || whisper) ? undefined : parseExpression(message);
 
 				if (expression) {
 					setEntityExpression(client.pony, expression);
-				} else if (!whisper && isLaugh(message)) {
+				}
+				else if (!whisper && isLaugh(message)) {
 					execAction(client, Action.Laugh, settings);
 				}
 
 				if (isPartyChat(type)) {
 					sayToParty(client, message, think ? MessageType.PartyThinking : MessageType.Party);
-				} else {
+				}
+				else {
 					const friendWhisper = whisper && target !== undefined && isFriend(client, target);
 					const messageNoLinks = filterUrls(message);
 					const messageCensored = forbidden ? repeat('*', messageNoLinks.length) : filterBadWords(messageNoLinks);
@@ -171,11 +178,14 @@ export const createSay =
 						}
 
 						world.kick(client, 'swearing', LeaveReason.Swearing);
-					} else if (!friendWhisper && forbidden) {
+					}
+					else if (!friendWhisper && forbidden) {
 						sayTo(client, client.pony, trimmedMessage, messageType);
-					} else if (whisper) {
+					}
+					else if (whisper) {
 						sayWhisper(client, trimmedMessage, trimmedCensored, messageType, target, settings);
-					} else {
+					}
+					else {
 						sayToEveryone(client, trimmedMessage, trimmedCensored, messageType, settings);
 					}
 				}
@@ -236,14 +246,17 @@ function sayWhisper(
 ) {
 	if (target === undefined || target.shadowed || isHiddenBy(client, target)) {
 		saySystem(client, `Couldn't find this player`);
-	} else {
+	}
+	else {
 		const friend = isFriend(client, target);
 
 		if (!friend && client.accountSettings.ignoreNonFriendWhispers) {
 			saySystem(client, `You can only whisper to friends`);
-		} else if (!friend && target.accountSettings.ignoreNonFriendWhispers) {
+		}
+		else if (!friend && target.accountSettings.ignoreNonFriendWhispers) {
 			saySystem(client, `Can't whisper to this player`);
-		} else {
+		}
+		else {
 			sayTo(client, target.pony, message, toMessageType(type));
 
 			if (!isMutedOrShadowed(client)) {
@@ -256,9 +269,11 @@ function sayWhisper(
 function sayToParty(client: IClient, message: string, type: MessageType) {
 	if (!client.party) {
 		saySystem(client, `you're not in a party`);
-	} else if (isMutedOrShadowed(client)) {
+	}
+	else if (isMutedOrShadowed(client)) {
 		sayTo(client, client.pony, message, type);
-	} else {
+	}
+	else {
 		for (const c of client.party.clients) {
 			sayTo(c, client.pony, message, type);
 		}
@@ -283,7 +298,8 @@ export function sayToEveryone(
 		client.accountSettings.ignorePublicChat
 	) {
 		sayTo(client, client.pony, message, type);
-	} else {
+	}
+	else {
 		sayToAll(client.pony, message, censoredMessage, type, settings);
 	}
 }
@@ -293,9 +309,11 @@ export function sayToOthers(
 ) {
 	if (isWhisper(type)) {
 		sayWhisper(client, message, message, type, target, settings);
-	} else if (isPartyMessage(type)) {
+	}
+	else if (isPartyMessage(type)) {
 		sayToParty(client, message, type);
-	} else {
+	}
+	else {
 		sayToEveryone(client, message, message, type, settings);
 	}
 }

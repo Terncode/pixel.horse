@@ -34,13 +34,15 @@ export function playAnimation(player: AnimationPlayer, animation: SpriteAnimatio
 				player.time = (player.frame + 1) / player.currentAnimation.fps;
 				player.phase = AnimationPhase.Ending;
 			}
-		} else {
+		}
+		else {
 			player.currentAnimation = animation;
 			player.time = 0;
 			player.phase = AnimationPhase.Starting;
 		}
 		player.dirty = true;
-	} else if (player.phase === AnimationPhase.Ending) {
+	}
+	else if (player.phase === AnimationPhase.Ending) {
 		player.nextAnimation = animation;
 		player.dirty = true;
 	}
@@ -95,12 +97,14 @@ export function drawAnimation(
 				throw new Error('Undefined frame in sprite animation');
 			}
 
-			if (!frame) // TEMP
+			if (!frame) { // TEMP
 				return;
+			}
 
 			if (maxY === 0) {
 				batch.drawSprite(frame, color, player.palette, x, y);
-			} else {
+			}
+			else {
 				drawSpriteCropped(batch, frame, color, player.palette, x, y, maxY);
 			}
 		}

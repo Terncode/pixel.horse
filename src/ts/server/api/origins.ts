@@ -22,13 +22,15 @@ export async function getOriginStats(accounts: Account[]): Promise<OriginStats> 
 
 				if (uniques.has(origin.ip)) {
 					duplicates.add(origin.ip);
-				} else {
+				}
+				else {
 					uniques.add(origin.ip);
 				}
 
 				if (origin.ip.indexOf(':') !== -1) {
 					totalOriginsIP6++;
-				} else {
+				}
+				else {
 					totalOriginsIP4++;
 				}
 			}

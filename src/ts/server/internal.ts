@@ -78,7 +78,7 @@ export function getServer(id: string) {
 	return server;
 }
 
-export function createApi<T extends {}>(host: string, url: string, apiToken: string): T {
+export function createApi<T extends object>(host: string, url: string, apiToken: string): T {
 	return new Proxy<T>({} as any, {
 		get: (_, key) =>
 			async (...args: any[]) => {
@@ -115,7 +115,8 @@ async function join(joinServer: InternalGameServerState, account: IAccount, char
 		const kicked = await mapGameServers(s => {
 			if (isMod(account) && s !== joinServer) {
 				return false;
-			} else {
+			}
+			else {
 				return s.api.kick(account._id.toString(), undefined).catch(e => (logger.error(e), false));
 			}
 		});
@@ -125,7 +126,8 @@ async function join(joinServer: InternalGameServerState, account: IAccount, char
 		}
 
 		return await joinServer.api.join(account._id.toString(), character._id.toString());
-	} catch (error) {
+	}
+	catch (error) {
 		if (
 			typeof error === 'object' &&
 			error !== null &&
@@ -136,7 +138,8 @@ async function join(joinServer: InternalGameServerState, account: IAccount, char
 			(error as any).error.userError
 		) {
 			throw new UserError((error as any).error.error);
-		} else {
+		}
+		else {
 			logger.error(error);
 			throw new Error('Internal error');
 		}
@@ -154,13 +157,16 @@ export async function accountChanged(accountId: string) {
 		await mapGameServers(s => {
 			s.api.accountChanged(accountId).catch(noop);
 		});
-	} else {
+	}
+	else {
 		await accountChangedHandler(accountId);
 	}
 }
 
 export async function accountMerged(accountId: string, mergedId: string) {
-	await mapGameServers(s => { s.api.accountMerged(accountId, mergedId).catch(noop); });
+	await mapGameServers(s => {
+		s.api.accountMerged(accountId, mergedId).catch(noop);
+	});
 }
 
 export async function accountStatus(accountId: string) {
@@ -194,7 +200,11 @@ export type RemovedDocument = ReturnType<typeof createRemovedDocument>;
 export const createRemovedDocument =
 	(endPoints: EndPoints | undefined, adminService: AdminService | undefined) =>
 		(model: 'events' | 'ponies' | 'accounts' | 'auths' | 'origins', id: string) => {
-			endPoints && model in endPoints && (endPoints as any)[model].removedItem(id);
-			adminService && adminService.removedItem(model, id);
+			if (endPoints && model in endPoints) {
+				(endPoints as any)[model].removedItem(id);
+			}
+			if (adminService) {
+				adminService.removedItem(model, id);
+			}
 			return adminServer ? adminServer.api.removedDocument(model, id).catch(noop) : Promise.resolve();
 		};

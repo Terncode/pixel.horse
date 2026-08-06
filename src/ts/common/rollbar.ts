@@ -80,9 +80,11 @@ export interface Person {
 function getLabel(arg: LogArgument | undefined) {
 	if (typeof arg === 'string') {
 		return arg;
-	} else if (arg && 'message' in arg) {
+	}
+	else if (arg && 'message' in arg) {
 		return (arg as any).message + (arg.stack || '');
-	} else {
+	}
+	else {
 		return arg ? arg.toString() : '';
 	}
 }

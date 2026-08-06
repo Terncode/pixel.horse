@@ -35,13 +35,17 @@ let lastErrorTime = 0;
 function formatMessage(message: string | Uint8Array | null | undefined) {
 	if (message === null) {
 		return '<null>';
-	} else if (message === undefined) {
+	}
+	else if (message === undefined) {
 		return '<undefined>';
-	} else if (typeof message === 'string') {
+	}
+	else if (typeof message === 'string') {
 		return message;
-	} else if (message instanceof Uint8Array) {
+	}
+	else if (message instanceof Uint8Array) {
 		return `<${Array.from(message).toString()}>`;
-	} else {
+	}
+	else {
 		return `<${JSON.stringify(message)}>`;
 	}
 }
@@ -57,18 +61,23 @@ function reportError(rollbar: Rollbar | undefined, e: Error, client: IClient | u
 	if (isUserError(e)) {
 		reportUserError2(e, client);
 		return e;
-	} else {
+	}
+	else {
 		if (client && client.reporter && !reporterIgnore.test(e.message)) {
 			client.reporter.error(e);
-		} else if (client && client.originalRequest) {
+		}
+		else if (client && client.originalRequest) {
 			const origin = client.originalRequest && getOriginFromHTTP(client.originalRequest);
 			createReporter(config, undefined, undefined, origin).error(e);
-		} else {
+		}
+		else {
 			createReporter(config).error(e);
 		}
 
 		if (!rollbarIgnore.test(e.message)) {
-			rollbar && rollbar.error(e, null as any, { person: getPerson(client) });
+			if (rollbar) {
+				rollbar.error(e, null as any, { person: getPerson(client) });
+			}
 		}
 
 		return new Error('Error occurred');
@@ -82,10 +91,12 @@ function getMethodNameFromPacket(packet: string | Uint8Array) {
 		if (typeof packet === 'string') {
 			const values = JSON.parse(packet);
 			return serverMethods[values[0]].name;
-		} else {
+		}
+		else {
 			return serverMethods[packet[0]].name;
 		}
-	} catch {
+	}
+	catch {
 		return '???';
 	}
 }
@@ -100,7 +111,8 @@ function reportRateLimit(client: IClient, e: Error, message: string) {
 			client.rateLimitCount = 1;
 			client.disconnect(true, true);
 		}
-	} else {
+	}
+	else {
 		client.rateLimitMessage = e.message;
 		client.rateLimitCount = 1;
 	}
@@ -120,13 +132,15 @@ export class SocketErrorHandler implements ErrorHandler {
 		if (/^rate limit exceeded/i.test(e.message)) {
 			reportRateLimit(client, e, 'rejection');
 			return new Error('Error occurred');
-		} else {
+		}
+		else {
 			return reportError(this.rollbar, e, client, this.config);
 		}
 	}
 	handleRecvError(client: IClient, e: Error, socketMessage: string | Uint8Array) {
-		if (lastError === e.message && Date.now() < (lastErrorTime + 5000))
+		if (lastError === e.message && Date.now() < (lastErrorTime + 5000)) {
 			return;
+		}
 
 		const message = formatMessage(socketMessage);
 		const method = getMethodNameFromPacket(socketMessage);
@@ -135,11 +149,13 @@ export class SocketErrorHandler implements ErrorHandler {
 		if (client.reporter) {
 			if (/^rate limit exceeded/i.test(e.message)) {
 				reported = reportRateLimit(client, e, message);
-			} else if (/^transfer limit exceeded/i.test(e.message)) {
+			}
+			else if (/^transfer limit exceeded/i.test(e.message)) {
 				reported = true;
 				const desc = e.message.replace(/transfer limit exceeded /i, '');
 				client.reporter.warn('Transfer limit exceeded', `${desc} - (${method}) ${message}`);
-			} else if (!includes(ignoreErrors, e.message)) {
+			}
+			else if (!includes(ignoreErrors, e.message)) {
 				reported = true;
 				client.reporter.error(e, `(${method}) ${message}`);
 			}
@@ -150,7 +166,9 @@ export class SocketErrorHandler implements ErrorHandler {
 
 		if (!reported && !rollbarIgnore.test(e.message || '')) {
 			logger.error(`recv error: ${e.stack || e}\n\n    message: ${message}`);
-			this.rollbar && this.rollbar.error(e, null as any, { custom: { message }, person: getPerson(client) });
+			if (this.rollbar) {
+				this.rollbar.error(e, null as any, { custom: { message }, person: getPerson(client) });
+			}
 		}
 	}
 }

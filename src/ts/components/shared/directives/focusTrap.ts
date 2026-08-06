@@ -32,7 +32,8 @@ export class FocusTrap implements OnInit, OnDestroy {
 				if (!isParentOf(this.element.nativeElement, this.lastActiveElement)) {
 					setTimeout(() => this.lastActiveElement = focusFirstElement(this.element.nativeElement));
 				}
-			} else {
+			}
+			else {
 				this.lastActiveElement = undefined;
 				document.removeEventListener('focusin', this.focus);
 			}
@@ -41,13 +42,15 @@ export class FocusTrap implements OnInit, OnDestroy {
 	private focus = (e: Event) => {
 		if (isParentOf(this.element.nativeElement, e.target as any)) {
 			this.lastActiveElement = e.target as any;
-		} else {
+		}
+		else {
 			const focusable = findFocusableElements(this.element.nativeElement);
 
 			if (focusable.length) {
 				if (this.lastActiveElement === focusable[0]) {
 					this.lastActiveElement = focusable[focusable.length - 1];
-				} else {
+				}
+				else {
 					this.lastActiveElement = focusable[0];
 				}
 

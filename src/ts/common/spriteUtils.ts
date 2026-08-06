@@ -10,7 +10,9 @@ export function addTitles(sprites: ColorExtraSets, titles: string[]): ColorExtra
 }
 
 export function addLabels(sprites: ColorExtraSets, labels: string[]) {
-	sprites && sprites.forEach((s, i) => s && s[0] ? s[0]!.label = labels[i] : undefined);
+	if (sprites) {
+		sprites.forEach((s, i) => s && s[0] ? s[0]!.label = labels[i] : undefined);
+	}
 	return sprites;
 }
 

@@ -103,14 +103,16 @@ export class ChatBox implements AfterViewInit, OnDestroy {
 		this.toggleEmojiBox();
 		if (!this.message) {
 			this.message = emoji;
-		} else if (this.input.maxLength > this.message.length) {
+		}
+		else if (this.input.maxLength > this.message.length) {
 			this.message += emoji;
 		}
 	}
 	toggleEmojiBox() {
 		if (this.emojiBoxState === 'none') {
 			this.emojiBoxState = 'inline-block';
-		} else {
+		}
+		else {
 			this.emojiBoxState = 'none';
 		}
 	}
@@ -134,8 +136,9 @@ export class ChatBox implements AfterViewInit, OnDestroy {
 			do {
 				offset = message.indexOf(' ', offset);
 
-				if (offset === -1)
+				if (offset === -1) {
 					break;
+				}
 
 				const name = message.substr(0, offset);
 				entity = findBestEntityByName(this.game, name);
@@ -145,7 +148,8 @@ export class ChatBox implements AfterViewInit, OnDestroy {
 			if (entity) {
 				message = message.substr(offset);
 				entityId = entity.id;
-			} else {
+			}
+			else {
 				entityId = 0;
 			}
 		}
@@ -176,20 +180,25 @@ export class ChatBox implements AfterViewInit, OnDestroy {
 					if (names.length === 1) {
 						this.message = `${this.message.substring(0, space)} ${names[0]}`;
 					}
-				} else {
+				}
+				else {
 					this.message = autocompleteMesssage(this.message, e.shiftKey, this.state);
 				}
 			}
 
 			e.preventDefault();
-		} else if (e.keyCode === Key.ENTER && this.isOpen) {
+		}
+		else if (e.keyCode === Key.ENTER && this.isOpen) {
 			this.send(e);
-		} else if (e.keyCode === Key.ESCAPE) {
+		}
+		else if (e.keyCode === Key.ESCAPE) {
 			this.close();
 			e.preventDefault();
-		} else if (e.keyCode === Key.SPACE) {
-			if (!this.message)
+		}
+		else if (e.keyCode === Key.SPACE) {
+			if (!this.message) {
 				return;
+			}
 
 			const isParty = /^\/(p|party)$/i.test(this.message);
 			const isSay = /^\/(s|say)$/i.test(this.message);
@@ -208,33 +217,43 @@ export class ChatBox implements AfterViewInit, OnDestroy {
 
 			if (isSayOrInvalid) {
 				this.changeChatType(e, ChatType.Say);
-			} else if (isParty) {
+			}
+			else if (isParty) {
 				this.changeChatType(e, ChatType.Party);
-			} else if (isSup) {
+			}
+			else if (isSup) {
 				this.changeChatType(e, ChatType.Supporter);
-			} else if (isSup1) {
+			}
+			else if (isSup1) {
 				this.changeChatType(e, ChatType.Supporter1);
-			} else if (isSup2) {
+			}
+			else if (isSup2) {
 				this.changeChatType(e, ChatType.Supporter2);
-			} else if (isSup3) {
+			}
+			else if (isSup3) {
 				this.changeChatType(e, ChatType.Supporter3);
-			} else if (/^\/(t|think)$/i.test(this.message)) {
+			}
+			else if (/^\/(t|think)$/i.test(this.message)) {
 				if (isPartyChat(this.chatType)) {
 					this.changeChatType(e, ChatType.PartyThink);
-				} else {
+				}
+				else {
 					this.changeChatType(e, ChatType.Think);
 				}
-			} else if (/^\/(r|reply)$/i.test(this.message)) {
+			}
+			else if (/^\/(r|reply)$/i.test(this.message)) {
 				const lastWhisperFrom = this.game.lastWhisperFrom;
 				const entity = lastWhisperFrom && findEntityOrMockByAnyMeans(this.game, lastWhisperFrom.entityId);
 
 				if (entity) {
 					this.game.whisperTo = entity;
 					this.changeChatType(e, ChatType.Whisper);
-				} else {
+				}
+				else {
 					this.changeChatType(e, ChatType.Say);
 				}
-			} else if (/^\/(w|whisper) .+$/i.test(this.message) && !e.shiftKey) {
+			}
+			else if (/^\/(w|whisper) .+$/i.test(this.message) && !e.shiftKey) {
 				const name = this.message.substr(/^\/w /i.test(this.message) ? 3 : 9);
 				const entity = findBestEntityByName(this.game, name);
 
@@ -252,7 +271,8 @@ export class ChatBox implements AfterViewInit, OnDestroy {
 			return !!this.game.send(server =>
 				server.say(entityId, ((rawMessage !== '') ? rawMessage + ' ' : '') + `¯\\_(ツ)_/¯`,
 					chatType));
-		} else {
+		}
+		else {
 			return !!this.game.send(server => server.say(entityId, message, chatType));
 		}
 	}
@@ -265,7 +285,8 @@ export class ChatBox implements AfterViewInit, OnDestroy {
 	private chat(event: Event | undefined) {
 		if (this.isOpen) {
 			this.send(event);
-		} else {
+		}
+		else {
 			this.open();
 		}
 	}
@@ -299,12 +320,15 @@ export class ChatBox implements AfterViewInit, OnDestroy {
 	toggle() {
 		if (this.isOpen) {
 			this.close();
-		} else {
+		}
+		else {
 			this.open();
 		}
 	}
 	onMouseEnterEmojiButton(event: MouseEvent) {
-		if (!event.target) return;
+		if (!event.target) {
+			return;
+		}
 		const emoji = sample(emojis)!;
 		this.btnEmoji = emoji.names[0];
 	}
@@ -318,10 +342,12 @@ export class ChatBox implements AfterViewInit, OnDestroy {
 		if (type === 'say') {
 			this.chatType = ChatType.Say;
 			this.open();
-		} else if (type === 'party' && isInParty(this.game)) {
+		}
+		else if (type === 'party' && isInParty(this.game)) {
 			this.chatType = ChatType.Party;
 			this.open();
-		} else if (type === 'whisper') {
+		}
+		else if (type === 'whisper') {
 			this.chatType = ChatType.Whisper;
 			this.open();
 		}
@@ -344,7 +370,8 @@ export class ChatBox implements AfterViewInit, OnDestroy {
 		if (this.chatType === ChatType.Whisper) {
 			typePrefix = 'To ';
 			typeName = this.game.whisperTo && this.game.whisperTo.name || 'unknown';
-		} else {
+		}
+		else {
 			typePrefix = '';
 			typeName = chatTypeNames[this.chatType];
 		}

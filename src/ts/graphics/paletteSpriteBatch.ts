@@ -227,7 +227,8 @@ export class PaletteSpriteBatch extends BaseSpriteBatch implements IPaletteSprit
 					);
 					this.spritesCount++;
 				}
-			} else {
+			}
+			else {
 				this.index = pushQuad(
 					this.vertices,
 					this.transform, this.index, s.type, getColorFloat(color, this.globalAlpha),

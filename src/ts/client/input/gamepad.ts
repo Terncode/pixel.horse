@@ -55,7 +55,8 @@ function button({ mapping, gamepad }: GamepadInstance, name: GamepadButtons) {
 	if (button.axis !== undefined) {
 		if (button.direction < 0) {
 			return gamepad.axes[button.axis] < -0.75;
-		} else {
+		}
+		else {
 			return gamepad.axes[button.axis] > 0.75;
 		}
 	}
@@ -84,8 +85,9 @@ export class GamePadController implements InputController {
 		window.removeEventListener('gamepaddisconnected', this.gamepaddisconnected);
 	}
 	update() {
-		if (this.manager.disabledGamepad || !isFocused() || this.gamepadIndex === -1)
+		if (this.manager.disabledGamepad || !isFocused() || this.gamepadIndex === -1) {
 			return;
+		}
 
 		const gamepads = navigator.getGamepads();
 		const gamepad = gamepads[this.gamepadIndex];
@@ -150,7 +152,8 @@ function readAxis(manager: InputManager, keyX: Key, keyY: Key, axisX: number, ax
 		manager.setValue(keyX, Math.cos(theta) * scaledDist);
 		manager.setValue(keyY, Math.sin(theta) * scaledDist);
 		return false;
-	} else if (!zeroed) {
+	}
+	else if (!zeroed) {
 		manager.setValue(keyX, 0);
 		manager.setValue(keyY, 0);
 		return true;

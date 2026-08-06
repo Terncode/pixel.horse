@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { stubClass, stubFromInstance, resetStubMethods } from '../lib';
 import { expect } from 'chai';
 import { stub, assert, spy, SinonSpy, SinonFakeTimers, useFakeTimers, SinonStub } from 'sinon';
@@ -616,7 +617,8 @@ describe('ServerActions', () => {
 
 			try {
 				await serverActions.otherAction(111, ModAction.Report, 0);
-			} catch  { }
+			}
+			catch  { }
 
 			assert.calledWith(disconnect, true, true);
 		});

@@ -42,6 +42,7 @@ export class ToolsFrame {
 				openedPopover.popoverIsOpen = false;
 			}
 
+			// eslint-disable-next-line @typescript-eslint/no-this-alias
 			openedPopover = this;
 		}
 
@@ -50,7 +51,8 @@ export class ToolsFrame {
 		if (this.popoverIsOpen) {
 			this.selected = false;
 			window.addEventListener('mousedown', this.closePopover);
-		} else {
+		}
+		else {
 			window.removeEventListener('mousedown', this.closePopover);
 		}
 

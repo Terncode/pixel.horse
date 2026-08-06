@@ -27,7 +27,8 @@ export class NotificationService {
 	addNotification(client: IClient, notification: ServerNotification) {
 		if (client.notifications.length >= NOTIFICATION_LIMIT || hasNotification(client, notification)) {
 			return 0;
-		} else {
+		}
+		else {
 			notification.id = getId(client.notifications);
 			client.notifications.push(notification);
 			const { id, entityId = 0, name, message, note = '', flags = 0 } = notification;
@@ -39,7 +40,8 @@ export class NotificationService {
 		if (removeById(client.notifications, id)) {
 			client.removeNotification(id);
 			return true;
-		} else {
+		}
+		else {
 			return false;
 		}
 	}

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import '../lib';
 import { expect } from 'chai';
 import { stub, SinonStub, assert, SinonFakeTimers, useFakeTimers } from 'sinon';
@@ -322,7 +323,8 @@ describe('LiveList', () => {
 						on(event: string, callback: any) {
 							if (event === 'data') {
 								items.forEach(callback);
-							} else if (event === 'end') {
+							}
+							else if (event === 'end') {
 								callback();
 							}
 							return this;

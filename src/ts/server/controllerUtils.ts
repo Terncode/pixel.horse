@@ -12,7 +12,8 @@ export function give(type: number, message?: string) {
 	return (e: ServerEntity, client: IClient) => {
 		if (client.pony.options && client.pony.options.hold === type) {
 			unholdItem(client.pony);
-		} else {
+		}
+		else {
 			if (message) {
 				sayTo(client, e, message, MessageType.Announcement);
 			}
@@ -71,7 +72,8 @@ export function updateLights(entities: ServerEntity[], on: boolean) {
 			if (entity.lightDelay === undefined || entity.lightDelay < Date.now()) {
 				if (on) {
 					turnOn(entity);
-				} else {
+				}
+				else {
 					turnOff(entity);
 				}
 			}
@@ -96,7 +98,8 @@ export function createFenceMaker(
 
 			if (horizontal) {
 				add(sample(beamsH)!(x + dx * i + (size / 2), y));
-			} else {
+			}
+			else {
 				add(sample(beamsV)!(x, y + dy * i));
 			}
 		}

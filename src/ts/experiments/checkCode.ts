@@ -22,7 +22,8 @@ function processDir(pathStr: string, client = false) {
 
 		if (file.isDirectory()) {
 			processDir(filePath);
-		} else if (file.isFile()) {
+		}
+		else if (file.isFile()) {
 			if (file.name.endsWith('.ts')) {
 				const lines = fs.readFileSync(filePath, 'utf-8').split('\n').map(l => l.trim());
 				checked++;
@@ -37,7 +38,8 @@ function processDir(pathStr: string, client = false) {
 					console.warn('='.repeat(16));
 				}
 			}
-		} else {
+		}
+		else {
 			console.log(`File not supported ${pathStr}`);
 		}
 	}
@@ -52,7 +54,8 @@ function main() {
 	}
 	if (issues) {
 		console.log(`Found ${issues} issues in ${checked} files`);
-	} else {
+	}
+	else {
 		console.log(`Checked ${checked} files no issues have been found`);
 	}
 }

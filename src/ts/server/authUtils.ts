@@ -12,7 +12,8 @@ export async function assignAuth(auth: IAuth, account: IAccount) {
 		system(account._id, `connected auth ${auth.name} [${auth._id}]`);
 		await updateAuth(auth._id, { account: account._id });
 		return true;
-	} else {
+	}
+	else {
 		return false;
 	}
 }
@@ -22,7 +23,8 @@ export async function findOrCreateAuth(profile: Profile, accountId: string | und
 
 	if (auth) {
 		await updateAuthInfo(updateAuth, auth, profile, accountId);
-	} else {
+	}
+	else {
 		if (options.connectOnly && !accountId) {
 			if (profile.emails.length) {
 				const account = await Account.findOne({ emails: { $in: profile.emails } }).exec();
@@ -30,7 +32,8 @@ export async function findOrCreateAuth(profile: Profile, accountId: string | und
 				if (!account) {
 					throw new UserError(connectOnlySocialError);
 				}
-			} else {
+			}
+			else {
 				throw new UserError(connectOnlySocialError);
 			}
 		}
@@ -45,8 +48,9 @@ export async function findOrCreateAuth(profile: Profile, accountId: string | und
 export async function updateAuthInfo(
 	updateAuth: UpdateAuth, auth: IAuth | undefined, profile: Profile, accountId: string | undefined
 ) {
-	if (!auth)
+	if (!auth) {
 		return;
+	}
 
 	const changes: MongoUpdate<IAuth> = {};
 
@@ -96,7 +100,8 @@ async function verifyOrRestoreAuth(auth: IAuth, mergeAccount: string | undefined
 	if (auth.disabled || auth.banned) {
 		if (!auth.banned && auth.account && !!mergeAccount) {
 			changes.disabled = false;
-		} else {
+		}
+		else {
 			throw new UserError('Cannot sign-in using this social account');
 		}
 	}

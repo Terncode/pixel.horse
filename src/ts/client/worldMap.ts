@@ -105,7 +105,8 @@ function pickEntity(
 function pickByBounds(entity: Entity, rect: Rect, pickHidden: boolean): boolean {
 	if ((entity.flags & EntityFlags.Interactive) === 0 || (isHidden(entity) && !pickHidden)) {
 		return false;
-	} else {
+	}
+	else {
 		const bounds = entity.interactBounds || entity.bounds;
 		return !!bounds && boundsIntersect(entity.x, entity.y, bounds, 0, 0, rect);
 	}
@@ -128,8 +129,9 @@ export function pickEntitiesByRect(map: WorldMap, rect: Rect, ignorePonies: bool
 }
 
 export function removeRegions(map: WorldMap, coords: number[]) {
-	if (coords.length === 0)
+	if (coords.length === 0) {
 		return;
+	}
 
 	const entitiesToRemove = new Set<Entity>();
 
@@ -161,7 +163,9 @@ export function setRegion(map: WorldMap, x: number, y: number, region: Region) {
 		const oldRegion = map.regions[index];
 
 		if (oldRegion) {
-			DEVELOPMENT && !TESTS && console.error(`Region already set (${x}, ${y})`);
+			if (DEVELOPMENT && !TESTS) {
+				console.error(`Region already set (${x}, ${y})`);
+			}
 
 			for (const e of oldRegion.entities.slice()) {
 				releaseAndRemoveEntityFromMap(map, e);
@@ -172,8 +176,11 @@ export function setRegion(map: WorldMap, x: number, y: number, region: Region) {
 		setTilesDirty(map, x * REGION_SIZE - 1, y * REGION_SIZE - 1, REGION_SIZE + 2, REGION_SIZE + 2);
 		map.regions[index] = region;
 		updateMinMaxRegion(map);
-	} else {
-		DEVELOPMENT && !TESTS && console.error(`Invalid region coords (${x}, ${y})`);
+	}
+	else {
+		if (DEVELOPMENT && !TESTS) {
+			console.error(`Invalid region coords (${x}, ${y})`);
+		}
 	}
 }
 
@@ -186,7 +193,8 @@ export function addEntity(map: WorldMap, entity: Entity) {
 
 	if (!region) {
 		throw new Error(`Missing region at ${entity.x} ${entity.y}`);
-	} else {
+	}
+	else {
 		addEntityToMapRegion(map, region, entity);
 	}
 }
@@ -209,7 +217,8 @@ export function removeEntityDirectly(map: WorldMap, entity: Entity) {
 			releaseEntity(entity);
 			removeEntityFromEntities(map, entity);
 			return false;
-		} else {
+		}
+		else {
 			return true;
 		}
 	});
@@ -286,9 +295,11 @@ export function addEntityToMapRegion(map: WorldMap, region: Region, entity: Enti
 		const existing = map.entitiesById.get(entity.id);
 
 		if (existing) {
-			DEVELOPMENT && !TESTS && console.error(`Adding duplicate entity ${entity.id} (` +
+			if (DEVELOPMENT && !TESTS) {
+				console.error(`Adding duplicate entity ${entity.id} (` +
 				`${worldToRegionX(existing.x, map)}, ${worldToRegionY(existing.y, map)} => ` +
 				`${worldToRegionX(entity.x, map)}, ${worldToRegionY(entity.y, map)})`);
+			}
 
 			removeEntity(map, existing);
 		}
@@ -419,7 +430,8 @@ export function updateEntitiesCoverLifted(map: WorldMap, player: Entity, hideObj
 
 			if (e.coverLifted && lifting < 1) {
 				e.coverLifting = Math.min(lifting + delta * 2, 1);
-			} else if (!e.coverLifted && lifting > 0) {
+			}
+			else if (!e.coverLifted && lifting > 0) {
 				e.coverLifting = Math.max(lifting - delta * 2, 0);
 			}
 		}
@@ -460,7 +472,9 @@ export function getMapHeightAt(map: WorldMap, x: number, y: number, gameTime: nu
 }
 
 export function updateEntities(game: PonyTownGame, gameTime: number, delta: number, safe: boolean) {
-	TIMING && timeStart('updateEntities');
+	if (TIMING) {
+		timeStart('updateEntities');
+	}
 
 	const map = game.map;
 
@@ -475,7 +489,8 @@ export function updateEntities(game: PonyTownGame, gameTime: number, delta: numb
 			const bobs = entity.bobs!;
 			const frame = (((gameTime / 1000) * entity.bobsFps!) | 0) % bobs.length;
 			entity.z = toWorldZ(bobs[frame]);
-		} else if ((flags & EntityFlags.StaticY) === 0) {
+		}
+		else if ((flags & EntityFlags.StaticY) === 0) {
 			entity.z = getMapHeightAt(map, entity.x, entity.y, gameTime);
 		}
 
@@ -489,11 +504,13 @@ export function updateEntities(game: PonyTownGame, gameTime: number, delta: numb
 			if (wasSwimming !== pony.swimming) {
 				if (isFlyingDown(pony.animator.state)) {
 					setTimeout(() => playEffect(game, pony, splash.type), 400);
-				} else {
+				}
+				else {
 					playEffect(game, pony, splash.type);
 				}
 			}
-		} else if (entity.update !== undefined) {
+		}
+		else if (entity.update !== undefined) {
 			entity.update(delta, gameTime);
 		}
 
@@ -516,7 +533,8 @@ export function updateEntities(game: PonyTownGame, gameTime: number, delta: numb
 				if (Math.abs(entity.lightScale! - entity.lightTarget!) < move) {
 					entity.lightScale = entity.lightTarget;
 					entity.lightTarget = 1 - Math.random() * 0.15;
-				} else {
+				}
+				else {
 					entity.lightScale! += entity.lightScale! < entity.lightTarget! ? move : -move;
 				}
 			}
@@ -538,7 +556,9 @@ export function updateEntities(game: PonyTownGame, gameTime: number, delta: numb
 		}
 	}
 
-	TIMING && timeEnd();
+	if (TIMING) {
+		timeEnd();
+	}
 }
 
 export function invalidatePalettes(entities: Entity[]) {
@@ -552,8 +572,9 @@ export function invalidatePalettes(entities: Entity[]) {
 export function ensureAllVisiblePoniesAreDecoded(map: WorldMap, camera: Camera, paletteManager: PaletteManager) {
 	const poniesToDecode = map.poniesToDecode;
 
-	if (!poniesToDecode.length)
+	if (!poniesToDecode.length) {
 		return;
+	}
 
 	const decode = new Set<number>();
 
@@ -565,8 +586,9 @@ export function ensureAllVisiblePoniesAreDecoded(map: WorldMap, camera: Camera, 
 		}
 	}
 
-	if (!decode.size)
+	if (!decode.size) {
 		return;
+	}
 
 	if (decode.size > 100) {
 		paletteManager.deduplicate = false;
@@ -575,10 +597,12 @@ export function ensureAllVisiblePoniesAreDecoded(map: WorldMap, camera: Camera, 
 	map.poniesToDecode = poniesToDecode.filter((pony, i) => {
 		if (pony.palettePonyInfo !== undefined) {
 			return false;
-		} else if (decode.has(i)) {
+		}
+		else if (decode.has(i)) {
 			ensurePonyInfoDecoded(pony);
 			return false;
-		} else {
+		}
+		else {
 			return true;
 		}
 	});
@@ -595,7 +619,8 @@ export function switchEntityRegion(map: WorldMap, entity: Entity, x: number, y: 
 
 	if (region) {
 		addEntityToRegion(region, entity, map);
-	} else {
+	}
+	else {
 		releaseAndRemoveEntityFromMap(map, entity);
 	}
 }

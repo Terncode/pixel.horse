@@ -28,7 +28,9 @@ export class Help {
 	ngAfterViewInit() {
 		this.route.fragment.subscribe(f => {
 		  const element = document.querySelector('#' + f);
-		  if (element) setTimeout(() => element.scrollIntoView(), 10);
+		  if (element) {
+				setTimeout(() => element.scrollIntoView(), 10);
+			}
 		});
 	}
 }

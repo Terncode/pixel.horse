@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 type List<T> = ArrayLike<T>;
 type PartialDeep<T> = {
 	[P in keyof T]?: PartialDeep<T[P]>;
@@ -8,7 +9,7 @@ interface Dictionary<T> {
 interface NumericDictionary<T> {
 	[index: number]: T;
 }
-type NotVoid = {} | null | undefined;
+type NotVoid = NonNullable<unknown> | null | undefined;
 type ListIteratee<T> = ListIterator<T, NotVoid> | string | [string, any] | PartialDeep<T>;
 type ListIterator<T, TResult> = (value: T, index: number, collection: List<T>) => TResult;
 type ListIterateeCustom<T, TResult> = ListIterator<T, TResult> | string | [string, any] | PartialDeep<T>;

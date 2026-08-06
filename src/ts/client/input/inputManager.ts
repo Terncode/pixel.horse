@@ -146,7 +146,8 @@ export class InputManager {
 	setValue(input: Key, value: number): boolean {
 		if (input < 0 || input >= KEYS) {
 			console.warn(`Input out of range: ${input}`);
-		} else if (this.state[input] !== value) {
+		}
+		else if (this.state[input] !== value) {
 			this.state[input] = value;
 
 			if (this.actions[input] && this.actions[input].length) {
@@ -163,7 +164,8 @@ export class InputManager {
 	addValue(input: Key, value: number) {
 		if (input < 0 || input >= KEYS) {
 			console.warn(`Input out of range: ${input}`);
-		} else {
+		}
+		else {
 			this.state[input] += value;
 		}
 	}

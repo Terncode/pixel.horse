@@ -45,7 +45,8 @@ export class DropdownMenu {
 		if (!this.ref) {
 			if (useOutlet) {
 				this.ref = this.service.viewContainer!.createEmbeddedView(this.templateRef);
-			} else {
+			}
+			else {
 				this.ref = this.viewContainer.createEmbeddedView(this.templateRef);
 			}
 
@@ -63,7 +64,8 @@ export class DropdownMenu {
 					if ((rect.bottom + menuRect.height) > window.innerHeight) {
 						transform = `translate3d(${Math.round(rect.left)}px, ${Math.round(rect.top - menuRect.height)}px, 0)`;
 						renderer.addClass(root, 'dropdown-menu-up');
-					} else {
+					}
+					else {
 						transform = `translate3d(${Math.round(rect.left)}px, ${Math.round(rect.bottom)}px, 0)`;
 						renderer.removeClass(root, 'dropdown-menu-up');
 					}
@@ -184,7 +186,8 @@ export class Dropdown {
 	toggle() {
 		if (this.isOpen) {
 			this.close();
-		} else {
+		}
+		else {
 			this.open();
 		}
 	}
@@ -196,7 +199,8 @@ export class Dropdown {
 			&& !(this.autoClose === 'outsideClick' && this.menu.checkTarget(e))
 		) {
 			this.close();
-		} else if (this.autoClose && e.keyCode === 27) { // esc
+		}
+		else if (this.autoClose && e.keyCode === 27) { // esc
 			this.close();
 		}
 	};

@@ -62,7 +62,8 @@ export default function (server: ServerConfig, settings: Settings, world: World 
 	app.get('/maps', offline, (_, res) => {
 		if (world) {
 			res.json(world.maps.map(m => m.id));
-		} else {
+		}
+		else {
 			res.sendStatus(400);
 		}
 	});

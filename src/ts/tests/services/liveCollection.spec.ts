@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import '../lib';
 import { SocketService } from 'ag-sockets';
 import { expect } from 'chai';

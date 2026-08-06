@@ -85,7 +85,8 @@ export class CharacterPreview implements OnDestroy, OnChanges, AfterViewInit {
 					if (this.nextBlink < now) {
 						this.blinkFrame = 0;
 					}
-				} else {
+				}
+				else {
 					this.blinkFrame++;
 
 					if (this.blinkFrame >= BLINK_FRAMES.length) {
@@ -106,11 +107,13 @@ export class CharacterPreview implements OnDestroy, OnChanges, AfterViewInit {
 	private tryDraw() {
 		try {
 			this.draw();
-		} catch { }
+		}
+		catch { }
 	}
 	private draw() {
-		if (!this.initialized)
+		if (!this.initialized) {
 			return;
+		}
 
 		const canvas = this.canvas.nativeElement as HTMLCanvasElement;
 
@@ -121,8 +124,9 @@ export class CharacterPreview implements OnDestroy, OnChanges, AfterViewInit {
 		const bufferWidth = Math.round(canvas.width / scale);
 		const bufferHeight = Math.round(canvas.height / scale);
 
-		if (!bufferWidth || !bufferHeight)
+		if (!bufferWidth || !bufferHeight) {
 			return;
+		}
 
 		this.batch = this.batch || new ContextSpriteBatch(createCanvas(bufferWidth, bufferHeight));
 		resizeCanvas(this.batch.canvas, bufferWidth, bufferHeight);
@@ -136,7 +140,8 @@ export class CharacterPreview implements OnDestroy, OnChanges, AfterViewInit {
 			try {
 				const options = { ...DEFAULT_OPTIONS, shadow: !this.noShadow, extra: !!this.extra };
 				drawPony(this.batch, toPalette(this.pony), this.state || DEFAULT_STATE, x, y, options);
-			} catch (e) {
+			}
+			catch (e) {
 				console.error(e);
 			}
 
@@ -145,8 +150,9 @@ export class CharacterPreview implements OnDestroy, OnChanges, AfterViewInit {
 
 		const viewContext = canvas.getContext('2d');
 
-		if (!viewContext)
+		if (!viewContext) {
 			return;
+		}
 
 		disableImageSmoothing(viewContext);
 

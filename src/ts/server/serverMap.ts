@@ -217,8 +217,9 @@ export function saveMap(map: ServerMap, saveOptions: MapSaveOptions): MapData {
 		for (const region of map.regions) {
 			for (const entity of region.entities) {
 				if (!hasFlag(entity.serverFlags, ServerFlags.DoNotSave) && !hasFlag(entity.flags, EntityFlags.Debug)) {
-					if (saveOptions.saveOnlyEditableEntities && !hasFlag(entity.state, EntityState.Editable))
+					if (saveOptions.saveOnlyEditableEntities && !hasFlag(entity.state, EntityState.Editable)) {
 						continue;
+					}
 
 					const options = entity.options && Object.keys(entity.options).length > 0 ? entity.options : undefined;
 					const name = entity.name;
@@ -286,8 +287,9 @@ export function loadMap(world: World, map: ServerMap, data: MapData, loadOptions
 		deserializeMap(map, data, loadOptions);
 	}
 
-	if (loadOptions.loadOnlyTiles)
+	if (loadOptions.loadOnlyTiles) {
 		return;
+	}
 
 	if (loadOptions.loadEntitiesAsEditable) {
 		const entitiesToRemove: ServerEntity[] = [];

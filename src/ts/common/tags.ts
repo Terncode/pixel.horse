@@ -42,9 +42,11 @@ export function getTagPalette(tag: CharacterTag, palettes: FontPalettes) {
 export function canUseTag(account: AccountRoles, tag: string) {
 	if (tag === 'mod') {
 		return hasRole(account, 'mod');
-	} else if (tag === 'dev' || /^dev:/.test(tag)) {
+	}
+	else if (tag === 'dev' || /^dev:/.test(tag)) {
 		return hasRole(account, 'dev');
-	} else {
+	}
+	else {
 		return false;
 	}
 }

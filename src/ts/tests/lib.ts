@@ -20,6 +20,7 @@ import { loadImage, loadImageSync, createCanvas } from '../server/canvasUtilsNod
 import { loadAndInitSheets } from '../client/loadSprites';
 
 import * as chai from 'chai';
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const chaiAsPromised = require('chai-as-promised') as any;
 chai.use(chaiAsPromised.default ?? chaiAsPromised);
 
@@ -54,7 +55,8 @@ export function loadImageAsCanvas(filePath: string): HTMLCanvasElement {
 		const expected = createCanvas(image.width, image.height);
 		expected.getContext('2d')!.drawImage(image, 0, 0);
 		return expected;
-	} catch (e) {
+	}
+	catch (e) {
 		console.error(e);
 	}
 
@@ -75,14 +77,18 @@ export function compareCanvases(
 	filePath: string, group: string, diff = true
 ) {
 	try {
-		if (expected === actual)
+		if (expected === actual) {
 			return;
-		if (!expected)
+		}
+		if (!expected) {
 			throw new Error(`Expected canvas is null`);
-		if (!actual)
+		}
+		if (!actual) {
 			throw new Error(`Actual canvas is null`);
-		if (expected.width !== actual.width || expected.height !== actual.height)
+		}
+		if (expected.width !== actual.width || expected.height !== actual.height) {
 			throw new Error(`Canvas size is different than expected`);
+		}
 
 		const expectedData = expected.getContext('2d')!.getImageData(0, 0, expected.width, expected.height);
 		const actualData = actual.getContext('2d')!.getImageData(0, 0, actual.width, actual.height);
@@ -95,7 +101,8 @@ export function compareCanvases(
 				throw new Error(`Actual canvas different than expected at (${x}, ${y})`);
 			}
 		}
-	} catch (e) {
+	}
+	catch (e) {
 		if (actual && diff) {
 			const tempRoot = pathTo('tools', 'temp', group);
 			const tempPath = path.join(tempRoot, filePath ? path.basename(filePath) : `${Date.now()}-failed-test.png`);

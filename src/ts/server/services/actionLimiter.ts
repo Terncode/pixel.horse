@@ -18,20 +18,25 @@ export class ActionLimiter {
 		this.counters.start();
 	}
 	canExecute(requester: IClient, target: IClient): LimiterResult {
-		if (requester === target || requester.accountId === target.accountId)
+		if (requester === target || requester.accountId === target.accountId) {
 			return LimiterResult.SameAccount;
+		}
 
-		if (target.offline)
+		if (target.offline) {
 			return LimiterResult.TargetOffline;
+		}
 
-		if (isMutedOrShadowed(requester))
+		if (isMutedOrShadowed(requester)) {
 			return LimiterResult.MutedOrShadowed;
+		}
 
-		if (isIgnored(requester, target) || isIgnored(target, requester))
+		if (isIgnored(requester, target) || isIgnored(target, requester)) {
 			return LimiterResult.Ignored;
+		}
 
-		if (this.counters.get(requester.accountId).count >= this.countLimit)
+		if (this.counters.get(requester.accountId).count >= this.countLimit) {
 			return LimiterResult.LimitReached;
+		}
 
 		return LimiterResult.Yes;
 	}

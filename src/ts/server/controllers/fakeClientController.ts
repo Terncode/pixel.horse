@@ -25,24 +25,28 @@ export class FakeClientsController implements Controller {
 	constructor(private world: World, private server: ServerConfig, private options: Options) {
 	}
 	initialize() {
-		if (this.initialized)
+		if (this.initialized) {
 			return;
+		}
 
 		times(1000, async i => {
 			try {
 				const name = `perf-${i}`;
 				const account = await Account.findOne({ name }).exec();
 
-				if (!account)
+				if (!account) {
 					throw new Error(`Missing debug account (${name})`);
+				}
 
 				const character = await Character.findOne({ account: account._id }).exec();
 
-				if (!character)
+				if (!character) {
 					throw new Error(`Missing debug character (${name})`);
+				}
 
 				this.tokens.push({ id: name, account, character });
-			} catch (e) {
+			}
+			catch (e) {
 				console.error(e);
 			}
 		});
@@ -78,7 +82,8 @@ export class FakeClientsController implements Controller {
 				const client = await joinFakeClient(token, this.server, this.world);
 				this.clients.push(client);
 			}
-		} catch (e) {
+		}
+		catch (e) {
 			console.error(e);
 		}
 	}
@@ -127,10 +132,12 @@ async function joinFakeClient(token: any, server: ServerConfig, world: World): P
 					}
 
 					break;
-				} catch (e) {
+				}
+				catch (e) {
 					if (e instanceof RangeError ||  isDataViewError(e)) {
 						resizeWriter(packetWriter);
-					} else {
+					}
+					else {
 						throw e;
 					}
 				}

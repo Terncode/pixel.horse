@@ -80,7 +80,8 @@ export function execAsync(command: string, options?: ExecOptions) {
 		exec(command, options || {}, (error, stdout, stderr) => {
 			if (error) {
 				reject(error);
-			} else {
+			}
+			else {
 				resolve({ stdout: stdout.toString(), stderr: stderr.toString() });
 			}
 		});
@@ -118,7 +119,7 @@ export function handlePromiseDefault(promise: Promise<any>, errorHandler: any = 
 	Promise.resolve(promise).catch(errorHandler);
 }
 
-export function cached<TResult, T extends Function>(func: T, cacheTimeout = 1000): T & { clear(...args: any[]): void; } {
+export function cached<TResult, T extends (...args: any[]) => any>(func: T, cacheTimeout = 1000): T & { clear(...args: any[]): void; } {
 	const cacheMap = new Map<string, { timeout: any; result: TResult; }>();
 
 	const cachedFunc: any = (...args: any[]) => {
@@ -129,7 +130,8 @@ export function cached<TResult, T extends Function>(func: T, cacheTimeout = 1000
 			clearTimeout(cache.timeout);
 			cache.timeout = setTimeout(() => cacheMap.delete(cacheKey), cacheTimeout);
 			return cache.result;
-		} else {
+		}
+		else {
 			const result = func(...args);
 			const timeout = setTimeout(() => cacheMap.delete(cacheKey), cacheTimeout);
 			cacheMap.set(cacheKey, { result, timeout });

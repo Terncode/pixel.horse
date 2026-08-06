@@ -17,8 +17,9 @@ export class CloudController implements Controller {
 	constructor(private world: World, private map: ServerMap, private cloudCount: number) {
 	}
 	initialize() {
-		if (this.initialized)
+		if (this.initialized) {
 			return;
+		}
 
 		for (let i = 0; i < this.cloudCount; i++) {
 			this.addCloud(false, this.world.now / 1000);

@@ -119,7 +119,8 @@ export class ColorPicker {
 		if (!this.isDisabled) {
 			if (this.isOpen) {
 				this.close();
-			} else {
+			}
+			else {
 				this.open();
 			}
 		}

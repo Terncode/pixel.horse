@@ -37,8 +37,9 @@ export const mockPaletteManager: PaletteManager = {
 };
 
 export function spriteSet(type: number, lockFirstFill = true, fill = 'ffd700', otherFills = FILLS): SpriteSet<string> {
-	if (otherFills.length !== (MAX_COLORS - 1))
+	if (otherFills.length !== (MAX_COLORS - 1)) {
 		throw new Error('Invalid fills count');
+	}
 
 	const fills = [fill, ...otherFills];
 	const outlines = fills.map(fillToOutline);
@@ -147,13 +148,15 @@ export function syncLockedSpriteSet<T>(
 	set: SpriteSet<T> | undefined, customOutlines: boolean, fillToOutline: FillToOutline<T>, baseFill?: T,
 	baseOutline?: T
 ) {
-	if (set === undefined)
+	if (set === undefined) {
 		return;
+	}
 
 	const fills = set.fills;
 
-	if (!fills)
+	if (!fills) {
 		return;
+	}
 
 	const lockFills = set.lockFills;
 
@@ -177,7 +180,8 @@ export function syncLockedSpriteSet<T>(
 			if (lockOutlines[i]) {
 				if (i === 0 && baseOutline && lockFills && lockFills[i]) {
 					outlines[i] = baseOutline;
-				} else {
+				}
+				else {
 					outlines[i] = fillToOutline(fills[i]);
 				}
 			}
@@ -202,7 +206,8 @@ function syncLockedSpritesSet2<T>(
 			if (locked) {
 				if (baseOutlines[i] && set.lockFills && set.lockFills[i]) {
 					set.outlines![i] = baseOutlines[i];
-				} else {
+				}
+				else {
 					set.outlines![i] = fillToOutline(set.fills![i]);
 				}
 			}
@@ -356,7 +361,8 @@ function getColorsGeneric(
 
 		if (darken) {
 			colors[i * 2 + 1] = outlines[i] ? colorToHexRGB(darkenForOutline(parseColorFast(outlines[i]!))) : defaultColor;
-		} else {
+		}
+		else {
 			colors[i * 2 + 1] = outlines[i] || defaultColor;
 		}
 	}
@@ -398,7 +404,8 @@ export const getColorsForSetNumber: GetColorsForSet<number> = (set, length, dark
 
 		if (darken) {
 			result[((i << 1) + 2) | 0] = i < outlines.length ? darkenForOutline(outlines[i] || BLACK) : BLACK;
-		} else {
+		}
+		else {
 			result[((i << 1) + 2) | 0] = i < outlines.length ? (outlines[i] || BLACK) : BLACK;
 		}
 	}
@@ -432,8 +439,9 @@ function createCMPalette<T>(
 ): Palette | undefined {
 	const size = CM_SIZE * CM_SIZE;
 
-	if (cm === undefined || cm.length === 0 || cm.length > size)
+	if (cm === undefined || cm.length === 0 || cm.length > size) {
 		return undefined;
+	}
 
 	const result = new Uint32Array(size);
 
@@ -568,7 +576,8 @@ export function releasePalettes(info: PalettePonyInfo): void {
 			if ('refs' in value) {
 				const palette = value as Palette;
 				releasePalette(palette);
-			} else if ('palette' in value) {
+			}
+			else if ('palette' in value) {
 				const set = value as PaletteSpriteSet;
 				releasePalette(set.palette);
 				releasePalette(set.extraPalette);

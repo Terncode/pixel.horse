@@ -128,13 +128,17 @@ export class ToolsEntity implements OnInit {
 	handleKey(keyCode: number) {
 		if (keyCode === Key.UP) {
 			this.movePart(0, -1);
-		} else if (keyCode === Key.DOWN) {
+		}
+		else if (keyCode === Key.DOWN) {
 			this.movePart(0, 1);
-		} else if (keyCode === Key.LEFT) {
+		}
+		else if (keyCode === Key.LEFT) {
 			this.movePart(-1, 0);
-		} else if (keyCode === Key.RIGHT) {
+		}
+		else if (keyCode === Key.RIGHT) {
 			this.movePart(1, 0);
-		} else {
+		}
+		else {
 			return false;
 		}
 
@@ -149,7 +153,8 @@ export class ToolsEntity implements OnInit {
 		this.selectedPart = findLastIndex(this.parts, p => {
 			if (this.drawHold) {
 				return p.type === 'pickable';
-			} else {
+			}
+			else {
 				const bounds = getBounds(p);
 				return !!bounds && containsPoint(0, 0, bounds, x, y);
 			}
@@ -176,7 +181,8 @@ export class ToolsEntity implements OnInit {
 		if (entity) {
 			this.name = entity.name;
 			this.parts = entity.parts;
-		} else {
+		}
+		else {
 			this.name = '';
 			this.parts = [];
 		}
@@ -189,7 +195,8 @@ export class ToolsEntity implements OnInit {
 
 			if (existing) {
 				existing.parts = cloneDeep(this.parts);
-			} else {
+			}
+			else {
 				this.entities.push({
 					name: this.name,
 					parts: cloneDeep(this.parts),
@@ -260,7 +267,8 @@ export class ToolsEntity implements OnInit {
 
 				const state = { ...defaultPonyState(), holding };
 				drawPony(batch, this.pony, state, X, Y, defaultDrawPonyOptions());
-			} else {
+			}
+			else {
 				draw(batch);
 			}
 		});
@@ -344,7 +352,8 @@ function getBounds(part: Part): Rect | undefined {
 				h: color.h,
 			};
 		}
-	} else if (part.type === 'cover' || part.type === 'collider') {
+	}
+	else if (part.type === 'cover' || part.type === 'collider') {
 		return part;
 	}
 
@@ -358,15 +367,20 @@ function getSprite(name: string): PaletteRenderable {
 function drawSpritePart(batch: PaletteSpriteBatch, part: SpritePart, px: number, py: number) {
 	const sprite = getSprite(part.sprite);
 
-	if (!sprite)
+	if (!sprite) {
 		return;
+	}
 
 	const x = px + part.x;
 	const y = py + part.y;
 	const palette = paletteManager.addArray(sprite.palettes![0]);
 
-	sprite.shadow && batch.drawSprite(sprite.shadow, SHADOW_COLOR, defaultPalette, x, y);
-	sprite.color && batch.drawSprite(sprite.color, WHITE, palette, x, y);
+	if (sprite.shadow) {
+		batch.drawSprite(sprite.shadow, SHADOW_COLOR, defaultPalette, x, y);
+	}
+	if (sprite.color) {
+		batch.drawSprite(sprite.color, WHITE, palette, x, y);
+	}
 
 	releasePalette(palette);
 }
@@ -374,11 +388,14 @@ function drawSpritePart(batch: PaletteSpriteBatch, part: SpritePart, px: number,
 function drawPart(batch: PaletteSpriteBatch, part: Part, x: number, y: number) {
 	if (part.type === 'sprite') {
 		return drawSpritePart(batch, part, x, y);
-	} else if (part.type === 'cover' || part.type === 'collider') {
+	}
+	else if (part.type === 'cover' || part.type === 'collider') {
 		return drawOutline(batch, colors[part.type], part.x + x, part.y + y, part.w, part.h);
-	} else if (part.type === 'pickable') {
+	}
+	else if (part.type === 'pickable') {
 		return drawOutline(batch, colors[part.type], part.x + x, part.y + y, 1, 1);
-	} else {
+	}
+	else {
 		throw new Error(`Invalid part type (${(part as any).type})`);
 	}
 }
@@ -395,8 +412,9 @@ function drawBufferScaled(canvas: HTMLCanvasElement, buffer: HTMLCanvasElement, 
 function drawMixin(sprite: PaletteRenderable, dx: number, dy: number, paletteIndex = 0): EntityPart {
 	const bounds = getRenderableBounds(sprite, dx, dy);
 
-	if (SERVER && !TESTS)
+	if (SERVER && !TESTS) {
 		return { bounds };
+	}
 
 	const defaultPalette = sprite.shadow && createPalette(sprites.defaultPalette);
 	const palette = createPalette(att(sprite.palettes, paletteIndex));

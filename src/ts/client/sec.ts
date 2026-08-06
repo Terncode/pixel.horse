@@ -33,7 +33,9 @@ export function restorePlayerPosition() {
 		if (currentPlayer.x !== setX || currentPlayer.y !== setY) {
 			currentPlayer.x = setX;
 			currentPlayer.y = setY;
-			DEVELOPMENT && console.warn('Restoring player position');
+			if (DEVELOPMENT) {
+				console.warn('Restoring player position');
+			}
 		}
 	}
 }

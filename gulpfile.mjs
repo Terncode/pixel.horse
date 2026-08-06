@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import 'source-map-support/register.js';
 import fs from 'fs';
 import path from 'path';
@@ -125,7 +127,7 @@ const changelog = cb => {
 			.map(x => x.replace(/^\[test\]/, '<span class="badge badge-secondary">test</span>')),
 	}));
 	const type = `{ version: string; changes: string[]; }[]`;
-	const code = `/* tslint:disable */\n\nexport const CHANGELOG: ${type} = ${JSON.stringify(object, null, 2)};\n`;
+	const code = `/* eslint:disable */\n\nexport const CHANGELOG: ${type} = ${JSON.stringify(object, null, 2)};\n`;
 	fs.writeFile('src/ts/generated/changelog.ts', code, 'utf8', cb);
 };
 
@@ -178,7 +180,7 @@ const shaders = cb => {
 	}
 
 	const dir = path.join('src', 'ts', 'graphics', 'shaders');
-	const code = '/* tslint:disable */\n\n' + fs.readdirSync(dir)
+	const code = '/* eslint:disable */\n\n' + fs.readdirSync(dir)
 		.map(file => [_.camelCase(file.replace(/\.glsl$/, '')), path.join(dir, file)])
 		.map(([name, filePath]) => `export const ${name}Shader = \`${getShaderCode(filePath)}\`;`)
 		.join('\n\n');
@@ -200,7 +202,7 @@ const rollbar = cb => {
 const assetsRev = cb => {
 	const json = fs.readFileSync('dist/browser/rev-manifest.json', 'utf8');
 	const data = _.mapValues(JSON.parse(json), value => value.replace(/^\S+-([a-f0-9]{10})\.\S+$/, '$1'));
-	const code = `export const REV: { [key: string]: string; } = ${JSON.stringify(data, null, 4)};`;
+	const code = `export const REV: { [key: string]: string; } = ${JSON.stringify(data, null, 2)};`;
 	fs.writeFile('src/ts/generated/rev.ts', lintCode(code), 'utf8', cb);
 };
 

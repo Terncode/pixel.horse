@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { expect } from 'chai';
 import { useFakeTimers, SinonFakeTimers, SinonStub, stub, assert } from 'sinon';
 import {

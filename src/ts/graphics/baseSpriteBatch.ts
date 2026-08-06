@@ -137,7 +137,8 @@ export abstract class BaseSpriteBatch extends BaseStateBatch implements SpriteBa
 
 			// return batch;
 			return this.vertices.slice(this.startBatchIndex, this.index);
-		} catch {
+		}
+		catch {
 			return undefined;
 		}
 	}
@@ -145,8 +146,9 @@ export abstract class BaseSpriteBatch extends BaseStateBatch implements SpriteBa
 		// releaseBuffer(batch);
 	}
 	flush() {
-		if (this.index === 0)
+		if (this.index === 0) {
 			return;
+		}
 
 		if (!this.vao || !this.vertexBuffer) {
 			throw new Error('Disposed');
@@ -155,14 +157,22 @@ export abstract class BaseSpriteBatch extends BaseStateBatch implements SpriteBa
 		const gl = this.gl;
 
 		if (this.batching) {
-			TIMING && timeStart('bufferSubData');
+			if (TIMING) {
+				timeStart('bufferSubData');
+			}
 			gl.bindBuffer(gl.ARRAY_BUFFER, this.vertexBuffer);
 			gl.bufferSubData(gl.ARRAY_BUFFER, 0, this.vertices.subarray(0, this.startBatchIndex));
-			TIMING && timeEnd();
+			if (TIMING) {
+				timeEnd();
+			}
 
-			TIMING && timeStart('vao.draw');
+			if (TIMING) {
+				timeStart('vao.draw');
+			}
 			this.vao.draw(this.gl.TRIANGLES, this.startBatchSprites * 6, 0);
-			TIMING && timeEnd();
+			if (TIMING) {
+				timeEnd();
+			}
 
 			this.drawnTrisStats += this.startBatchSprites * 2;
 			this.spritesCount -= this.startBatchSprites;
@@ -170,15 +180,24 @@ export abstract class BaseSpriteBatch extends BaseStateBatch implements SpriteBa
 			this.vertices.copyWithin(0, this.startBatchIndex, this.startBatchIndex + this.index);
 			this.startBatchIndex = 0;
 			this.startBatchSprites = 0;
-		} else {
-			TIMING && timeStart('bufferSubData');
+		}
+		else {
+			if (TIMING) {
+				timeStart('bufferSubData');
+			}
 			gl.bindBuffer(gl.ARRAY_BUFFER, this.vertexBuffer);
 			gl.bufferSubData(gl.ARRAY_BUFFER, 0, this.vertices.subarray(0, this.index));
-			TIMING && timeEnd();
+			if (TIMING) {
+				timeEnd();
+			}
 
-			TIMING && timeStart('vao.draw');
+			if (TIMING) {
+				timeStart('vao.draw');
+			}
 			this.vao.draw(this.gl.TRIANGLES, this.spritesCount * 6, 0);
-			TIMING && timeEnd();
+			if (TIMING) {
+				timeEnd();
+			}
 
 			this.drawnTrisStats += this.spritesCount * 2;
 			this.spritesCount = 0;
@@ -197,8 +216,11 @@ function disposeBuffers(gl: WebGLRenderingContext, batch: BaseSpriteBatch) {
 		if (batch.vertexBuffer) {
 			gl.deleteBuffer(batch.vertexBuffer);
 		}
-	} catch (e) {
-		DEVELOPMENT && console.error(e);
+	}
+	catch (e) {
+		if (DEVELOPMENT) {
+			console.error(e);
+		}
 	}
 
 	batch.vao = undefined;

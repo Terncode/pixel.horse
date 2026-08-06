@@ -74,7 +74,8 @@ function mergeStates(a: AccountState | undefined, b: AccountState | undefined) {
 			clovers: toInt(a.clovers) + toInt(b.clovers),
 			toys: toInt(a.toys) | toInt(b.toys),
 		};
-	} else {
+	}
+	else {
 		return a || b;
 	}
 }
@@ -169,7 +170,8 @@ async function removeDuplicateFriendRequests(id: string) {
 
 		if (checked.has(friendId)) {
 			removeRequests.push(request._id);
-		} else {
+		}
+		else {
 			checked.add(friendId);
 		}
 	}

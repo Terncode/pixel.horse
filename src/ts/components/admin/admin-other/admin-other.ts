@@ -49,7 +49,9 @@ export class AdminOther implements OnInit, OnDestroy {
 		});
 	}
 	ngOnDestroy() {
-		this.subscription && this.subscription.unsubscribe();
+		if (this.subscription) {
+			this.subscription.unsubscribe();
+		}
 	}
 	saveFields() {
 		let settings: any = {};
@@ -67,7 +69,8 @@ export class AdminOther implements OnInit, OnDestroy {
 		try {
 			compact(this.suspiciousPonies!.split(/\n/g).map(x => x.trim())).map(x => JSON.parse(x));
 			this.model.updateSettings({ suspiciousPonies: this.suspiciousPonies });
-		} catch (e) {
+		}
+		catch (e) {
 			this.suspiciousPoniesError = isErrorAlike(e) ? e.message : 'Unknown error';
 		}
 	}

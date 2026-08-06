@@ -109,7 +109,8 @@ export class ServerActions implements IServerActions, SocketServer {
 
 		if (DEVELOPMENT && /slow/.test(this.client.characterName)) {
 			setTimeout(() => this.world.joinClientToQueue(this.client), 5000);
-		} else {
+		}
+		else {
 			this.world.joinClientToQueue(this.client);
 		}
 	}
@@ -142,8 +143,9 @@ export class ServerActions implements IServerActions, SocketServer {
 		validateNumber(chatType, 'chatType');
 		this.updateLastAction();
 
-		if (this.client.isSwitchingMap)
+		if (this.client.isSwitchingMap) {
 			return;
+		}
 
 		const target = entityId ? this.world.getEntityById(entityId) : undefined;
 		this.chatSay(this.client, text, chatType, target && target.client, this.getSettings());
@@ -153,8 +155,9 @@ export class ServerActions implements IServerActions, SocketServer {
 		validateNumber(entityId, 'entityId');
 		this.updateLastAction();
 
-		if (this.client.isSwitchingMap)
+		if (this.client.isSwitchingMap) {
 			return;
+		}
 
 		const entity = entityId === 0 ? undefined : (this.world.getEntityById(entityId) || this.getEntityFromClients(entityId));
 		const mod = this.client.isMod;
@@ -169,11 +172,13 @@ export class ServerActions implements IServerActions, SocketServer {
 					const playerState = getPlayerState(this.client, entity);
 					const flags = UpdateFlags.Options | UpdateFlags.Name | UpdateFlags.Info | UpdateFlags.PlayerState;
 					pushUpdateEntityToClient(this.client, { entity, flags, options, playerState });
-				} else if (hasFlag(flags, SelectFlags.FetchEx) || mod) {
+				}
+				else if (hasFlag(flags, SelectFlags.FetchEx) || mod) {
 					pushUpdateEntityToClient(this.client, { entity, flags: UpdateFlags.Options, options });
 				}
 			}
-		} else if (entityId) {
+		}
+		else if (entityId) {
 			this.client.updateSelection(entityId, 0);
 		}
 	}
@@ -182,8 +187,9 @@ export class ServerActions implements IServerActions, SocketServer {
 		validateNumber(entityId, 'entityId');
 		this.updateLastAction();
 
-		if (this.client.isSwitchingMap)
+		if (this.client.isSwitchingMap) {
 			return;
+		}
 
 		interactWith(this.client, this.world.getEntityById(entityId));
 	}
@@ -191,8 +197,9 @@ export class ServerActions implements IServerActions, SocketServer {
 	use() {
 		this.updateLastAction();
 
-		if (this.client.isSwitchingMap)
+		if (this.client.isSwitchingMap) {
 			return;
+		}
 
 		useHeldItem(this.client);
 	}
@@ -208,8 +215,9 @@ export class ServerActions implements IServerActions, SocketServer {
 				this.hiding.requestUnhideAll(this.client);
 				break;
 			default:
-				if (this.client.isSwitchingMap)
+				if (this.client.isSwitchingMap) {
 					return;
+				}
 
 				execAction(this.client, action, this.getSettings());
 				break;
@@ -242,7 +250,8 @@ export class ServerActions implements IServerActions, SocketServer {
 
 				if (target) {
 					this.friends.remove(this.client, target);
-				} else {
+				}
+				else {
 					this.friends.removeByAccountId(this.client, param);
 				}
 
@@ -289,7 +298,8 @@ export class ServerActions implements IServerActions, SocketServer {
 				) {
 					if (this.isHouseLocked()) {
 						saySystem(this.client, `House is locked`);
-					} else {
+					}
+					else {
 						this.world.removeEntity(entity, this.map);
 					}
 				}
@@ -388,7 +398,8 @@ export class ServerActions implements IServerActions, SocketServer {
 
 		if (cancellable) {
 			setEntityExpression(this.pony, expr, 0, true);
-		} else {
+		}
+		else {
 			this.pony.exprPermanent = expr;
 			setEntityExpression(this.pony, undefined, 0);
 		}
@@ -424,7 +435,8 @@ export class ServerActions implements IServerActions, SocketServer {
 				const hideFor = toInt(param);
 				if (hideFor === 0) {
 					this.hiding.requestHide(this.client, target, 0);
-				} else {
+				}
+				else {
 					this.hiding.requestHide(this.client, target, clamp(hideFor, MIN_HIDE_TIME, MAX_HIDE_TIME));
 				}
 				break;
@@ -445,8 +457,9 @@ export class ServerActions implements IServerActions, SocketServer {
 	leaveParty() {
 		this.updateLastAction();
 
-		if (this.client.isSwitchingMap)
+		if (this.client.isSwitchingMap) {
 			return;
+		}
 
 		if (this.client.party) {
 			this.partyService.remove(this.client.party.leader, this.client);
@@ -509,7 +522,8 @@ export class ServerActions implements IServerActions, SocketServer {
 			for (const friend of findAllOnlineFriends(this.world, this.client)) {
 				if (isHidden) {
 					friend.updateFriends([{ accountId: this.client.accountId, status: FriendStatusFlags.None }], false);
-				} else {
+				}
+				else {
 					friend.updateFriends([toFriendOnline(this.client)], false);
 				}
 
@@ -590,37 +604,46 @@ export class ServerActions implements IServerActions, SocketServer {
 		validateNumber(type, 'type');
 		this.updateLastAction();
 
-		if (this.client.isSwitchingMap)
+		if (this.client.isSwitchingMap) {
 			return;
+		}
 
 		const wallTile = type === TileType.WallH || type === TileType.WallV;
 
 		if (hasFlag(this.map.flags, MapFlags.EditableWalls) && wallTile) {
 			if (this.isHouseLocked()) {
 				saySystem(this.client, `House is locked`);
-			} else {
+			}
+			else {
 				this.world.toggleWall(this.map, x, y, type);
 			}
-		} else if (BETA && this.client.isMod && wallTile) {
+		}
+		else if (BETA && this.client.isMod && wallTile) {
 			this.world.toggleWall(this.map, x, y, type);
-		} else if (hasFlag(this.map.flags, MapFlags.EditableTiles) && this.pony.options!.hold === entities.shovel.type) {
-			if (!houseTiles.some(t => t.type === type))
+		}
+		else if (hasFlag(this.map.flags, MapFlags.EditableTiles) && this.pony.options!.hold === entities.shovel.type) {
+			if (!houseTiles.some(t => t.type === type)) {
 				return;
+			}
 
-			if (this.isHouseLocked())
+			if (this.isHouseLocked()) {
 				return saySystem(this.client, `House is locked`);
+			}
 
 			this.world.setTile(this.map, x, y, type);
-		} else if (BETA && this.client.isMod && isValidModTile(type)) {
+		}
+		else if (BETA && this.client.isMod && isValidModTile(type)) {
 			this.world.setTile(this.map, x, y, type);
-		} else if (isValidTile(type)) {
+		}
+		else if (isValidTile(type)) {
 			if ((BETA || distanceXY(x, y, this.pony.x, this.pony.y) < TILE_CHANGE_RANGE)) {
 				const tile = getTile(this.map, x, y);
 
 				if (tile === TileType.Dirt || tile === TileType.Grass) {
 					if (this.client.shadowed) {
 						pushUpdateTileToClient(this.client, x, y, type);
-					} else {
+					}
+					else {
 						this.world.setTile(this.map, x, y, type);
 					}
 				}
@@ -646,7 +669,8 @@ export class ServerActions implements IServerActions, SocketServer {
 						const toAdd = Array.isArray(entity) ? entity : [entity];
 						toAdd.forEach(e => this.world.addEntity(e, this.map));
 						added.push({ name, entities: toAdd });
-					} else {
+					}
+					else {
 						saySystem(this.client, 'Invalid entity');
 					}
 					break;
@@ -665,7 +689,9 @@ export class ServerActions implements IServerActions, SocketServer {
 					break;
 				case 'undo':
 					const remove = added.pop();
-					remove && remove.entities.forEach(e => this.world.removeEntityFromSomeMap(e));
+					if (remove) {
+						remove.entities.forEach(e => this.world.removeEntityFromSomeMap(e));
+					}
 					break;
 				case 'clear':
 					added.forEach(x => x.entities.forEach(e => this.world.removeEntityFromSomeMap(e)));

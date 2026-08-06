@@ -107,7 +107,8 @@ export class ToolsRegions implements OnInit, OnDestroy {
 				if (isAreaVisible(this.camera, x * regionWidth, y * regionHeight, regionWidth, regionHeight)) {
 					if (this.regions[y][x] === 'Sienna') {
 						this.regions[y][x] = 'SeaGreen';
-					} else {
+					}
+					else {
 						this.regions[y][x] = 'Crimson';
 					}
 				}
@@ -130,13 +131,17 @@ export class ToolsRegions implements OnInit, OnDestroy {
 		if (e.keyCode === Key.KEY_P) {
 			this.zoom = this.zoom === 4 ? 1 : (this.zoom + 1);
 			this.update();
-		} else if (e.keyCode === Key.RIGHT) {
+		}
+		else if (e.keyCode === Key.RIGHT) {
 			this.right = true;
-		} else if (e.keyCode === Key.LEFT) {
+		}
+		else if (e.keyCode === Key.LEFT) {
 			this.left = true;
-		} else if (e.keyCode === Key.UP) {
+		}
+		else if (e.keyCode === Key.UP) {
 			this.up = true;
-		} else if (e.keyCode === Key.DOWN) {
+		}
+		else if (e.keyCode === Key.DOWN) {
 			this.down = true;
 		}
 	}
@@ -144,11 +149,14 @@ export class ToolsRegions implements OnInit, OnDestroy {
 	keyup(e: KeyboardEvent) {
 		if (e.keyCode === Key.RIGHT) {
 			this.right = false;
-		} else if (e.keyCode === Key.LEFT) {
+		}
+		else if (e.keyCode === Key.LEFT) {
 			this.left = false;
-		} else if (e.keyCode === Key.UP) {
+		}
+		else if (e.keyCode === Key.UP) {
 			this.up = false;
-		} else if (e.keyCode === Key.DOWN) {
+		}
+		else if (e.keyCode === Key.DOWN) {
 			this.down = false;
 		}
 	}
@@ -160,10 +168,18 @@ export class ToolsRegions implements OnInit, OnDestroy {
 		let dx = 0;
 		let dy = 0;
 
-		if (this.right) dx += 1;
-		if (this.left) dx -= 1;
-		if (this.up) dy -= 1;
-		if (this.down) dy += 1;
+		if (this.right) {
+			dx += 1;
+		}
+		if (this.left) {
+			dx -= 1;
+		}
+		if (this.up) {
+			dy -= 1;
+		}
+		if (this.down) {
+			dy += 1;
+		}
 
 		if (dx || dy) {
 			this.player.x += dx * delta * PONY_SPEED_TROT;

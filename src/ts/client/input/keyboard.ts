@@ -14,8 +14,12 @@ function allowKey(key: number) {
 
 function fixKeyCode(key: number) {
 	if (firefox) {
-		if (key === 173) return Key.DASH;
-		if (key === 61) return Key.EQUALS;
+		if (key === 173) {
+			return Key.DASH;
+		}
+		if (key === 61) {
+			return Key.EQUALS;
+		}
 	}
 
 	return key;

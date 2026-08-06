@@ -24,7 +24,9 @@ export class FromNow implements OnInit, OnDestroy, OnChanges {
 		this.update();
 	}
 	ngOnDestroy() {
-		this.unsubscribe && this.unsubscribe();
+		if (this.unsubscribe) {
+			this.unsubscribe();
+		}
 	}
 	private update() {
 		const text = this.date

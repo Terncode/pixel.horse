@@ -144,7 +144,9 @@ export const enum EntityState {
 	Editable = 8,
 
 	// pony
+	// eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
 	HeadTurned = 4,
+	// eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
 	Magic = 8,
 	// CanFly ?, // Or in flags ?
 
@@ -203,7 +205,8 @@ export const enum MessageType {
 export function toMessageType(type: MessageType) {
 	if (type === MessageType.WhisperAnnouncement) {
 		return MessageType.WhisperToAnnouncement;
-	} else {
+	}
+	else {
 		return MessageType.WhisperTo;
 	}
 }
@@ -1274,11 +1277,9 @@ export interface PalettePonyInfo extends PonyInfoBase<Palette, PaletteSpriteSet>
 	magicColorValue: number;
 }
 
-export interface PonyInfo extends PonyInfoBase<string, SpriteSet<string>> {
-}
+export type PonyInfo = PonyInfoBase<string, SpriteSet<string>>;
 
-export interface PonyInfoNumber extends PonyInfoBase<number, SpriteSet<number>> {
-}
+export type PonyInfoNumber = PonyInfoBase<number, SpriteSet<number>>;
 
 export interface ColorExtra {
 	color: Sprite;
@@ -1742,7 +1743,7 @@ export interface EntityDescriptor {
 	create: CreateEntity;
 }
 
-export type EntityOptions = PonyEntityOptions | SpiderEntityOptions | SignEntityOptions | {};
+export type EntityOptions = PonyEntityOptions | SpiderEntityOptions | SignEntityOptions | object;
 export type EntityOrPonyOptions = Partial<PonyOptions> & EntityOptions;
 
 export interface EntityWorldState {
@@ -1826,7 +1827,8 @@ export let counterNow: () => number;
 
 if (typeof window !== 'undefined') {
 	counterNow = performance.now;
-} else {
+}
+else {
 	const hrtime = process.hrtime;
 	const getNanoSeconds = () => {
 		const hr = hrtime();

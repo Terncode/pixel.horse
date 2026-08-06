@@ -98,7 +98,8 @@ export async function updateAccountSafe(accountId: string, update: AccountUpdate
 export async function setRole(accountId: string, role: string, set: boolean, isSuperadmin: boolean) {
 	if (role === 'superadmin' || !isSuperadmin) {
 		throw new Error('Not allowed');
-	} else {
+	}
+	else {
 		await updateAccountAndNotify(accountId, set ? { $addToSet: { roles: [role] } } : { $pull: { roles: role } });
 	}
 }
@@ -139,7 +140,8 @@ export async function findAccounts(
 
 	if (cache.findAccounts && isValidCache(cache.findAccounts, query, 5 * MINUTE)) {
 		found = cache.findAccounts.result;
-	} else {
+	}
+	else {
 		found = filterAccounts(service.accounts.items, search, showOnly, not);
 		cache.findAccounts = {
 			query,

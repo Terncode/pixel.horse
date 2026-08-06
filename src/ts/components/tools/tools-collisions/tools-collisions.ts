@@ -118,10 +118,12 @@ export class ToolsCollisions implements OnInit {
 		if (shiftKey) {
 			if (Math.abs(dx) > Math.abs(dy)) {
 				this.target = toWorld({ x, y: toScreenY(this.start.y) });
-			} else {
+			}
+			else {
 				this.target = toWorld({ x: toScreenX(this.start.x), y });
 			}
-		} else {
+		}
+		else {
 			this.target = toWorld({ x, y });
 		}
 
@@ -146,7 +148,8 @@ export class ToolsCollisions implements OnInit {
 					this.steps.push(collision);
 					current.x = collision.x;
 					current.y = collision.y;
-				} else {
+				}
+				else {
 					this.steps.push(point(this.target.x, this.target.y));
 				}
 
@@ -156,19 +159,22 @@ export class ToolsCollisions implements OnInit {
 			if (steps <= 0) {
 				console.error('Failed');
 			}
-		} else {
+		}
+		else {
 			const collision = getClosestCollisionOld(this.start, this.target, this.rects);
 
 			if (equal(this.target, collision)) {
 				this.deflection = { ...this.target };
-			} else {
+			}
+			else {
 				const coll = getClosestCollisionOld(collision, this.target, this.rects);
 
 				if (equal(collision, coll)) {
 					const horizontal = getClosestCollisionOld(collision, { x: this.target.x, y: collision.y }, this.rects);
 					const vertical = getClosestCollisionOld(collision, { x: collision.x, y: this.target.y }, this.rects);
 					this.deflection = equal(collision, horizontal) ? vertical : horizontal;
-				} else {
+				}
+				else {
 					console.log('not', collision, coll);
 				}
 			}
@@ -214,13 +220,15 @@ export class ToolsCollisions implements OnInit {
 
 					if (ay < (y + 1)) {
 						x++;
-					} else {
+					}
+					else {
 						y++;
 					}
 
 					checkedTiles.add(`${x}-${y}`);
 				}
-			} else {
+			}
+			else {
 				while (--steps && (x !== x1 || y !== y1)) {
 					const dx = (x + 1) - srcX;
 					const dy = dx * DYbyDX;
@@ -228,7 +236,8 @@ export class ToolsCollisions implements OnInit {
 
 					if (ay >= y) {
 						x++;
-					} else {
+					}
+					else {
 						y--;
 					}
 
@@ -441,12 +450,14 @@ function getCollisionTest({ x, y }: Point, b: Point, r: Rect): Point | undefined
 			if (q[i] < 0) {
 				return undefined;
 			}
-		} else {
+		}
+		else {
 			const t = q[i] / p[i];
 
 			if (p[i] < 0 && u1 < t) {
 				u1 = t;
-			} else if (p[i] > 0 && u2 > t) {
+			}
+			else if (p[i] > 0 && u2 > t) {
 				u2 = t;
 			}
 		}
@@ -523,24 +534,29 @@ function checkInLine(srcX: number, srcY: number, dstX: number, dstY: number, col
 			oy = 1;
 			stepYT = 1 | 0;
 			stepXF = 1 | 0;
-		} else {
+		}
+		else {
 			ox = 1;
 			stepYT = -1 | 0;
 			stepXF = 1 | 0;
 		}
-	} else if (srcX > dstX) {
+	}
+	else if (srcX > dstX) {
 		if (srcY < dstY) {
 			oy = 1;
 			stepYT = 1 | 0;
 			stepXF = -1 | 0;
-		} else {
+		}
+		else {
 			stepYT = -1 | 0;
 			stepXF = -1 | 0;
 		}
-	} else {
+	}
+	else {
 		if (srcY < dstY) {
 			stepYF = stepYT = 1 | 0;
-		} else {
+		}
+		else {
 			stepYF = stepYT = -1 | 0;
 		}
 	}
@@ -555,7 +571,8 @@ function checkInLine(srcX: number, srcY: number, dstX: number, dstY: number, col
 		if (useGt ? (fx > fy) : (fx < fy)) {
 			tx = (tx + stepXT) | 0;
 			ty = (ty + stepYT) | 0;
-		} else {
+		}
+		else {
 			tx = (tx + stepXF) | 0;
 			ty = (ty + stepYF) | 0;
 		}
@@ -583,17 +600,20 @@ function checkInLine(srcX: number, srcY: number, dstX: number, dstY: number, col
 					actualNY -= 1;
 					dstY -= 1;
 					collides = false;
-				} else if (shiftDown && (canShiftDown = !isColliding(actualX, actualY + 1)) && !isColliding(actualNX, actualY + 1)) {
+				}
+				else if (shiftDown && (canShiftDown = !isColliding(actualX, actualY + 1)) && !isColliding(actualNX, actualY + 1)) {
 					actualNX = actualX;
 					actualNY += 1;
 					dstY += 1;
 					collides = false;
-				} else if (shiftUp && canShiftUp && !isColliding(actualNX, actualY - 2)) {
+				}
+				else if (shiftUp && canShiftUp && !isColliding(actualNX, actualY - 2)) {
 					actualNX = actualX;
 					actualNY -= 1;
 					dstY -= 1;
 					collides = false;
-				} else if (shiftDown && canShiftDown && !isColliding(actualNX, actualY + 2)) {
+				}
+				else if (shiftDown && canShiftDown && !isColliding(actualNX, actualY + 2)) {
 					actualNX = actualX;
 					actualNY += 1;
 					dstY += 1;
@@ -601,7 +621,8 @@ function checkInLine(srcX: number, srcY: number, dstX: number, dstY: number, col
 				}
 
 				canMove = canShiftUp || canShiftDown;
-			} else {
+			}
+			else {
 				let canShiftLeft = false;
 				let canShiftRight = false;
 
@@ -610,17 +631,20 @@ function checkInLine(srcX: number, srcY: number, dstX: number, dstY: number, col
 					actualNY = actualY;
 					dstX -= 1;
 					collides = false;
-				} else if (shiftRight && (canShiftRight = !isColliding(actualX + 1, actualY)) && !isColliding(actualX + 1, actualNY)) {
+				}
+				else if (shiftRight && (canShiftRight = !isColliding(actualX + 1, actualY)) && !isColliding(actualX + 1, actualNY)) {
 					actualNX += 1;
 					actualNY = actualY;
 					dstX += 1;
 					collides = false;
-				} else if (shiftLeft && canShiftLeft && !isColliding(actualX - 2, actualNY)) {
+				}
+				else if (shiftLeft && canShiftLeft && !isColliding(actualX - 2, actualNY)) {
 					actualNX -= 1;
 					actualNY = actualY;
 					dstX -= 1;
 					collides = false;
-				} else if (shiftRight && canShiftRight && !isColliding(actualX + 2, actualNY)) {
+				}
+				else if (shiftRight && canShiftRight && !isColliding(actualX + 2, actualNY)) {
 					actualNX += 1;
 					actualNY = actualY;
 					dstX += 1;
@@ -635,7 +659,8 @@ function checkInLine(srcX: number, srcY: number, dstX: number, dstY: number, col
 			actualX = actualNX;
 			actualY = actualNY;
 			checks.push({ x: actualX, y: actualY });
-		} else if (!canMove || horizontalOrVertical) {
+		}
+		else if (!canMove || horizontalOrVertical) {
 			checks.push({ x: actualX, y: actualY, type: 'break' });
 			break;
 		}
@@ -705,12 +730,14 @@ function getCollision(
 			if (q < 0) {
 				return false;
 			}
-		} else {
+		}
+		else {
 			const t = q / p;
 
 			if (p < 0 && u1 < t) {
 				u1 = t;
-			} else if (p > 0 && u2 > t) {
+			}
+			else if (p > 0 && u2 > t) {
 				u2 = t;
 			}
 		}
@@ -724,12 +751,14 @@ function getCollision(
 			if (q < 0) {
 				return false;
 			}
-		} else {
+		}
+		else {
 			const t = q / p;
 
 			if (p < 0 && u1 < t) {
 				u1 = t;
-			} else if (p > 0 && u2 > t) {
+			}
+			else if (p > 0 && u2 > t) {
 				u2 = t;
 			}
 		}
@@ -743,12 +772,14 @@ function getCollision(
 			if (q < 0) {
 				return false;
 			}
-		} else {
+		}
+		else {
 			const t = q / p;
 
 			if (p < 0 && u1 < t) {
 				u1 = t;
-			} else if (p > 0 && u2 > t) {
+			}
+			else if (p > 0 && u2 > t) {
 				u2 = t;
 			}
 		}
@@ -762,12 +793,14 @@ function getCollision(
 			if (q < 0) {
 				return false;
 			}
-		} else {
+		}
+		else {
 			const t = q / p;
 
 			if (p < 0 && u1 < t) {
 				u1 = t;
-			} else if (p > 0 && u2 > t) {
+			}
+			else if (p > 0 && u2 > t) {
 				u2 = t;
 			}
 		}

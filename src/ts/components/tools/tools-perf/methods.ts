@@ -15,7 +15,8 @@ function forEachCharacter(value: string, callback: (code: number) => void) {
 					callback(((code & 0x3ff) << 10) + (extra & 0x3ff) + 0x10000);
 				}
 			}
-		} else {
+		}
+		else {
 			callback(code);
 		}
 	}
@@ -24,11 +25,14 @@ function forEachCharacter(value: string, callback: (code: number) => void) {
 function charLengthInBytes(code: number): number {
 	if ((code & 0xffffff80) === 0) {
 		return 1;
-	} else if ((code & 0xfffff800) === 0) {
+	}
+	else if ((code & 0xfffff800) === 0) {
 		return 2;
-	} else if ((code & 0xffff0000) === 0) {
+	}
+	else if ((code & 0xffff0000) === 0) {
 		return 3;
-	} else {
+	}
+	else {
 		return 4;
 	}
 }
@@ -45,13 +49,16 @@ function encodeStringTo(buffer: Uint8Array | Buffer, offset: number, value: stri
 
 		if (length === 1) {
 			buffer[offset++] = code;
-		} else {
+		}
+		else {
 			if (length === 2) {
 				buffer[offset++] = ((code >> 6) & 0x1f) | 0xc0;
-			} else if (length === 3) {
+			}
+			else if (length === 3) {
 				buffer[offset++] = ((code >> 12) & 0x0f) | 0xe0;
 				buffer[offset++] = ((code >> 6) & 0x3f) | 0x80;
-			} else {
+			}
+			else {
 				buffer[offset++] = ((code >> 18) & 0x07) | 0xf0;
 				buffer[offset++] = ((code >> 12) & 0x3f) | 0x80;
 				buffer[offset++] = ((code >> 6) & 0x3f) | 0x80;
@@ -65,8 +72,9 @@ function encodeStringTo(buffer: Uint8Array | Buffer, offset: number, value: stri
 }
 
 export function encodeString(value: string | null): Uint8Array | null {
-	if (value == null)
+	if (value == null) {
 		return null;
+	}
 
 	const buffer = new Uint8Array(stringLengthInBytes(value));
 	encodeStringTo(buffer, 0, value);
@@ -74,8 +82,9 @@ export function encodeString(value: string | null): Uint8Array | null {
 }
 
 export function encodeStringNew(value: string | null): Uint8Array | null {
-	if (value == null)
+	if (value == null) {
 		return null;
+	}
 
 	const buffer = new Uint8Array(stringLengthInBytes2(value));
 	encodeStringTo2(buffer, 0, value);
@@ -87,11 +96,14 @@ export function encodeStringNew(value: string | null): Uint8Array | null {
 function charLengthInBytes2(code: number): number {
 	if ((code & 0xffffff80) === 0) {
 		return 1;
-	} else if ((code & 0xfffff800) === 0) {
+	}
+	else if ((code & 0xfffff800) === 0) {
 		return 2;
-	} else if ((code & 0xffff0000) === 0) {
+	}
+	else if ((code & 0xffff0000) === 0) {
 		return 3;
-	} else {
+	}
+	else {
 		return 4;
 	}
 }
@@ -108,13 +120,16 @@ export function encodeStringTo2(buffer: Uint8Array, offset: number, value: strin
 
 		if (length === 1) {
 			buffer[offset++] = code;
-		} else {
+		}
+		else {
 			if (length === 2) {
 				buffer[offset++] = ((code >> 6) & 0x1f) | 0xc0;
-			} else if (length === 3) {
+			}
+			else if (length === 3) {
 				buffer[offset++] = ((code >> 12) & 0x0f) | 0xe0;
 				buffer[offset++] = ((code >> 6) & 0x3f) | 0x80;
-			} else {
+			}
+			else {
 				buffer[offset++] = ((code >> 18) & 0x07) | 0xf0;
 				buffer[offset++] = ((code >> 12) & 0x3f) | 0x80;
 				buffer[offset++] = ((code >> 6) & 0x3f) | 0x80;
@@ -143,10 +158,12 @@ function forEachCharacter2(value: string, callback: (code: number) => void) {
 				if ((extra & 0xfc00) === 0xdc00) {
 					i = (i + 1) | 0;
 					code = (((((code & 0x3ff) << 10) + (extra & 0x3ff)) | 0) + 0x10000) | 0;
-				} else {
+				}
+				else {
 					continue;
 				}
-			} else {
+			}
+			else {
 				continue;
 			}
 		}

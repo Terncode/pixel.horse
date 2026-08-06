@@ -53,9 +53,11 @@ export function getPonyChatHeight(pony: Pony) {
 
 	if (pony.animator.state === trotting) {
 		return baseHeight;
-	} else if (pony.animator.state === flying || pony.animator.state === hovering) {
+	}
+	else if (pony.animator.state === flying || pony.animator.state === hovering) {
 		return baseHeight - 16;
-	} else {
+	}
+	else {
 		const frame = getPonyAnimationFrame(state.animation, state.animationFrame, defaultBodyFrame);
 		const animation = state.headAnimation || defaultHeadAnimation;
 		const headFrame = getPonyAnimationFrame(animation, state.headAnimationFrame, defaultHeadFrame);
@@ -284,7 +286,8 @@ export function addOrRemoveFromEntityList(list: Entity[], entity: Entity, had: b
 	if (had !== has) {
 		if (has) {
 			pushUniq(list, entity);
-		} else {
+		}
+		else {
 			removeItemFast(list, entity);
 		}
 	}

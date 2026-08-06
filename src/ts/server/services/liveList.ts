@@ -65,7 +65,9 @@ export class LiveList<T extends Document> {
 	}
 	for(id: string | undefined, callback: (item: T) => void) {
 		const item = id ? this.get(id) : undefined;
-		item && callback(item);
+		if (item) {
+			callback(item);
+		}
 	}
 	add(item: T) {
 		const id = this.getId(item);
@@ -91,7 +93,9 @@ export class LiveList<T extends Document> {
 			this.trigger(id, undefined);
 			this.itemsMap.delete(id);
 			removeItem(this.items, item);
-			this.config.onDelete && this.config.onDelete(item);
+			if (this.config.onDelete) {
+				this.config.onDelete(item);
+			}
 		}
 	}
 	discard(id: string) {
@@ -119,7 +123,8 @@ export class LiveList<T extends Document> {
 
 		if (item) {
 			listener(id, this.config.clean(item));
-		} else if (this.config.onSubscribeToMissing) {
+		}
+		else if (this.config.onSubscribeToMissing) {
 			this.add(this.config.onSubscribeToMissing(id));
 		}
 
@@ -143,9 +148,11 @@ export class LiveList<T extends Document> {
 
 			try {
 				await this.update();
-			} catch (e) {
+			}
+			catch (e) {
 				this.logger.error(e);
-			} finally {
+			}
+			finally {
 				this.timeout = setTimeout(() => this.tick(), tickInterval);
 			}
 		}
@@ -178,12 +185,14 @@ export class LiveList<T extends Document> {
 				if (doc !== undefined) {
 					applyUpdate(doc, update);
 					this.trigger(this.getId(doc), doc);
-				} else if (fetching || !(this.config.ignore && this.config.ignore(update))) {
+				}
+				else if (fetching || !(this.config.ignore && this.config.ignore(update))) {
 					this.add(update);
 				}
 
 				addedOrUpdated = true;
-			} catch (e) {
+			}
+			catch (e) {
 				console.error(e);
 			}
 		});
@@ -194,7 +203,9 @@ export class LiveList<T extends Document> {
 
 		if (!this.finished) {
 			this.finished = true;
-			this.config.onFinished && this.config.onFinished();
+			if (this.config.onFinished) {
+				this.config.onFinished();
+			}
 		}
 	}
 }

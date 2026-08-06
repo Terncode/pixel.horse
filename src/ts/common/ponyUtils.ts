@@ -72,30 +72,49 @@ export function canMagic(info: PonyInfoBase<any, SpriteSetBase>) {
 export function flipIris(iris: Iris): Iris {
 	if (iris === Iris.Left || iris === Iris.UpLeft) {
 		return iris + 1;
-	} else if (iris === Iris.Right || iris === Iris.UpRight) {
+	}
+	else if (iris === Iris.Right || iris === Iris.UpRight) {
 		return iris - 1;
-	} else {
+	}
+	else {
 		return iris;
 	}
 }
 
 export function flipFaceAccessoryType(type: number) {
-	if (type === 6) return 7;
-	if (type === 7) return 6;
+	if (type === 6) {
+		return 7;
+	}
+	if (type === 7) {
+		return 6;
+	}
 
-	if (type === 9) return 10;
-	if (type === 10) return 9;
+	if (type === 9) {
+		return 10;
+	}
+	if (type === 10) {
+		return 9;
+	}
 
 	return type;
 }
 
 export function flipFaceAccessoryPattern(type: number, pattern: number) {
 	if (type === 2) { // dark glasses
-		if (pattern === 1) return 2;
-		if (pattern === 2) return 1;
-	} else if (type === 11) { // large dark glasses
-		if (pattern === 1) return 2;
-		if (pattern === 2) return 1;
+		if (pattern === 1) {
+			return 2;
+		}
+		if (pattern === 2) {
+			return 1;
+		}
+	}
+	else if (type === 11) { // large dark glasses
+		if (pattern === 1) {
+			return 2;
+		}
+		if (pattern === 2) {
+			return 1;
+		}
 	}
 
 	return pattern;

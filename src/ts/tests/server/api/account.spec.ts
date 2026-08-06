@@ -232,7 +232,8 @@ describe('api account', () => {
 				await updateAccount(account, { name: 'bar', birthdate: '2000-02-03' });
 
 				assert.calledWith(log, account._id, 'Changed birthdate 1970-01-01 (49yo) => 2000-02-03 (19yo)');
-			} finally {
+			}
+			finally {
 				clock.restore();
 			}
 		});

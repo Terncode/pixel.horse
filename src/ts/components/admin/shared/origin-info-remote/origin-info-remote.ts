@@ -23,11 +23,15 @@ export class OriginInfoRemote implements OnDestroy {
 		if (this.originIP !== value) {
 			this._originIP = value;
 			this.origin = undefined;
-			this.subscription && this.subscription.unsubscribe();
+			if (this.subscription) {
+				this.subscription.unsubscribe();
+			}
 			this.subscription = value ? this.model.origins.subscribe(value, origin => this.origin = origin) : undefined;
 		}
 	}
 	ngOnDestroy() {
-		this.subscription && this.subscription.unsubscribe();
+		if (this.subscription) {
+			this.subscription.unsubscribe();
+		}
 	}
 }

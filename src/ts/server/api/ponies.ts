@@ -20,9 +20,11 @@ function createQuery({ search }: FindPonyQuery) {
 	if (search) {
 		if (search === 'orphan') {
 			and.push({ account: { $exists: false } });
-		} else if (/^exact:/.test(search)) {
+		}
+		else if (/^exact:/.test(search)) {
 			and.push({ name: new RegExp(`^${escapeRegExp(search.substr(6))}$`, 'i') });
-		} else {
+		}
+		else {
 			and.push({ name: new RegExp(escapeRegExp(search), 'i') });
 		}
 	}
@@ -57,8 +59,9 @@ export async function findPonies(query: FindPonyQuery, page: number) {
 export async function assignCharacter(characterId: string, accountId: string) {
 	const character = await Character.findById(characterId).exec();
 
-	if (!character)
+	if (!character) {
 		return;
+	}
 
 	await kickFromAllServersByCharacter(characterId);
 	await Character.updateOne({ _id: characterId }, { account: accountId }).exec();
@@ -71,8 +74,9 @@ export async function assignCharacter(characterId: string, accountId: string) {
 export async function removeCharacter(service: AdminService, characterId: string) {
 	const character = await Character.findById(characterId).exec();
 
-	if (!character)
+	if (!character) {
 		return;
+	}
 
 	await kickFromAllServersByCharacter(characterId);
 	await character.deleteOne();

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { stubClass, resetStubMethods } from '../../lib';
 import { assert, SinonStub, stub, SinonStubbedInstance, SinonFakeTimers, useFakeTimers, match } from 'sinon';
 import { Model } from 'mongoose';

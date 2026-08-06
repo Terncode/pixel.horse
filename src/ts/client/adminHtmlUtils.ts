@@ -26,7 +26,8 @@ export function createSupporterChanges(entries: LogEntry[]): SupporterChange[] {
 			if (current.level > prev.level) {
 				current.icon = faCaretSquareUp;
 				current.class = 'text-info';
-			} else if (current.level < prev.level) {
+			}
+			else if (current.level < prev.level) {
 				current.icon = faCaretSquareDown;
 				current.class = 'text-info';
 			}
@@ -49,7 +50,6 @@ function formatChatLine(l: string): HTMLElement {
 	// 00:00:01 [merged][dev][Autumn Leafs][ignored] hello world
 	// 00:00:01 [merged][dev][main][Autumn Leafs][ignored] hello world
 
-	/* tslint:disable:max-line-length */
 	const regex = /^([0-9:]+) (\[(?:merged|\d+|\d+:merged|[a-z0-9]{24})\])?\[([a-z0-9_-]+)\](?:\[([a-z0-9_-]+)\])?((?:\[.*?\])?)(?:\[(muted|ignored|ignorepub)\])?\t(.*)$/;
 	const m = regex.exec(l);
 
@@ -69,7 +69,8 @@ function formatChatLine(l: string): HTMLElement {
             textNode(' '),
             element('a', 'chat-translate', [], undefined, { click: translateChat }),
 		]);
-	} else {
+	}
+	else {
 		return element('div', '', [textNode(highlightWords(l))]);
 	}
 }
@@ -104,13 +105,17 @@ export function formatChat(chat: string): HTMLElement[] {
 function getMessageTag(message: string) {
 	if (/^\/p /.test(message)) {
 		return 'party';
-	} else if (/^\/w /.test(message)) {
+	}
+	else if (/^\/w /.test(message)) {
 		return 'whisper';
-	} else if (/^\/s[s123] /.test(message)) {
+	}
+	else if (/^\/s[s123] /.test(message)) {
 		return 'supporter';
-	} else if (/^\//.test(message)) {
+	}
+	else if (/^\//.test(message)) {
 		return 'command';
-	} else {
+	}
+	else {
 		return 'none';
 	}
 }

@@ -1,5 +1,5 @@
 // generated file
-/* tslint:disable */
+/* eslint:disable */
 
 import {
 	Sprite, SpriteBorder, PonyNose, PonyEye, ColorExtra, ColorExtraSets, Shadow, ColorShadow, TileSprites, SpriteSheet

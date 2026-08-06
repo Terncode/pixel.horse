@@ -213,7 +213,8 @@ export class ToolsAnimation implements OnInit, OnDestroy {
 						headFrame = Math.min(headFrame, headFrames - 1);
 						this.state.headAnimationFrame = headFrame;
 					}
-				} else {
+				}
+				else {
 					this.state.headAnimationFrame = this.frame;
 				}
 			}
@@ -301,7 +302,8 @@ export class ToolsAnimation implements OnInit, OnDestroy {
 			.subscribe(({ type, animation }) => {
 				if (type === 'body') {
 					this.bodyAnimations.push(animation);
-				} else {
+				}
+				else {
 					this.headAnimations.push(animation);
 				}
 
@@ -312,7 +314,8 @@ export class ToolsAnimation implements OnInit, OnDestroy {
 	private createAnimation(): BodyAnimation | HeadAnimation {
 		if (this.mode === 'body') {
 			return { name: 'new animation', loop: true, fps: 24, frames: [createDefaultBodyFrame()] };
-		} else {
+		}
+		else {
 			return { name: 'new animation', loop: true, fps: 24, frames: [createDefaultHeadFrame()] };
 		}
 	}
@@ -341,7 +344,8 @@ export class ToolsAnimation implements OnInit, OnDestroy {
 	selectAnimation(animation: BodyAnimation | HeadAnimation) {
 		if (this.mode === 'body') {
 			this.selectBodyAnimation(animation as BodyAnimation);
-		} else {
+		}
+		else {
 			this.selectHeadAnimation(animation as HeadAnimation);
 		}
 	}
@@ -435,11 +439,14 @@ export class ToolsAnimation implements OnInit, OnDestroy {
 	handleKey(keyCode: number) {
 		if (keyCode === Key.OPEN_BRACKET || keyCode === Key.LEFT || keyCode === Key.COMMA) {
 			this.prevFrame();
-		} else if (keyCode === Key.CLOSE_BRACKET || keyCode === Key.RIGHT || keyCode === Key.PERIOD) {
+		}
+		else if (keyCode === Key.CLOSE_BRACKET || keyCode === Key.RIGHT || keyCode === Key.PERIOD) {
 			this.nextFrame();
-		} else if (keyCode === Key.ENTER) {
+		}
+		else if (keyCode === Key.ENTER) {
 			this.playing = !this.playing;
-		} else {
+		}
+		else {
 			return false;
 		}
 
@@ -470,7 +477,8 @@ export class ToolsAnimation implements OnInit, OnDestroy {
 				const shadow = this.bodyAnimation.frames.map(f => [f.shadowFrame, f.shadowOffset]);
 				console.log(`shadow: [${shadow.map(x => `[${x.join(', ')}]`).join(', ')}]`);
 			}
-		} else {
+		}
+		else {
 			const frames = this.headAnimation.frames
 				.map(f => [f.duration, '[' + compressHeadFrame(f).join(', ') + ']'])
 				.map(([repeat, frame]) => parseInt(`${repeat}`, 10) > 1 ? `...repeat(${repeat}, ${frame})` : frame);
@@ -555,7 +563,8 @@ export class ToolsAnimation implements OnInit, OnDestroy {
 						this.state.animation = this.bodyAnimationsToPlay[this.bodyAnimationPlaying];
 						this.state.animationFrame = 0;
 						this.time = 0;
-					} else {
+					}
+					else {
 						this.state.animationFrame = frame % this.state.animation.frames.length;
 					}
 				}
@@ -657,7 +666,8 @@ function fromBodyAnimation({ name, frames, fps, loop, shadow }: IBodyAnimation, 
 			&& l.wing === f.wing
 		) {
 			l.duration++;
-		} else {
+		}
+		else {
 			fs.push({
 				duration: 1,
 				...f,
@@ -731,7 +741,8 @@ function fromHeadAnimation({ name, fps, loop, properties, frames }: IHeadAnimati
 
 		if (l && l.headX === f.headX && l.headY === f.headY && l.left === f.left && l.right === f.right && l.mouth === f.mouth) {
 			l.duration++;
-		} else {
+		}
+		else {
 			fs.push({ duration: 1, ...f });
 		}
 	});

@@ -67,13 +67,16 @@ export function unbindAllTexturesAndBuffers(gl: WebGLRenderingContext) {
 		gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
 		gl.bindRenderbuffer(gl.RENDERBUFFER, null);
 		gl.bindFramebuffer(gl.FRAMEBUFFER, null);
-	} catch (e) {
-		DEVELOPMENT && console.error(e);
+	}
+	catch (e) {
+		if (DEVELOPMENT) {
+			console.error(e);
+		}
 	}
 }
 
 export function clearWebGLErrors(gl: WebGLRenderingContext) {
-	while (hasWebGLErrors(gl));
+	while (hasWebGLErrors(gl)){}
 }
 
 export function hasWebGLErrors(gl: WebGLRenderingContext) {

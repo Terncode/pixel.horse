@@ -20,8 +20,9 @@ function isIdenticalSprite(a: ExtSprite | undefined, b: ExtSprite | undefined): 
 }
 
 function isIdenticalData(a: ImageData, b: ImageData) {
-	if (a.width !== b.width || a.height !== b.height)
+	if (a.width !== b.width || a.height !== b.height) {
 		return false;
+	}
 
 	const length = (a.width * a.height * 4) | 0;
 	const adat = a.data;
@@ -37,8 +38,9 @@ function isIdenticalData(a: ImageData, b: ImageData) {
 }
 
 function isIdenticalChannel(a: Sprite | undefined, b: Sprite | undefined, channel: number) {
-	if (!a || !b || a.w !== b.w || a.h !== b.h)
+	if (!a || !b || a.w !== b.w || a.h !== b.h) {
 		return false;
+	}
 
 	const adata = a.image.getContext('2d')!.getImageData(a.ox, a.oy, a.w, a.h);
 	const bdata = b.image.getContext('2d')!.getImageData(b.ox, b.oy, b.w, b.h);
@@ -88,14 +90,18 @@ function trimImageData(data: ImageData): Rect {
 		return true;
 	}
 
-	while (bottom > top && isRowEmpty(bottom - 1))
+	while (bottom > top && isRowEmpty(bottom - 1)) {
 		bottom--;
-	while (right > left && isColEmpty(right - 1))
+	}
+	while (right > left && isColEmpty(right - 1)) {
 		right--;
-	while (top < bottom && isRowEmpty(top))
+	}
+	while (top < bottom && isRowEmpty(top)) {
 		top++;
-	while (left < right && isColEmpty(left))
+	}
+	while (left < right && isColEmpty(left)) {
 		left++;
+	}
 
 	return { y: top, x: left, w: right - left, h: bottom - top };
 }
@@ -222,23 +228,28 @@ function positionSprite(sprite: ExtSprite, outputWidth: number, taken: Taken[], 
 				const length = span.length;
 				const end = start + length;
 
-				if (start >= right) // right of span
+				if (start >= right) { // right of span
 					break;
+				}
 
-				if (end <= right) // left of span
+				if (end <= right) { // left of span
 					continue;
+				}
 
 				if (start === x) {
 					if (length === w) { // entire span
 						spans.splice(i, 1);
-					} else { // at the start of span
+					}
+					else { // at the start of span
 						span.start += w;
 						span.length -= w;
 					}
-				} else {
+				}
+				else {
 					if (end === right) { // at the end of span
 						span.length -= w;
-					} else { // in the middle of span
+					}
+					else { // in the middle of span
 						span.length = x - start;
 						spans.splice(i + 1, 0, { start: right, length: end - right });
 					}
@@ -285,8 +296,9 @@ function hasShading(s: Sprite) {
 }
 
 function getSpriteImageData(s: ExtSprite): ImageData | undefined {
-	if (!s.w || !s.h)
+	if (!s.w || !s.h) {
 		return undefined;
+	}
 
 	const context = s.image.getContext('2d')!;
 	const { width, height, data } = context.getImageData(s.ox, s.oy, s.w, s.h);
@@ -350,7 +362,8 @@ export function createSpriteSheet(name: string, images: ExtSprite[], log: boolea
 					}
 
 					layered++;
-				} else {
+				}
+				else {
 					pool.push(sprite);
 				}
 
@@ -375,7 +388,8 @@ export function createSpriteSheet(name: string, images: ExtSprite[], log: boolea
 				positionSprite(s, outputWidth, taken, pack);
 				maxY = Math.max(maxY, s.y + s.h);
 				areaTaken += s.w * s.h;
-			} catch (e) {
+			}
+			catch (e) {
 				console.error(e);
 			}
 		});
@@ -429,7 +443,8 @@ export function createSpriteSheet(name: string, images: ExtSprite[], log: boolea
 			.forEach(s => {
 				if (s.layer === 3) {
 					drawChannel(s.image, alphaData, 0, 0, s.ox, s.oy, s.x, s.y, s.w, s.h);
-				} else {
+				}
+				else {
 					drawChannel(s.image, data, 0, s.layer || 0, s.ox, s.oy, s.x, s.y, s.w, s.h);
 				}
 
@@ -440,7 +455,8 @@ export function createSpriteSheet(name: string, images: ExtSprite[], log: boolea
 
 		context.putImageData(data, 0, 0);
 		alphaContext.putImageData(alphaData, 0, 0);
-	} else {
+	}
+	else {
 		sprites
 			.filter(s => !s.duplicateOf && s.w && s.h)
 			.forEach(s => context.drawImage(s.image, s.ox, s.oy, s.w, s.h, s.x, s.y, s.w, s.h));

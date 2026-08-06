@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import '../lib';
 import { Subject } from 'rxjs';
 import { expect } from 'chai';

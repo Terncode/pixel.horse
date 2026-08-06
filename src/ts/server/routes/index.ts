@@ -41,7 +41,8 @@ function getFiles(urlBase: string, dir: string, sub: string): RevFile[] {
 				path: path.join(dir, sub, file),
 				url: `${urlBase}/${sub}/${file}`,
 			}));
-	} catch {
+	}
+	catch {
 		return [];
 	}
 }
@@ -86,7 +87,8 @@ export function createIndex(assetsPath: string, adminAssetsPath: string) {
 			const data = writeBinary(writer => writeObject(writer, options));
 			const buffer = Buffer.from(data);
 			return buffer.toString('base64');
-		} else {
+		}
+		else {
 			return '';
 		}
 	}
@@ -137,7 +139,8 @@ export function createIndex(assetsPath: string, adminAssetsPath: string) {
 			try {
 				const token = socket.token({ account: req.user } as TokenData);
 				res.send(renderPage({ production, base, style, script, scriptES, noindex: true, socketOptions, token }));
-			} catch (e) {
+			}
+			catch (e) {
 				logger.error(e);
 				res.sendStatus(500);
 			}

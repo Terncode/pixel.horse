@@ -43,21 +43,35 @@ export function createCaveMap(world: World): ServerMap {
 		const index1 = code & 0b11;
 		const index2 = (code >> 2) & 0b11;
 		const index3 = (code >> 4) & 0b11;
-		index1 && index1 !== 3 && add(caveDecals[index1 - 1](x + 0.5, y - 1)); // no decal 2 here
-		index2 && add(caveDecals[index2 - 1](x + 0.5, y));
-		index3 && add(caveDecals[index3 - 1](x + 0.5, y + 1));
+		if (index1 && index1 !== 3) {
+			add(caveDecals[index1 - 1](x + 0.5, y - 1));
+		} // no decal 2 here
+		if (index2) {
+			add(caveDecals[index2 - 1](x + 0.5, y));
+		}
+		if (index3) {
+			add(caveDecals[index3 - 1](x + 0.5, y + 1));
+		}
 	}
 
 	function cracksSLeft(x: number, y: number) {
 		const code = (Math.random() * 1000) % 4;
-		(code & 0b01) && add(entities.caveDecalL(x + 0.5, y - 1));
-		(code & 0b10) && add(entities.caveDecalL(x + 0.5, y));
+		if (code & 0b01) {
+			add(entities.caveDecalL(x + 0.5, y - 1));
+		}
+		if (code & 0b10) {
+			add(entities.caveDecalL(x + 0.5, y));
+		}
 	}
 
 	function cracksSRight(x: number, y: number) {
 		const code = (Math.random() * 1000) % 4;
-		(code & 0b01) && add(entities.caveDecalR(x + 0.5, y - 1));
-		(code & 0b10) && add(entities.caveDecalR(x + 0.5, y));
+		if (code & 0b01) {
+			add(entities.caveDecalR(x + 0.5, y - 1));
+		}
+		if (code & 0b10) {
+			add(entities.caveDecalR(x + 0.5, y));
+		}
 	}
 
 	function caveSW(x: number, y: number) {
@@ -137,7 +151,8 @@ export function createCaveMap(world: World): ServerMap {
 	function caveTrimLeft(x: number, y: number, h: number, botTrim = true) {
 		if (botTrim) {
 			add(entities.caveBotTrimLeft(x - 0.5, y));
-		} else {
+		}
+		else {
 			add(entities.caveMidTrimLeft(x - 0.5, y));
 		}
 
@@ -153,7 +168,8 @@ export function createCaveMap(world: World): ServerMap {
 	function caveTrimRight(x: number, y: number, h: number, botTrim = true) {
 		if (botTrim) {
 			add(entities.caveBotTrimRight(x + 0.5, y));
-		} else {
+		}
+		else {
 			add(entities.caveMidTrimRight(x + 0.5, y));
 		}
 
@@ -563,7 +579,8 @@ export function createCaveMap(world: World): ServerMap {
 	add(createBoxOfLanterns(30.97, 49.63)).interact = (_, client) => {
 		if (client.pony.options!.hold === entities.crystalHeld.type) {
 			holdItem(client.pony, entities.crystalLantern.type);
-		} else {
+		}
+		else {
 			holdItem(client.pony, entities.lanternOn.type);
 		}
 	};
@@ -880,14 +897,17 @@ export function createCaveMap(world: World): ServerMap {
 	map.controllers.push(wallController);
 	wallController.top = 3;
 	wallController.isTall = (x, y) => {
-		if (y === 10 && x >= 17 && x <= 23)
+		if (y === 10 && x >= 17 && x <= 23) {
 			return true;
+		}
 
-		if (x >= 31 && x <= 39 && y >= 22 && y <= 25)
+		if (x >= 31 && x <= 39 && y >= 22 && y <= 25) {
 			return true;
+		}
 
-		if (y === 31 && x >= 33 && x <= 34)
+		if (y === 31 && x >= 33 && x <= 34) {
 			return true;
+		}
 
 		return false;
 	};

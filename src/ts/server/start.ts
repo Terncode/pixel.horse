@@ -94,7 +94,8 @@ export function start(world: World, server: ServerConfig) {
 				frames = 0;
 				world.sparseUpdate(now);
 			}
-		} catch (e) {
+		}
+		catch (e) {
 			if (isErrorAlike(e)) {
 				createReporter(server).danger(e.message);
 			}

@@ -48,7 +48,8 @@ export abstract class BaseTable<T> {
 	sortBy(field: string) {
 		if (this.sortedBy === field) {
 			this.sortedAsc = !this.sortedAsc;
-		} else {
+		}
+		else {
 			this.sortedBy = field;
 			this.sortedAsc = true;
 		}

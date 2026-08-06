@@ -20,7 +20,8 @@ export class ClientAdminActions extends ClientAdminActionsTemplate {
 
 			if (model) {
 				model.update(id, update);
-			} else {
+			}
+			else {
 				console.error(`Invalid model type "${type}"`);
 			}
 		}

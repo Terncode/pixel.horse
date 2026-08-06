@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import '../../lib';
 import { uniqueId } from 'lodash';
 import { expect } from 'chai';

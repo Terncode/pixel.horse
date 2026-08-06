@@ -52,11 +52,14 @@ export function formatDuration(duration: number) {
 
 	if (d > 0) {
 		return h ? `${d}d ${h}h` : `${d}d`;
-	} else if (h > 0) {
+	}
+	else if (h > 0) {
 		return m ? `${h}h ${m}m` : `${h}h`;
-	} else if (m > 0) {
+	}
+	else if (m > 0) {
 		return s ? `${m}m ${s}s` : `${m}m`;
-	} else {
+	}
+	else {
 		return `${s}s`;
 	}
 }
@@ -93,7 +96,8 @@ export function createValidBirthDate(day: number, month: number, year: number) {
 		year >= (currentYear - 120) && year < currentYear
 	) {
 		return date;
-	} else {
+	}
+	else {
 		return undefined;
 	}
 }
@@ -165,7 +169,9 @@ export function toInt(value: any): number {
 }
 
 export function dispose<T extends { dispose(): void; }>(obj: T | undefined): undefined {
-	obj && obj.dispose();
+	if (obj) {
+		obj.dispose();
+	}
 	return undefined;
 }
 
@@ -267,7 +273,8 @@ export function removeItem<T>(items: T[], item: T): boolean {
 	if (index !== -1) {
 		items.splice(index, 1);
 		return true;
-	} else {
+	}
+	else {
 		return false;
 	}
 }
@@ -279,7 +286,8 @@ export function removeItemFast<T>(items: T[], item: T): boolean {
 		items[index] = items[items.length - 1];
 		items.pop();
 		return true;
-	} else {
+	}
+	else {
 		return false;
 	}
 }
@@ -291,7 +299,8 @@ export function removeById<U, T extends { id: U }>(items: T[], id: U): T | undef
 		const item = items[index];
 		items.splice(index, 1);
 		return item;
-	} else {
+	}
+	else {
 		return undefined;
 	}
 }
@@ -316,7 +325,8 @@ export function pushUniq<T>(array: T[], item: T) {
 	if (index === -1) {
 		array.push(item);
 		return array.length;
-	} else {
+	}
+	else {
 		return index + 1;
 	}
 }
@@ -433,13 +443,17 @@ export function createError(status: number, data: string | { error: string; }): 
 		return new Error(PROTECTION_ERROR);
 		// } else if (status === 400) {
 		// 	return new Error('Bad Request');
-	} else if (status === 403) {
+	}
+	else if (status === 403) {
 		return new Error(ACCESS_ERROR);
-	} else if (status === 404) {
+	}
+	else if (status === 404) {
 		return new Error(NOT_FOUND_ERROR);
-	} else if (typeof data === 'string') {
+	}
+	else if (typeof data === 'string') {
 		return new Error(data || OFFLINE_ERROR);
-	} else {
+	}
+	else {
 		return new Error((data && data.error) || OFFLINE_ERROR);
 	}
 }
@@ -455,7 +469,8 @@ export function observableToPromise<T>(observable: Observable<T>) {
 
 			try {
 				error = JSON.parse(error);
-			} catch { }
+			}
+			catch { }
 
 			const e: RequestError = createError(status || 0, error);
 			e.status = status;
@@ -518,7 +533,9 @@ export function processCommand(text: string) {
 }
 
 export function parseSeason(value?: string): Season | undefined {
-	if (!value) return undefined;
+	if (!value) {
+		return undefined;
+	}
 	switch (value.toLowerCase()) {
 		case 'spring': return Season.Spring;
 		case 'summer': return Season.Summer;
@@ -529,7 +546,9 @@ export function parseSeason(value?: string): Season | undefined {
 }
 
 export function parseHoliday(value?: string): Holiday | undefined {
-	if (!value) return undefined;
+	if (!value) {
+		return undefined;
+	}
 	switch (value.toLowerCase()) {
 		case 'none': return Holiday.None;
 		case 'halloween': return Holiday.Halloween;

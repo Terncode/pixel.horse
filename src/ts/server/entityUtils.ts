@@ -30,7 +30,8 @@ export function setEntityName(entity: ServerEntity, name: string) {
 export function getEntityName(entity: ServerEntity, client: IClient) {
 	if (entity.name && entity.nameBad && client.accountSettings.filterSwearWords) {
 		return filterName(entity.name);
-	} else {
+	}
+	else {
 		return entity.name;
 	}
 }
@@ -45,7 +46,8 @@ export function isHoldingGrapes(e: ServerEntity) {
 export function canBoopEntity(e: ServerEntity, boopRect: Rect) {
 	if (e.type === PONY_TYPE) {
 		return isHoldingGrapes(e);
-	} else {
+	}
+	else {
 		return e.boop !== undefined && containsPoint(0, 0, boopRect, e.x + (e.boopX || 0), e.y + (e.boopY || 0));
 	}
 }
@@ -82,13 +84,17 @@ export function moveRandomly(
 
 		if (e.x < 0) {
 			vx = 1;
-		} else if (e.x > map.width) {
+		}
+		else if (e.x > map.width) {
 			vx = -1;
-		} else if (e.y < 0) {
+		}
+		else if (e.y < 0) {
 			vy = 1;
-		} else if (e.y > map.height) {
+		}
+		else if (e.y > map.height) {
 			vy = -1;
-		} else {
+		}
+		else {
 			vx = Math.random() - 0.5;
 			vy = Math.random() - 0.5;
 		}
@@ -158,7 +164,8 @@ export function pushUpdateEntity(update: EntityUpdateBase) {
 
 	if (isEntityShadowed(entity)) {
 		pushUpdateEntityToClient(entity.client, update);
-	} else if (entity.region) {
+	}
+	else if (entity.region) {
 		pushUpdateEntityToRegion(entity.region, update);
 	}
 }
@@ -168,7 +175,8 @@ function resizePreserveWriter(error: Error, writer: BinaryWriter, offset: number
 		resizeWriterWithData(writer);
 		writer.offset = offset;
 		// DEVELOPMENT && console.log(`resize writer to ${writer.view.byteLength} (${error.message})`);
-	} else {
+	}
+	else {
 		throw error;
 	}
 }
@@ -183,7 +191,8 @@ export function pushAddEntityToClient(client: IClient, entity: ServerEntity) {
 			writeUint8(writer, UpdateType.AddEntity);
 			writeOneEntity(writer, entity, client);
 			break;
-		} catch (e) {
+		}
+		catch (e) {
 			resizePreserveWriter(e as Error, writer, offset);
 		}
 	}
@@ -199,7 +208,8 @@ export function pushUpdateEntityToClient(client: IClient, update: EntityUpdateBa
 			writeUint8(writer, UpdateType.UpdateEntity);
 			writeOneUpdate(writer, entity, flags, x, y, vx, vy, options, action, playerState);
 			break;
-		} catch (e) {
+		}
+		catch (e) {
 			resizePreserveWriter(e as Error, writer, offset);
 		}
 	}
@@ -214,7 +224,8 @@ export function pushRemoveEntityToClient(client: IClient, entity: ServerEntity) 
 			writeUint8(writer, UpdateType.RemoveEntity);
 			writeUint32(writer, entity.id);
 			break;
-		} catch (e) {
+		}
+		catch (e) {
 			resizePreserveWriter(e as Error, writer, offset);
 		}
 	}
@@ -231,7 +242,8 @@ export function pushUpdateTileToClient(client: IClient, x: number, y: number, ty
 			writeUint16(writer, y);
 			writeUint8(writer, type);
 			break;
-		} catch (e) {
+		}
+		catch (e) {
 			resizePreserveWriter(e as Error, writer, offset);
 		}
 	}

@@ -32,7 +32,8 @@ export class SettingsService {
 
 		if (this.save(settings)) {
 			return Promise.resolve();
-		} else {
+		}
+		else {
 			return this.model.saveSettings(settings);
 		}
 	}

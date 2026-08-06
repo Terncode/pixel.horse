@@ -92,7 +92,8 @@ export const createSavePony =
 				character.info = info;
 				character.flags = flags;
 				character.lastUsed = new Date();
-			} catch (error) {
+			}
+			catch (error) {
 				const message = DEVELOPMENT ? `${CHARACTER_SAVING_ERROR} (${error})` : CHARACTER_SAVING_ERROR;
 				throw new UserError(message, { error: isError(error) ? error : new Error('Unknown error'), data: { pony: data }, desc: `info: "${data.info}"` });
 			}
@@ -116,7 +117,8 @@ export const createSavePony =
 
 			if (created) {
 				log(account._id.toString(), `created pony "${character.name}"`);
-			} else if (nameChanged) {
+			}
+			else if (nameChanged) {
 				log(account._id.toString(), `renamed pony "${oldName}" => "${character.name}"`);
 			}
 

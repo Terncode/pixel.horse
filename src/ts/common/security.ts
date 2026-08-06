@@ -17,10 +17,12 @@ function createRegExpFromList(list: string | undefined, wholeWords = false): Reg
 
 		if (wholeWords) {
 			return new RegExp(`\\b(${combined})\\b`, 'ui');
-		} else {
+		}
+		else {
 			return new RegExp(combined, 'ui');
 		}
-	} else {
+	}
+	else {
 		return undefined;
 	}
 }
@@ -47,8 +49,9 @@ export const createIsSuspiciousMessage = (general: GeneralSettings) => {
 	const testWholeInstant = createCachedTest(true);
 
 	return (text: string, { filterSwears }: GameServerSettings): Suspicious => {
-		if (test(general.suspiciousMessages, text))
+		if (test(general.suspiciousMessages, text)) {
 			return Suspicious.Very;
+		}
 
 		if (filterSwears) {
 			if (testSafeInstant(general.suspiciousSafeInstantMessages, text) ||
@@ -85,7 +88,8 @@ export const createIsSuspiciousAuth =
 function tryParseJSON(value: string): any {
 	try {
 		return JSON.parse(value);
-	} catch {
+	}
+	catch {
 		return undefined;
 	}
 }
@@ -108,7 +112,8 @@ function matchPony(info: PonyInfoNumber, match: Partial<PonyInfo>) {
 function comparePonyInfoFields(a: any, b: any): boolean {
 	if (typeof a === 'number' && typeof b === 'string') {
 		return a === parseColorFast(b);
-	} else {
+	}
+	else {
 		return undefined as any;
 	}
 }

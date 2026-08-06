@@ -97,8 +97,9 @@ export class ToolsChat implements AfterViewInit {
 		this.redraw();
 	}
 	redraw() {
-		if (!this.initialized)
+		if (!this.initialized) {
 			return;
+		}
 
 		const canvas1 = drawCanvas(500, 400, sprites.paletteSpriteSheet, undefined, batch => {
 			const palettes = createCommonPalettes(mockPaletteManager);
@@ -162,7 +163,7 @@ export class ToolsChat implements AfterViewInit {
 		});
 
 		const canvas3 = drawCanvas(500, 400, sprites.paletteSpriteSheet, undefined, batch => {
-			/* tslint:disable */
+			// eslint-disable-next-line max-len
 			const loremIpsum = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce scelerisque interdum scelerisque. Suspendisse malesuada, enim in viverra ornare, dui ex laoreet ipsum, at mollis orci felis vitae ipsum. In faucibus venenatis augue, ac ornare libero. Etiam vitae aliquet neque.';
 			const text = lineBreak(loremIpsum, fontPal, 200);
 

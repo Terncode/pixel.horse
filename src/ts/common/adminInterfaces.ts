@@ -352,6 +352,7 @@ export const enum SupporterFlags {
 	Supporter1 = 1,
 	Supporter2 = 2,
 	Supporter3 = 3,
+	// eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
 	SupporterMask = 0x0003,
 	IgnorePatreon = 0x0080,
 	PastSupporter = 0x0100,
@@ -489,11 +490,9 @@ export const eventFields: (keyof Event)[] = [
 
 // models
 
-export interface OriginInfo extends OriginInfoBase {
-}
+export type OriginInfo = OriginInfoBase;
 
-export interface Timestamps extends TimestampsBase {
-}
+export type Timestamps = TimestampsBase;
 
 export interface AccountStatus {
 	online: boolean;

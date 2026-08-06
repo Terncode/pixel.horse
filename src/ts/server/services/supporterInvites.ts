@@ -44,11 +44,13 @@ export class SupporterInvitesService {
 		const items = await this.getInvites(requester);
 		const limit = getSupporterInviteLimit(requester.account);
 
-		if (items.length >= limit)
+		if (items.length >= limit) {
 			return saySystem(requester, 'Invite limit reached');
+		}
 
-		if (this.limiter.canExecute(requester, target) !== LimiterResult.Yes)
+		if (this.limiter.canExecute(requester, target) !== LimiterResult.Yes) {
 			return saySystem(requester, 'Cannot invite');
+		}
 
 		this.log(formatMessage(requester, target, 'invited to supporter server'));
 

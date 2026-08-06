@@ -17,8 +17,8 @@ export interface Doc extends Document {
 	updatedAt: Date;
 }
 
-export interface IOriginInfo extends OriginInfoBase { }
-export interface ITimestamps extends TimestampsBase { }
+export type IOriginInfo = OriginInfoBase;
+export type ITimestamps = TimestampsBase;
 export interface IAuth extends AuthBase<Types.ObjectId>, Doc { }
 export interface IOrigin extends OriginBase, Doc { }
 export interface IEvent extends EventBase<Types.ObjectId>, Doc { }
@@ -266,7 +266,8 @@ function throwOnEmpty<T>(message: string): (item: T | undefined) => T {
 	return item => {
 		if (item) {
 			return item;
-		} else {
+		}
+		else {
 			throw new Error(message);
 		}
 	};
@@ -473,8 +474,9 @@ export async function findHidesForMerge(accountId: ID): Promise<MergeHideData[]>
 }
 
 export async function addHide(source: ID, target: ID, name: string) {
-	if (source.toString() === target.toString())
+	if (source.toString() === target.toString()) {
 		return;
+	}
 
 	const existing = await HideRequest.findOne({ source, target }, '_id').lean().exec();
 

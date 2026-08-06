@@ -31,7 +31,8 @@ export function timeStart(name: string) {
 			entry.time = performance.now();
 			entry.name = name;
 			entriesCount++;
-		} else {
+		}
+		else {
 			console.warn(`exceeded timing entry limit`);
 		}
 	}
@@ -44,7 +45,8 @@ export function timeEnd() {
 			entry.time = performance.now();
 			entry.name = undefined;
 			entriesCount++;
-		} else {
+		}
+		else {
 			console.warn(`exceeded timing entry limit`);
 		}
 	}
@@ -70,7 +72,8 @@ export function timingCollate(): TimingResult[] {
 
 			if (entry.name !== undefined) {
 				startStack.push({ ...entry, excludedTime: 0 });
-			} else {
+			}
+			else {
 				const start = startStack.pop()!;
 				const name = start.name!;
 				const time = entry.time - start.time;

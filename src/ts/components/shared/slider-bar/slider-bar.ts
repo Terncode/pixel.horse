@@ -35,8 +35,9 @@ export class SliderBar {
 		return clamp(((this.value - this.min) / (this.max - this.min)) * 100, 0, 100);
 	}
 	drag({ type, x, event }: AgDragEvent) {
-		if (this.disabled)
+		if (this.disabled) {
 			return;
+		}
 
 		event.preventDefault();
 
@@ -58,21 +59,25 @@ export class SliderBar {
 	}
 	@HostListener('keydown', ['$event'])
 	keydown(e: KeyboardEvent) {
-		if (this.disabled)
+		if (this.disabled) {
 			return;
+		}
 
 		const step = this.step || 1;
 
 		if (e.keyCode === Key.LEFT || e.keyCode === Key.DOWN || e.keyCode === Key.PAGE_DOWN) {
 			e.preventDefault();
 			this.setValue(this.value - step * (e.keyCode === Key.PAGE_DOWN ? this.largeStep : 1), true);
-		} else if (e.keyCode === Key.RIGHT || e.keyCode === Key.UP || e.keyCode === Key.PAGE_UP) {
+		}
+		else if (e.keyCode === Key.RIGHT || e.keyCode === Key.UP || e.keyCode === Key.PAGE_UP) {
 			e.preventDefault();
 			this.setValue(this.value + step * (e.keyCode === Key.PAGE_UP ? this.largeStep : 1), true);
-		} else if (e.keyCode === Key.HOME) {
+		}
+		else if (e.keyCode === Key.HOME) {
 			e.preventDefault();
 			this.setValue(this.min, true);
-		} else if (e.keyCode === Key.END) {
+		}
+		else if (e.keyCode === Key.END) {
 			e.preventDefault();
 			this.setValue(this.max, true);
 		}

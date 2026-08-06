@@ -38,7 +38,8 @@ export function timingStart(name: string) {
 			entry.time = counterNow();
 			entry.name = name;
 			entriesCount++;
-		} else {
+		}
+		else {
 			console.warn(`exceeded timing entry limit`);
 		}
 	}
@@ -52,7 +53,8 @@ export function timingEnd() {
 			entry.time = counterNow();
 			entry.name = undefined;
 			entriesCount++;
-		} else {
+		}
+		else {
 			console.warn(`exceeded timing entry limit`);
 		}
 	}

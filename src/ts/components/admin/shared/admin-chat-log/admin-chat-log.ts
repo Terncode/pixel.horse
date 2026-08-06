@@ -42,7 +42,8 @@ export class AdminChatLog implements OnDestroy {
 	set autoRefresh(value: boolean) {
 		if (value) {
 			this.refreshInterval = this.refreshInterval || setInterval(() => this.refresh(), 10 * 1000);
-		} else {
+		}
+		else {
 			this.stopInterval();
 		}
 	}
@@ -75,7 +76,8 @@ export class AdminChatLog implements OnDestroy {
 	add(account: Account) {
 		if (!this.account) {
 			this.show(account);
-		} else if (account !== this.account && !includes(this.accounts, account)) {
+		}
+		else if (account !== this.account && !includes(this.accounts, account)) {
 			this.date = this.date || this.today;
 			this.accounts.push(account);
 			this.refresh();
@@ -116,7 +118,8 @@ export class AdminChatLog implements OnDestroy {
 		if (this.account) {
 			const accounts = [this.account._id, ...this.accounts.map(a => a._id)];
 			this.handleChat(this.model.accountsFormattedChat(accounts, date));
-		} else if (this.search) {
+		}
+		else if (this.search) {
 			this.handleChat(this.model.searchFormattedChat(this.search, date));
 		}
 	}
@@ -177,7 +180,8 @@ export class AdminChatLog implements OnDestroy {
 
 			this.atNode += i;
 			this.processIdle = requestIdleCallback(() => this.processNodes());
-		} else {
+		}
+		else {
 			this.nodesToProcess = undefined;
 		}
 	}

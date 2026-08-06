@@ -112,7 +112,8 @@ export class AdminReportsPerf {
 			element.style.left = `${x + 10}px`;
 			element.style.top = `${y + 10}px`;
 			element.innerText = tooltip.text;
-		} else {
+		}
+		else {
 			element.style.display = 'none';
 		}
 	}
@@ -208,8 +209,9 @@ export class AdminReportsPerf {
 
 		this.tooltips.length = 0;
 
-		if (!this.timings.length)
+		if (!this.timings.length) {
 			return;
+		}
 
 		const firstTime = this.timings[0].time;
 		const startTime = this.startTime;
@@ -254,7 +256,8 @@ export class AdminReportsPerf {
 		for (const entry of this.timings) {
 			if (entry.type === TimingEntryType.Start) {
 				startStack.push(entry);
-			} else {
+			}
+			else {
 				const start = startStack.pop()!;
 				const name = start.name!;
 				const startX = timeToX(start.time);
@@ -267,9 +270,11 @@ export class AdminReportsPerf {
 				if (startStack.length === 0) {
 					context.fillStyle = '#efc457';
 					text = `${text} (${time.toFixed(2)} ms) ${(100 * time / frameTime).toFixed(0)}%`;
-				} else if (/\(\)$/.test(name)) {
+				}
+				else if (/\(\)$/.test(name)) {
 					context.fillStyle = '#d4ecc6';
-				} else {
+				}
+				else {
 					context.fillStyle = '#c6dcec';
 				}
 
@@ -298,7 +303,8 @@ export class AdminReportsPerf {
 		for (const entry of this.timings) {
 			if (entry.type === TimingEntryType.Start) {
 				startStack.push({ ...entry, excludedTime: 0 });
-			} else {
+			}
+			else {
 				const start = startStack.pop()!;
 				const name = start.name!;
 				const time = entry.time - start.time;

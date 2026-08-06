@@ -180,13 +180,15 @@ const horizontalRegex = new RegExp(`^${any(horizontalEyesRight)}(//)?${any(horiz
 function matchVertical(
 	text: string, regex: RegExp, flip: boolean, muzzleMap: Dict<Muzzle>, eyesMap: Dict<Eye>, command: boolean = false
 ): Expression | undefined {
-	if (!command && /^([|]{2,}|BS|8x|x8|x-?x|\d+)$/i.test(text))
+	if (!command && /^([|]{2,}|BS|8x|x8|x-?x|\d+)$/i.test(text)) {
 		return undefined;
+	}
 
 	const match = regex.exec(text);
 
-	if (!match)
+	if (!match) {
 		return undefined;
+	}
 
 	const eyesStr = flip ? match[3] : match[1];
 	const muzzleStr = flip ? match[1] : match[3];
@@ -288,11 +290,14 @@ const constants = createPlainMap<() => Expression | undefined>({
 function matchOther(text: string): Expression | undefined {
 	if (/^A{5,}\.*$/.test(text)) {
 		return expression(Eye.Neutral, Eye.Neutral, Muzzle.ConcernedOpen3, Iris.Shocked, Iris.Shocked);
-	} else if (/^a{5,}\.*$/.test(text)) {
+	}
+	else if (/^a{5,}\.*$/.test(text)) {
 		return expression(Eye.Neutral, Eye.Neutral, Muzzle.ConcernedOpen3);
-	} else if (/^z{3,}\.*$/i.test(text)) {
+	}
+	else if (/^z{3,}\.*$/i.test(text)) {
 		return expression(Eye.Closed, Eye.Closed, Muzzle.Neutral);
-	} else {
+	}
+	else {
 		return constants[text] && constants[text]();
 	}
 }

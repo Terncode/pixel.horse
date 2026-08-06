@@ -87,8 +87,9 @@ export class SpriteBox implements AfterViewInit, OnChanges, DoCheck {
 		const scale = this.scale;
 		const canvas = this.canvas.nativeElement as HTMLCanvasElement;
 
-		if (!size || this.invisible)
+		if (!size || this.invisible) {
 			return;
+		}
 
 		if (canvas.width !== size || canvas.height !== size) {
 			canvas.width = size;
@@ -97,8 +98,9 @@ export class SpriteBox implements AfterViewInit, OnChanges, DoCheck {
 
 		const context = canvas.getContext('2d');
 
-		if (!context)
+		if (!context) {
 			return;
+		}
 
 		context.save();
 		context.clearRect(0, 0, canvas.width, canvas.height);
@@ -149,7 +151,8 @@ export class SpriteBox implements AfterViewInit, OnChanges, DoCheck {
 				for (const color of sprite.colorMany) {
 					batch.drawSprite(color, WHITE, palette, x, y);
 				}
-			} else {
+			}
+			else {
 				batch.drawSprite(sprite.color, WHITE, palette, x, y);
 			}
 
@@ -175,7 +178,8 @@ function addRect(rect: Rect, sprite: Sprite | undefined) {
 			rect.y = sprite.oy;
 			rect.w = sprite.w;
 			rect.h = sprite.h;
-		} else {
+		}
+		else {
 			const x = Math.min(rect.x, sprite.ox);
 			const y = Math.min(rect.y, sprite.oy);
 			rect.w = Math.max(rect.x + rect.w, sprite.ox + sprite.w) - x;

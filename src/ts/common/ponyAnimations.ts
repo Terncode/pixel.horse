@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { BodyAnimation, BodyAnimationFrame, HeadAnimation, HeadAnimationFrame, BodyShadow, HeadAnimationProperties } from './interfaces';
 import { repeat, flatten } from './utils';
 

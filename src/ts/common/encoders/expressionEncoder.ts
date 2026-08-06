@@ -4,8 +4,9 @@ import { hasFlag } from '../utils';
 export const EMPTY_EXPRESSION = 0x1fffffff;
 
 export function encodeExpression(expression: Expression | undefined): number {
-	if (!expression)
+	if (!expression) {
 		return EMPTY_EXPRESSION;
+	}
 
 	const { extra, rightIris, leftIris, right, left, muzzle } = expression;
 
@@ -16,8 +17,9 @@ export function encodeExpression(expression: Expression | undefined): number {
 export function decodeExpression(value: number): Expression | undefined {
 	value = value >>> 0;
 
-	if (value === EMPTY_EXPRESSION)
+	if (value === EMPTY_EXPRESSION) {
 		return undefined;
+	}
 
 	const muzzle = value & 0x1f;
 	const left = (value >> 5) & 0x1f;

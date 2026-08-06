@@ -131,8 +131,9 @@ export function generateRegionCollider<T extends Region | undefined>(region: Reg
 		for (let rx = minX; rx <= maxX; rx++) {
 			const r = getRegion(map, rx, ry);
 
-			if (r === undefined)
+			if (r === undefined) {
 				continue;
+			}
 
 			for (const entity of r.colliders) {
 				const entityX = toScreenX(entity.x - baseX) | 0;
@@ -171,7 +172,8 @@ export function generateRegionCollider<T extends Region | undefined>(region: Reg
 								}
 							}
 						}
-					} else {
+					}
+					else {
 						for (const pc of ponyColliders) {
 							const tx0 = (baseX0 + pc.x) | 0;
 							const ty0 = (baseY0 + pc.y) | 0;
@@ -210,7 +212,8 @@ export function getRegionGlobal<T>(map: IMap<T>, x: number, y: number): T {
 export function getRegion<T>(map: IMap<T>, x: number, y: number): T {
 	if (x < 0 || y < 0 || x >= map.regionsX || y >= map.regionsY) {
 		throw new Error(`Invalid region coords (${x}, ${y})`);
-	} else {
+	}
+	else {
 		return map.regions[((x | 0) + (y | 0) * map.regionsX) | 0];
 	}
 }
@@ -218,7 +221,8 @@ export function getRegion<T>(map: IMap<T>, x: number, y: number): T {
 export function getRegionUnsafe<T>(map: IMap<T>, x: number, y: number): T | undefined {
 	if (x < 0 || y < 0 || x >= map.regionsX || y >= map.regionsY) {
 		return undefined;
-	} else {
+	}
+	else {
 		return map.regions[((x | 0) + (y | 0) * map.regionsX) | 0];
 	}
 }

@@ -115,10 +115,18 @@ function addSeasonalObjects(world: World, map: ServerMap, season: Season, holida
 
 	function addHollyDecoration(x: number, y: number, a = true, b = true, c = true, d = true) {
 		if (isChristmas) {
-			a && addHolly(x - 2.8, y);
-			b && addHolly(x - 1, y);
-			c && addHolly(x + 1, y);
-			d && addHolly(x + 2.8, y);
+			if (a) {
+				addHolly(x - 2.8, y);
+			}
+			if (b) {
+				addHolly(x - 1, y);
+			}
+			if (c) {
+				addHolly(x + 1, y);
+			}
+			if (d) {
+				addHolly(x + 2.8, y);
+			}
 		}
 	}
 
@@ -1030,7 +1038,8 @@ function addSeasonalObjects(world: World, map: ServerMap, season: Season, holida
 				delay = randomDelay();
 				reset = false;
 				resetDelay = 5;
-			} else if (!reset && resetDelay < 0) {
+			}
+			else if (!reset && resetDelay < 0) {
 				setEntityAnimation(ghost, GhostAnimation.None);
 				setEntityAnimation(hooves, GhostAnimation.None);
 				reset = true;
@@ -1051,7 +1060,8 @@ function addSeasonalObjects(world: World, map: ServerMap, season: Season, holida
 					setEntityAnimation(entity, 1);
 					delay = 0.2;
 					open = false;
-				} else {
+				}
+				else {
 					setEntityAnimation(entity, 0);
 					delay = random(5, 10, true);
 					open = true;
@@ -1473,15 +1483,19 @@ export function updateMainMapSeason(world: World, map: ServerMap, season: Season
 			if (isWinter) {
 				if (x > 18 && (tile === TileType.Water || tile === TileType.WalkableWater || tile === TileType.Boat)) {
 					setTile(map, x, y, tile === TileType.Water ? TileType.Ice : TileType.WalkableIce);
-				} else {
+				}
+				else {
 					setTile(map, x, y, tile);
 				}
-			} else {
+			}
+			else {
 				if (tile === TileType.Ice || tile === TileType.SnowOnIce) {
 					setTile(map, x, y, TileType.Water);
-				} else if (tile === TileType.WalkableIce) {
+				}
+				else if (tile === TileType.WalkableIce) {
 					setTile(map, x, y, TileType.WalkableWater);
-				} else {
+				}
+				else {
 					setTile(map, x, y, tile);
 				}
 			}
@@ -1572,21 +1586,35 @@ export function createMainMap(world: World): ServerMap {
 		const index1 = code & 0b11;
 		const index2 = (code >> 2) & 0b11;
 		const index3 = (code >> 4) & 0b11;
-		index1 && index1 !== 3 && add(cliffDecals[index1 - 1](x + 0.5, y - 1)); // no decal 2 here
-		index2 && add(cliffDecals[index2 - 1](x + 0.5, y));
-		index3 && add(cliffDecals[index3 - 1](x + 0.5, y + 1));
+		if (index1 && index1 !== 3) {
+			add(cliffDecals[index1 - 1](x + 0.5, y - 1));
+		} // no decal 2 here
+		if (index2) {
+			add(cliffDecals[index2 - 1](x + 0.5, y));
+		}
+		if (index3) {
+			add(cliffDecals[index3 - 1](x + 0.5, y + 1));
+		}
 	}
 
 	function cracksSLeft(x: number, y: number) {
 		const code = (Math.random() * 1000) % 4;
-		(code & 0b01) && add(entities.cliffDecalL(x + 0.5, y - 1));
-		(code & 0b10) && add(entities.cliffDecalL(x + 0.5, y));
+		if (code & 0b01) {
+			add(entities.cliffDecalL(x + 0.5, y - 1));
+		}
+		if (code & 0b10) {
+			add(entities.cliffDecalL(x + 0.5, y));
+		}
 	}
 
 	function cracksSRight(x: number, y: number) {
 		const code = (Math.random() * 1000) % 4;
-		(code & 0b01) && add(entities.cliffDecalR(x + 0.5, y - 1));
-		(code & 0b10) && add(entities.cliffDecalR(x + 0.5, y));
+		if (code & 0b01) {
+			add(entities.cliffDecalR(x + 0.5, y - 1));
+		}
+		if (code & 0b10) {
+			add(entities.cliffDecalR(x + 0.5, y));
+		}
 	}
 
 	function cliffSW(x: number, y: number) {
@@ -1672,7 +1700,8 @@ export function createMainMap(world: World): ServerMap {
 	function cliffTrimRight(x: number, y: number, h: number, botTrim = true) {
 		if (botTrim) {
 			add(entities.cliffBotTrimRight(x + 0.5, y));
-		} else {
+		}
+		else {
 			add(entities.cliffMidTrimRight(x + 0.5, y));
 		}
 
@@ -1946,7 +1975,8 @@ export function createMainMap(world: World): ServerMap {
 			if ((x === 0 && (y % 2)) || (x === (maxX - 1) && (y % 2))) {
 				const ox = x === 0 ? (18 / tileWidth) : (-18 / tileWidth);
 				add(shortPlank()(baseX + ox + x * plankWidth, baseY + y * plankHeight));
-			} else {
+			}
+			else {
 				add(plank()(baseX + x * plankWidth, baseY + y * plankHeight));
 			}
 		}
@@ -2623,21 +2653,25 @@ export function createMainMap(world: World): ServerMap {
 					setEntityAnimation(entity, CatAnimation.Enter);
 					hideDelay = random(30, 60, true);
 					delay = random(2, 4, true);
-				} else {
+				}
+				else {
 					hidden = true;
 					setEntityAnimation(entity, CatAnimation.Exit);
 					hideDelay = random(15, 30, true);
 				}
-			} else if (!hidden && delay < 0) {
+			}
+			else if (!hidden && delay < 0) {
 				const rand = Math.random();
 
 				if (rand < 0.1) {
 					sayToAll(entity, 'meow', 'meow', MessageType.System, {});
 					delay = random(2, 4, true);
-				} else if (rand < 0.5) {
+				}
+				else if (rand < 0.5) {
 					setEntityAnimation(entity, CatAnimation.Wag);
 					delay = random(2, 4, true);
-				} else {
+				}
+				else {
 					setEntityAnimation(entity, CatAnimation.Blink);
 					delay = random(2, 4, true);
 				}

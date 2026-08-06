@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import '../../lib';
 import { SinonStub, stub, useFakeTimers, SinonFakeTimers, assert, SinonStubbedInstance } from 'sinon';
 import { expect } from 'chai';
@@ -63,7 +64,9 @@ describe('api pony', () => {
 					name: 'oldname',
 					_id: characterObjectId,
 					createdAt: new Date(10),
-					save() { return this; }
+					save() {
+						return this;
+					}
 				} as any;
 
 				findCharacter.withArgs(characterId, 'accid').resolves(character);
@@ -213,7 +216,9 @@ describe('api pony', () => {
 			beforeEach(() => {
 				character = {
 					_id: new Types.ObjectId(characterId),
-					save() { return this; }
+					save() {
+						return this;
+					}
 				} as any;
 
 				createCharacter.withArgs(acc).returns(character);

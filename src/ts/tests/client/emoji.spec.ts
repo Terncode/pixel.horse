@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import '../lib';
 import { expect } from 'chai';
 import { splitEmojis, findEmoji, replaceEmojis, emojis, hasEmojis, autocompleteMesssage } from '../../common/emoji';

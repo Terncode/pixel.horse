@@ -124,7 +124,8 @@ export function createLiveEndPoint<T extends Doc>(
 						fixItems(items);
 						logger.warn(`Fetching ${items.length} ${model.modelName}s [${items[ITEM_LIMIT + 1].updatedAt.toISOString()}]`);
 					}
-				} catch (e) {
+				}
+				catch (e) {
 					logger.error(e);
 				}
 			})
@@ -132,8 +133,9 @@ export function createLiveEndPoint<T extends Doc>(
 	}
 
 	function fixItems(items: T[]) {
-		if (fixing || !fix)
+		if (fixing || !fix) {
 			return;
+		}
 
 		fixing = true;
 		logger.info(`Fixing ${model.modelName}s`);

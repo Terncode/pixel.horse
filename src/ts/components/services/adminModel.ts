@@ -177,8 +177,9 @@ export class AdminModel {
 		return this.liveEvents.finished;
 	}
 	initialize(live: boolean) {
-		if (this.initializedLive)
+		if (this.initializedLive) {
 			return;
+		}
 
 		notification.requestPermission();
 
@@ -545,8 +546,9 @@ export class AdminModel {
 	}
 	private updateStateTimeout: any;
 	private updateState(): void {
-		if (!this.running)
+		if (!this.running) {
 			return;
+		}
 
 		clearTimeout(this.updateStateTimeout);
 
@@ -590,7 +592,8 @@ export class AdminModel {
 function decodeDate(value: number | undefined, base: string | undefined): Date {
 	if (value == null || base == null) {
 		return new Date(0);
-	} else {
+	}
+	else {
 		const d = new Date(base);
 		d.setTime(d.getTime() + value);
 		return d;

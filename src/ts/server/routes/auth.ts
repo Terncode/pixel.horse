@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { Router, Request, Response, RequestHandler } from 'express';
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
@@ -33,7 +34,7 @@ type PassportAuth = passport.Authenticator<Handler, any, any, passport.Authentic
 const FRESH_ACCOUNT_TIME = 1 * MINUTE;
 const mergeRequests: MergeRequest[] = [];
 
-/* tslint:disable */
+
 const ignoreErrors = [
 	'Service unavailable', // replacement for twitter HTTP error
 	'Internal error',
@@ -173,7 +174,8 @@ function handleErrorAndRedirect(
 		if (e.userInfo) {
 			url += `&alert=${encodeURIComponent(e.userInfo)}`;
 		}
-	} else {
+	}
+	else {
 		reportError(server, `Auth error: ${message}`, e, req);
 		url += `?error=${encodeURIComponent(message)}`;
 	}
@@ -209,10 +211,12 @@ async function handleAuth(
 			}
 
 			await mergeUser(req, res, account, removedDocument);
-		} else {
+		}
+		else {
 			await loginUser(server, req, res, account);
 		}
-	} catch (e) {
+	}
+	catch (e) {
 		const message = merge ? 'Account merge error' : 'Authentication error';
 		const error = isError(e) ? e : new Error(`Unknown error: ${e}`);
 		handleErrorAndRedirect(server, merge ? '/account' : '/', message, error, req, res);

@@ -39,26 +39,33 @@ export const createJoinGame =
 					hasInvites(account._id),
 				]);
 
-				if (clientVersion !== version)
+				if (clientVersion !== version) {
 					throw new UserError(VERSION_ERROR);
+				}
 
-				if (new URL(url).host !== new URL(host).host && !debug && !local)
-    				throw new UserError('Invalid data', { message: 'Invalid host', desc: url });
+				if (new URL(url).host !== new URL(host).host && !debug && !local) {
+					throw new UserError('Invalid data', { message: 'Invalid host', desc: url });
+				}
 
-				if (!server)
+				if (!server) {
 					throw new UserError('Invalid data');
+				}
 
-				if (isServerOffline(server))
+				if (isServerOffline(server)) {
 					throw new UserError('Server is offline');
+				}
 
-				if (server.state.settings.blockJoining)
+				if (server.state.settings.blockJoining) {
 					throw new UserError('Cannot join to the server');
+				}
 
-				if (!meetsRequirement({ roles: account.roles, supporter: supporterLevel(account), supporterInvited }, server.state.require))
+				if (!meetsRequirement({ roles: account.roles, supporter: supporterLevel(account), supporterInvited }, server.state.require)) {
 					throw new UserError('Server is restricted');
+				}
 
-				if (!characterId || typeof characterId !== 'string')
+				if (!characterId || typeof characterId !== 'string') {
 					throw new UserError('Invalid data', { message: 'Invalid pony ID', desc: `"${characterId}"` });
+				}
 
 				const req = waiting.get(accountId);
 				const time = new Date();
@@ -86,7 +93,8 @@ export const createJoinGame =
 				await addOrigin(account, origin);
 				const token = await join(server, account, character!);
 				return { token };
-			} finally {
+			}
+			finally {
 				waiting.delete(accountId);
 			}
 		};

@@ -145,7 +145,9 @@ export function updateChatLogLine(line: ChatLogLineDOM, entry: ChatLogMessage, h
 
 function updateTime(line: ChatLogLineDOM, hourMode?: '12' | '24') {
 	line.time.style.display = 'inline';
-	if (!hourMode) return;
+	if (!hourMode) {
+		return;
+	}
 
 	if (hourMode === '24') {
 		replaceNodes(line.timeContent, `[${format(new Date(), 'HH:mm:ss')}] `);
@@ -157,9 +159,15 @@ function updateTime(line: ChatLogLineDOM, hourMode?: '12' | '24') {
 }
 
 function setNameColors(line: ChatLogLineDOM | undefined, colors?: string[]) {
-	if (!colors || !line) return;
-	if (colors[1]) line.name.style.color = colors[1];
-	if (colors[0]) line.nameContent.style.color = colors[0];
+	if (!colors || !line) {
+		return;
+	}
+	if (colors[1]) {
+		line.name.style.color = colors[1];
+	}
+	if (colors[0]) {
+		line.nameContent.style.color = colors[0];
+	}
 }
 
 function updateChatLogName(line: ChatLogLineDOM, { name, index }: ChatLogMessage) {
@@ -168,7 +176,8 @@ function updateChatLogName(line: ChatLogLineDOM, { name, index }: ChatLogMessage
 		replaceNodes(line.nameContent, name);
 		line.index.style.display = (index > 0) ? 'inline' : 'none';
 		line.indexText.nodeValue = (index > 0) ? ` #${index + 1}` : '';
-	} else {
+	}
+	else {
 		line.name.style.display = 'none';
 	}
 }
@@ -302,7 +311,8 @@ export class ChatLog implements AfterViewInit, OnDestroy, DoCheck {
 			this.setUnread(0);
 			this.regenerateList();
 			this.scrollToEnd();
-		} else {
+		}
+		else {
 			this.clearList();
 		}
 
@@ -333,7 +343,8 @@ export class ChatLog implements AfterViewInit, OnDestroy, DoCheck {
 				if (this.scrollingToEnd) {
 					this.scrolledToEnd = true;
 					this.scrollingToEnd = false;
-				} else {
+				}
+				else {
 					const clientHeight = scroll.getBoundingClientRect().height;
 					this.scrolledToEnd = scroll.scrollTop >= (scroll.scrollHeight - clientHeight - SCROLL_END_THRESHOLD);
 				}
@@ -468,7 +479,8 @@ export class ChatLog implements AfterViewInit, OnDestroy, DoCheck {
 			this.clearTimeOutAutoClear();
 			this.filterChatLogLines('', false);
 			return;
-		} else {
+		}
+		else {
 			this.filterColor = this.bg;
 		}
 
@@ -487,17 +499,22 @@ export class ChatLog implements AfterViewInit, OnDestroy, DoCheck {
 		this.filterInput.nativeElement.style.color = '';
 		if (value.startsWith('#')) {
 			value = value.slice(1);
-		} else if (value.startsWith('/')) {
+		}
+		else if (value.startsWith('/')) {
 			value = value.slice(1);
 			try {
 				const regExp = new RegExp(value);
 				this.filterChatLogLines(regExp, toLowerCase);
-			} catch (err) {// If the user inputs invalid regExp we just notify him by changing text color to red
-				if (DEVELOPMENT) console.error(err);
+			}
+			catch (err) {// If the user inputs invalid regExp we just notify him by changing text color to red
+				if (DEVELOPMENT) {
+					console.error(err);
+				}
 				this.filterInput.nativeElement.style.color = '#ff6666';
 			}
 			return;
-		} else {
+		}
+		else {
 			value = value.toLowerCase();
 			toLowerCase = true;
 		}
@@ -515,10 +532,12 @@ export class ChatLog implements AfterViewInit, OnDestroy, DoCheck {
 				if (typeof content === 'string') {
 					if (caseSensitive) {
 						lines[i].hidden = !textContent.toLowerCase().includes(content);
-					} else {
+					}
+					else {
 						lines[i].hidden = !textContent.includes(content);
 					}
-				} else {
+				}
+				else {
 					lines[i].hidden = !textContent.match(content);
 				}
 			}
@@ -534,18 +553,27 @@ export class ChatLog implements AfterViewInit, OnDestroy, DoCheck {
 		if (hsl.l < 40) {
 			if (hsl.l > 20 && hsl.l < 40) {
 				hsl.l += 20;
-				if (hsl.s > 11) hsl.s -= 11;
-			} else {
+				if (hsl.s > 11) {
+					hsl.s -= 11;
+				}
+			}
+			else {
 				hsl.l = 40;
-				if (hsl.s > 11) hsl.s = 0;
+				if (hsl.s > 11) {
+					hsl.s = 0;
+				}
 			}
 		}
 		return hsl;
 	}
 	private getCharacterColors(id: number | undefined) {
-		if (!id) return;
+		if (!id) {
+			return;
+		}
 		const entity = findEntityById(this.game.map, id) as Pony;
-		if (!entity || !entity.palettePonyInfo) return;
+		if (!entity || !entity.palettePonyInfo) {
+			return;
+		}
 		let colors = [];
 		let { body, mane } = entity.palettePonyInfo;
 		if (body && body.palette && body.palette.colors[1]) {
@@ -559,29 +587,36 @@ export class ChatLog implements AfterViewInit, OnDestroy, DoCheck {
 			const hsl = rgb2hsl(rgb);
 			this.brightenDarkColors(hsl);
 			colors.push(hsl2CSS(hsl));
-		} else if (colors && colors[0]) {
+		}
+		else if (colors && colors[0]) {
 			colors.push((colors[0]));
 		}
 		return colors;
 	}
 	clearTimeOutAutoClear() {
-		if (this.autoClear) clearTimeout(this.autoClear);
+		if (this.autoClear) {
+			clearTimeout(this.autoClear);
+		}
 		this.autoClear = undefined;
 		this.filterColor = this.inactiveBg;
 	}
 	clearTimeOutAutoUnfocus() {
-		if (this.autoUnfocus) clearTimeout(this.autoUnfocus);
+		if (this.autoUnfocus) {
+			clearTimeout(this.autoUnfocus);
+		}
 		this.autoUnfocus = undefined;
 	}
 	focus() {
 		this.clearTimeOutAutoUnfocus();
-		if (this.filterInput.nativeElement)
+		if (this.filterInput.nativeElement) {
 			this.filterInput.nativeElement.focus();
+		}
 	}
 	unFocus() {
 		this.clearTimeOutAutoUnfocus();
-		if (this.filterInput.nativeElement)
+		if (this.filterInput.nativeElement) {
 			this.filterInput.nativeElement.blur();
+		}
 	}
 	addMessage(message: ChatMessage) {
 		if (message.name && message.message) {
@@ -681,10 +716,12 @@ export class ChatLog implements AfterViewInit, OnDestroy, DoCheck {
 			tab.classList.add('active');
 			tab.classList.remove('unread');
 			tab.style.backgroundColor = this.bg;
-		} else {
+		}
+		else {
 			tab.classList.remove('active');
-			if (!tab.classList.contains('unread'))
+			if (!tab.classList.contains('unread')) {
 				tab.style.backgroundColor = this.inactiveBg;
+			}
 		}
 	}
 	scrollToEnd() {
@@ -762,7 +799,8 @@ export class ChatLog implements AfterViewInit, OnDestroy, DoCheck {
 			if (value) {
 				count.textContent = value > 99 ? '99+' : `${value}`;
 				toggle.classList.add('has-unread');
-			} else {
+			}
+			else {
 				count.textContent = '';
 				toggle.classList.remove('has-unread');
 			}

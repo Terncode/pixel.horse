@@ -30,12 +30,16 @@ export class AuthInfoEdit implements OnDestroy {
 		if (this.authId !== value) {
 			this._authId = value;
 			this.auth = undefined;
-			this.subscription && this.subscription.unsubscribe();
+			if (this.subscription) {
+				this.subscription.unsubscribe();
+			}
 			this.subscription = value ? this.model.auths.subscribe(value, auth => this.auth = auth) : undefined;
 		}
 	}
 	ngOnDestroy() {
-		this.subscription && this.subscription.unsubscribe();
+		if (this.subscription) {
+			this.subscription.unsubscribe();
+		}
 	}
 	removeAuth(auth: Auth | undefined) {
 		if (auth && confirm('Are you sure?')) {

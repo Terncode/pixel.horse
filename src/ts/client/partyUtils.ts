@@ -5,7 +5,8 @@ import { PonyTownGame } from './game';
 export function updateParty(current: PartyInfo | undefined, info: PartyMember[] | undefined): PartyInfo | undefined {
 	if (!info || !info.length) {
 		return undefined;
-	} else {
+	}
+	else {
 		const party = current || {
 			leaderId: 0,
 			members: [],
@@ -18,7 +19,8 @@ export function updateParty(current: PartyInfo | undefined, info: PartyMember[] 
 
 			if (existing) {
 				Object.assign(existing, m);
-			} else {
+			}
+			else {
 				party.members.push(m);
 			}
 

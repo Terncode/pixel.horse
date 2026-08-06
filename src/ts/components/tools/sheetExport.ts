@@ -43,7 +43,8 @@ function getSets(sheet: Sheet, key: string, override?: string): Sets | undefined
 
 	if (sheet.duplicateFirstFrame !== undefined) {
 		return times(sheet.duplicateFirstFrame, () => sets[0]);
-	} else {
+	}
+	else {
 		return sheet.single ? [sets] : sets;
 	}
 }
@@ -60,7 +61,8 @@ export function getCols(sheet: Sheet) {
 export function getRows(sheet: Sheet) {
 	if (sheet.rows !== undefined) {
 		return sheet.rows;
-	} else {
+	}
+	else {
 		const sets = getSetsForFirstKey(sheet);
 		const maxFrames = sets && max(sets.map(f => f ? f.length : 0));
 		return (maxFrames || 0) + 1;
@@ -117,7 +119,8 @@ function drawPsdLayer(
 		pony.head = ignoreSet();
 		pony.nose = ignoreSet();
 		pony.ears = ignoreSet();
-	} else if (layer.noFace) {
+	}
+	else if (layer.noFace) {
 		baseState.headAnimation = createHeadAnimation('', 1, false, [[]]);
 		pony.head = ignoreSet();
 		pony.nose = ignoreSet();
@@ -143,7 +146,9 @@ function drawPsdLayer(
 		options.no = setFlag(options.no, NoDraw.BackFarLeg, true);
 	}
 
-	layer.setup && layer.setup(pony, baseState);
+	if (layer.setup) {
+		layer.setup(pony, baseState);
+	}
 
 	syncLockedPonyInfoNumber(pony);
 
@@ -159,8 +164,12 @@ function drawPsdLayer(
 
 		const state = cloneDeep(baseState);
 
-		sheet.frame && sheet.frame(pony, state, options, xIndex, yIndex, pattern);
-		layer.frame && layer.frame(pony, state, options, xIndex, yIndex, pattern);
+		if (sheet.frame) {
+			sheet.frame(pony, state, options, xIndex, yIndex, pattern);
+		}
+		if (layer.frame) {
+			layer.frame(pony, state, options, xIndex, yIndex, pattern);
+		}
 
 		state.animationFrame = xIndex;
 
@@ -183,10 +192,12 @@ function drawPsdLayer(
 
 				if (aframe && typeIndex < aframe.length && aframe[typeIndex] && pattern < aframe[typeIndex]!.length) {
 					set.pattern = pattern;
-				} else {
+				}
+				else {
 					set.type = -1;
 				}
-			} else {
+			}
+			else {
 				set.fills = whiteColors;
 				set.outlines = whiteColors;
 
@@ -195,7 +206,9 @@ function drawPsdLayer(
 				}
 			}
 
-			layer.frameSet && layer.frameSet(set, xIndex, yIndex, pattern);
+			if (layer.frameSet) {
+				layer.frameSet(set, xIndex, yIndex, pattern);
+			}
 
 			(pony as any)[fieldName] = set.type === -1 ? ignoreSet() : set;
 		}
@@ -210,7 +223,8 @@ function drawPsdLayer(
 
 			if (extra) {
 				set.palette = mockPaletteManager.add([0, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK]);
-			} else {
+			}
+			else {
 				set.extraPalette = undefined;
 			}
 		}
@@ -247,7 +261,8 @@ function createPsdLayer(sheet: Sheet, rows: number, cols: number, layer: SheetLa
 
 	if (layer.set) {
 		return { name, children: createPsdPatternLayers(sheet, rows, cols, layer) };
-	} else {
+	}
+	else {
 		return { name, canvas: drawPsdLayer(sheet, rows, cols, layer) };
 	}
 }
@@ -352,7 +367,11 @@ export function drawPsd(psd: Psd, scale: number, canvas?: HTMLCanvasElement): HT
 
 function drawLayer(layer: Layer, context: CanvasRenderingContext2D) {
 	if (!layer.hidden) {
-		layer.canvas && context.drawImage(layer.canvas, 0, 0);
-		layer.children && layer.children.forEach(c => drawLayer(c, context));
+		if (layer.canvas) {
+			context.drawImage(layer.canvas, 0, 0);
+		}
+		if (layer.children) {
+			layer.children.forEach(c => drawLayer(c, context));
+		}
 	}
 }

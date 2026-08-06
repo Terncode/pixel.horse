@@ -102,7 +102,9 @@ export class SettingsModal implements OnInit, OnDestroy {
 			this.cancel();
 		}
 
-		this.subscription && this.subscription.unsubscribe();
+		if (this.subscription) {
+			this.subscription.unsubscribe();
+		}
 	}
 	reset() {
 		this.account = this.settingsService.account = {};
@@ -125,7 +127,8 @@ export class SettingsModal implements OnInit, OnDestroy {
 
 			if (filter.length > MAX_FILTER_WORDS_LENGTH) {
 				this.account.filterWords = '';
-			} else {
+			}
+			else {
 				this.account.filterWords = filter;
 			}
 		}
@@ -136,9 +139,15 @@ export class SettingsModal implements OnInit, OnDestroy {
 		this.close.emit();
 	}
 	switchTimestamp(state?: string) {
-		if (!state) this.browser.timestamp = undefined;
-		else if (state === '12') this.browser.timestamp = '12';
-		else if (state === '24') this.browser.timestamp = '24';
+		if (!state) {
+			this.browser.timestamp = undefined;
+		}
+		else if (state === '12') {
+			this.browser.timestamp = '12';
+		}
+		else if (state === '24') {
+			this.browser.timestamp = '24';
+		}
 	}
 	updateChatlogRange(range: number | undefined) {
 		document.body.classList.add('translucent-modals');

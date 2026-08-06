@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import '../lib';
 import { expect } from 'chai';
 import { spy, assert, SinonFakeTimers, useFakeTimers } from 'sinon';
@@ -374,7 +375,9 @@ describe('utils', () => {
 		});
 
 		it('returns undefined', () => {
-			expect(dispose({ dispose() { return 5; } })).undefined;
+			expect(dispose({ dispose() {
+				return 5;
+			} })).undefined;
 		});
 
 		it('does nothing for undefined', () => {

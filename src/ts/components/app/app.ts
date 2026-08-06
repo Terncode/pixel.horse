@@ -193,7 +193,8 @@ export class App implements OnInit, OnDestroy {
 		if (isSelected(this.game, message.entityId)) {
 			this.game.whisperTo = entity;
 			chatBox.setChatType('whisper');
-		} else {
+		}
+		else {
 			this.game.select(entity as Pony);
 		}
 	}

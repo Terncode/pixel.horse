@@ -47,8 +47,9 @@ export class ToolsPerf {
 }
 
 function measure(name: string, iterations: number, func: (i: number) => void) {
-	if (!iterations)
+	if (!iterations) {
 		return;
+	}
 
 	const start = performance.now();
 	let v: any;
@@ -124,12 +125,14 @@ export function compareArrays() {
 	let t: any;
 
 	function compareArrays(a: number[], b: number[]) {
-		if (a.length !== b.length)
+		if (a.length !== b.length) {
 			return false;
+		}
 
 		for (let i = 0; i < a.length; i++) {
-			if (a[i] !== b[i])
+			if (a[i] !== b[i]) {
 				return false;
+			}
 		}
 
 		return true;

@@ -80,13 +80,15 @@ export function updatePonyFromState(pony: ServerEntity, state: CharacterState) {
 		if (type) {
 			pony.options.hold = type;
 		}
-	} else if (pony.options.hold) {
+	}
+	else if (pony.options.hold) {
 		pony.options.hold = 0;
 	}
 
 	if (state.toy) {
 		pony.options.toy = state.toy;
-	} else if (pony.options.toy) {
+	}
+	else if (pony.options.toy) {
 		pony.options.toy = 0;
 	}
 
@@ -120,7 +122,8 @@ export function updatePony(pony: ServerEntity, account: IAccount, character: ICh
 
 	if (character.tag && canUseTag(account, character.tag)) {
 		options.tag = character.tag;
-	} else if (level && !hasFlag(character.flags, CharacterFlags.HideSupport)) {
+	}
+	else if (level && !hasFlag(character.flags, CharacterFlags.HideSupport)) {
 		options.tag = `sup${level}`;
 	}
 
@@ -139,7 +142,8 @@ export function updatePony(pony: ServerEntity, account: IAccount, character: ICh
 		ponyInfo.cm = undefined;
 		pony.infoSafe = compressPony(ponyInfo);
 		pony.encryptedInfoSafe = encryptInfo(pony.infoSafe);
-	} else {
+	}
+	else {
 		pony.infoSafe = pony.info;
 		pony.encryptedInfoSafe = encryptInfo(info);
 	}
@@ -179,8 +183,9 @@ export function logRemovedCharacter({ _id, account, name, info }: ICharacter) {
 }
 
 export async function swapCharacter(client: IClient, { server }: World, query: QueryFilter<ICharacter>) {
-	if (client.isSwitchingMap)
+	if (client.isSwitchingMap) {
 		return;
+	}
 
 	if ((Date.now() - client.lastSwap) < SWAP_TIMEOUT) {
 		return;

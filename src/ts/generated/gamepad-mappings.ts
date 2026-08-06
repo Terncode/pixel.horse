@@ -1,4 +1,4 @@
-/* tslint:disable:max-line-length */
+/* eslint-disable */
 
 export interface GamepadMapping {
 	axes: AxesTable;

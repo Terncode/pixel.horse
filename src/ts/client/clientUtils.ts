@@ -39,7 +39,8 @@ function isMultipleMatch(message: string, last: string): boolean {
 		}
 
 		return message === current.substr(0, SAY_MAX_LENGTH);
-	} else {
+	}
+	else {
 		return false;
 	}
 }
@@ -53,9 +54,11 @@ function isTrailingMatch(message: string, last: string) {
 
 	if (message.length > last.length && last.length > minMessageLength) {
 		return checkTrailing(message, last);
-	} else if (message.length < last.length && message.length > minMessageLength) {
+	}
+	else if (message.length < last.length && message.length > minMessageLength) {
 		return checkTrailing(last, message);
-	} else {
+	}
+	else {
 		return false;
 	}
 }
@@ -63,7 +66,8 @@ function isTrailingMatch(message: string, last: string) {
 export function isSpamMessage(message: string, lastMessages: string[]): boolean {
 	if (!/^\//.test(message) && lastMessages.length) {
 		return lastMessages.some(last => message === last || isMultipleMatch(message, last) || isTrailingMatch(message, last));
-	} else {
+	}
+	else {
 		return false;
 	}
 }
@@ -154,7 +158,8 @@ export function readFileAsText(file: File) {
 export function isFileSaverSupported() {
 	try {
 		return !!new Blob;
-	} catch {
+	}
+	catch {
 		return false;
 	}
 }
@@ -167,13 +172,15 @@ export function setIsIncognitoMode(value: boolean) {
 
 /* istanbul ignore next */
 function checkIncognitoMode(wnd: any) {
-	if (!wnd || !wnd.chrome)
+	if (!wnd || !wnd.chrome) {
 		return;
+	}
 
 	const fs = wnd.RequestFileSystem || wnd.webkitRequestFileSystem;
 
-	if (!fs)
+	if (!fs){
 		return;
+	}
 
 	fs(wnd.TEMPORARY, 100, () => { }, () => isInIncognitoMode = true);
 }
@@ -202,7 +209,8 @@ export function isStandalone() {
 export function supportsLetAndConst() {
 	try {
 		return (new Function('let x = true; return x;'))();
-	} catch {
+	}
+	catch {
 		return false;
 	}
 }
@@ -230,7 +238,8 @@ export function registerServiceWorker(url: string, onUpdate: () => void) {
 				}
 			});
 		}
-	} catch (e) {
+	}
+	catch (e) {
 		console.error(e);
 	}
 }
@@ -244,7 +253,8 @@ export function unregisterServiceWorker() {
 					registration.unregister();
 				}
 			});
-	} else {
+	}
+	else {
 		return Promise.resolve();
 	}
 }
@@ -271,7 +281,8 @@ export function updateRangeIndicator(range: number | undefined, { player, scale,
 		e.style.top = `${-h / 2}px`;
 		e.style.transform = `translate3d(${x}px, ${y}px, 0)`;
 		e.style.display = 'block';
-	} else {
+	}
+	else {
 		e.style.display = 'none';
 	}
 }
@@ -283,7 +294,8 @@ export function checkIframeKey(iframeId: string, expectedKey: string) {
 		const doc = iframe && iframe.contentWindow && iframe.contentWindow.document;
 		const key = doc && doc.body && doc.body.getAttribute('data-key');
 		return key === expectedKey;
-	} catch (e) {
+	}
+	catch (e) {
 		if (DEVELOPMENT) {
 			console.error(e);
 		}
@@ -333,9 +345,11 @@ export function isSupporterOrPastSupporter(account: AccountData | undefined) {
 export function supporterTitle(account: AccountData | undefined) {
 	if (account && account.supporter) {
 		return `Supporter Tier ${account.supporter}`;
-	} else if (account && hasFlag(account.flags, AccountDataFlags.PastSupporter)) {
+	}
+	else if (account && hasFlag(account.flags, AccountDataFlags.PastSupporter)) {
 		return 'Past supporter';
-	} else {
+	}
+	else {
 		return '';
 	}
 }
@@ -343,9 +357,11 @@ export function supporterTitle(account: AccountData | undefined) {
 export function supporterClass(account: AccountData | undefined) {
 	if (account && account.supporter) {
 		return `supporter-${account.supporter}`;
-	} else if (account && hasFlag(account.flags, AccountDataFlags.PastSupporter)) {
+	}
+	else if (account && hasFlag(account.flags, AccountDataFlags.PastSupporter)) {
 		return 'supporter-past';
-	} else {
+	}
+	else {
 		return 'd-none';
 	}
 }
@@ -353,9 +369,11 @@ export function supporterClass(account: AccountData | undefined) {
 export function supporterRewards(account: AccountData | undefined) {
 	if (account && account.supporter) {
 		return SUPPORTER_REWARDS[account.supporter];
-	} else if (account && hasFlag(account.flags, AccountDataFlags.PastSupporter)) {
+	}
+	else if (account && hasFlag(account.flags, AccountDataFlags.PastSupporter)) {
 		return PAST_SUPPORTER_REWARDS;
-	} else {
+	}
+	else {
 		return SUPPORTER_REWARDS[0];
 	}
 }

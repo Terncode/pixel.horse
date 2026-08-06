@@ -37,9 +37,11 @@ export class BanIcon implements OnInit, OnDestroy, OnChanges {
 	get className() {
 		if (this.isPerma) {
 			return 'text-banned';
-		} else if (this.isTimedOut) {
+		}
+		else if (this.isTimedOut) {
 			return 'text-alert';
-		} else {
+		}
+		else {
 			return 'text-muted';
 		}
 	}

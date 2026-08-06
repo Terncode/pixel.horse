@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import '../lib';
 import { expect } from 'chai';
 import { EntityState } from '../../common/interfaces';
@@ -82,7 +83,7 @@ describe('movementUtils', () => {
 			const [a, b, c, d, e] = encodeMovement(100001, 100001, 1, EntityState.None, 123, rect(100000 * 32, 100000 * 24, 100, 100));
 
 			expect(decodeMovement(a, b, c, d, e)).eql({
-				x: 100000.015625, y: 100000.020833333333334, dir: 1, flags: EntityState.None, time: 123,
+				x: 100000.015625, y: 100000.02083333333, dir: 1, flags: EntityState.None, time: 123,
 				camera: rect(100000 * 32, 100000 * 24, 100, 100)
 			});
 		});

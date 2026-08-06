@@ -26,8 +26,11 @@ function resizeUpdatesBuffer(e: unknown) {
 		updatesBuffer = new ArrayBuffer(updatesBuffer.byteLength * 2);
 		updatesBufferOffset = 0;
 		const errorMsg = isErrorAlike(e) ? e.message : `${e}`;
-		DEVELOPMENT && logger.debug(`resize buffer to ${updatesBuffer.byteLength} (${errorMsg})`);
-	} else {
+		if (DEVELOPMENT) {
+			logger.debug(`resize buffer to ${updatesBuffer.byteLength} (${errorMsg})`);
+		}
+	}
+	else {
 		throw e;
 	}
 }
@@ -54,7 +57,8 @@ function encodeUpdate(region: ServerRegion): Uint8Array {
 			writeUpdate(writer, region);
 			result = commitUpdatesWriter(writer);
 			break;
-		} catch (e) {
+		}
+		catch (e) {
 			resizeUpdatesBuffer(e);
 		}
 	}
@@ -75,7 +79,8 @@ function encodeRegion(region: ServerRegion, client: IClient): Uint8Array {
 			writeRegion(writer, region, client);
 			result = commitUpdatesWriter(writer);
 			break;
-		} catch (e) {
+		}
+		catch (e) {
 			resizeUpdatesBuffer(e);
 		}
 	}
@@ -123,8 +128,11 @@ export function unsubscribeFromOutOfRangeRegions(client: IClient) {
 
 		if (!isRectVisible(client.camera, region.unsubscribeBounds)) {
 			if (includes(region.entities, client.pony)) {
-				DEVELOPMENT && logger.warn(`Trying to unsubscribe client from region they are in`);
-			} else {
+				if (DEVELOPMENT) {
+					logger.warn(`Trying to unsubscribe client from region they are in`);
+				}
+			}
+			else {
 				removeItem(region.clients, client);
 				regions.splice(i, 1);
 				client.unsubscribes.push(region.x, region.y);
@@ -150,7 +158,8 @@ export function unsubscribeFromAllRegions(client: IClient, silent: boolean) {
 export function getExpectedRegion({ x, y, flags, region }: ServerEntity, map: ServerMap) {
 	if (region !== undefined && (flags & EntityFlags.Movable) !== 0 && pointInRect(x, y, region.boundsWithBorder)) {
 		return region;
-	} else {
+	}
+	else {
 		const rx = clamp(Math.floor(x / REGION_SIZE), 0, map.regionsX - 1) | 0;
 		const ry = clamp(Math.floor(y / REGION_SIZE), 0, map.regionsY - 1) | 0;
 		return map.regions[(rx + ((ry * map.regionsX) | 0)) | 0];
@@ -244,7 +253,8 @@ export function addToRegion(entity: ServerEntity, region: ServerRegion, map: Ser
 
 	if (isEntityShadowed(entity)) {
 		pushAddEntityToClient(entity.client, entity);
-	} else {
+	}
+	else {
 		for (const client of region.clients) {
 			pushAddEntityToClient(client, entity);
 		}

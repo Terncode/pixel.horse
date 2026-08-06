@@ -20,7 +20,8 @@ export function taskQueue(): TaskQueue {
 
 		if (task) {
 			exec(task);
-		} else {
+		}
+		else {
 			working = false;
 		}
 	}
@@ -41,7 +42,8 @@ export function taskQueue(): TaskQueue {
 
 			if (working) {
 				queue.push(task);
-			} else {
+			}
+			else {
 				exec(task);
 			}
 		});

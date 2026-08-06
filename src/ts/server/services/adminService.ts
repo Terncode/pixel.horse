@@ -21,7 +21,8 @@ function addAuthToAccount(account: Account, auth: Auth, log: string) {
 
 	if (existingAuth) { // TODO: remove
 		console.log('duplicate auth', auth._id, 'to', account._id, log);
-	} else {
+	}
+	else {
 		account.authsList!.pushOrdered(auth, compareAuths);
 	}
 }
@@ -45,7 +46,8 @@ function addPonyToAccount(account: Account, pony: Character) {
 function removePonyFromAccount(account: Account, pony: Character) {
 	if (account.poniesList) {
 		return account.poniesList.remove(pony);
-	} else {
+	}
+	else {
 		return false;
 	}
 }
@@ -136,8 +138,12 @@ export class AdminService {
 				}
 
 				if (oldAccount.lastBrowserId !== newAccount.lastBrowserId) {
-					oldAccount.lastBrowserId && this.removeBrowserIdFromMap(oldAccount.lastBrowserId, oldAccount);
-					newAccount.lastBrowserId && this.addBrowserIdToMap(newAccount.lastBrowserId, oldAccount);
+					if (oldAccount.lastBrowserId) {
+						this.removeBrowserIdFromMap(oldAccount.lastBrowserId, oldAccount);
+					}
+					if (newAccount.lastBrowserId) {
+						this.addBrowserIdToMap(newAccount.lastBrowserId, oldAccount);
+					}
 				}
 
 				Object.assign(oldAccount, newAccount);
@@ -175,7 +181,9 @@ export class AdminService {
 					}
 				}
 
-				account.lastBrowserId && this.removeBrowserIdFromMap(account.lastBrowserId, account);
+				if (account.lastBrowserId) {
+					this.removeBrowserIdFromMap(account.lastBrowserId, account);
+				}
 				this.removeNoteRefsFromMap(account.note, account);
 				this.accountDeleted.next(account);
 			},
@@ -266,13 +274,17 @@ export class AdminService {
 	removedItem(type: 'events' | 'ponies' | 'accounts' | 'auths' | 'origins', id: string) {
 		if (type === 'accounts') {
 			this.accounts.removed(id);
-		} else if (type === 'origins') {
+		}
+		else if (type === 'origins') {
 			this.origins.removed(id);
-		} else if (type === 'auths') {
+		}
+		else if (type === 'auths') {
 			this.auths.removed(id);
-		} else if (type === 'ponies') {
+		}
+		else if (type === 'ponies') {
 			this.ponies.removed(id);
-		} else {
+		}
+		else {
 			console.warn(`Unhandled removedItem for type: ${type}`);
 		}
 	}
@@ -293,7 +305,8 @@ export class AdminService {
 				if (remove(account.origins, o => includes(ips, o.ip)).length) {
 					this.updateOriginRefs(account);
 				}
-			} else if (account.origins.length) {
+			}
+			else if (account.origins.length) {
 				account.origins = [];
 				this.updateOriginRefs(account);
 			}
@@ -304,7 +317,8 @@ export class AdminService {
 
 		if (account) {
 			return account.authsList!.subscribe(listener);
-		} else {
+		}
+		else {
 			return undefined;
 		}
 	}
@@ -445,7 +459,8 @@ export class AdminService {
 
 		if (account) {
 			action(account);
-		} else {
+		}
+		else {
 			pushUnique(unassigned, item);
 		}
 	}
@@ -471,7 +486,8 @@ export class AdminService {
 			for (const o of oldOriginRefs) {
 				if (!o.origin._id && o.origin.accounts!.length === 0) {
 					this.origins.removed(o.origin.ip);
-				} else {
+				}
+				else {
 					this.origins.trigger(o.origin.ip, o.origin);
 				}
 			}
@@ -488,7 +504,8 @@ export class AdminService {
 			if (account) {
 				push(account, item);
 				return true;
-			} else {
+			}
+			else {
 				return false;
 			}
 		});
@@ -536,7 +553,8 @@ function removeById<U, T extends { _id: U }>(items: T[], id: U): T | undefined {
 		const item = items[index];
 		items.splice(index, 1);
 		return item;
-	} else {
+	}
+	else {
 		return undefined;
 	}
 }

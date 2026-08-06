@@ -41,11 +41,14 @@ export class AdminApp {
 	get loading() {
 		if (!this.model.initialized) {
 			return 'Initializing';
-		} else if (!this.model.connected) {
+		}
+		else if (!this.model.connected) {
 			return 'Connecting';
-		} else if (!this.model.loaded) {
+		}
+		else if (!this.model.loaded) {
 			return 'Loading';
-		} else {
+		}
+		else {
 			return '';
 		}
 	}

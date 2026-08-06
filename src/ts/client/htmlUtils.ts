@@ -27,7 +27,8 @@ export function createHtmlNodes(value: string | undefined, scale: number): Node[
 			});
 
 			return img;
-		} else {
+		}
+		else {
 			return document.createTextNode(x);
 		}
 	}) : [];
@@ -88,7 +89,9 @@ export function removeFirstChild(element: HTMLElement) {
 }
 
 export function removeElement(element: HTMLElement) {
-	element.parentElement && element.parentElement.removeChild(element);
+	if (element.parentElement) {
+		element.parentElement.removeChild(element);
+	}
 }
 
 export function replaceNodes(element: HTMLElement, text: string) {
@@ -105,7 +108,8 @@ export function replaceNodes(element: HTMLElement, text: string) {
 	if (hasEmojis(text)) {
 		firstChild.nodeValue = '';
 		appendAllNodes(element, createHtmlNodes(text, 2));
-	} else {
+	}
+	else {
 		firstChild.nodeValue = text;
 	}
 }

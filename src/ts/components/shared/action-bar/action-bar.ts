@@ -117,7 +117,8 @@ export class ActionBar {
 			while (actions.length < 5 || (last(actions)!.action !== undefined && actions.length < ACTIONS_LIMIT)) {
 				actions.push({ action: undefined });
 			}
-		} else {
+		}
+		else {
 			while (actions.length > 0 && last(actions)!.action === undefined) {
 				actions.pop();
 			}

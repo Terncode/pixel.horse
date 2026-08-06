@@ -162,7 +162,9 @@ export function updatePonyInfo(pony: Pony, info: string | Uint8Array, apply: () 
 		pony.discardBatch = true;
 
 		if (isPonyFlying(pony) && !canPonyFly(pony)) {
-			DEVELOPMENT && console.warn('Force land');
+			if (DEVELOPMENT) {
+				console.warn('Force land');
+			}
 			pony.state = setFlag(pony.state, EntityState.PonyFlying, false);
 			resetAnimatorState(pony.animator);
 		}
@@ -201,7 +203,8 @@ export function doBoopPonyAction(game: PonyTownGame, pony: Pony) {
 	if (pony.swimming && pony.lastBoopSplash < performance.now()) {
 		if (isFacingRight(pony)) {
 			playEffect(game, pony, boopSplashRight.type);
-		} else {
+		}
+		else {
 			playEffect(game, pony, boopSplashLeft.type);
 		}
 
@@ -242,13 +245,15 @@ export function drawPonyEntity(batch: PaletteSpriteBatch, pony: Pony, drawOption
 	if (pony.batch !== undefined) {
 		batch.patchBatchDepth(pony.batch);
 		batch.drawBatch(pony.batch);
-	} else if (pony.palettePonyInfo !== undefined) {
+	}
+	else if (pony.palettePonyInfo !== undefined) {
 		let swimming = false;
 
 		if (isSwimmingState(pony.animator.state)) {
 			if (pony.animator.state === swimmingToFlying) {
 				swimming = pony.animator.time < 0.4;
-			} else {
+			}
+			else {
 				swimming = true;
 			}
 		}
@@ -294,7 +299,9 @@ export function drawPonyEntity(batch: PaletteSpriteBatch, pony: Pony, drawOption
 			if (pony.magicEffect.currentAnimation !== undefined) {
 				drawAnimation(batch, pony.magicEffect, 0, 0, pony.magicColor, flip);
 				const sprite = sprites.magic3.frames[pony.magicEffect.frame];
-				sprite && batch.drawSprite(sprite, WHITE, pony.heartsEffect.palette, 0, 0);
+				if (sprite) {
+					batch.drawSprite(sprite, WHITE, pony.heartsEffect.palette, 0, 0);
+				}
 			}
 		}
 
@@ -384,13 +391,16 @@ export function flagsToState(state: EntityState, moving: boolean, isSwimming: bo
 
 	if (isSwimming) {
 		return swimming;
-	} else if (moving) {
+	}
+	else if (moving) {
 		if (ponyState === EntityState.PonyFlying) {
 			return flying;
-		} else {
+		}
+		else {
 			return trotting;
 		}
-	} else {
+	}
+	else {
 		switch (ponyState) {
 			case EntityState.PonyStanding: return standing;
 			case EntityState.PonyWalking: return trotting;
@@ -435,7 +445,8 @@ export function updatePonyEntity(pony: Pony, delta: number, gameTime: number, sa
 		}
 
 		pony.doAction = DoAction.None;
-	} else {
+	}
+	else {
 		setAnimatorState(pony.animator, animationState);
 	}
 
@@ -448,7 +459,8 @@ export function updatePonyEntity(pony: Pony, delta: number, gameTime: number, sa
 		if (frame >= pony.headAnimation.frames.length && !pony.headAnimation.loop) {
 			pony.headAnimation = undefined;
 			state.headAnimationFrame = 0;
-		} else {
+		}
+		else {
 			state.headAnimationFrame = frame % pony.headAnimation.frames.length;
 		}
 	}
@@ -468,7 +480,8 @@ export function updatePonyEntity(pony: Pony, delta: number, gameTime: number, sa
 
 	if ((pony.state & EntityState.Magic) !== 0) {
 		playAnimation(pony.magicEffect, magicAnimation);
-	} else {
+	}
+	else {
 		playAnimation(pony.magicEffect, undefined);
 	}
 
@@ -546,11 +559,13 @@ export function updatePonyHold(pony: Pony, game: PonyTownGame) {
 	if (pony.hold !== 0) {
 		if (ponyState.holding === undefined) {
 			ponyState.holding = createAnEntity(pony.hold, 0, 0, 0, {}, pony.paletteManager, game);
-		} else if (ponyState.holding.type !== pony.hold) {
+		}
+		else if (ponyState.holding.type !== pony.hold) {
 			releaseEntity(ponyState.holding);
 			ponyState.holding = createAnEntity(pony.hold, 0, 0, 0, {}, pony.paletteManager, game);
 		}
-	} else if (ponyState.holding !== undefined) {
+	}
+	else if (ponyState.holding !== undefined) {
 		releaseEntity(ponyState.holding);
 		ponyState.holding = undefined;
 	}
@@ -590,7 +605,8 @@ function filterExpression(expression: Expression) {
 
 		if (expression.muzzle === Muzzle.SmilePant) {
 			expression.muzzle = Muzzle.SmileOpen;
-		} else if (expression.muzzle === Muzzle.NeutralPant) {
+		}
+		else if (expression.muzzle === Muzzle.NeutralPant) {
 			expression.muzzle = Muzzle.NeutralOpen2;
 		}
 	}
@@ -598,9 +614,11 @@ function filterExpression(expression: Expression) {
 	if (blush) {
 		if (expression.muzzle === Muzzle.SmileOpen2) {
 			expression.muzzle = Muzzle.SmileOpen;
-		} else if (expression.muzzle === Muzzle.FrownOpen) {
+		}
+		else if (expression.muzzle === Muzzle.FrownOpen) {
 			expression.muzzle = Muzzle.ConcernedOpen;
-		} else if (expression.muzzle === Muzzle.NeutralOpen2) {
+		}
+		else if (expression.muzzle === Muzzle.NeutralOpen2) {
 			expression.muzzle = Muzzle.Oh;
 		}
 	}
@@ -619,21 +637,25 @@ function updatePonyExpression(pony: Pony, expr: number, safe: boolean) {
 
 	if (hasFlag(extra, ExpressionExtra.Cry)) {
 		playAnimation(pony.cryEffect, cryAnimation);
-	} else if (hasFlag(extra, ExpressionExtra.Tears)) {
+	}
+	else if (hasFlag(extra, ExpressionExtra.Tears)) {
 		playAnimation(pony.cryEffect, tearsAnimation);
-	} else {
+	}
+	else {
 		playAnimation(pony.cryEffect, undefined);
 	}
 
 	if (hasFlag(extra, ExpressionExtra.Zzz)) {
 		playOneOfAnimations(pony.zzzEffect, zzzAnimations);
-	} else {
+	}
+	else {
 		playAnimation(pony.zzzEffect, undefined);
 	}
 
 	if (hasFlag(extra, ExpressionExtra.Hearts)) {
 		playAnimation(pony.heartsEffect, heartsAnimation);
-	} else {
+	}
+	else {
 		playAnimation(pony.heartsEffect, undefined);
 	}
 }

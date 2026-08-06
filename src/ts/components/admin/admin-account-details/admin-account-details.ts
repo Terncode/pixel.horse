@@ -145,9 +145,15 @@ export class AdminAccountDetails implements OnInit, OnDestroy {
 	}
 	ngOnDestroy() {
 		this.model.updated = () => { };
-		this.authsSubscription && this.authsSubscription.unsubscribe();
-		this.accountSubscription && this.accountSubscription.unsubscribe();
-		this.originsSubscription && this.originsSubscription.unsubscribe();
+		if (this.authsSubscription) {
+			this.authsSubscription.unsubscribe();
+		}
+		if (this.accountSubscription) {
+			this.accountSubscription.unsubscribe();
+		}
+		if (this.originsSubscription) {
+			this.originsSubscription.unsubscribe();
+		}
 	}
 	refresh() {
 		const account = this.account;
@@ -160,10 +166,14 @@ export class AdminAccountDetails implements OnInit, OnDestroy {
 		this.accountObject = undefined;
 		this.loadingDuplicates = false;
 
-		this.authsSubscription && this.authsSubscription.unsubscribe();
+		if (this.authsSubscription) {
+			this.authsSubscription.unsubscribe();
+		}
 		this.authsSubscription = undefined;
 
-		this.originsSubscription && this.originsSubscription.unsubscribe();
+		if (this.originsSubscription) {
+			this.originsSubscription.unsubscribe();
+		}
 		this.originsSubscription = undefined;
 
 		this.auths = [];
@@ -201,7 +211,8 @@ export class AdminAccountDetails implements OnInit, OnDestroy {
 
 			this.originsSubscription = this.model.accountOrigins
 				.subscribe(account._id, origins => this.origins = origins || []);
-		} else {
+		}
+		else {
 			this.duplicates = [];
 			this.ignores = [];
 			this.ignoredBy = [];
@@ -468,7 +479,8 @@ export class AdminAccountDetails implements OnInit, OnDestroy {
 
 		if (merge.data) {
 			return `${mergeInfo('ACCOUNT', merge.data.account)}\n\n${mergeInfo('MERGED', merge.data.merge)}`;
-		} else {
+		}
+		else {
 			return '<empty>';
 		}
 	}
@@ -552,7 +564,9 @@ export class AdminAccountDetails implements OnInit, OnDestroy {
 	}
 	private update() {
 		if (this.id) {
-			this.accountSubscription && this.accountSubscription.unsubscribe();
+			if (this.accountSubscription) {
+				this.accountSubscription.unsubscribe();
+			}
 			this.accountSubscription = this.id ? this.model.accounts.subscribe(this.id, a => this.setAccount(a)) : undefined;
 
 			this.events = this.model.events

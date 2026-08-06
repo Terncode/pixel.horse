@@ -11,6 +11,8 @@ import Rollbar from 'rollbar';
 import { Passport } from 'passport';
 import MongoStore from 'connect-mongo';
 import express from 'express';
+import frameguard from 'frameguard';
+import cookieParser from 'cookie-parser';
 import { WebSocketServer } from '@encharm/cws';
 import { compact, once } from 'lodash';
 import { copySync, removeSync, ensureDirSync } from 'fs-extra';
@@ -62,7 +64,8 @@ import { ClientAdminActionsTemplate } from '../common/clientAdminActionsTemplate
 function getServiceWorker() {
 	try {
 		return fs.readFileSync(pathTo('dist', 'browser', 'sw.js'));
-	} catch {
+	}
+	catch {
 		return '';
 	}
 }
@@ -121,8 +124,9 @@ if (config.proxy) {
 }
 
 if (production) {
+	// eslint-disable-next-line @typescript-eslint/no-require-imports
 	app.use(require('hsts')({ maxAge }));
-	app.use(require('frameguard')({ action: 'sameorigin' }));
+	app.use(frameguard({ action: 'sameorigin' }));
 	// app.use(require('shrink-ray-current')());
 }
 
@@ -140,7 +144,8 @@ if (serviceWorker) {
 		res.setHeader('Cache-Control', 'public, max-age=0');
 		res.send(serviceWorker);
 	});
-} else {
+}
+else {
 	app.get('/sw.js', notFound);
 }
 
@@ -156,7 +161,7 @@ if (args.login || args.admin) {
 
 app.use(bodyParser.json({ type: ['json', 'application/csp-report'], limit }));
 app.use(bodyParser.urlencoded({ extended: true, limit }));
-app.use(require('cookie-parser')());
+app.use(cookieParser());
 
 if (args.login || args.admin) {
 	passport.serializeUser<string>((account, done) => done(null, (account as IAccount)._id.toString()));
@@ -164,7 +169,8 @@ if (args.login || args.admin) {
 		try {
 			const account = await Account.findById(id).exec();
 			done(undefined, account && !isBanned(account) ? account : false);
-		} catch (error) {
+		}
+		catch (error) {
 			done(error);
 		}
 	});
@@ -189,6 +195,7 @@ if (!production) {
 	app.use('/assets-admin', express.static(pathTo('src')));
 	app.use('/assets', express.static(pathTo('assets')));
 	app.use('/assets', express.static(pathTo('src')));
+	// eslint-disable-next-line @typescript-eslint/no-require-imports
 	app.use(require('errorhandler')());
 }
 
@@ -353,7 +360,8 @@ if (args.login) {
 	app.use((req, res) => {
 		if (settings.isPageOffline) {
 			res.send(offlinePage);
-		} else {
+		}
+		else {
 			if (production && !args.local) {
 				res.setHeader('Content-Security-Policy', csp);
 				res.setHeader('Link', linkPreloads);
@@ -373,7 +381,8 @@ if (args.login) {
 app.use((err: any, req: any, res: express.Response, next: any) => {
 	if (err instanceof URIError) {
 		res.redirect(config.host);
-	} else {
+	}
+	else {
 		return next(err, req, res);
 	}
 });

@@ -123,7 +123,8 @@ export function blushColor(coat: number): number {
 		(h > 280 && s > 0.2 && s < 0.7 && v > 0.85)
 	) {
 		return DARK_BLUSH;
-	} else {
+	}
+	else {
 		return LIGHT_BLUSH;
 	}
 }
@@ -134,9 +135,11 @@ export function getTileColor(tile: TileType, season: Season) {
 		case TileType.ElevatedDirt:
 			if (season === Season.Autumn) {
 				return 0xedd29eff;
-			} else if (season === Season.Winter) {
+			}
+			else if (season === Season.Winter) {
 				return 0xd9c2a1ff;
-			} else {
+			}
+			else {
 				return 0xf5d99bff;
 			}
 		case TileType.Water:
@@ -146,9 +149,11 @@ export function getTileColor(tile: TileType, season: Season) {
 		case TileType.Grass:
 			if (season === Season.Autumn) {
 				return 0xddcf71ff;
-			} else if (season === Season.Winter) {
+			}
+			else if (season === Season.Winter) {
 				return 0xe1ebf8ff;
-			} else {
+			}
+			else {
 				return 0x7cc991ff;
 			}
 		case TileType.Ice:

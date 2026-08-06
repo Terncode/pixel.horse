@@ -51,7 +51,8 @@ export class LiveCollection<T extends Document> {
 			if (removeFromList || this.options.deleteItems) {
 				removeItem(this.items, item);
 				this.itemsMap.delete(key);
-			} else if (deleted) {
+			}
+			else if (deleted) {
 				item.deleted = true;
 			}
 
@@ -64,8 +65,9 @@ export class LiveCollection<T extends Document> {
 		return this.server.assignAccount(this.name, id, account);
 	}
 	live(): Promise<void> {
-		if (!this.running)
+		if (!this.running) {
 			return Promise.resolve();
+		}
 
 		clearTimeout(this.liveTimeout);
 
@@ -129,11 +131,13 @@ export class LiveCollection<T extends Document> {
 			if (doc) {
 				if (this.options.onUpdate) {
 					this.options.onUpdate(doc, update);
-				} else {
+				}
+				else {
 					Object.assign(doc, update);
 				}
 				all.push(doc);
-			} else if (!liveFetch || !this.options.ignore || !this.options.ignore(update)) {
+			}
+			else if (!liveFetch || !this.options.ignore || !this.options.ignore(update)) {
 				this.push(update);
 				added.push(update);
 				all.push(update);

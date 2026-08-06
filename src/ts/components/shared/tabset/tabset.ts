@@ -49,7 +49,8 @@ export class Tabset {
 	set justify(className: 'start' | 'center' | 'end' | 'fill' | 'justified') {
 		if (className === 'fill' || className === 'justified') {
 			this.justifyClass = `nav-${className}`;
-		} else {
+		}
+		else {
 			this.justifyClass = `justify-content-${className}`;
 		}
 	}
@@ -75,20 +76,26 @@ export class Tabset {
 		if (index !== undefined) {
 			e.preventDefault();
 			const element = document.getElementById(this.tabs.toArray()[index].id);
-			element && element.focus();
+			if (element) {
+				element.focus();
+			}
 			this.select(index);
 		}
 	}
 	private handleKey(keyCode: number) {
 		if (keyCode === Key.LEFT) {
 			return this.activeIndex === 0 ? this.tabs.length - 1 : this.activeIndex - 1;
-		} else if (keyCode === Key.RIGHT) {
+		}
+		else if (keyCode === Key.RIGHT) {
 			return this.activeIndex === this.tabs.length - 1 ? 0 : this.activeIndex + 1;
-		} else if (keyCode === Key.HOME) {
+		}
+		else if (keyCode === Key.HOME) {
 			return 0;
-		} else if (keyCode === Key.END) {
+		}
+		else if (keyCode === Key.END) {
 			return this.tabs.length - 1;
-		} else {
+		}
+		else {
 			return undefined;
 		}
 	}

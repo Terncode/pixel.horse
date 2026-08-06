@@ -213,7 +213,8 @@ export function filterString(value: string | undefined, filter: (code: number) =
 				code = fromSurrogate(code, extra);
 				i++;
 				size++;
-			} else {
+			}
+			else {
 				invalidSurrogate = true;
 			}
 		}

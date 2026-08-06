@@ -37,7 +37,8 @@ export function handleActionCommand(message: string, game: PonyTownGame): boolea
 				if (player) {
 					if (isPonyLying(player)) {
 						sitAction(player, game);
-					} else {
+					}
+					else {
 						lieAction(player, game);
 					}
 				}
@@ -46,7 +47,8 @@ export function handleActionCommand(message: string, game: PonyTownGame): boolea
 				if (player) {
 					if (isPonyFlying(player)) {
 						standAction(player, game);
-					} else {
+					}
+					else {
 						sitAction(player, game);
 					}
 				}
@@ -60,7 +62,8 @@ export function handleActionCommand(message: string, game: PonyTownGame): boolea
 				if (player) {
 					if (isPonyFlying(player)) {
 						standAction(player, game);
-					} else {
+					}
+					else {
 						flyAction(player, game);
 					}
 				}
@@ -77,9 +80,11 @@ export function upAction(game: PonyTownGame) {
 	if (player) {
 		if (isPonyLying(player)) {
 			sitAction(player, game);
-		} else if (isPonySitting(player)) {
+		}
+		else if (isPonySitting(player)) {
 			standAction(player, game);
-		} else if (isPonyStanding(player)) {
+		}
+		else if (isPonyStanding(player)) {
 			flyAction(player, game);
 		}
 	}
@@ -91,9 +96,11 @@ export function downAction(game: PonyTownGame) {
 	if (player) {
 		if (isPonySitting(player)) {
 			lieAction(player, game);
-		} else if (isPonyStanding(player)) {
+		}
+		else if (isPonyStanding(player)) {
 			sitAction(player, game);
-		} else if (isPonyFlying(player)) {
+		}
+		else if (isPonyFlying(player)) {
 			standAction(player, game);
 		}
 	}
@@ -172,11 +179,14 @@ export function interact(game: PonyTownGame, shift: boolean) {
 
 		if (entity && entityInRange(entity, player)) {
 			game.send(server => server.interact(entity.id));
-		} else if (player.hold === hammer.type) {
+		}
+		else if (player.hold === hammer.type) {
 			game.changePlaceEntity(shift);
-		} else if (player.hold === shovel.type) {
+		}
+		else if (player.hold === shovel.type) {
 			game.changePlaceTile(shift);
-		} else if (player.ponyState.holding && hasFlag(player.ponyState.holding.flags, EntityFlags.Usable)) {
+		}
+		else if (player.ponyState.holding && hasFlag(player.ponyState.holding.flags, EntityFlags.Usable)) {
 			game.send(server => server.use());
 		}
 	}
@@ -191,13 +201,16 @@ export function toggleWall(game: PonyTownGame, hover: Point) {
 	if (dx > dy) {
 		if ((dx + dy) < 1) {
 			game.send(server => server.changeTile(x, y, TileType.WallH));
-		} else {
+		}
+		else {
 			game.send(server => server.changeTile(x + 1, y, TileType.WallV));
 		}
-	} else {
+	}
+	else {
 		if ((dx + dy) < 1) {
 			game.send(server => server.changeTile(x, y, TileType.WallV));
-		} else {
+		}
+		else {
 			game.send(server => server.changeTile(x, y + 1, TileType.WallH));
 		}
 	}
@@ -209,8 +222,11 @@ export function editorSelectEntities(game: PonyTownGame, hover: Point, shift: bo
 
 		if (shift) {
 			const entity = entities.filter(e => !includes(game.editor.selectedEntities, e))[0];
-			entity && game.editor.selectedEntities.push(entity);
-		} else {
+			if (entity) {
+				game.editor.selectedEntities.push(entity);
+			}
+		}
+		else {
 			const index = entities.findIndex(e => includes(game.editor.selectedEntities, e));
 			const entity = entities[(index + 1) % entities.length];
 			game.editor.selectedEntities = entity ? [entity] : [];
@@ -227,7 +243,8 @@ export function editorDragEntities(game: PonyTownGame, hover: Point, buttonPress
 			e.x = roundPositionX(e.draggingStart!.x + dx);
 			e.y = roundPositionY(e.draggingStart!.y + dy);
 		});
-	} else {
+	}
+	else {
 		game.apply(() => game.editor.draggingEntities = false);
 		game.send(server => server.editorAction({
 			type: 'move',

@@ -432,8 +432,9 @@ export function theSameColor(a: LAB, b: LAB, delta = 27): boolean { // 27
 }
 
 export function isBadCM(cmString: string[], coatColor: string | undefined): string | undefined {
-	if (!cmString || !cmString.length)
+	if (!cmString || !cmString.length) {
 		return undefined;
+	}
 
 	const pad = CM_SIZE * CM_SIZE - cmString.length;
 	const coat = hexToLab(coatColor || '000000');

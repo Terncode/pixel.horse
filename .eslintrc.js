@@ -89,6 +89,8 @@ module.exports = {
 				]
 			}
 		],
+		'curly': ['warn', 'all'],
+		'brace-style': ['warn', 'stroustrup'],
 		'eol-last': 'error',
 		'eqeqeq': [
 			'error',

@@ -24,11 +24,15 @@ export class PonyInfoRemote implements OnDestroy {
 		if (this.ponyId !== value) {
 			this._ponyId = value;
 			this.pony = undefined;
-			this.subscription && this.subscription.unsubscribe();
+			if (this.subscription) {
+				this.subscription.unsubscribe();
+			}
 			this.subscription = value ? this.model.ponies.subscribe(value, pony => this.pony = pony) : undefined;
 		}
 	}
 	ngOnDestroy() {
-		this.subscription && this.subscription.unsubscribe();
+		if (this.subscription) {
+			this.subscription.unsubscribe();
+		}
 	}
 }

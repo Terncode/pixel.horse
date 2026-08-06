@@ -35,7 +35,8 @@ export class IntervalUpdateService {
 		return (on: boolean) => {
 			if (on && !unsubscribe) {
 				unsubscribe = this.subscribe(action);
-			} else if (!on && unsubscribe) {
+			}
+			else if (!on && unsubscribe) {
 				unsubscribe();
 				unsubscribe = undefined;
 			}

@@ -14,7 +14,7 @@ import { meetsRequirement } from '../../common/accountUtils';
 import { isLanguage, isFocused, sortServersForRussian } from '../../client/clientUtils';
 import { StorageService } from './storageService';
 
-export interface ClientSocketService extends SocketService<ClientActions, IServerActions> { }
+export type ClientSocketService = SocketService<ClientActions, IServerActions>;
 
 function createSocket(
 	gameService: GameService, game: PonyTownGame, model: Model, zone: NgZone, options: ClientOptions,
@@ -183,7 +183,8 @@ export class GameService {
 		if (reason === LeaveReason.Swearing) {
 			this.leftMessage = 'Kicked for swearing or inappropriate language';
 			this.locked = true;
-		} else {
+		}
+		else {
 			this.leftMessage = undefined;
 		}
 
@@ -233,11 +234,14 @@ export class GameService {
 	private getAndUpdateStatus(account: AccountData | undefined) {
 		if (this.joining || this.playing || !account || !isFocused()) {
 			return Promise.resolve();
-		} else {
+		}
+		else {
 			return this.model.status(this.initialized)
 				.then(status => this.updateStatus(account, status))
 				.catch((e: RequestError) => {
-					DEVELOPMENT && console.error(e);
+					if (DEVELOPMENT) {
+						console.error(e);
+					}
 					this.offline = e.message === OFFLINE_ERROR;
 					this.versionError = e.message === VERSION_ERROR;
 					this.protectionError = e.message === PROTECTION_ERROR;
@@ -255,14 +259,16 @@ export class GameService {
 
 			if (existing) {
 				merge(existing, server);
-			} else if ('name' in server) {
+			}
+			else if ('name' in server) {
 				const info = server as ServerInfo;
 				info.countryFlags = info.flag && /^[a-z]{2}( [a-z]{2})*$/.test(info.flag) ? info.flag.split(/ /g) : [];
 
 				if (info.name && account && meetsRequirement(account, info.require)) {
 					this.servers.push(info);
 				}
-			} else {
+			}
+			else {
 				// got new server on the list
 				this.initialized = false;
 			}
@@ -302,7 +308,8 @@ export class GameService {
 				if (socket.isConnected) {
 					clearInterval(interval);
 					this.zone.run(resolve);
-				} else if (!this.joining) {
+				}
+				else if (!this.joining) {
 					clearInterval(interval);
 					this.zone.run(() => reject(new Error('Cancelled (poll)')));
 				}

@@ -32,8 +32,9 @@ charsToCodes(CHARS + ROMAJI + EMOJI).forEach(code => existing.add(code));
 items.forEach(({ name }) => {
 	const codes = charsToCodes(name);
 	const missingChars = codes.reduce((count, code) => {
-		if (existing.has(code) || isNonPrintableCharacter(code))
+		if (existing.has(code) || isNonPrintableCharacter(code)) {
 			return count;
+		}
 
 		const current = missing.get(code) || 0;
 		missing.set(code, current + 1);

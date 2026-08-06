@@ -121,7 +121,8 @@ export class ToolsMap implements OnInit {
 		if (this.map && this.info) {
 			if (this.type === 'regular') {
 				drawTheMap(this.canvas.nativeElement, this.map, this.info, this.scale, this.grid);
-			} else if (this.type === 'minimap') {
+			}
+			else if (this.type === 'minimap') {
 				drawMinimap(this.canvas.nativeElement, this.map, this.info, this.scale);
 			}
 		}

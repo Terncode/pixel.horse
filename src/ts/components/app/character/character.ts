@@ -490,8 +490,11 @@ export class Character implements OnInit, OnDestroy {
 						await this.model.savePony(pony, true);
 						imported++;
 					}
-				} catch (e) {
-					DEVELOPMENT && console.error(e);
+				}
+				catch (e) {
+					if (DEVELOPMENT) {
+						console.error(e);
+					}
 				}
 			}
 

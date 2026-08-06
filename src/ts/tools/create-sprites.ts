@@ -1,5 +1,4 @@
-/* tslint:disable */
-
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 require('source-map-support').install();
 
 (global as any).BETA = false;
@@ -38,6 +37,7 @@ const head0Indices = [0, 1, 2, 4, 7, 8, 9, 10, 12, 13, 14, 16, 18, 19]; // regul
 const head1Indices = [0, 1, 3, 5, 6, 8, 9, 11, 12, 13, 15, 17, 18, 19]; // clipped (left facing, displayed in char creator)
 
 const MAX_PALETTE_SIZE = 128;
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const { assetsPath } = require('../../../config.json');
 const rootPath = path.join(__dirname, '..', '..', '..');
 const sourcePath = path.join(assetsPath);
@@ -179,11 +179,14 @@ function splitMuzzleMouth(canvas: ExtCanvas) {
 	const mouthCanvas = mapColors(canvas, c => {
 		if (c === MOUTH_COLOR || c === TONGUE_COLOR) {
 			return c;
-		} else if (c === TEETH_COLOR) {
+		}
+		else if (c === TEETH_COLOR) {
 			return WHITE;
-		} else if (c === TEETH_SHADE_COLOR) {
+		}
+		else if (c === TEETH_SHADE_COLOR) {
 			return LIGHT_SHADE_COLOR;
-		} else {
+		}
+		else {
 			return 0;
 		}
 	});
@@ -226,7 +229,8 @@ function getMuzzlesFromPsd({ sprites, objects2 }: Result, psd: Psd) {
 			const color = getImage(noseMuzzleCanvas, x, y);
 			const pattern = getImage(nosePatternCanvas, x, y);
 			return [{ ...addSpriteWithColors(sprites, color, pattern), mouth, fangs }];
-		} else {
+		}
+		else {
 			return [{ color: addSprite(sprites, getImage(muzzleCanvas, x, y)), colors: 3, mouth, fangs }];
 		}
 	}));
@@ -273,7 +277,8 @@ function importSprites({ sprites, objects2 }: Result, sheet: Sheet) {
 		frameCount = 1;
 		const oldGet = getImage;
 		getImage = (canvas, _, type) => oldGet(canvas, type % wrap, Math.floor(type / wrap));
-	} else if (sheet.single) {
+	}
+	else if (sheet.single) {
 		typeCount = typeCount * frameCount;
 		frameCount = 1;
 		const oldGet = getImage;
@@ -327,7 +332,8 @@ function importSprites({ sprites, objects2 }: Result, sheet: Sheet) {
 
 				if (isCanvasEmpty(accessoryFrame)) {
 					return null;
-				} else {
+				}
+				else {
 					let extraProps: any = {};
 
 					if (extraFrame) {
@@ -413,7 +419,8 @@ function importSprites({ sprites, objects2 }: Result, sheet: Sheet) {
 
 		if (sheet.single) {
 			objects2[`${name}: StaticSprites${hasExtra ? 'Extra' : ''}`] = frames[0] || [];
-		} else {
+		}
+		else {
 			objects2[`${name}: AnimatedSprites`] = frames;
 		}
 	});
@@ -474,7 +481,8 @@ function getTreesOrObjectFromPsd(result: Result, psd: Psd, name: string, palette
 		const color = getLayerCanvas('color', psd);
 		const shadow = getLayerCanvas('shadow', psd);
 		addColorShadow(result, name, color, shadow, palettes);
-	} else {
+	}
+	else {
 		getTreesFromPsd(result, psd, name, palettes);
 	}
 }
@@ -730,11 +738,14 @@ function addPalettes(palettes: number[][]) {
 function obj(value: any, name: string, indent = false): string {
 	if (value == null) {
 		return 'undefined';
-	} else if (typeof value === 'string') {
+	}
+	else if (typeof value === 'string') {
 		return value;
-	} else if (typeof value === 'number') {
+	}
+	else if (typeof value === 'number') {
 		return `sprites[${value.toString()}]`;
-	} else if (Array.isArray(value)) {
+	}
+	else if (Array.isArray(value)) {
 		if (/: StaticSprites(Extra)?$/.test(name)) {
 			// [type][pattern]
 			const types = value as (({ color: number; colors: number; extra?: number; palette?: number[]; } | null)[] | null)[];
@@ -770,17 +781,19 @@ function obj(value: any, name: string, indent = false): string {
 							`createColorPalette(${x!.extra}, [${addPalette(x!.palette!)}])` :
 							'emptyColorPalette()').join(', ')}],` :
 						'\tundefined,'
-					).join('\n')}\n];`);
+					).join('\n')}\n]`);
 			}
 
 			const items = `\n${value.map((x, i) => '\t' + obj(x, `${name}[${i}]`)).join(',\n')}\n`;
-			return `[${indent ? items : items.replace(/\t/g, '').replace(/\n/g, ' ').trim()}];` +
-				'\n' + lines.join('\n') + '\n';
-		} else {
+			return `[${indent ? items : items.replace(/\t/g, '').replace(/\n/g, ' ').trim()}]` +
+				(lines.length ? '\n' + lines.join('\n') : '');
+		}
+		else {
 			const items = `\n${value.map((x, i) => '\t' + obj(x, `${name}[${i}]`)).join(',\n')}\n`;
 			return `[${indent ? items : items.replace(/\t/g, '').replace(/\n/g, ' ').trim()}]`;
 		}
-	} else {
+	}
+	else {
 		return createObj(value, name);
 	}
 }
@@ -790,9 +803,11 @@ function encodeColor(value: number) {
 
 	if (alpha === 0) {
 		return '0';
-	} else if (alpha !== 0xff) {
+	}
+	else if (alpha !== 0xff) {
 		return value.toString(16).padStart(8, '0');
-	} else {
+	}
+	else {
 		return (value >>> 8).toString(16).padStart(6, '0');
 	}
 }
@@ -802,38 +817,54 @@ function createObj(
 ) {
 	if (s.frames && s.palette && s.shadow) {
 		return `createAnimationShadow(${encodeArray(s.frames)}, ${s.shadow}, ${addPalette(s.palette)})`;
-	} else if (s.frames && s.palette) {
+	}
+	else if (s.frames && s.palette) {
 		return `createAnimationPalette(${encodeArray(s.frames)}, ${addPalette(s.palette)})`;
-	} else if (s.frames) {
+	}
+	else if (s.frames) {
 		return `createAnimation(${encodeArray(s.frames)})`;
-	} else if (s.fangs != null) {
+	}
+	else if (s.fangs != null) {
 		return `createNose(${s.color}, ${s.colors}, ${s.mouth}, ${s.fangs})`;
-	} else if (s.color && s.colors && s.extra && s.palette) {
+	}
+	else if (s.color && s.colors && s.extra && s.palette) {
 		return `createColorExtraPal(${s.color}, ${s.colors}, ${s.extra}, [${addPalette(s.palette)}])`;
-	} else if (s.color && s.colors) {
+	}
+	else if (s.color && s.colors) {
 		return `colorPal${s.colors}(${s.color})`;
-	} else if (s.base && s.irises != null) {
+	}
+	else if (s.base && s.irises != null) {
 		return `createEye(${s.base}, ${encodeArray(s.irises)}, ${s.shadow}, ${s.shine})`;
-	} else if (s.color && s.shadow && s.palettes) {
+	}
+	else if (s.color && s.shadow && s.palettes) {
 		return `createColorShadowPalette(${s.color}, ${s.shadow}, ${addPalettes(s.palettes)})`;
-	} else if (s.color && s.palettes) {
+	}
+	else if (s.color && s.palettes) {
 		return `createColorPalette(${s.color}, ${addPalettes(s.palettes)})`;
-	} else if (s.sprites && s.palettes) {
+	}
+	else if (s.sprites && s.palettes) {
 		return `createSpritesPalette(${encodeArray(s.sprites)}, ${addPalettes(s.palettes)})`;
-	} else if (s.color && s.palette) {
+	}
+	else if (s.color && s.palette) {
 		return `/* no palettes */ createColorPalette(${s.color}, [${addPalette(s.palette)}])`;
-	} else if (s.color && s.shadow) {
+	}
+	else if (s.color && s.shadow) {
 		return `createColorShadow(${s.color}, ${s.shadow})`;
-	} else if (s.color) {
+	}
+	else if (s.color) {
 		return `createColor(${s.color})`;
-	} else if (s.shadow) {
+	}
+	else if (s.shadow) {
 		return `createShadow(${s.shadow})`;
-	} else if (s.topLeft) {
+	}
+	else if (s.topLeft) {
 		return `createButton(${s.border}, ${s.topLeft}, ${s.top}, ${s.topRight}, ${s.left}, ${s.bg},`
 			+ ` ${s.right}, ${s.bottomLeft}, ${s.bottom}, ${s.bottomRight})`;
-	} else if (s.name && s.sprite) {
+	}
+	else if (s.name && s.sprite) {
 		return `createEmote('${s.name}', ${s.sprite})`;
-	} else {
+	}
+	else {
 		throw new Error(`Failed '${name}' createSprite(${JSON.stringify(s)})`);
 	}
 }
@@ -953,7 +984,7 @@ function createSpritesTS(dest: string, config: SpriteTSConfig) {
 	const { objects, objects2 } = config.result;
 
 	let ts = fs.readFileSync(path.join(rootPath, 'src', 'ts', 'tools', 'sprites-template.ts'), 'utf8');
-	ts = ts.replace(/export \{.+?\r\n/, '');
+	ts = ts.replace(/export \{[\s\S]*?\};\r?\n?/, '');
 	ts = ts.replace('/*SPRITE_SHEET*/', `images/${config.spriteFileName}`);
 	ts = ts.replace('/*SPRITE_SHEET_PALETTE*/', `images/${config.paletteFileName}`);
 	ts = ts.replace('/*SPRITE_SHEET_PALETTE_ALPHA*/', `images/${config.paletteAlphaFileName}`);

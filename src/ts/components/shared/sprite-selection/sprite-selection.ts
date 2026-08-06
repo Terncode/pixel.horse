@@ -78,18 +78,23 @@ export class SpriteSelection {
 			if (keyCode === Key.RIGHT || keyCode === Key.DOWN) {
 				if (this.selected >= (this.sprites.length - 1)) {
 					return this.skip;
-				} else {
+				}
+				else {
 					return this.selected + 1;
 				}
-			} else if (keyCode === Key.LEFT || keyCode === Key.UP) {
+			}
+			else if (keyCode === Key.LEFT || keyCode === Key.UP) {
 				if (this.selected <= this.skip) {
 					return this.sprites.length - 1;
-				} else {
+				}
+				else {
 					return this.selected - 1;
 				}
-			} else if (keyCode === Key.HOME) {
+			}
+			else if (keyCode === Key.HOME) {
 				return this.skip;
-			} else if (keyCode === Key.END) {
+			}
+			else if (keyCode === Key.END) {
 				return this.sprites.length - 1;
 			}
 		}

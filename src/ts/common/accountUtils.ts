@@ -41,13 +41,17 @@ function meetsSupporterRequirement(account: AccountSupporter, require: string): 
 
 	if (require === 'inv') {
 		return modOrDev || level >= 1 || !!account.supporterInvited;
-	} else if (require === 'sup1') {
+	}
+	else if (require === 'sup1') {
 		return modOrDev || level >= 1;
-	} else if (require === 'sup2') {
+	}
+	else if (require === 'sup2') {
 		return modOrDev || level >= 2;
-	} else if (require === 'sup3') {
+	}
+	else if (require === 'sup3') {
 		return modOrDev || level >= 3;
-	} else {
+	}
+	else {
 		return false;
 	}
 }
@@ -60,7 +64,8 @@ export function getCharacterLimit(account: AccountSupporter) {
 		default:
 			if (hasFlag(account.flags, AccountDataFlags.PastSupporter)) {
 				return BASE_CHARACTER_LIMIT + ADDITIONAL_CHARACTERS_PAST_SUPPORTER;
-			} else {
+			}
+			else {
 				return BASE_CHARACTER_LIMIT;
 			}
 	}
@@ -69,7 +74,8 @@ export function getCharacterLimit(account: AccountSupporter) {
 export function getSupporterInviteLimit(account: AccountSupporter) {
 	if (isMod(account) || isDev(account)) {
 		return 100;
-	} else {
+	}
+	else {
 		switch (account.supporter) {
 			case 1: return 1;
 			case 2: return 5;

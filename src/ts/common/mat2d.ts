@@ -102,7 +102,8 @@ export function skewTransform(base: Matrix2D | undefined, skew: number, ox: numb
 		translateMat2D(tempMatrix, tempMatrix, ox + x, oy + y);
 		skewY(tempMatrix, tempMatrix, skew);
 		translateMat2D(tempMatrix, tempMatrix, -ox, -oy);
-	} else {
+	}
+	else {
 		translateMat2D(tempMatrix, tempMatrix, x, y);
 	}
 

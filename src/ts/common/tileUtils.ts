@@ -423,7 +423,8 @@ function getTileNormal(
 ) {
 	if (x >= 0 && y >= 0 && x < REGION_SIZE && y < REGION_SIZE) {
 		return normalizeTile(tiles[x | (y << 3)], base);
-	} else {
+	}
+	else {
 		const mapX = clamp(x + baseX, 0, map.width - 1);
 		const mapY = clamp(y + baseY, 0, map.height - 1);
 		const region = getRegionGlobal(map, mapX, mapY);
@@ -432,7 +433,8 @@ function getTileNormal(
 			const regionX = mapX - region.x * REGION_SIZE;
 			const regionY = mapY - region.y * REGION_SIZE;
 			return normalizeTile(region.tiles[regionX | (regionY << 3)], base);
-		} else {
+		}
+		else {
 			return TileType.None;
 		}
 	}
@@ -446,7 +448,8 @@ function getTileIndex(region: Region, index: number, x: number, y: number, map: 
 
 	if (type === TileType.Dirt || type === TileType.ElevatedDirt) {
 		baseTileIndex = 47;
-	} else if (type !== TileType.None) {
+	}
+	else if (type !== TileType.None) {
 		let topLeft = 0, top = 0, topRight = 0, left = 0, right = 0, bottomLeft = 0, bottom = 0, bottomRight = 0;
 
 		if (x > 1 && y > 1 && x < (REGION_SIZE - 1) && y < (REGION_SIZE - 1)) {
@@ -458,7 +461,8 @@ function getTileIndex(region: Region, index: number, x: number, y: number, map: 
 			bottomLeft = normalizeTile(tiles[(x - 1) | (y + 1) << 3], type);
 			bottom = normalizeTile(tiles[(x) | (y + 1) << 3], type);
 			bottomRight = normalizeTile(tiles[(x + 1) | (y + 1) << 3], type);
-		} else {
+		}
+		else {
 			const baseX = (region.x * REGION_SIZE) | 0;
 			const baseY = (region.y * REGION_SIZE) | 0;
 			topLeft = getTileNormal(tiles, baseX, baseY, x - 1, y - 1, map, type);
@@ -508,8 +512,9 @@ function valueToHeight(value: number, bottom: number, top: number) {
 }
 
 export function initializeTileHeightmaps() {
-	if (tileHeightMapsInitialized)
+	if (tileHeightMapsInitialized) {
 		return;
+	}
 
 	function createTileHeightMaps(sprite: Sprite, tileType: TileTypeNumber, bottom: number, top: number) {
 		const sheetData = sprites.normalSpriteSheet.data!;
@@ -591,11 +596,14 @@ export function getTileHeight(
 				return heightMaps[tx + ty * tileWidth];
 			}
 		}
-	} else if (typeNumber === TileTypeNumber.SnowOnIce) {
+	}
+	else if (typeNumber === TileTypeNumber.SnowOnIce) {
 		return -0.2;
-	} else if (tileType === TileType.ElevatedDirt) {
+	}
+	else if (tileType === TileType.ElevatedDirt) {
 		return 0.5;
-	} else if (typeNumber === TileTypeNumber.Boat) {
+	}
+	else if (typeNumber === TileTypeNumber.Boat) {
 		const frame = ((gameTime / 1000) * WATER_FPS) | 0;
 		return waterHeight[frame % waterHeight.length];
 	}
@@ -610,7 +618,8 @@ export function getTile<T>(map: IMap<T>, x: number, y: number): TileType {
 		const regionX = Math.floor(x - region.x * REGION_SIZE);
 		const regionY = Math.floor(y - region.y * REGION_SIZE);
 		return getRegionTile(region, regionX, regionY);
-	} else {
+	}
+	else {
 		return TileType.None;
 	}
 }
@@ -618,8 +627,9 @@ export function getTile<T>(map: IMap<T>, x: number, y: number): TileType {
 export function setTile(map: WorldMap, worldX: number, worldY: number, type: TileType) {
 	const region = getRegionGlobal(map, worldX, worldY);
 
-	if (!region)
+	if (!region) {
 		return;
+	}
 
 	const x = Math.floor(worldX - region.x * REGION_SIZE);
 	const y = Math.floor(worldY - region.y * REGION_SIZE);

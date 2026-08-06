@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { Injectable, NgZone } from '@angular/core';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { debounce } from 'lodash';
@@ -370,7 +371,8 @@ export class PonyTownGame implements Game {
 	send<T>(action: (server: IServerActions) => T) {
 		if (this.socket && this.socket.isConnected) {
 			return action(this.socket.server);
-		} else {
+		}
+		else {
 			return undefined;
 		}
 	}
@@ -385,11 +387,13 @@ export class PonyTownGame implements Game {
 		this.setScale(Math.max(1, this.scale - 1));
 	}
 	select(pony: Pony | undefined) {
-		if (this.selected === pony)
+		if (this.selected === pony) {
 			return;
+		}
 
-		if (pony && isHidden(pony) && !this.mod)
+		if (pony && isHidden(pony) && !this.mod) {
 			return;
+		}
 
 		this.zone.run(() => {
 			if (this.selected) {
@@ -400,7 +404,8 @@ export class PonyTownGame implements Game {
 
 			if (pony && !pony.info && !pony.palettePonyInfo) {
 				this.send(server => server.select(pony.id, SelectFlags.FetchEx | SelectFlags.FetchInfo));
-			} else {
+			}
+			else {
 				this.sendSelected();
 			}
 
@@ -427,12 +432,16 @@ export class PonyTownGame implements Game {
 		if (!this.initialized) {
 			this.canvas.addEventListener('webglcontextlost', e => {
 				e.preventDefault();
-				DEVELOPMENT && console.warn('Context lost');
+				if (DEVELOPMENT) {
+					console.warn('Context lost');
+				}
 				this.errorReporter.captureEvent({ name: 'Context lost' });
 			});
 
 			this.canvas.addEventListener('webglcontextrestored', () => {
-				DEVELOPMENT && console.warn('Context restored');
+				if (DEVELOPMENT) {
+					console.warn('Context restored');
+				}
 				this.errorReporter.captureEvent({ name: 'Context restored' });
 
 				if (this.webgl) {
@@ -573,7 +582,8 @@ export class PonyTownGame implements Game {
 								dir = -1;
 							}
 						}, 1000 / 24);
-					} else {
+					}
+					else {
 						let faceDir = 0;
 						const state = this.player!.ponyState;
 
@@ -643,7 +653,8 @@ export class PonyTownGame implements Game {
 					if (loseContext) {
 						loseContext.restoreContext();
 						loseContext = null;
-					} else {
+					}
+					else {
 						loseContext = this.webgl!.gl.getExtension('WEBGL_lose_context')!;
 						loseContext.loseContext();
 					}
@@ -661,7 +672,8 @@ export class PonyTownGame implements Game {
 							const entity = entities[0];
 							const typeName = getEntityTypeName(entity.type);
 							this.announce(`${typeName}${entities.length > 1 ? ` (1 of ${entities.length})` : ''}`);
-						} else {
+						}
+						else {
 							this.announce('nothing');
 						}
 					}
@@ -705,7 +717,9 @@ export class PonyTownGame implements Game {
 
 			window.addEventListener('resize', () => {
 				this.resized = true;
-				DEVELOPMENT && log(`resized ${window.innerHeight} (${window.scrollY})`);
+				if (DEVELOPMENT) {
+					log(`resized ${window.innerHeight} (${window.scrollY})`);
+				}
 			});
 
 			this.canvas.addEventListener('touchstart', () => this.audio.touch());
@@ -721,7 +735,8 @@ export class PonyTownGame implements Game {
 		if (this.socket) {
 			if (this.socket.isConnected) {
 				this.socket.server.leave();
-			} else {
+			}
+			else {
 				this.socket.disconnect();
 			}
 		}
@@ -767,10 +782,13 @@ export class PonyTownGame implements Game {
 			this.supporterPony = createPony(0, 0, SUPPORTER_PONY, palettes.defaultPalette, this.paletteManager);
 			this.discordPony = createPony(0, 0, DISCORD_PONY, palettes.defaultPalette, this.paletteManager);
 			initializeToys(this.paletteManager);
-		} catch (e) {
+		}
+		catch (e) {
 			this.errorReporter.captureEvent({ name: 'failed game.initWebGL', error: isErrorAlike(e) ? e.message : '', stack: isErrorAlike(e) ? e.stack : '' });
 			this.releaseWebGL();
-			DEVELOPMENT && console.error(e);
+			if (DEVELOPMENT) {
+				console.error(e);
+			}
 			throw new Error(`Failed to initialize graphics device (${isErrorAlike(e) ? e.message : 'Unknown error'})`);
 		}
 	}
@@ -781,8 +799,11 @@ export class PonyTownGame implements Game {
 			try {
 				this.paletteManager.dispose(this.webgl.gl);
 				disposeWebGL(this.webgl);
-			} catch (e) {
-				DEVELOPMENT && console.error(e);
+			}
+			catch (e) {
+				if (DEVELOPMENT) {
+					console.error(e);
+				}
 			}
 
 			this.webgl = undefined;
@@ -827,7 +848,8 @@ export class PonyTownGame implements Game {
 	startup(socket: ClientSocketService, mod: boolean) {
 		if (this.settings.account.actions) {
 			this.actions = deserializeActions(this.settings.account.actions);
-		} else {
+		}
+		else {
 			this.actions = createDefaultButtonActions();
 		}
 
@@ -860,21 +882,25 @@ export class PonyTownGame implements Game {
 		return this.scale * (integerPixelRatio() / pixelRatio());
 	}
 	update(delta: number, now: number, last: number) {
-		TIMING && timeStart('update');
+		if (TIMING) {
+			timeStart('update');
+		}
 		delta *= this.deltaMultiplier;
 
 		const shiftSpeed = delta * 10;
 
 		if (this.cameraShiftOn && this.camera.shiftRatio !== 1) {
 			this.camera.shiftRatio = Math.min(1, this.camera.shiftRatio + shiftSpeed);
-		} else if (!this.cameraShiftOn && this.camera.shiftRatio !== 0) {
+		}
+		else if (!this.cameraShiftOn && this.camera.shiftRatio !== 0) {
 			this.camera.shiftRatio = Math.max(0, this.camera.shiftRatio - shiftSpeed);
 		}
 
 		updateMap(this.map, delta);
 
-		if (!this.socket || !this.socket.isConnected || !this.element)
+		if (!this.socket || !this.socket.isConnected || !this.element) {
 			return;
+		}
 
 		this.updateGameTime(delta);
 
@@ -986,7 +1012,8 @@ export class PonyTownGame implements Game {
 				if (hasFlag(this.map.flags, MapFlags.EditableEntities)) {
 					if (player.hold === removeEntitiesTool.type) {
 						this.highlightEntity = pickEntities(this.map, hover, true, false, true)[0];
-					} else if (player.hold === placeEntitiesTool.type) {
+					}
+					else if (player.hold === placeEntitiesTool.type) {
 						if (!isOutsideMap(hover.x, hover.y, this.map)) {
 							const { type } = placeableEntities[this.placeEntity];
 							let { x, y } = hover;
@@ -1011,38 +1038,48 @@ export class PonyTownGame implements Game {
 
 					if (BETA && this.editor.selectingEntities) {
 						editorSelectEntities(this, hover, shift);
-					} else if (pickedEntity && (!holdingTool || !editableMap || hasFlag(pickedEntity.flags, EntityFlags.IgnoreTool))) {
+					}
+					else if (pickedEntity && (!holdingTool || !editableMap || hasFlag(pickedEntity.flags, EntityFlags.IgnoreTool))) {
 						if (pickedEntity.type === PONY_TYPE) {
 							this.select(pickedEntity as Pony);
-						} else if (entityInRange(pickedEntity, player)) {
+						}
+						else if (entityInRange(pickedEntity, player)) {
 							server.interact(pickedEntity.id);
 						}
-					} else if (BETA && this.editor.tile !== -1) {
+					}
+					else if (BETA && this.editor.tile !== -1) {
 						if (this.editor.brushSize > 1) {
 							const x = Math.floor((hover.x - (this.editor.brushSize / 2)));
 							const y = Math.floor((hover.y - (this.editor.brushSize / 2)));
 							server.editorAction({ type: 'tile', x, y, tile: this.editor.tile, size: this.editor.brushSize });
-						} else {
+						}
+						else {
 							const x = hover.x | 0;
 							const y = hover.y | 0;
 							const type = this.editor.tile === getTile(this.map, hover.x, hover.y) ? TileType.Dirt : this.editor.tile;
 							server.changeTile(x, y, type);
 						}
-					} else if (player.hold === changeTileTool.type && hasFlag(this.map.flags, MapFlags.EditableTiles)) {
+					}
+					else if (player.hold === changeTileTool.type && hasFlag(this.map.flags, MapFlags.EditableTiles)) {
 						const x = hover.x | 0;
 						const y = hover.y | 0;
 						server.changeTile(x, y, houseTiles[this.placeTile].type);
-					} else if (player.hold === toggleWallsTool.type && hasFlag(this.map.flags, MapFlags.EditableWalls)) {
+					}
+					else if (player.hold === toggleWallsTool.type && hasFlag(this.map.flags, MapFlags.EditableWalls)) {
 						toggleWall(this, hover);
-					} else if (holdingRemoveTool && this.highlightEntity && editableMap) {
+					}
+					else if (holdingRemoveTool && this.highlightEntity && editableMap) {
 						const id = this.highlightEntity.id;
 						this.send(server => server.actionParam(Action.RemoveEntity, id));
-					} else if (holdingPlaceTool && this.highlightEntity && editableMap) {
+					}
+					else if (holdingPlaceTool && this.highlightEntity && editableMap) {
 						const { x, y, type } = this.highlightEntity;
 						this.send(server => server.actionParam(Action.PlaceEntity, { x, y, type }));
-					} else if (this.selected) {
+					}
+					else if (this.selected) {
 						this.select(undefined);
-					} else if (hasFlag(this.map.flags, MapFlags.EdibleGrass)) {
+					}
+					else if (hasFlag(this.map.flags, MapFlags.EdibleGrass)) {
 						const tile = getTile(this.map, hover.x, hover.y);
 
 						if (isValidTile(tile) && distanceXY(player.x, player.y, hover.x, hover.y) < TILE_CHANGE_RANGE) {
@@ -1051,7 +1088,8 @@ export class PonyTownGame implements Game {
 							let type = tile === TileType.Grass ? TileType.Dirt : TileType.Grass;
 							server.changeTile(x, y, type);
 						}
-					} else if (DEVELOPMENT && this.engine === Engine.LayeredTiles && this.editor.elevation) {
+					}
+					else if (DEVELOPMENT && this.engine === Engine.LayeredTiles && this.editor.elevation) {
 						const value = getElevation(this.map, hover.x, hover.y);
 						setElevation(this.map, hover.x, hover.y, clamp(this.editor.elevation === 'up' ? value + 1 : value - 1, 0, 10));
 					}
@@ -1060,7 +1098,8 @@ export class PonyTownGame implements Game {
 				if (BETA && input.wasPressed(Key.MOUSE_BUTTON2)) {
 					if (this.editor.selectingEntities) {
 						editorMoveEntities(this, hover);
-					} else if (this.mod) {
+					}
+					else if (this.mod) {
 						toggleWall(this, hover);
 					}
 				}
@@ -1078,10 +1117,12 @@ export class PonyTownGame implements Game {
 							const action = input.wheelY < 0 ? Action.SwitchTool : Action.SwitchToolRev;
 							this.send(server => server.action(action));
 						}
-					} else {
+					}
+					else {
 						if (this.player.hold === placeEntitiesTool.type) {
 							this.changePlaceEntity(input.wheelY < 0);
-						} else if (this.player.hold === changeTileTool.type) {
+						}
+						else if (this.player.hold === changeTileTool.type) {
 							this.changePlaceTile(input.wheelY < 0);
 						}
 					}
@@ -1144,7 +1185,9 @@ export class PonyTownGame implements Game {
 		}
 
 		this.updateSocketStats(delta);
-		TIMING && timeEnd();
+		if (TIMING) {
+			timeEnd();
+		}
 
 		if (DEVELOPMENT && LOG_POSITION) {
 			if (this.player) {
@@ -1159,7 +1202,8 @@ export class PonyTownGame implements Game {
 
 			if (Math.abs(this.targetBaseTime - baseTime) < timeDelta) {
 				this.baseTime = this.targetBaseTime;
-			} else {
+			}
+			else {
 				this.baseTime = baseTime;
 			}
 		}
@@ -1188,7 +1232,8 @@ export class PonyTownGame implements Game {
 
 		if (initial) {
 			this.baseTime = this.targetBaseTime = baseTime;
-		} else {
+		}
+		else {
 			this.targetBaseTime = baseTime;
 		}
 
@@ -1218,11 +1263,14 @@ export class PonyTownGame implements Game {
 		redrawActionButtons(this.actionsChanged);
 		this.actionsChanged = false;
 
-		if (!this.webgl)
+		if (!this.webgl) {
 			return;
+		}
 
 		if (this.webgl.gl.isContextLost()) {
-			DEVELOPMENT && console.warn('Context is lost');
+			if (DEVELOPMENT) {
+				console.warn('Context is lost');
+			}
 			return;
 		}
 
@@ -1247,16 +1295,21 @@ export class PonyTownGame implements Game {
 		const { gl, frameBuffer, frameBuffer2, spriteBatch, paletteBatch, palettes, failedFBO,
 			mergeShader, paletteShader, spriteShader, spriteShaderWithColor, lightShader } = this.webgl;
 
-		TIMING && timeStart('draw');
+		if (TIMING) {
+			timeStart('draw');
+		}
 
-		TIMING && timeStart('draw init');
+		if (TIMING) {
+			timeStart('draw init');
+		}
 		let lightColor = WHITE;
 		let shadowColor = 0;
 
 		if (this.map.type === MapType.Cave) {
 			lightColor = CAVE_LIGHT;
 			shadowColor = CAVE_SHADOW;
-		} else {
+		}
+		else {
 			lightColor = getLightColor(this.lightData, this.time);
 			shadowColor = getShadowColor(this.lightData, this.time);
 		}
@@ -1291,17 +1344,27 @@ export class PonyTownGame implements Game {
 		}
 
 		ortho(this.fboMatrix, 0, gl.drawingBufferWidth / actualScale, gl.drawingBufferHeight / actualScale, 0, 0, 1000, false);
-		TIMING && timeEnd();
+		if (TIMING) {
+			timeEnd();
+		}
 
-		TIMING && timeStart('ensureAllVisiblePon...');
+		if (TIMING) {
+			timeStart('ensureAllVisiblePon...');
+		}
 		ensureAllVisiblePoniesAreDecoded(this.map, camera, this.paletteManager);
-		TIMING && timeEnd();
+		if (TIMING) {
+			timeEnd();
+		}
 
-		TIMING && timeStart('commit+invalidatePalettes');
+		if (TIMING) {
+			timeStart('commit+invalidatePalettes');
+		}
 		if (this.paletteManager.commit(gl)) {
 			invalidatePalettes(this.map.entitiesDrawable);
 		}
-		TIMING && timeEnd();
+		if (TIMING) {
+			timeEnd();
+		}
 
 		if (this.settings.browser.brightNight) {
 			lerpColor(light, white, 0.3);
@@ -1310,9 +1373,13 @@ export class PonyTownGame implements Game {
 		// you'd draw directly onto the screen only when there's no framebuffer
 		// or the graphics is low and framebuffer size matches screen size
 
-		TIMING && timeStart('initializeFrameBuffers');
+		if (TIMING) {
+			timeStart('initializeFrameBuffers');
+		}
 		this.initializeFrameBuffers(this.webgl, width, height, this.settings.browser.graphicsQuality === GraphicsQuality.High);
-		TIMING && timeEnd();
+		if (TIMING) {
+			timeEnd();
+		}
 
 		const useDepthBuffer =
 			!failedFBO && (this.settings.browser.graphicsQuality === GraphicsQuality.High) && !!frameBuffer!.depthStencilRenderbuffer;
@@ -1342,12 +1409,16 @@ export class PonyTownGame implements Game {
 		gl.depthFunc(gl.ALWAYS);
 
 		if (drawSceneDirectlyOntoScreen) {
-			TIMING && timeStart('color -> screen');
+			if (TIMING) {
+				timeStart('color -> screen');
+			}
 			gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
 			gl.clear(gl.COLOR_BUFFER_BIT);
 			gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 			this.drawMap(this.webgl, this.map, this.viewMatrix, mapDrawingColor, drawOptions);
-			TIMING && timeEnd();
+			if (TIMING) {
+				timeEnd();
+			}
 		}
 		else {
 			// if (!isWebGL2(gl)) {
@@ -1361,17 +1432,23 @@ export class PonyTownGame implements Game {
 				clearMask |= gl.DEPTH_BUFFER_BIT;
 			}
 
-			TIMING && timeStart('color -> framebuffer');
+			if (TIMING) {
+				timeStart('color -> framebuffer');
+			}
 			bindFrameBuffer(gl, frameBuffer!);
 			gl.viewport(0, 0, frameBuffer!.width, frameBuffer!.height); // clearing the whole surface is preferable for most GPUs
 			gl.clear(clearMask);
 			gl.viewport(0, 0, width, height);
 			this.drawMap(this.webgl, this.map, this.viewMatrix, mapDrawingColor, drawOptions);
 			gl.depthMask(false);
-			TIMING && timeEnd();
+			if (TIMING) {
+				timeEnd();
+			}
 
 			if (useLighting) {
-				TIMING && timeStart('light -> fbo');
+				if (TIMING) {
+					timeStart('light -> fbo');
+				}
 				bindFrameBuffer(gl, frameBuffer2!);
 				gl.viewport(0, 0, frameBuffer2!.width, frameBuffer2!.height); // clearing the whole surface is preferable for most GPUs
 				gl.clearColor(light[0], light[1], light[2], light[3]);
@@ -1402,9 +1479,13 @@ export class PonyTownGame implements Game {
 				if (isWebGL2(gl)) {
 					(gl as WebGL2RenderingContext).invalidateFramebuffer(gl.FRAMEBUFFER, [gl.DEPTH_ATTACHMENT]);
 				}
-				TIMING && timeEnd();
+				if (TIMING) {
+					timeEnd();
+				}
 
-				TIMING && timeStart('color + lights -> screen');
+				if (TIMING) {
+					timeStart('color + lights -> screen');
+				}
 				unbindFrameBuffer(gl);
 				gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
 				gl.disable(gl.BLEND);
@@ -1417,10 +1498,14 @@ export class PonyTownGame implements Game {
 				spriteBatch.begin();
 				spriteBatch.drawImage(WHITE, 0, 0, width, height, 0, 0, width, height);
 				spriteBatch.end();
-				TIMING && timeEnd();
+				if (TIMING) {
+					timeEnd();
+				}
 			}
 			else {
-				TIMING && timeStart('color framebuffer -> screen');
+				if (TIMING) {
+					timeStart('color framebuffer -> screen');
+				}
 				unbindFrameBuffer(gl);
 				gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
 				gl.disable(gl.BLEND);
@@ -1433,7 +1518,9 @@ export class PonyTownGame implements Game {
 				spriteBatch.begin();
 				spriteBatch.drawImage(WHITE, 0, 0, width, height, 0, 0, width, height);
 				spriteBatch.end();
-				TIMING && timeEnd();
+				if (TIMING) {
+					timeEnd();
+				}
 			}
 		}
 
@@ -1442,7 +1529,9 @@ export class PonyTownGame implements Game {
 		gl.blendEquation(gl.FUNC_ADD);
 		gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
-		TIMING && timeStart('drawNames+drawChat');
+		if (TIMING) {
+			timeStart('drawNames+drawChat');
+		}
 		gl.useProgram(paletteShader.program);
 		gl.uniformMatrix4fv(paletteShader.uniforms.transform, false, this.fboMatrix);
 		gl.uniform4fv(paletteShader.uniforms.lighting, white);
@@ -1461,13 +1550,16 @@ export class PonyTownGame implements Game {
 
 		if (!this.socket || !this.socket.isConnected) {
 			this.drawMessage(this.webgl, 'Connecting...');
-		} else if (!this.loaded) {
+		}
+		else if (!this.loaded) {
 			if (this.placeInQueue) {
 				this.drawMessage(this.webgl, `Waiting in queue (${this.placeInQueue})`);
-			} else {
+			}
+			else {
 				this.drawMessage(this.webgl, 'Loading...');
 			}
-		} else if ((performance.now() - this.socket.lastPacket) > CONNECTION_ISSUE_TIMEOUT) {
+		}
+		else if ((performance.now() - this.socket.lastPacket) > CONNECTION_ISSUE_TIMEOUT) {
 			// this.drawMessage('Connection issues...');
 		}
 
@@ -1478,7 +1570,8 @@ export class PonyTownGame implements Game {
 				const y = this.input.pointerY / scale;
 				const height = getMapHeightAt(this.map, this.hover.x, this.hover.y, this.time);
 				drawText(paletteBatch, `${height.toFixed(2)}`, fontSmallPal, BLACK, x, y);
-			} catch (e) {
+			}
+			catch (e) {
 				console.warn(e);
 			}
 		}
@@ -1497,13 +1590,16 @@ export class PonyTownGame implements Game {
 				if (dx > dy) {
 					if ((dx + dy) < 1) {
 						paletteBatch.drawSprite(wall_h_placeholder.color, color, palette, screenX, screenY - 15);
-					} else {
+					}
+					else {
 						paletteBatch.drawSprite(wall_v_placeholder.color, color, palette, screenX + tileWidth - 4, screenY - 12);
 					}
-				} else {
+				}
+				else {
 					if ((dx + dy) < 1) {
 						paletteBatch.drawSprite(wall_v_placeholder.color, color, palette, screenX - 4, screenY - 12);
-					} else {
+					}
+					else {
 						paletteBatch.drawSprite(wall_h_placeholder.color, color, palette, screenX, screenY + tileHeight - 15);
 					}
 				}
@@ -1511,7 +1607,9 @@ export class PonyTownGame implements Game {
 		}
 
 		paletteBatch.end();
-		TIMING && timeEnd();
+		if (TIMING) {
+			timeEnd();
+		}
 
 		gl.useProgram(spriteShaderWithColor.program);
 		gl.uniformMatrix4fv(spriteShaderWithColor.uniforms.transform, false, this.fboMatrix);
@@ -1562,7 +1660,9 @@ export class PonyTownGame implements Game {
 
 		if (showFPS || showHelp || showPalette || showAdditionalStats) {
 			// 1 to 1 pixel scale drawing
-			TIMING && timeStart('showFps');
+			if (TIMING) {
+				timeStart('showFps');
+			}
 			const scale = 2;
 			ortho(this.fboMatrix, 0, gl.drawingBufferWidth / ratio, gl.drawingBufferHeight / ratio, 0, 0, 1000, false);
 			gl.uniformMatrix4fv(spriteShaderWithColor.uniforms.transform, false, this.fboMatrix);
@@ -1626,25 +1726,37 @@ export class PonyTownGame implements Game {
 				spriteBatch.end();
 			}
 
-			TIMING && timeEnd();
+			if (TIMING) {
+				timeEnd();
+			}
 		}
 
 		bindTexture(gl, 0, undefined);
 		bindTexture(gl, 1, undefined);
 		gl.useProgram(null);
 
-		TIMING && timeEnd();
+		if (TIMING) {
+			timeEnd();
+		}
 		this.updateStatsText();
 
-		TIMING && timeStart('messageQueue');
+		if (TIMING) {
+			timeStart('messageQueue');
+		}
 		while (this.messageQueue.length) {
 			this.onMessage.next(this.messageQueue.shift()!);
 		}
-		TIMING && timeEnd();
+		if (TIMING) {
+			timeEnd();
+		}
 
-		TIMING && timeStart('onFrame');
+		if (TIMING) {
+			timeStart('onFrame');
+		}
 		this.onFrame.next();
-		TIMING && timeEnd();
+		if (TIMING) {
+			timeEnd();
+		}
 	}
 	private drawMessage({ paletteBatch, palettes }: WebGL, message: string) {
 		drawFullScreenMessage(paletteBatch, this.camera, message, palettes.mainFont.white);
@@ -1654,7 +1766,9 @@ export class PonyTownGame implements Game {
 
 		const mapPaletteShader = options.useDepthBuffer ? paletteShaderWithDepth : paletteShader;
 
-		TIMING && timeStart('drawMap');
+		if (TIMING) {
+			timeStart('drawMap');
+		}
 		if (this.tileSets && this.player) {
 			gl.useProgram(mapPaletteShader.program);
 			gl.uniformMatrix4fv(mapPaletteShader.uniforms.transform, false, viewMatrix);
@@ -1675,14 +1789,18 @@ export class PonyTownGame implements Game {
 				paletteBatch.end();
 			}
 		}
-		TIMING && timeEnd();
+		if (TIMING) {
+			timeEnd();
+		}
 	}
 	private updateCameraShift() {
 		if (isMobile) {
 			const isKeyboardOpen = !!document.activeElement && /input/i.test(document.activeElement.tagName);
 
 			if (this.lastIsKeyboardOpen !== isKeyboardOpen) {
-				DEVELOPMENT && log(`keyboard open ${isKeyboardOpen}`);
+				if (DEVELOPMENT) {
+					log(`keyboard open ${isKeyboardOpen}`);
+				}
 				this.lastIsKeyboardOpen = isKeyboardOpen;
 			}
 
@@ -1695,10 +1813,13 @@ export class PonyTownGame implements Game {
 						log(`shift camera ${this.cameraShiftTarget} (${this.windowHeight} - ${window.innerHeight}, ${window.scrollY})`);
 					}
 				}
-			} else {
+			}
+			else {
 				if (this.cameraShiftOn && window.scrollY < 100) {
 					this.cameraShiftOn = false;
-					DEVELOPMENT && log(`unshift camera`);
+					if (DEVELOPMENT) {
+						log(`unshift camera`);
+					}
 				}
 			}
 		}
@@ -1728,7 +1849,9 @@ export class PonyTownGame implements Game {
 			canvas.style.height = `${h / ratio}px`;
 			this.lastCanvasRatio = ratio;
 			this.resized = false;
-			DEVELOPMENT && log(`scrollY: ${window.scrollY}`);
+			if (DEVELOPMENT) {
+				log(`scrollY: ${window.scrollY}`);
+			}
 		}
 	}
 	private initializeFrameBuffers(
@@ -1748,8 +1871,11 @@ export class PonyTownGame implements Game {
 
 			if (isSizeTooBig) {
 				this.setScale(this.scale + 1); // should not happen, useDepthBuffer is also ignored if it does
-				DEVELOPMENT && console.warn('Cannot resize framebuffer');
-			} else {
+				if (DEVELOPMENT) {
+					console.warn('Cannot resize framebuffer');
+				}
+			}
+			else {
 				disposeFrameBuffer(gl, frameBuffer);
 				disposeFrameBuffer(gl, frameBuffer2);
 				createFrameBuffer(gl, frameBuffer, width, height, useDepthBuffer, null);
@@ -1763,7 +1889,8 @@ export class PonyTownGame implements Game {
 	changePlaceEntity(reverse: boolean) {
 		if (reverse) {
 			this.placeEntity = this.placeEntity === 0 ? (placeableEntities.length - 1) : (this.placeEntity - 1);
-		} else {
+		}
+		else {
 			this.placeEntity = (this.placeEntity + 1) % placeableEntities.length;
 		}
 
@@ -1774,7 +1901,8 @@ export class PonyTownGame implements Game {
 	changePlaceTile(reverse: boolean) {
 		if (reverse) {
 			this.placeTile = this.placeTile === 0 ? (houseTiles.length - 1) : (this.placeTile - 1);
-		} else {
+		}
+		else {
 			this.placeTile = (this.placeTile + 1) % houseTiles.length;
 		}
 
@@ -1789,7 +1917,9 @@ export class PonyTownGame implements Game {
 		const { gl, spriteBatch, paletteBatch } = this.webgl!;
 
 		if ((performance.now() - this.lastStats) > SECOND) {
-			TIMING && timingCollate();
+			if (TIMING) {
+				timingCollate();
+			}
 
 			if (TIMING) {
 				const timings = timingCollate();
@@ -1834,7 +1964,9 @@ export class PonyTownGame implements Game {
 			this.onClock.next(formatHourMinutes(this.time));
 		}
 
-		TIMING && timeReset();
+		if (TIMING) {
+			timeReset();
+		}
 
 		spriteBatch!.drawnTrisStats = 0;
 		spriteBatch!.flushes = 0;

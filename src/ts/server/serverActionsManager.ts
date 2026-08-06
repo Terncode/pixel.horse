@@ -70,7 +70,8 @@ export function createServerActionsFactory(
 		if (hidingData) {
 			hiding.deserialize(hidingData);
 		}
-	} catch { }
+	}
+	catch { }
 
 	pollHidingDataSave(hiding, server.id);
 

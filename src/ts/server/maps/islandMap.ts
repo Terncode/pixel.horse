@@ -38,7 +38,8 @@ export function createIslandMap(world: World, instanced: boolean, template = fal
 
 	if (islandMapTemplate) {
 		copyMapTiles(map, islandMapTemplate);
-	} else {
+	}
+	else {
 		deserializeMap(map, islandMapData);
 	}
 
@@ -114,7 +115,8 @@ export function createIslandMap(world: World, instanced: boolean, template = fal
 				const ox = x === minX ? (18 / tileWidth) : (-18 / tileWidth);
 				const plank = sample(entities.planksShort)!;
 				add(plank(baseX + ox + x * plankWidth, baseY + y * plankHeight));
-			} else {
+			}
+			else {
 				const plank = sample(entities.planks)!;
 				add(plank(baseX + x * plankWidth, baseY + y * plankHeight));
 			}

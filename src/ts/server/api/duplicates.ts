@@ -110,7 +110,8 @@ async function getAllDuplicates(service: AdminService, accountId: string): Promi
 
 	if (!account) {
 		return [];
-	} else {
+	}
+	else {
 		return uniq([
 			...getDuplicatesByNote(service, account),
 			...getDuplicatesByEmail(service, account),

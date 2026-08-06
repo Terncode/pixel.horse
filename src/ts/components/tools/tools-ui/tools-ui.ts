@@ -176,7 +176,8 @@ export class ToolsUI implements OnInit, OnDestroy {
 		if (this.spamChatInterval) {
 			clearInterval(this.spamChatInterval);
 			this.spamChatInterval = 0;
-		} else {
+		}
+		else {
 			this.spamChatInterval = 1;
 			this.zone.runOutsideAngular(() => this.spamChatInterval = setInterval(() => {
 				chatlog.addMessage({
@@ -195,7 +196,8 @@ export class ToolsUI implements OnInit, OnDestroy {
 	set isPartyLeader(value: boolean) {
 		if (value) {
 			this.game.party!.leaderId = this.game.player!.id;
-		} else {
+		}
+		else {
 			this.game.party!.leaderId = 1;
 		}
 	}

@@ -24,11 +24,15 @@ export class OriginListRemote implements OnDestroy {
 		if (this.accountId !== value) {
 			this._accountId = value;
 			this.origins = [];
-			this.subscription && this.subscription.unsubscribe();
+			if (this.subscription) {
+				this.subscription.unsubscribe();
+			}
 			this.subscription = value ? this.model.accountOrigins.subscribe(value, x => this.origins = x || []) : undefined;
 		}
 	}
 	ngOnDestroy() {
-		this.subscription && this.subscription.unsubscribe();
+		if (this.subscription) {
+			this.subscription.unsubscribe();
+		}
 	}
 }

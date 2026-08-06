@@ -41,7 +41,8 @@ export async function saveHidingData(hiding: HidingService, serverId: string) {
 		try {
 			const data = hiding.serialize();
 			await fs.writeFileAsync(hidingDataPath(serverId), data, 'utf8');
-		} catch (e) {
+		}
+		catch (e) {
 			logger.error(e);
 		}
 	}
@@ -97,7 +98,8 @@ export class HidingService {
 			}
 
 			this.cleanup();
-		} catch (e) {
+		}
+		catch (e) {
 			logger.error(e);
 		}
 	}
@@ -129,13 +131,17 @@ export class HidingService {
 
 		if (requester.accountId === target.accountId) {
 			saySystem(requester, `Cannot hide yourself`);
-		} else if (requester.party && includes(requester.party.clients, target)) {
+		}
+		else if (requester.party && includes(requester.party.clients, target)) {
 			this.notifications.addNotification(requester, simpleNotification(cannotHidePlayerInParty));
-		} else if (isFriend(requester, target)) {
+		}
+		else if (isFriend(requester, target)) {
 			this.notifications.addNotification(requester, simpleNotification(cannotHideFriends));
-		} else if (count >= HIDE_LIMIT) {
+		}
+		else if (count >= HIDE_LIMIT) {
 			this.notifications.addNotification(requester, simpleNotification(hidePlayerLimit));
-		} else {
+		}
+		else {
 			this.notifications.addNotification(requester, {
 				id: 0,
 				name: target.pony.name || '',
@@ -151,7 +157,8 @@ export class HidingService {
 
 		if (unhideTimestamp > Date.now()) {
 			this.notifications.addNotification(requester, simpleNotification(unhideAllLimit, unhideAllLimitNote));
-		} else {
+		}
+		else {
 			this.notifications.addNotification(requester, {
 				id: 0,
 				name: '',
@@ -195,13 +202,16 @@ export class HidingService {
 				})
 				.catch(e => logger.error(e));
 			return true;
-		} else {
+		}
+		else {
 
-			if (by === who)
+			if (by === who) {
 				return false;
+			}
 
-			if (this.isHiddenInner(by, who))
+			if (this.isHiddenInner(by, who)) {
 				return false;
+			}
 
 			const hides = this.hides.get(by) || new Map<string, number>();
 			hides.set(who, Date.now() + timeout);
@@ -234,8 +244,9 @@ export class HidingService {
 	unhideAll(byClient: IClient) {
 		const by = byClient.accountId;
 
-		if (this.unhides.has(by))
+		if (this.unhides.has(by)) {
 			return;
+		}
 
 		const hides = this.hides.get(by);
 
@@ -268,18 +279,23 @@ export class HidingService {
 				for (const id of Array.from(mergeHides.keys())) {
 					const who = targetHides.get(id);
 					targetHides.set(id, Math.max(who || 0, mergeHides.get(id)!));
-					targetClient && targetClient.hides.add(id);
+					if (targetClient) {
+						targetClient.hides.add(id);
+					}
 
 					if (!who) {
 						notify.push({ by: target, who: id });
 						notify.push({ by: merge, who: id });
 					}
 				}
-			} else {
+			}
+			else {
 				this.hides.set(target, mergeHides);
 
 				for (const id of Array.from(mergeHides.keys())) {
-					targetClient && targetClient.hides.add(id);
+					if (targetClient) {
+						targetClient.hides.add(id);
+					}
 					notify.push({ by: target, who: id });
 					notify.push({ by: merge, who: id });
 				}
@@ -309,7 +325,9 @@ export class HidingService {
 					client.hides.delete(merge);
 
 					if (target !== by) {
-						client && client.hides.add(target);
+						if (client) {
+							client.hides.add(target);
+						}
 					}
 				}
 
@@ -331,7 +349,9 @@ export class HidingService {
 				if (hides.get(who)! < now) {
 					hides.delete(who);
 					const client = this.findClient(by);
-					client && client.hides.delete(who);
+					if (client) {
+						client.hides.delete(who);
+					}
 					notify.push({ by, who });
 				}
 			}

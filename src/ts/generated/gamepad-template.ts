@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 export interface GamepadMapping {
 	axes: AxesTable;
 	buttons: ButtonsTable;

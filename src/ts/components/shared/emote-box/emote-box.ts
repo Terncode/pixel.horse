@@ -70,7 +70,8 @@ export class EmoteBox implements AfterViewInit {
 					image.alt = emote ? emote.symbol : '';
 					image.style.visibility = 'visible';
 				});
-			} else {
+			}
+			else {
 				image.style.width = `0px`;
 				image.style.height = `0px`;
 				image.src = '';

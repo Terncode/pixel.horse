@@ -77,7 +77,8 @@ export function canvasToSource(canvas: HTMLCanvasElement) {
 		canvas.toBlob(blob => {
 			if (blob) {
 				resolve(URL.createObjectURL(blob));
-			} else {
+			}
+			else {
 				reject(new Error('Failed to convert canvas'));
 			}
 		});
@@ -93,7 +94,8 @@ export function saveCanvas(canvas: HTMLCanvasElement, name: string) {
 export function disableImageSmoothing(context: CanvasRenderingContext2D) {
 	if ('imageSmoothingEnabled' in context) {
 		context.imageSmoothingEnabled = false;
-	} else {
+	}
+	else {
 		(context as any).webkitImageSmoothingEnabled = false;
 		(context as any).mozImageSmoothingEnabled = false;
 		(context as any).msImageSmoothingEnabled = false;

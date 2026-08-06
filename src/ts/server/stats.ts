@@ -47,9 +47,11 @@ function getDate() {
 function getAverage({ bytes, mbytes }: ByteSize, count: number): string {
 	if (!count) {
 		return '0';
-	} else if (mbytes >= 1) {
+	}
+	else if (mbytes >= 1) {
 		return `${Math.floor((mbytes / count) * MB)} b`;
-	} else {
+	}
+	else {
 		return `${Math.floor(bytes / count)} b`;
 	}
 }
@@ -114,7 +116,8 @@ export class StatsTracker {
 
 		if (binary) {
 			entry.countBin++;
-		} else {
+		}
+		else {
 			entry.countStr++;
 		}
 
@@ -160,7 +163,8 @@ export class StatsTracker {
 		if (entry) {
 			entry.count++;
 			entry.size.addBytes(bytes);
-		} else {
+		}
+		else {
 			this.stats.set(path, {
 				count: 1,
 				size: new ByteSize(bytes),
@@ -190,8 +194,11 @@ export class StatsTracker {
 		if (!fs.existsSync(this.statsPath)) {
 			try {
 				fs.mkdirSync(path.dirname(this.statsPath), { recursive: true });
-			} catch (e) {
-				if ((e as NodeJS.ErrnoException).code !== 'EEXIST') throw e;
+			}
+			catch (e) {
+				if ((e as NodeJS.ErrnoException).code !== 'EEXIST') {
+					throw e;
+				}
 			}
 			fs.writeFileSync(this.statsPath, encodeCSV(statsHeaders), { encoding: 'utf8' });
 		}

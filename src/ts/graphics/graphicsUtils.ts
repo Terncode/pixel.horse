@@ -66,9 +66,11 @@ export function drawRoundBaloon(batch: AnyBatch, color: number, x: number, y: nu
 function getMessagePalette(type: MessageType, palettes: FontPalettes) {
 	if (type === MessageType.Supporter2) {
 		return palettes.supporter2;
-	} else if (type === MessageType.Supporter3) {
+	}
+	else if (type === MessageType.Supporter3) {
 		return palettes.supporter3;
-	} else {
+	}
+	else {
 		return undefined;
 	}
 }
@@ -77,8 +79,9 @@ export function drawBaloon(
 	batch: PaletteSpriteBatch, { message, type = MessageType.Chat, timer = 1, total = 10 }: Says,
 	x: number, y: number, bounds: Rect, palettes: CommonPalettes
 ) {
-	if (!fontPal)
+	if (!fontPal) {
 		return;
+	}
 
 	let { w, h } = measureText(message, fontPal);
 
@@ -114,9 +117,11 @@ export function drawBaloon(
 
 		if (isThinking(type)) {
 			drawThinkingBaloon(batch, message, color, options, x, y, w, h, alpha, nippleX);
-		} else if (isWhisper(type) || isWhisperTo(type)) {
+		}
+		else if (isWhisper(type) || isWhisperTo(type)) {
 			drawWhisperBaloon(batch, message, color, options, x, y, w, h, alpha, nippleX);
-		} else {
+		}
+		else {
 			drawSpeechBaloon(batch, message, color, options, x, y, w, h, alpha, nippleX);
 		}
 	}
@@ -217,9 +222,11 @@ export enum DrawNameFlags {
 function getNameColor(flags: DrawNameFlags) {
 	if (hasFlag(flags, DrawNameFlags.Party)) {
 		return PARTY_COLOR;
-	} else if (hasFlag(flags, DrawNameFlags.Friend)) {
+	}
+	else if (hasFlag(flags, DrawNameFlags.Friend)) {
 		return FRIENDS_COLOR;
-	} else {
+	}
+	else {
 		return WHITE;
 	}
 }

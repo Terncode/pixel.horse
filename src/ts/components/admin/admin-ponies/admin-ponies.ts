@@ -90,7 +90,8 @@ export class AdminPonies implements OnInit {
 					}
 
 					this.items = result.items;
-				} else {
+				}
+				else {
 					this.items = [];
 				}
 			})

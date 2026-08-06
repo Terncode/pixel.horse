@@ -33,9 +33,11 @@ export class BitmapBox implements OnChanges {
 		if (this.bitmap) {
 			if (this.tool === 'eraser') {
 				this.bitmap[index] = '';
-			} else if (this.tool === 'brush') {
+			}
+			else if (this.tool === 'brush') {
 				this.bitmap[index] = parseColor(this.bitmap[index]) === parseColor(this.color) ? '' : this.color;
-			} else if (this.tool === 'eyedropper') {
+			}
+			else if (this.tool === 'eyedropper') {
 				this.color = this.bitmap[index];
 				this.colorChange.emit(this.color);
 			}

@@ -217,7 +217,8 @@ export function colorToCSS(color: number): string {
 
 	if (alpha === 0xff) {
 		return `#${colorToHexRGB(color)}`;
-	} else {
+	}
+	else {
 		return `rgba(${getR(color)},${getG(color)},${getB(color)},${alpha / 255})`;
 	}
 }
@@ -277,26 +278,30 @@ export function colorFromHSVAObject({ h, s, v, a }: HSVA) {
 // parse
 
 export function parseColorFast(str: string): number {
-	if (!isString(str))
+	if (!isString(str)) {
 		return TRANSPARENT;
+	}
 
 	const int = parseInt(str, 16);
 
 	if (str.length !== 6 || isNaN(int) || int < 0) {
 		return parseColorWithAlpha(str, 1);
-	} else {
+	}
+	else {
 		return (((int << 8) | 0xff) >>> 0);
 	}
 }
 
 export function parseColor(str: string): number {
-	if (!isString(str))
+	if (!isString(str)) {
 		return TRANSPARENT;
+	}
 
 	str = str.trim().toLowerCase();
 
-	if (str === '' || str === 'none' || str === 'transparent')
+	if (str === '' || str === 'none' || str === 'transparent') {
 		return TRANSPARENT;
+	}
 
 	str = colorNames[str] || str;
 
@@ -320,7 +325,8 @@ export function parseColor(str: string): number {
 				parseInt(s.charAt(0), 16) * 0x11,
 				parseInt(s.charAt(1), 16) * 0x11,
 				parseInt(s.charAt(2), 16) * 0x11, 255);
-		} else {
+		}
+		else {
 			return colorFromRGBA(
 				parseInt(s.substr(0, 2), 16),
 				parseInt(s.substr(2, 2), 16),
@@ -511,18 +517,34 @@ export function rgb2hsl(rgb: RGB): HSL {
 	let s;
 	let l;
 
-	if (max === min) h = 0;
-	else if (r === max) h = (g - b) / delta;
-	else if (g === max) h = 2 + (b - r) / delta;
-	else if (b === max) h = 4 + (r - g) / delta;
+	if (max === min) {
+		h = 0;
+	}
+	else if (r === max) {
+		h = (g - b) / delta;
+	}
+	else if (g === max) {
+		h = 2 + (b - r) / delta;
+	}
+	else if (b === max) {
+		h = 4 + (r - g) / delta;
+	}
 
 	h = Math.min(h * 60, 360);
-	if (h < 0) h += 360;
+	if (h < 0) {
+		h += 360;
+	}
 	l = (min + max) / 2;
 
-	if (max === min) s = 0;
-	else if (l <= 0.5) s = delta / (max + min);
-	else s = delta / (2 - max - min);
+	if (max === min) {
+		s = 0;
+	}
+	else if (l <= 0.5) {
+		s = delta / (max + min);
+	}
+	else {
+		s = delta / (2 - max - min);
+	}
 	h = Math.floor(h);
 	s = Math.floor(s * 100);
 	l = Math.floor(l * 100);

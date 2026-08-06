@@ -63,7 +63,8 @@ export class SpriteBatch extends BaseSpriteBatch implements ISpriteBatch {
 
 			if (rect) {
 				this.drawImage(color, rect.x, rect.y, rect.w, rect.h, x, y, w, h);
-			} else {
+			}
+			else {
 				this.drawImage(color, 0, 0, 1, 1, x, y, w, h);
 			}
 		}

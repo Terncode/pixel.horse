@@ -112,7 +112,8 @@ export function createHeadTransform(
 ) {
 	if (originalTransform !== undefined) {
 		copyMat2D(headTransform, originalTransform);
-	} else {
+	}
+	else {
 		identityMat2D(headTransform);
 	}
 
@@ -140,7 +141,8 @@ const hairOffsets = [
 function draw(options: Options, flag: NoDraw) {
 	if (TOOLS) {
 		return !hasFlag(options.no, flag);
-	} else {
+	}
+	else {
 		return true;
 	}
 }
@@ -274,13 +276,17 @@ export function drawPony(batch: Batch, info: Info, state: State, ponyX: number, 
 	// selection
 	if (options.selected) {
 		const sprite = at(sprites.ponySelections, shadow.frame);
-		sprite && batch.drawSprite(sprite, WHITE, info.defaultPalette, shadowX, shadowY);
+		if (sprite) {
+			batch.drawSprite(sprite, WHITE, info.defaultPalette, shadowX, shadowY);
+		}
 	}
 
 	// shadow
 	if (options.shadow) {
 		const sprite = at(sprites.ponyShadows, shadow.frame);
-		sprite && batch.drawSprite(sprite, options.shadowColor, info.defaultPalette, shadowX, shadowY);
+		if (sprite) {
+			batch.drawSprite(sprite, options.shadowColor, info.defaultPalette, shadowX, shadowY);
+		}
 	}
 
 	// head accessory
@@ -522,7 +528,8 @@ export function drawHead(
 
 	if (toy !== undefined) {
 		drawSet(batch, sprites.extraAccessoriesBehind, toy, extraX, extraY, WHITE);
-	} else if (options.extra && draw(options, NoDraw.Behind)) {
+	}
+	else if (options.extra && draw(options, NoDraw.Behind)) {
 		drawSet(batch, sprites.extraAccessoriesBehind, info.extraAccessory, extraX, extraY, WHITE);
 	}
 
@@ -615,7 +622,9 @@ export function drawHead(
 		const noses = at(sprites.noses, muzzle);
 		const nose = att(noses, info.nose && info.nose.type)![0];
 
-		nose.mouth && batch.drawSprite(nose.mouth, WHITE, info.defaultPalette, x, y);
+		if (nose.mouth) {
+			batch.drawSprite(nose.mouth, WHITE, info.defaultPalette, x, y);
+		}
 
 		if (holding !== undefined && holding.draw !== undefined) {
 			holding.x = toWorldX(x + toInt(holding.pickableX));
@@ -647,7 +656,8 @@ export function drawHead(
 
 	if (toy !== undefined) {
 		drawSet(batch, sprites.extraAccessories, toy, extraX, extraY, WHITE);
-	} else if (options.extra && draw(options, NoDraw.Front)) {
+	}
+	else if (options.extra && draw(options, NoDraw.Front)) {
 		drawSet(batch, sprites.extraAccessories, info.extraAccessory, extraX, extraY, WHITE);
 	}
 
@@ -770,13 +780,21 @@ function drawEye(
 ) {
 	if (eye !== undefined) {
 		if (info.eyeshadow === true) {
-			eye.shadow && batch.drawSprite(eye.shadow, WHITE, info.eyeshadowColor, x, y);
-			eye.shine && batch.drawSprite(eye.shine, SHINES_COLOR, info.defaultPalette, x, y);
+			if (eye.shadow) {
+				batch.drawSprite(eye.shadow, WHITE, info.eyeshadowColor, x, y);
+			}
+			if (eye.shine) {
+				batch.drawSprite(eye.shine, SHINES_COLOR, info.defaultPalette, x, y);
+			}
 		}
 
-		eye.base && batch.drawSprite(eye.base, WHITE, eyePalette, x, y);
+		if (eye.base) {
+			batch.drawSprite(eye.base, WHITE, eyePalette, x, y);
+		}
 		const sprite = at(eye.irises, iris);
-		sprite && batch.drawSprite(sprite, WHITE, palette, x, y);
+		if (sprite) {
+			batch.drawSprite(sprite, WHITE, palette, x, y);
+		}
 	}
 }
 

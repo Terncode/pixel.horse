@@ -4,6 +4,7 @@ import { config } from './config';
 import { logger } from './logger';
 import { OriginInfoBase } from '../common/adminInterfaces';
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports, camelcase
 const get_ip = require('ipware')().get_ip;
 
 export function getIP(req: { headers: any; }) {
@@ -36,10 +37,12 @@ export async function addOrigin(account: IAccount, origin: IOriginInfo) {
 
 		if (existingOrigin) {
 			await Account.updateOne({ _id, 'origins._id': existingOrigin._id }, { $set: { 'origins.$.last': new Date() } }).exec();
-		} else {
+		}
+		else {
 			await Account.updateOne({ _id }, { $push: { origins: origin } }).exec();
 		}
-	} catch (e) {
+	}
+	catch (e) {
 		logger.error('Failed to add origin', e);
 	}
 }

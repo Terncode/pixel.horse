@@ -46,8 +46,11 @@ export function disposeFrameBuffer(gl?: WebGLRenderingContext, buffer?: FrameBuf
 				gl.deleteRenderbuffer(buffer.depthStencilRenderbuffer);
 			}
 		}
-	} catch (e) {
-		DEVELOPMENT && console.error(e);
+	}
+	catch (e) {
+		if (DEVELOPMENT) {
+			console.error(e);
+		}
 	}
 
 	return undefined;

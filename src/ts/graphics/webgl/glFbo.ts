@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { Texture2D, resizeTexture, disposeTexture, createEmptyTexture } from './texture2d';
 import { array } from '../../common/utils';
 
@@ -55,10 +56,12 @@ export function createFrameBuffer(gl: WebGL, width: number, height: number, opti
 
 	if (numColors < 0) {
 		throw new Error('Must specify a nonnegative number of colors');
-	} else if (numColors > 1) {
+	}
+	else if (numColors > 1) {
 		if (!ext) {
 			throw new Error('Multiple draw buffer extension not supported');
-		} else if (numColors > gl.getParameter(ext.MAX_COLOR_ATTACHMENTS_WEBGL)) {
+		}
+		else if (numColors > gl.getParameter(ext.MAX_COLOR_ATTACHMENTS_WEBGL)) {
 			throw new Error(`Context does not support ${numColors} draw buffers`);
 		}
 	}
@@ -72,7 +75,8 @@ export function createFrameBuffer(gl: WebGL, width: number, height: number, opti
 		}
 
 		colorType = gl.FLOAT;
-	} else if (preferFloat && numColors > 0) {
+	}
+	else if (preferFloat && numColors > 0) {
 		if (OES_texture_float) {
 			colorType = gl.FLOAT;
 		}
@@ -124,9 +128,11 @@ export function resizeFrameBuffer(fbo: FrameBuffer, w: number, h: number) {
 
 		if (fbo.useDepth && fbo.useStencil) {
 			gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_STENCIL, w, h);
-		} else if (fbo.useDepth) {
+		}
+		else if (fbo.useDepth) {
 			gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_COMPONENT16, w, h);
-		} else if (fbo.useStencil) {
+		}
+		else if (fbo.useStencil) {
 			gl.renderbufferStorage(gl.RENDERBUFFER, gl.STENCIL_INDEX8, w, h);
 		}
 	}
@@ -191,7 +197,8 @@ function rebuild(fbo: FrameBuffer) {
 		if (ext) {
 			ext.drawBuffersWEBGL(colorAttachmentArrays![0]);
 		}
-	} else if (numColors > 1) {
+	}
+	else if (numColors > 1) {
 		if (ext) {
 			ext.drawBuffersWEBGL(colorAttachmentArrays![numColors]);
 		}
@@ -203,15 +210,19 @@ function rebuild(fbo: FrameBuffer) {
 		if (useStencil) {
 			fbo.depth = initTexture(
 				gl, width, height, WEBGL_depth_texture.UNSIGNED_INT_24_8_WEBGL, gl.DEPTH_STENCIL, gl.DEPTH_STENCIL_ATTACHMENT);
-		} else if (useDepth) {
+		}
+		else if (useDepth) {
 			fbo.depth = initTexture(gl, width, height, gl.UNSIGNED_SHORT, gl.DEPTH_COMPONENT, gl.DEPTH_ATTACHMENT);
 		}
-	} else {
+	}
+	else {
 		if (useDepth && useStencil) {
 			fbo.depthRenderBuffer = initRenderBuffer(gl, width, height, gl.DEPTH_STENCIL, gl.DEPTH_STENCIL_ATTACHMENT);
-		} else if (useDepth) {
+		}
+		else if (useDepth) {
 			fbo.depthRenderBuffer = initRenderBuffer(gl, width, height, gl.DEPTH_COMPONENT16, gl.DEPTH_ATTACHMENT);
-		} else if (useStencil) {
+		}
+		else if (useStencil) {
 			fbo.depthRenderBuffer = initRenderBuffer(gl, width, height, gl.STENCIL_INDEX8, gl.STENCIL_ATTACHMENT);
 		}
 	}

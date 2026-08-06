@@ -71,10 +71,12 @@ export function setAnimatorState<T extends Animation>(animator: Animator<T>, sta
 		if (animator.state !== state) {
 			if (animator.state === undefined) {
 				animator.state = state;
-			} else {
+			}
+			else {
 				animator.target = state;
 			}
-		} else {
+		}
+		else {
 			animator.target = undefined;
 		}
 
@@ -106,7 +108,8 @@ export function updateAnimator<T extends Animation>(animator: Animator<T>, delta
 				if (frameTimeAfter >= exitAfter || animationEnded) {
 					if (!transition.keepTime) {
 						animator.time = transition.enterTime || 0;
-					} else {
+					}
+					else {
 						animator.time = animator.time % animationLength;
 					}
 

@@ -33,7 +33,8 @@ export const validAccount = (server: ServerConfig): RequestHandler => (req, res,
 		}
 		//logger.warn(ACCOUNT_ERROR, `${accountName} [${accountId}] (${req.path})`);
 		res.status(403).json({ error: ACCOUNT_ERROR });
-	} else {
+	}
+	else {
 		next(null);
 	}
 };
@@ -41,7 +42,8 @@ export const validAccount = (server: ServerConfig): RequestHandler => (req, res,
 export const blockMaps = (debug: boolean, local: boolean): RequestHandler => (req, res, next) => {
 	if (!debug && !local && /\.map$/.test(req.path) && getIP(req) !== ROLLBAR_IP) {
 		res.sendStatus(404);
-	} else {
+	}
+	else {
 		next(null);
 	}
 };
@@ -51,7 +53,8 @@ export const hash: RequestHandler = (req, res, next) => {
 
 	if (apiVersion !== HASH) {
 		res.status(400).json({ error: VERSION_ERROR });
-	} else {
+	}
+	else {
 		next(null);
 	}
 };
@@ -59,7 +62,8 @@ export const hash: RequestHandler = (req, res, next) => {
 export const offline = (settings: Settings): RequestHandler => (_req, res, next) => {
 	if (settings.isPageOffline) {
 		res.status(503).send(OFFLINE_ERROR);
-	} else {
+	}
+	else {
 		next(null);
 	}
 };
@@ -67,7 +71,8 @@ export const offline = (settings: Settings): RequestHandler => (_req, res, next)
 export const internal = (config: AppConfig, server: ServerConfig): RequestHandler => (req, res, next) => {
 	if (req.get('api-token') === config.token) {
 		next(null);
-	} else {
+	}
+	else {
 		createFromRequest(server, req).warn('Unauthorized internal api call', req.originalUrl);
 		res.sendStatus(403);
 	}
@@ -76,7 +81,8 @@ export const internal = (config: AppConfig, server: ServerConfig): RequestHandle
 export const auth: RequestHandler = (req, res, next) => {
 	if (req.isAuthenticated()) {
 		next(null);
-	} else {
+	}
+	else {
 		//createFromRequest(req).warn('Unauthorized access', req.originalUrl);
 		res.setHeader('X-Robots-Tag', 'noindex');
 		res.sendStatus(403);
@@ -86,7 +92,8 @@ export const auth: RequestHandler = (req, res, next) => {
 export const admin = (server: ServerConfig): RequestHandler => (req, res, next) => {
 	if (req.isAuthenticated() && req.user && isAdmin(req.user)) {
 		next(null);
-	} else {
+	}
+	else {
 		if (!/Googlebot/.test(req.get('User-Agent')!)) {
 			createFromRequest(server, req).warn(`Unauthorized access (admin)`, req.originalUrl);
 		}
@@ -122,7 +129,8 @@ export function handleError(server: ServerConfig, req: Request, res: Response) {
 		if (isUserError(e)) {
 			reportUserError(e, server, req);
 			res.status(422).json({ error: e.message, userError: true });
-		} else {
+		}
+		else {
 			reportError(e, server, req);
 			res.status(500).json({ error: 'Error occurred' });
 		}
@@ -154,7 +162,8 @@ export function wrapApi(server: ServerConfig, api: any) {
 	return wrap(server, ({ body: { method, args = [] } }) => {
 		if (api[method]) {
 			return api[method](...args);
-		} else {
+		}
+		else {
 			return Promise.reject(new Error(`Invalid method (${method})`));
 		}
 	});
@@ -179,7 +188,8 @@ function readFiles(files: Map<string, StaticFile>, dir: string, url: string) {
 
 		if (stat.isDirectory()) {
 			readFiles(files, filePath, `${url}/${file}`);
-		} else {
+		}
+		else {
 			const ext = path.extname(file);
 			const mimeType = mimeTypes[ext];
 
@@ -211,7 +221,8 @@ export function inMemoryStaticFiles(assetsPath: string, assetsUrl: string, maxAg
 			res.setHeader('Content-Type', staticFile.mimeType);
 			res.setHeader('Cache-Control', cacheControl);
 			res.status(200).end(staticFile.buffer);
-		} catch (e) {
+		}
+		catch (e) {
 			next(e);
 		}
 	};

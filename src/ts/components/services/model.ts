@@ -78,7 +78,8 @@ export function getPonyTag(pony: PonyObject, account: AccountData | undefined) {
 	if (account) {
 		const tag = canUseTag(account, pony.tag || '') ? pony.tag : undefined;
 		return (!tag && account.supporter && !pony.hideSupport) ? `sup${account.supporter}` : tag;
-	} else {
+	}
+	else {
 		return undefined;
 	}
 }
@@ -179,7 +180,8 @@ export class Model {
 					modStatus.mod = isMod(account);
 					modStatus.check = account.check;
 					modStatus.editor = account.editor || modStatus.editor;
-				} catch { }
+				}
+				catch { }
 
 				if (modStatus.editor) {
 					modStatus.editor.typeToName.forEach(({ type, name }) => entityTypeToName.set(type, name));
@@ -208,18 +210,22 @@ export class Model {
 				if (e.message === ACCESS_ERROR) {
 					this.loading = false;
 					this.storage.setItem('vid', '---');
-				} else if (e.message === LIMIT_ERROR) {
+				}
+				else if (e.message === LIMIT_ERROR) {
 					this.loadingError = 'request-limit';
 					return delay(5000).then(() => this.initializeAccount());
-				} else if (e.message === OFFLINE_ERROR) {
+				}
+				else if (e.message === OFFLINE_ERROR) {
 					this.loadingError = 'cannot-connect';
 					return delay(5000).then(() => this.initializeAccount());
-				} else if (e.message === PROTECTION_ERROR) {
+				}
+				else if (e.message === PROTECTION_ERROR) {
 					this.loadingError = 'cloudflare-error';
 					this.protectionErrors.next();
 					// } else if (e.message === VERSION_ERROR) {
 					// 	this.updating = true;
-				} else {
+				}
+				else {
 					setTimeout(() => this.loadingError = 'unexpected-error', 5 * SECOND);
 					console.error(e);
 				}
@@ -240,7 +246,9 @@ export class Model {
 				})).sort(compareFriends);
 			})
 			.catch(e => {
-				DEVELOPMENT && console.error(e);
+				if (DEVELOPMENT) {
+					console.error(e);
+				}
 				setTimeout(() => this.fetchFriends(), 5000);
 			});
 	}
@@ -275,7 +283,8 @@ export class Model {
 		try {
 			const ponyInfo = decompressPonyString(pony.info, true);
 			return { ponyInfo, ...pony };
-		} catch (e) {
+		}
+		catch (e) {
 			this.errorReporter.reportError(e, { ponyInfo: pony.info });
 			this.errorReporter.reportError('Pony info reading error', { originalError: isErrorAlike(e) ? e.message: '', ponyInfo: pony.info });
 			throw new Error('Error while reading pony info');
@@ -283,7 +292,9 @@ export class Model {
 	}
 	selectPony(pony: PonyObject) {
 		const copy = this.parsePonyObject(pony);
-		copy.ponyInfo && syncLockedPonyInfo(copy.ponyInfo);
+		if (copy.ponyInfo) {
+			syncLockedPonyInfo(copy.ponyInfo);
+		}
 		this._pony = copy;
 	}
 	// account
@@ -308,7 +319,8 @@ export class Model {
 
 		if (isStandalone()) {
 			window.open(url);
-		} else {
+		}
+		else {
 			location.href = url;
 		}
 	}
@@ -394,7 +406,8 @@ export class Model {
 
 				if (pony.id) {
 					removeById(this.ponies, pony.id);
-				} else {
+				}
+				else {
 					this.account!.characterCount++;
 				}
 
@@ -443,7 +456,8 @@ export class Model {
 
 			if (this.account.birthyear) {
 				age = currentYear - this.account.birthyear;
-			} else if (this.account.birthdate) {
+			}
+			else if (this.account.birthdate) {
 				const [year, month] = this.account.birthdate.split('-');
 				const before = parseInt(month, 10) > currentMonth;
 				age = Math.max(0, currentYear - parseInt(year, 10) - (before ? 1 : 0));
@@ -458,12 +472,15 @@ export class Model {
 		return observableToPromise(this.http.get<GameStatus>('/api2/game/status', { params }));
 	}
 	join(serverId: string, ponyId: string): Promise<JoinResponse> {
-		if (this.pending)
+		if (this.pending) {
 			return Promise.reject(new Error('Joining in progress'));
-		if (!serverId)
+		}
+		if (!serverId) {
 			return Promise.reject(new Error('Invalid server ID'));
-		if (!ponyId)
+		}
+		if (!ponyId) {
 			return Promise.reject(new Error('Invalid pony ID'));
+		}
 
 		this.pending = true;
 

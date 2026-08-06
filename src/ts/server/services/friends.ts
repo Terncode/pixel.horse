@@ -55,7 +55,8 @@ export function toFriendRemove(client: IClient): FriendStatusData {
 export function toFriend(client: IClient): FriendStatusData {
 	if (client.isConnected()) {
 		return toFriendOnline(client);
-	} else {
+	}
+	else {
 		return toFriendOffline(client);
 	}
 }
@@ -105,32 +106,40 @@ export class FriendsService {
 
 		if (can === LimiterResult.LimitReached) {
 			return saySystem(client, 'Reached request rejection limit');
-		} else if (can !== LimiterResult.Yes) {
+		}
+		else if (can !== LimiterResult.Yes) {
 			return saySystem(client, 'Cannot send request');
 		}
 
 		const pending = this.pending.get(client.accountId) || new Set();
 
-		if (pending.has(target.accountId))
+		if (pending.has(target.accountId)) {
 			return saySystem(client, 'Already sent request');
+		}
 
-		if (isFriend(client, target))
+		if (isFriend(client, target)) {
 			return saySystem(client, 'Already on friends list');
+		}
 
-		if (client.friends.size >= FRIENDS_LIMIT)
+		if (client.friends.size >= FRIENDS_LIMIT) {
 			return saySystem(client, 'Your friend list is full');
+		}
 
-		if (target.friends.size >= FRIENDS_LIMIT)
+		if (target.friends.size >= FRIENDS_LIMIT) {
 			return saySystem(client, 'Target player friend list is full');
+		}
 
-		if (hasFlag(client.account.flags, AccountFlags.BlockFriendRequests))
+		if (hasFlag(client.account.flags, AccountFlags.BlockFriendRequests)) {
 			return saySystem(client, 'Cannot send request');
+		}
 
-		if (target.accountSettings.ignoreFriendInvites)
+		if (target.accountSettings.ignoreFriendInvites) {
 			return saySystem(client, 'Cannot send request');
+		}
 
-		if (pending.size >= PENDING_LIMIT)
+		if (pending.size >= PENDING_LIMIT) {
 			return saySystem(client, 'Too many pending requests');
+		}
 
 		const notificationId = this.addInviteNotification(client, target);
 

@@ -50,11 +50,14 @@ function getBounds(sprite: Sprite | undefined, ox: number, oy: number): Rect {
 export function getRenderableBounds({ color, shadow }: Renderable, dx: number, dy: number): Rect {
 	if (color && shadow) {
 		return addRects(getBounds(color, -dx, -dy), getBounds(shadow, -dx, -dy));
-	} else if (color) {
+	}
+	else if (color) {
 		return getBounds(color, -dx, -dy);
-	} else if (shadow) {
+	}
+	else if (shadow) {
 		return getBounds(shadow, -dx, -dy);
-	} else {
+	}
+	else {
 		return rect(0, 0, 0, 0);
 	}
 }
@@ -288,15 +291,20 @@ export function mixAnimation(
 				}
 
 				return at(animations[animation], frameNumber) || 0;
-			} else {
+			}
+			else {
 				return repeat ? (frameNumber % anim.frames.length) : Math.min(frameNumber, anim.frames.length - 1);
 			}
 		};
 
 		base.bounds = bounds;
 		base.palettes = [];
-		defaultPalette && base.palettes.push(defaultPalette);
-		palette && base.palettes.push(palette);
+		if (defaultPalette) {
+			base.palettes.push(defaultPalette);
+		}
+		if (palette) {
+			base.palettes.push(palette);
+		}
 
 		base.update = function (delta: number) {
 			time += delta;
@@ -313,7 +321,8 @@ export function mixAnimation(
 			if (lastFrame !== frameNumber) {
 				lastFrame = frameNumber;
 				return true;
-			} else {
+			}
+			else {
 				return false;
 			}
 		};
@@ -332,8 +341,12 @@ export function mixAnimation(
 			}
 
 			batch.translate(-dx, -dy);
-			anim.shadow && batch.drawSprite(anim.shadow, options.shadowColor, defaultPalette, 0, 0);
-			frameSprite && batch.drawSprite(frameSprite, color, palette, 0, 0);
+			if (anim.shadow) {
+				batch.drawSprite(anim.shadow, options.shadowColor, defaultPalette, 0, 0);
+			}
+			if (frameSprite) {
+				batch.drawSprite(frameSprite, color, palette, 0, 0);
+			}
 			batch.restore();
 		};
 
@@ -374,8 +387,12 @@ export function mixDrawWindow(
 			const defaultPalette = sprite.shadow && createPalette(sprites.defaultPalette);
 			const palette = createPalette(att(sprite.palettes, paletteIndex));
 			base.palettes = [];
-			defaultPalette && base.palettes.push(defaultPalette);
-			palette && base.palettes.push(palette);
+			if (defaultPalette) {
+				base.palettes.push(defaultPalette);
+			}
+			if (palette) {
+				base.palettes.push(palette);
+			}
 
 			base.draw = function (batch, options) {
 				const baseX = toScreenX(this.x + (this.ox || 0));
@@ -407,8 +424,12 @@ export function mixDraw(sprite: PaletteRenderable, dx: number, dy: number, palet
 			const defaultPalette = sprite.shadow && createPalette(sprites.defaultPalette);
 			const palette = createPalette(att(sprite.palettes, paletteIndex));
 			base.palettes = [];
-			defaultPalette && base.palettes.push(defaultPalette);
-			palette && base.palettes.push(palette);
+			if (defaultPalette) {
+				base.palettes.push(defaultPalette);
+			}
+			if (palette) {
+				base.palettes.push(palette);
+			}
 
 			base.draw = function (batch: PaletteSpriteBatch, options: DrawOptions) {
 				const x = toScreenX(this.x + (this.ox || 0)) - dx;
@@ -506,8 +527,12 @@ export function mixDrawSeasonal(setup: MixDrawSeasonal): MixinEntity {
 				defaultPalette = sprite.shadow && createPalette(sprites.defaultPalette);
 				palette = createPalette(att(sprite.palettes, paletteIndex));
 				base.palettes = [];
-				defaultPalette && base.palettes.push(defaultPalette);
-				palette && base.palettes.push(palette);
+				if (defaultPalette) {
+					base.palettes.push(defaultPalette);
+				}
+				if (palette) {
+					base.palettes.push(palette);
+				}
 			};
 
 			setupSeason(worldState.season);
@@ -597,8 +622,9 @@ export function mixDrawDirectionSign(): MixinEntity {
 		base.bounds = rect(-20, -boundsH, 40, boundsH);
 		base.options = options;
 
-		if (SERVER && !TESTS)
+		if (SERVER && !TESTS) {
 			return;
+		}
 
 		const {
 			shadowUp, shadowDown, spriteUp, spriteDown, upDX, upDY, downDX, downDY,
@@ -613,18 +639,30 @@ export function mixDrawDirectionSign(): MixinEntity {
 		const defaultPalette = pole.sprite.shadow && createPalette(sprites.defaultPalette);
 		const palette = createPalette(att(pole.sprite.palettes, 0));
 		base.palettes = [];
-		defaultPalette && base.palettes.push(defaultPalette);
-		palette && base.palettes.push(palette);
+		if (defaultPalette) {
+			base.palettes.push(defaultPalette);
+		}
+		if (palette) {
+			base.palettes.push(palette);
+		}
 
 		base.draw = function (batch, options) {
 			const x = toScreenX(this.x);
 			const y = toScreenYWithZ(this.y, this.z);
 
 			batch.drawSprite(pole.sprite.shadow, options.shadowColor, defaultPalette, x + poleDX, y + pole.dy);
-			leftShadow && batch.drawSprite(shadowLeft, options.shadowColor, defaultPalette, x - 18, y - 1);
-			rightShadow && batch.drawSprite(shadowRight, options.shadowColor, defaultPalette, x + 4, y - 1);
-			upShadow && batch.drawSprite(shadowUp, options.shadowColor, defaultPalette, x + shadowUpDX, y + shadowUpDY);
-			downShadow && batch.drawSprite(shadowDown, options.shadowColor, defaultPalette, x + shadowDownDX, y + shadowDownDY);
+			if (leftShadow) {
+				batch.drawSprite(shadowLeft, options.shadowColor, defaultPalette, x - 18, y - 1);
+			}
+			if (rightShadow) {
+				batch.drawSprite(shadowRight, options.shadowColor, defaultPalette, x + 4, y - 1);
+			}
+			if (upShadow) {
+				batch.drawSprite(shadowUp, options.shadowColor, defaultPalette, x + shadowUpDX, y + shadowUpDY);
+			}
+			if (downShadow) {
+				batch.drawSprite(shadowDown, options.shadowColor, defaultPalette, x + shadowDownDX, y + shadowDownDY);
+			}
 
 			for (let i = n.length - 1; i >= 0; i--) {
 				if (n[i] !== -1) {
@@ -637,14 +675,18 @@ export function mixDrawDirectionSign(): MixinEntity {
 			for (let i = 0; i < w.length; i++) {
 				if (w[i] !== -1) {
 					const sprite = leftSprites[w[i]];
-					sprite && batch.drawSprite(sprite, WHITE, palette, x + leftDX, y + pole.dy + plateDY + i * leftRightStep);
+					if (sprite) {
+						batch.drawSprite(sprite, WHITE, palette, x + leftDX, y + pole.dy + plateDY + i * leftRightStep);
+					}
 				}
 			}
 
 			for (let i = 0; i < e.length; i++) {
 				if (e[i] !== -1) {
 					const sprite = rightSprites[e[i]];
-					sprite && batch.drawSprite(rightSprites[e[i]], WHITE, palette, x + rightDX, y + pole.dy + plateDY + i * leftRightStep);
+					if (sprite) {
+						batch.drawSprite(rightSprites[e[i]], WHITE, palette, x + rightDX, y + pole.dy + plateDY + i * leftRightStep);
+					}
 				}
 			}
 
@@ -668,8 +710,9 @@ export function mixLight(color: number, dx: number, dy: number, w: number, h: nu
 			const adjustedScale = base.lightScale * base.lightScaleAdjust * LIGHT_VOLUME_SCALE;
 			base.lightBounds = rect(-(dx + w / 2), -(dy + h / 2), w * adjustedScale, h * adjustedScale);
 			base.drawLight = function (batch: SpriteBatch) {
-				if (!this.lightOn)
+				if (!this.lightOn) {
 					return;
+				}
 
 				const x = toScreenX(this.x);
 				const y = toScreenYWithZ(this.y, this.z);
@@ -692,8 +735,9 @@ export function mixLightSprite(sprite: Sprite, color: number, dx: number, dy: nu
 			base.lightSpriteColor = color;
 			base.lightSpriteBounds = getBounds(sprite, -dx, -dy);
 			base.drawLightSprite = function (batch: SpriteBatch) {
-				if (!this.lightSpriteOn)
+				if (!this.lightSpriteOn) {
 					return;
+				}
 
 				const x = toScreenX(this.x) - this.lightSpriteX!;
 				const y = toScreenYWithZ(this.y, this.z) - this.lightSpriteY!;
@@ -711,8 +755,9 @@ export function mixDrawRain(): MixinEntity {
 	return base => {
 		base.bounds = bounds;
 
-		if (SERVER && !TESTS)
+		if (SERVER && !TESTS) {
 			return;
+		}
 
 		let time = 0;
 		const palette = createPalette(sprites.defaultPalette);
@@ -747,7 +792,9 @@ export function mixDrawShadow(sprite: PaletteRenderable, dx: number, dy: number,
 				const x = toScreenX(this.x + (this.ox || 0)) - dx;
 				const y = toScreenYWithZ(this.y + (this.oy || 0), this.z) - dy;
 				const color = shadowColor === undefined ? options.shadowColor : shadowColor;
-				sprite.shadow && batch.drawSprite(sprite.shadow, color, defaultPalette, x, y);
+				if (sprite.shadow) {
+					batch.drawSprite(sprite.shadow, color, defaultPalette, x, y);
+				}
 			};
 		}
 	};
@@ -776,22 +823,29 @@ export function mixDrawWall(
 	return base => {
 		base.bounds = fullBounds; // fullWalls ? fullBounds : halfBounds
 
-		if (SERVER && !TESTS)
+		if (SERVER && !TESTS) {
 			return;
+		}
 
 		const fullPalette = createPalette(att(full.palettes, 0));
 		const halfPalette = createPalette(att(half.palettes, 0));
 
 		base.palettes = [];
-		fullPalette && base.palettes.push(fullPalette);
-		halfPalette && base.palettes.push(halfPalette);
+		if (fullPalette) {
+			base.palettes.push(fullPalette);
+		}
+		if (halfPalette) {
+			base.palettes.push(halfPalette);
+		}
 
 		base.draw = function (batch: PaletteSpriteBatch) {
 			const sprite = fullWalls ? full : half;
 			const palette = fullWalls ? fullPalette : halfPalette;
 			const x = toScreenX(this.x) - dx;
 			const y = toScreenYWithZ(this.y, this.z) - (fullWalls ? dy : dy2);
-			sprite.color && batch.drawSprite(sprite.color, WHITE, palette, x, y);
+			if (sprite.color) {
+				batch.drawSprite(sprite.color, WHITE, palette, x, y);
+			}
 		};
 	};
 }
@@ -803,8 +857,9 @@ export function mixDrawSpider(
 	const spriteColor = sprite.color;
 	const baseBounds = getRenderableBounds(sprite, dx, dy);
 
-	if (!spriteColor)
+	if (!spriteColor) {
 		throw new Error('Missing sprite');
+	}
 
 	return base => {
 		const { height, time } = base.options as { height: number; time: number; };
@@ -813,8 +868,9 @@ export function mixDrawSpider(
 		bounds.h += height;
 		base.bounds = bounds;
 
-		if (SERVER && !TESTS)
+		if (SERVER && !TESTS) {
 			return;
+		}
 
 		const palette = createPalette(sprite.palettes && sprite.palettes[0]);
 		base.palettes = [palette];

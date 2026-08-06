@@ -68,14 +68,16 @@ function isPonyColliding<T extends Region | undefined>(x: number, y: number, map
 function isColliding(x: number, y: number, mask: number, map: IMap<Region | undefined>) {
 	if (x < 0 || x >= (map.width * tileWidth) || y < 0 || y >= (map.height * tileHeight)) {
 		return true;
-	} else {
+	}
+	else {
 		const regionX = (x / REGION_WIDTH) | 0;
 		const regionY = (y / REGION_HEIGHT) | 0;
 		const region = map.regions[regionX + regionY * map.regionsX];
 
 		if (region === undefined) {
 			return true;
-		} else {
+		}
+		else {
 			const insideX = (x % REGION_WIDTH) | 0;
 			const insideY = (y % REGION_HEIGHT) | 0;
 			return (region.collider[insideX + insideY * REGION_WIDTH] & mask) !== 0;
@@ -153,24 +155,29 @@ export function updatePosition(entity: Entity, delta: number, map: IMap<Region |
 			oy = 1;
 			stepYT = 1 | 0;
 			stepXF = 1 | 0;
-		} else {
+		}
+		else {
 			ox = 1;
 			stepYT = -1 | 0;
 			stepXF = 1 | 0;
 		}
-	} else if (srcX > dstX) {
+	}
+	else if (srcX > dstX) {
 		if (srcY < dstY) {
 			oy = 1;
 			stepYT = 1 | 0;
 			stepXF = -1 | 0;
-		} else {
+		}
+		else {
 			stepYT = -1 | 0;
 			stepXF = -1 | 0;
 		}
-	} else {
+	}
+	else {
 		if (srcY < dstY) {
 			stepYF = stepYT = 1 | 0;
-		} else {
+		}
+		else {
 			stepYF = stepYT = -1 | 0;
 		}
 	}
@@ -187,7 +194,8 @@ export function updatePosition(entity: Entity, delta: number, map: IMap<Region |
 		if (useGt ? (fx > fy) : (fx < fy)) {
 			tx = (tx + stepXT) | 0;
 			ty = (ty + stepYT) | 0;
-		} else {
+		}
+		else {
 			tx = (tx + stepXF) | 0;
 			ty = (ty + stepYF) | 0;
 		}
@@ -217,7 +225,8 @@ export function updatePosition(entity: Entity, delta: number, map: IMap<Region |
 					actualNY -= 1;
 					dstY -= 1;
 					collides = false;
-				} else if (
+				}
+				else if (
 					shiftDown && (canShiftDown = !isColliding(actualX, actualY + 1, mask, map)) &&
 					!isColliding(actualNX, actualY + 1, mask, map)
 				) {
@@ -225,12 +234,14 @@ export function updatePosition(entity: Entity, delta: number, map: IMap<Region |
 					actualNY += 1;
 					dstY += 1;
 					collides = false;
-				} else if (shiftUp && canShiftUp && !isColliding(actualNX, actualY - 2, mask, map)) {
+				}
+				else if (shiftUp && canShiftUp && !isColliding(actualNX, actualY - 2, mask, map)) {
 					actualNX = actualX;
 					actualNY -= 1;
 					dstY -= 1;
 					collides = false;
-				} else if (shiftDown && canShiftDown && !isColliding(actualNX, actualY + 2, mask, map)) {
+				}
+				else if (shiftDown && canShiftDown && !isColliding(actualNX, actualY + 2, mask, map)) {
 					actualNX = actualX;
 					actualNY += 1;
 					dstY += 1;
@@ -238,7 +249,8 @@ export function updatePosition(entity: Entity, delta: number, map: IMap<Region |
 				}
 
 				canMove = canShiftUp || canShiftDown;
-			} else {
+			}
+			else {
 				let canShiftLeft = false;
 				let canShiftRight = false;
 
@@ -250,7 +262,8 @@ export function updatePosition(entity: Entity, delta: number, map: IMap<Region |
 					actualNY = actualY;
 					dstX -= 1;
 					collides = false;
-				} else if (
+				}
+				else if (
 					shiftRight && (canShiftRight = !isColliding(actualX + 1, actualY, mask, map)) &&
 					!isColliding(actualX + 1, actualNY, mask, map)
 				) {
@@ -258,12 +271,14 @@ export function updatePosition(entity: Entity, delta: number, map: IMap<Region |
 					actualNY = actualY;
 					dstX += 1;
 					collides = false;
-				} else if (shiftLeft && canShiftLeft && !isColliding(actualX - 2, actualNY, mask, map)) {
+				}
+				else if (shiftLeft && canShiftLeft && !isColliding(actualX - 2, actualNY, mask, map)) {
 					actualNX -= 1;
 					actualNY = actualY;
 					dstX -= 1;
 					collides = false;
-				} else if (shiftRight && canShiftRight && !isColliding(actualX + 2, actualNY, mask, map)) {
+				}
+				else if (shiftRight && canShiftRight && !isColliding(actualX + 2, actualNY, mask, map)) {
 					actualNX += 1;
 					actualNY = actualY;
 					dstX += 1;
@@ -277,7 +292,8 @@ export function updatePosition(entity: Entity, delta: number, map: IMap<Region |
 		if (!collides) {
 			actualX = actualNX;
 			actualY = actualNY;
-		} else if (!canMove || horizontalOrVertical) {
+		}
+		else if (!canMove || horizontalOrVertical) {
 			break;
 		}
 	}
@@ -301,17 +317,27 @@ export function setColliderDirty(map: IMap<Region | undefined>, region: Region, 
 
 	if (x === 0) {
 		const r = getRegionUnsafe(map, region.x - 1, region.y);
-		r && (r.colliderDirty = true);
-	} else if (x === (REGION_SIZE - 1)) {
+		if (r) {
+			(r.colliderDirty = true);
+		}
+	}
+	else if (x === (REGION_SIZE - 1)) {
 		const r = getRegionUnsafe(map, region.x + 1, region.y);
-		r && (r.colliderDirty = true);
+		if (r) {
+			(r.colliderDirty = true);
+		}
 	}
 
 	if (y === 0) {
 		const r = getRegionUnsafe(map, region.x, region.y - 1);
-		r && (r.colliderDirty = true);
-	} else if (y === (REGION_SIZE - 1)) {
+		if (r) {
+			(r.colliderDirty = true);
+		}
+	}
+	else if (y === (REGION_SIZE - 1)) {
 		const r = getRegionUnsafe(map, region.x, region.y + 1);
-		r && (r.colliderDirty = true);
+		if (r) {
+			(r.colliderDirty = true);
+		}
 	}
 }

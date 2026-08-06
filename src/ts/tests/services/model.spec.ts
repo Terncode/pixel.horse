@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { stubClass, resetStubMethods } from '../lib';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';

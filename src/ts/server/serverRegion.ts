@@ -129,7 +129,8 @@ export function pushUpdateEntityToRegion(region: ServerRegion, update: EntityUpd
 
 	if (index === -1) {
 		region.entityUpdates.push({ x: 0, y: 0, vx: 0, vy: 0, action: 0, playerState: 0, options: undefined, ...update });
-	} else {
+	}
+	else {
 		region.reusedUpdates++;
 		const existing = region.entityUpdates[index];
 		existing.flags |= update.flags;
@@ -163,8 +164,9 @@ export function pushRemoveEntityToRegion(region: ServerRegion, entity: ServerEnt
 export function setRegionTile(map: ServerMap, region: ServerRegion, x: number, y: number, type: TileType, skipRestore = false) {
 	const old = getRegionTile(region, x, y);
 
-	if (type === old)
+	if (type === old) {
 		return;
+	}
 
 	const index = x | (y << 3);
 	region.tiles[index] = type;

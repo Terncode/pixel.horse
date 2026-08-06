@@ -16,8 +16,9 @@ export class TestController implements Controller {
 	constructor(private world: World, private map: ServerMap) {
 	}
 	initialize() {
-		if (this.initialized)
+		if (this.initialized) {
 			return;
+		}
 
 		const world = this.world;
 		const map = this.map;
@@ -78,7 +79,9 @@ export class TestController implements Controller {
 
 		for (const client of this.clients) {
 			for (const notification of client.notifications) {
-				notification.accept && notification.accept();
+				if (notification.accept) {
+					notification.accept();
+				}
 			}
 		}
 

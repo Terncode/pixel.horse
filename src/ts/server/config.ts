@@ -73,7 +73,9 @@ export interface AppArgs {
 }
 
 export const args = argv as AppArgs;
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 export const { version, description }: AppPackage = require('../../../package.json');
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 export const config: AppConfig = require('../../../config.json');
 
 // append / to host if the server op forgot it

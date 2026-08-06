@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { timeStart, timeEnd } from '../../common/timing';
 
 export interface VAOAttributes {
@@ -72,13 +73,18 @@ class VAONative implements VAO {
 		this.elementsType = elementsType || this.gl.UNSIGNED_SHORT;
 	}
 	draw(mode: number, count: number, offset = 0) {
-		TIMING && timeStart('VAONative.draw');
+		if (TIMING) {
+			timeStart('VAONative.draw');
+		}
 		if (this.useElements) {
 			this.gl.drawElements(mode, count, this.elementsType, offset);
-		} else {
+		}
+		else {
 			this.gl.drawArrays(mode, offset, count);
 		}
-		TIMING && timeEnd();
+		if (TIMING) {
+			timeEnd();
+		}
 	}
 }
 
@@ -104,13 +110,18 @@ class VAOEmulated implements VAO {
 	unbind() {
 	}
 	draw(mode: number, count: number, offset = 0) {
-		TIMING && timeStart('VAOEmulated.draw');
+		if (TIMING) {
+			timeStart('VAOEmulated.draw');
+		}
 		if (this.elements) {
 			this.gl.drawElements(mode, count, this.elementsType, offset);
-		} else {
+		}
+		else {
 			this.gl.drawArrays(mode, offset, count);
 		}
-		TIMING && timeEnd();
+		if (TIMING) {
+			timeEnd();
+		}
 	}
 }
 
@@ -146,7 +157,8 @@ function bindAttribs(
 		for (; i < maxAttribs; ++i) {
 			gl.disableVertexAttribArray(i);
 		}
-	} else {
+	}
+	else {
 		gl.bindBuffer(gl.ARRAY_BUFFER, null);
 
 		for (let i = 0; i < maxAttribs; ++i) {

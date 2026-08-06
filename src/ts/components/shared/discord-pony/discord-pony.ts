@@ -67,18 +67,21 @@ export class DiscordPony implements OnInit, OnDestroy {
 				this.state.headAnimation = undefined;
 				this.state.headAnimationFrame = 0;
 				this.characterPreview.blink();
-			} else {
+			}
+			else {
 				this.state.headAnimation = this.headAnimation;
 				this.state.headAnimationFrame = frame % this.headAnimation.frames.length;
 			}
-		} else {
+		}
+		else {
 			this.state.headAnimation = undefined;
 
 			if (this.expression) {
 				if (Math.random() < 0.01) {
 					this.expression = undefined;
 				}
-			} else {
+			}
+			else {
 				if (Math.random() < 0.005) {
 					this.expression = BLEP;
 				}

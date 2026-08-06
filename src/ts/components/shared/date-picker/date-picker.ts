@@ -51,7 +51,8 @@ function getMonthNames() {
 			date.setMonth(i);
 			return format.format(date);
 		});
-	} catch {
+	}
+	catch {
 		return MONTH_NAMES_EN;
 	}
 }

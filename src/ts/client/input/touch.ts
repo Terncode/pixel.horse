@@ -122,13 +122,16 @@ export class TouchController implements InputController {
 			this.touchIsDrag = true;
 			this.manager.setValue(Key.GAMEPAD_AXIS1_X, -Math.cos(theta) * scaledDist);
 			this.manager.setValue(Key.GAMEPAD_AXIS1_Y, -Math.sin(theta) * scaledDist);
-		} else {
+		}
+		else {
 			this.manager.setValue(Key.GAMEPAD_AXIS1_X, 0);
 			this.manager.setValue(Key.GAMEPAD_AXIS1_Y, 0);
 		}
 	}
 	private touchstart = (e: any) => {
-		e.cancellable && e.preventDefault();
+		if (e.cancellable) {
+			e.preventDefault();
+		}
 		e.stopPropagation();
 
 		this.manager.usingTouch = true;
@@ -144,7 +147,8 @@ export class TouchController implements InputController {
 				this.manager.setValue(Key.MOUSE_Y, this.touchStart.y);
 				this.manager.setValue(Key.TOUCH, 1);
 			}
-		} else if (this.touch2Id === -1) {
+		}
+		else if (this.touch2Id === -1) {
 			const touch = e.changedTouches.item(0);
 
 			if (touch) {

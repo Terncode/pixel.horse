@@ -31,17 +31,23 @@ function getShade(shade: number) {
 
 	if (shade > 130 && shade < 140) { // dark outline
 		return 135;
-	} else if (shade > 150 && shade < 165) { // outline
+	}
+	else if (shade > 150 && shade < 165) { // outline
 		return 159;
-	} else if (shade > 165 && shade < 180) { // dark shade
+	}
+	else if (shade > 165 && shade < 180) { // dark shade
 		return 174;
-	} else if (shade > 190 && shade < 210) { // shade
+	}
+	else if (shade > 190 && shade < 210) { // shade
 		return 204;
-	} else if (shade > 210 && shade < 220) { // dark fill
+	}
+	else if (shade > 210 && shade < 220) { // dark fill
 		return 217;
-	} else if (shade > 245) { // fill
+	}
+	else if (shade > 245) { // fill
 		return 255;
-	} else {
+	}
+	else {
 		return -1;
 	}
 }
@@ -49,9 +55,11 @@ function getShade(shade: number) {
 function getShadeForShading(shade: number) {
 	if (shade === 135) { // dark outline
 		return 204;
-	} else if (shade === 159) { // outline
+	}
+	else if (shade === 159) { // outline
 		return 255;
-	} else {
+	}
+	else {
 		return shade;
 	}
 }
@@ -95,15 +103,18 @@ export function imageToPalette(
 
 			data[i] = index;
 			data[i + 1] = 255;
-		} else {
+		}
+		else {
 			const alpha = getAlpha(data[i + 3]);
 			const shade = getShade(data[i]);
 			const index = findValidPatternColor(pdata[i], pdata[i + 1], pdata[i + 2]);
 
-			if (index === -1)
+			if (index === -1) {
 				throw new Error(`Invalid color (pattern) [${pixel(pdata, i)}] (${x} ${y}) (${pat.info})`);
-			if (alpha == null)
+			}
+			if (alpha == null) {
 				throw new Error(`Invalid color [${pixel(data, i)}] (${x} ${y}) (${image.info})`);
+			}
 
 			const actualIndex = (index * 2) + (isOutline(shade) ? 2 : 1);
 			const shadeForShading = getShadeForShading(shade);

@@ -110,7 +110,8 @@ async function updateServerState(server: InternalGameServerState | InternalLogin
 	try {
 		const state = await server.api.state();
 		Object.assign(server.state, state);
-	} catch {
+	}
+	catch {
 		server.state.dead = true;
 	}
 }
@@ -141,9 +142,11 @@ export async function poll(action: () => any, delayTime: number) {
 	try {
 		await delay(delayTime);
 		await action();
-	} catch (e) {
+	}
+	catch (e) {
 		console.error(e);
-	} finally {
+	}
+	finally {
 		poll(action, delayTime);
 	}
 }
@@ -151,9 +154,11 @@ export async function poll(action: () => any, delayTime: number) {
 export async function pollImmediate(action: () => any, delayTime: number) {
 	try {
 		await action();
-	} catch (e) {
+	}
+	catch (e) {
 		console.error(e);
-	} finally {
+	}
+	finally {
 		await delay(delayTime);
 		poll(action, delayTime);
 	}

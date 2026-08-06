@@ -225,8 +225,11 @@ export function deserializeActions(data: string): ButtonActionSlot[] {
 	try {
 		const json = JSON.parse(data);
 		return json.slice(0, ACTIONS_LIMIT).map(deserializeAction);
-	} catch (e) {
-		DEVELOPMENT && console.error(e);
+	}
+	catch (e) {
+		if (DEVELOPMENT) {
+			console.error(e);
+		}
 		return [];
 	}
 }
@@ -243,10 +246,13 @@ function serializeAction({ action }: ButtonActionSlot): any {
 			case 'entity':
 				return { ent: action.entity };
 			default:
-				DEVELOPMENT && console.warn(`Missing serialization for ${JSON.stringify(action)}`);
+				if (DEVELOPMENT) {
+					console.warn(`Missing serialization for ${JSON.stringify(action)}`);
+				}
 				return null;
 		}
-	} else {
+	}
+	else {
 		return null;
 	}
 }
@@ -255,15 +261,21 @@ function deserializeAction(data: any): ButtonActionSlot {
 	if (data) {
 		if ('act' in data || 'action' in data) {
 			return { action: getActionAction(data.act || data.action) };
-		} else if ('cmd' in data || 'command' in data) {
+		}
+		else if ('cmd' in data || 'command' in data) {
 			return { action: getCommandAction(data.cmd || data.command) };
-		} else if ('exp' in data || 'expression' in data) {
+		}
+		else if ('exp' in data || 'expression' in data) {
 			const expression = decodeExpression(data.exp || data.expression | 0);
 			return { action: expressionButtonAction(expression) };
-		} else if ('ent' in data || 'entity' in data) {
+		}
+		else if ('ent' in data || 'entity' in data) {
 			return { action: entityButtonAction(data.ent || data.entity) };
-		} else {
-			DEVELOPMENT && console.warn(`Missing deserialization for ${JSON.stringify(data)}`);
+		}
+		else {
+			if (DEVELOPMENT) {
+				console.warn(`Missing deserialization for ${JSON.stringify(data)}`);
+			}
 		}
 	}
 
@@ -281,7 +293,8 @@ export function useAction(game: PonyTownGame, action: ButtonAction | undefined) 
 			case 'action':
 				if (action.sendAction) {
 					game.send(server => server.action(action.sendAction));
-				} else {
+				}
+				else {
 					switch (action.action) {
 						case 'boop':
 							boopAction(game);
@@ -336,7 +349,8 @@ export function useAction(game: PonyTownGame, action: ButtonAction | undefined) 
 function shouldRedrawAction(action: ButtonAction | undefined, state: any, game: PonyTownGame) {
 	if (action !== state.action) {
 		return true;
-	} else if (action) {
+	}
+	else if (action) {
 		switch (action.type) {
 			case 'action': {
 				switch (action.action) {
@@ -353,7 +367,8 @@ function shouldRedrawAction(action: ButtonAction | undefined, state: any, game: 
 			default:
 				return false;
 		}
-	} else {
+	}
+	else {
 		return false;
 	}
 }
@@ -373,13 +388,15 @@ export function drawAction(canvas: HTMLCanvasElement, action: ButtonAction | und
 		state.action = 0;
 	}
 
-	if (!spriteSheetsLoaded || !shouldRedrawAction(action, state, game))
+	if (!spriteSheetsLoaded || !shouldRedrawAction(action, state, game)) {
 		return;
+	}
 
 	const context = canvas.getContext('2d');
 
-	if (!context)
+	if (!context) {
 		return;
+	}
 
 	state.action = action;
 
@@ -412,10 +429,12 @@ export function drawAction(canvas: HTMLCanvasElement, action: ButtonAction | und
 
 						if (hasFlag(extra, ExpressionExtra.Cry)) {
 							batch.drawSprite(sprites.emote_cry2.frames[4], WHITE, defaultPalette, headX, headY);
-						} else if (hasFlag(extra, ExpressionExtra.Tears)) {
+						}
+						else if (hasFlag(extra, ExpressionExtra.Tears)) {
 							batch.drawSprite(sprites.emote_tears.frames[0], WHITE, defaultPalette, headX, headY);
 						}
-					} else {
+					}
+					else {
 						const color = parseColor(ACTION_EXPRESSION_BG);
 						batch.drawRect(color, 0, 3, 15, 5);
 						batch.drawRect(color, 0, 8, 3, 1);
@@ -449,9 +468,12 @@ export function drawAction(canvas: HTMLCanvasElement, action: ButtonAction | und
 					state.draw = action.action === 'up' ? getUpDrawFunc(game) : getDownDrawFunc(game);
 
 					buffer = drawCanvasCached(`action:${action.action}:${state.draw}`, batch => {
-						state.draw && getDrawFuncByName(state.draw)(batch);
+						if (state.draw) {
+							getDrawFuncByName(state.draw)(batch);
+						}
 					});
-				} else {
+				}
+				else {
 					buffer = drawCanvasCached(`action:${action.action}`, batch => {
 						switch (action.action) {
 							case 'boop': {
@@ -662,9 +684,11 @@ function getUpDrawFunc(game: PonyTownGame) {
 	if (player) {
 		if (isPonyLying(player)) {
 			return 'sit';
-		} else if (isPonySitting(player)) {
+		}
+		else if (isPonySitting(player)) {
 			return 'stand';
-		} else if (isPonyStanding(player) && canPonyFly(player)) {
+		}
+		else if (isPonyStanding(player) && canPonyFly(player)) {
 			return 'fly';
 		}
 	}
@@ -678,9 +702,11 @@ function getDownDrawFunc(game: PonyTownGame) {
 	if (player) {
 		if (isPonySitting(player)) {
 			return 'lie';
-		} else if (isPonyStanding(player)) {
+		}
+		else if (isPonyStanding(player)) {
 			return 'sit';
-		} else if (isPonyFlying(player)) {
+		}
+		else if (isPonyFlying(player)) {
 			return 'stand';
 		}
 	}

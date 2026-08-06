@@ -293,10 +293,12 @@ export function createFont(
 
 			if (!width) {
 				return undefined;
-			} else if (added.has(actualCode)) {
+			}
+			else if (added.has(actualCode)) {
 				// console.log('skipping character', actualCode);
 				return undefined;
-			} else {
+			}
+			else {
 				const sprite = addImage(cropCanvas(canvas, x * w + left, y * h, width - left, h));
 				added.add(actualCode);
 				return { code: actualCode, sprite };
@@ -343,8 +345,9 @@ function compareFontSprite(a: FontSprite, b: FontSprite) {
 
 function isColEmpty(data: ImageData, x: number, y: number, h: number) {
 	for (let yy = 0; yy < h; yy++) {
-		if (data.data[((y + yy) * data.width + x) * 4 + 3])
+		if (data.data[((y + yy) * data.width + x) * 4 + 3]) {
 			return false;
+		}
 	}
 
 	return true;
@@ -377,8 +380,9 @@ function lengthChecker(expected: number) {
 	return function (line: string) {
 		const length = charsToCodes(line).length;
 
-		if (length !== expected)
+		if (length !== expected) {
 			throw new Error(`Invalid line length (${length}/${expected}) in "${line}"`);
+		}
 
 		return line;
 	};
