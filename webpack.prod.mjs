@@ -2,6 +2,7 @@ import path from 'path';
 import webpack from 'webpack';
 import { merge } from 'webpack-merge';
 import TerserPlugin from 'terser-webpack-plugin';
+import { EsbuildPlugin } from 'esbuild-loader';
 import WrapperPlugin from 'wrapper-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { AngularWebpackPlugin } from '@ngtools/webpack';
@@ -43,7 +44,7 @@ function getScripts(args) {
 	if (analyze || main) {
 		return [scripts[0]];
 	} else if (admin) {
-		return [scripts[2]];
+		return [scripts[1]];
 	} else {
 		return scripts;
 	}
@@ -51,7 +52,33 @@ function getScripts(args) {
 
 export default (args = {}) =>
 	getScripts(args)
-		.map(([script, entry, outDir, compilerOptions, tsconfig, _ecma, TOOLS]) => merge(common, {
+		.map(([script, entry, outDir, compilerOptions, tsconfig, _ecma, TOOLS]) => {
+			const minimizer = args.debug ? [
+				// Fast iteration: esbuild minify is ~40x faster than Terser,
+				// at the cost of ~11% larger bundles.
+				new EsbuildPlugin({
+					target: 'es2022',
+					legalComments: 'external',
+				}),
+			] : [
+				new TerserPlugin({
+					extractComments: {
+						condition: true,
+						banner: false,
+					},
+					terserOptions: {
+						sourceMap: true,
+						ecma: 5,
+						mangle: {
+							properties: {
+								regex: /^__(?!default$)/,
+							},
+						},
+						output: { comments: false },
+					},
+				}),
+			];
+			return merge(common, {
 			mode: 'production',
 			performance: {
 				maxEntrypointSize: 10000000,
@@ -65,6 +92,19 @@ export default (args = {}) =>
 				path: path.resolve(__dirname, 'dist', 'browser' , outDir, 'scripts'),
 			}),
 			devtool: script === 'bootstrap' ? 'source-map' : false,
+			cache: {
+				type: 'filesystem',
+				name: script,
+				cacheDirectory: path.resolve(__dirname, '.cache', 'webpack', 'prod'),
+				buildDependencies: {
+					config: [
+						fileURLToPath(import.meta.url),
+						path.resolve(__dirname, 'webpack.common.mjs'),
+						path.resolve(__dirname, tsconfig),
+						path.resolve(__dirname, 'tools/angular-linker-loader.mjs'),
+					],
+				},
+			},
 			module: {
 				rules: [
 					{
@@ -92,24 +132,7 @@ export default (args = {}) =>
 				moduleTrace: true
 			},
 			optimization: {
-				minimizer: [
-					new TerserPlugin({
-						extractComments: {
-							condition: true,
-							banner: false,
-						},
-						terserOptions: {
-							sourceMap: true,
-							ecma: 5,
-							mangle: {
-								properties: {
-									regex: /^__(?!default$)/,
-								},
-							},
-							output: { comments: false },
-						},
-					}),
-				],
+				minimizer,
 			},
 			plugins: [
 			new AngularWebpackPlugin({
@@ -136,4 +159,5 @@ export default (args = {}) =>
 					},
 				  }),
 			].filter(x => x),
-		}));
+		});
+	});

@@ -1,16 +1,11 @@
 import webpack from 'webpack';
 import { merge } from 'webpack-merge';
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import common from './webpack.common.mjs';
-import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const r = p => JSON.parse(fs.readFileSync(p, 'utf8'));
-const tsconfig = r('./tsconfig.json');
-
-const compilerOptions = {
-	...tsconfig.compilerOptions,
-	target: 'es6',
-	module: 'es2016',
-};
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const config = merge(common, {
 	mode: 'development',
@@ -20,6 +15,7 @@ const config = merge(common, {
 		'bootstrap-tools': './ts/bootstrap-tools',
 	},
 	devtool: 'eval-cheap-source-map',
+	ignoreWarnings: [/was not found/],
 	devServer: {
 		host: '0.0.0.0',
 		port: 8091,
@@ -50,6 +46,13 @@ const config = merge(common, {
 		errorDetails: true,
 		moduleTrace: true,
 	},
+	cache: {
+		type: 'filesystem',
+		cacheDirectory: path.resolve(__dirname, '.cache', 'webpack', 'dev'),
+		buildDependencies: {
+			config: [fileURLToPath(import.meta.url), path.resolve(__dirname, 'webpack.common.mjs')],
+		},
+	},
 	output: {
 		pathinfo: false,
 	},
@@ -62,9 +65,24 @@ const config = merge(common, {
 				test: /\.ts$/,
 				use: [
 					{
-						loader: 'ts-loader',
+						loader: 'swc-loader',
 						options: {
-							compilerOptions,
+							jsc: {
+								parser: {
+									syntax: 'typescript',
+									decorators: true,
+								},
+								transform: {
+									legacyDecorator: true,
+									decoratorMetadata: true,
+									useDefineForClassFields: false,
+								},
+								target: 'es6',
+							},
+							module: {
+								type: 'es6',
+							},
+							sourceMaps: true,
 						},
 					},
 					'angular2-template-loader',
@@ -87,7 +105,19 @@ const config = merge(common, {
 		},
 	},
 	plugins: [
-		new webpack.HotModuleReplacementPlugin(),
+		new ForkTsCheckerWebpackPlugin({
+			async: true,
+			typescript: {
+				configFile: path.resolve(__dirname, 'tsconfig.json'),
+				configOverwrite: {
+					compilerOptions: {
+						target: 'es6',
+						module: 'es6',
+					},
+				},
+				memoryLimit: 4096,
+			},
+		}),
 		new webpack.DefinePlugin({
 			DEVELOPMENT: true,
 			TOOLS: true,

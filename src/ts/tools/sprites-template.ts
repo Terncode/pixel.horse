@@ -1,7 +1,7 @@
 // generated file
 /* eslint:disable */
 
-import {
+import type {
 	Sprite, SpriteBorder, PonyNose, PonyEye, ColorExtra, ColorExtraSets, Shadow, ColorShadow, TileSprites, SpriteSheet
 } from '../common/interfaces';
 import { parseSpriteColor } from '../common/utils';
@@ -189,7 +189,9 @@ export function createAnimationShadow(frames: number[], shadow: number, palette:
 	return { frames: mapSprites2(frames), shadow: sprites2[shadow], palette: getPalette(palette) };
 }
 
-export {
+export type {
 	Sprite, SpriteBorder, PonyNose, PonyEye, ColorExtra, ColorExtraSets,
+};
+export {
 	colorPal3, colorPal5, colorPal7, colorPal9, colorPal11, colorPal13, colorPal17
 };
