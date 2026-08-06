@@ -127,7 +127,7 @@ const changelog = cb => {
 			.map(x => x.replace(/^\[test\]/, '<span class="badge badge-secondary">test</span>')),
 	}));
 	const type = `{ version: string; changes: string[]; }[]`;
-	const code = `/* eslint:disable */\n\nexport const CHANGELOG: ${type} = ${JSON.stringify(object, null, 2)};\n`;
+	const code = `/* eslint-disable */\n\nexport const CHANGELOG: ${type} = ${JSON.stringify(object, null, 2)};\n`;
 	fs.writeFile('src/ts/generated/changelog.ts', code, 'utf8', cb);
 };
 
@@ -180,7 +180,7 @@ const shaders = cb => {
 	}
 
 	const dir = path.join('src', 'ts', 'graphics', 'shaders');
-	const code = '/* eslint:disable */\n\n' + fs.readdirSync(dir)
+	const code = '/* eslint-disable */\n\n' + fs.readdirSync(dir)
 		.map(file => [_.camelCase(file.replace(/\.glsl$/, '')), path.join(dir, file)])
 		.map(([name, filePath]) => `export const ${name}Shader = \`${getShaderCode(filePath)}\`;`)
 		.join('\n\n');

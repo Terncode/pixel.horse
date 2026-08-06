@@ -984,7 +984,7 @@ function createSpritesTS(dest: string, config: SpriteTSConfig) {
 	const { objects, objects2 } = config.result;
 
 	let ts = fs.readFileSync(path.join(rootPath, 'src', 'ts', 'tools', 'sprites-template.ts'), 'utf8');
-	ts = ts.replace(/export \{[\s\S]*?\};\r?\n?/, '');
+	//ts = ts.replace(/export \{[\s\S]*?\};\r?\n?/, '');
 	ts = ts.replace('/*SPRITE_SHEET*/', `images/${config.spriteFileName}`);
 	ts = ts.replace('/*SPRITE_SHEET_PALETTE*/', `images/${config.paletteFileName}`);
 	ts = ts.replace('/*SPRITE_SHEET_PALETTE_ALPHA*/', `images/${config.paletteAlphaFileName}`);
