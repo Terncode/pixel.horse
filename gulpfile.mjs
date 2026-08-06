@@ -11,7 +11,7 @@ import gulpSass from 'gulp-sass';
 import  dartSass from 'sass';
 import shell from 'gulp-shell';
 import cssnano from 'gulp-cssnano';
-import imagemin from 'gulp-imagemin';
+import imagemin, { mozjpeg, optipng, gifsicle, svgo } from 'gulp-imagemin';
 import autoprefixer from 'gulp-autoprefixer';
 import liveServer from 'gulp-live-server';
 import sizereport from 'gulp-sizereport';
@@ -207,7 +207,12 @@ const assetsRev = cb => {
 };
 
 const assetsCopy = () => gulp.src('assets/**/*', { encoding: false })
-	.pipe(gulpif(!argv.fast, imagemin()))
+	.pipe(gulpif(!argv.fast, imagemin([
+		mozjpeg(),
+		optipng({ optimizationLevel: 1 }),
+		gifsicle(),
+		svgo(),
+	])))
 	.pipe(rev())
 	.pipe(gulp.dest('dist/browser/assets'))
 	.pipe(rev.manifest())
@@ -348,7 +353,10 @@ const webpackAdmin = npmScript('webpack-admin');
 const sw = npmScript('sw');
 
 const assets = gulp.series(assetsCopy, assetsRev);
-const common = gulp.series(manifest, hash, rollbar, changelog, icons, shaders, assets, sassTasks);
+const codegen = gulp.parallel(gulp.series(manifest, changelog), hash, rollbar, icons, shaders);
+// common: pre-webpack shared tasks. Sequential assets->sass avoids event-loop
+// contention between gulp-imagemin (async) and dart-sass (blocks the loop).
+const common = gulp.series(codegen, assets, sassTasks);
 const covRemap = gulp.series(coverage, remap);
 
 const watch = cb => {
@@ -395,7 +403,14 @@ const empty = cb => cb();
 const spritesTask = argv.sprites ? sprites : empty;
 //const buildSprites = gulp.series(tsTools, sprites);
 
-const build = gulp.series(clean, setProd, common, ts, webpackProd, sw, size);
+// tsc -> dist/node and webpack -> dist/browser are independent (different output
+// dirs, different inputs), so they can run in parallel with each other and with
+// the assets/sass branch. webpack is the long pole, so assets/sass are hidden
+// behind it. sw + size must wait for all of them.
+const build = gulp.series(clean, setProd, gulp.parallel(
+	gulp.series(codegen, gulp.parallel(ts, webpackProd)),
+	gulp.series(assets, sassTasks)
+), sw, size);
 const admin = gulp.series(cleanAdmin, setProd, sassAdmin, ts, webpackAdmin);
 const dev = gulp.series(clean, spritesTask, common, gulp.parallel(serverDev, watch, watchTools));
 

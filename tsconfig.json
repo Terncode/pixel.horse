@@ -13,6 +13,8 @@
 		"ignoreDeprecations": "6.0",
 		"types": ["*"],
 		"baseUrl": ".",
+		"incremental": true,
+		"tsBuildInfoFile": "dist/node/.tsbuildinfo",
 		"paths": {
 			"@angular/common/http": ["node_modules/@angular/common/types/http.d.ts"],
 			"@angular/platform-browser/animations": ["node_modules/@angular/platform-browser/types/animations.d.ts"],
