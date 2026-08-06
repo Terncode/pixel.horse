@@ -13,7 +13,7 @@ const __dirname = path.dirname(__filename);
 const config = {
 	context: path.join(__dirname, 'src'),
 	output: {
-		path: path.resolve(__dirname, 'build', 'assets', 'scripts'),
+		path: path.resolve(__dirname, 'dist', 'assets', 'scripts'),
 		filename: '[name].js',
 		publicPath: '/assets/scripts/',
 	},
