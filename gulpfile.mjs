@@ -16,8 +16,8 @@ import autoprefixer from 'gulp-autoprefixer';
 import liveServer from 'gulp-live-server';
 import sizereport from 'gulp-sizereport';
 import markdownTree from 'markdown-tree';
-import mocha from 'gulp-spawn-mocha';
-import remapIstanbul from 'remap-istanbul/lib/gulpRemapIstanbul.js';
+
+
 import { spawn } from 'child_process';
 import yargs from 'yargs/yargs';
 import { hideBin } from 'yargs/helpers';
@@ -269,26 +269,25 @@ const testScripts = [
 ];
 const ts = npmScript('ts');
 
-const tests = () => gulp.src(testScripts, { read: false })
-	.pipe(mocha({
-		exit: true,
-		reporter: 'progress',
-		timeout: 10000,
-	}))
-	.on('error', swallowError);
+const mochaBin = process.platform === 'win32' ? 'mocha.cmd' : 'mocha';
+const c8Bin = process.platform === 'win32' ? 'c8.cmd' : 'c8';
+const mochaArgs = [...testScripts, '--reporter', 'progress', '--exit', '--timeout', '10000'];
 
-const coverage = () => gulp.src(testScripts, { read: false })
-	.pipe(mocha({
-		exit: true,
-		reporter: 'progress',
-		timeout: 10000,
-		istanbul: {
-			print: 'none',
-		},
-	}));
+const tests = () => runAsync(mochaBin, mochaArgs)
+	.catch(e => console.log(e.message));
 
-const remap = () => gulp.src('coverage/coverage.json')
-	.pipe(remapIstanbul({ reports: { html: 'coverage-remapped' } }));
+const covTmp = 'coverage/.tmp';
+
+const coverage = () => runAsync(c8Bin, [
+	'--clean=false', `--temp-directory=${covTmp}`, '--reporter=json', '--report-dir=coverage', '--include=dist/node',
+	mochaBin, ...mochaArgs,
+])
+	.catch(e => console.log(e.message));
+
+const remap = () => runAsync(c8Bin, [
+	`--temp-directory=${covTmp}`, '--reporter=html', '--reporter=text', '--report-dir=coverage-remapped', '--include=dist/node',
+	'report',
+]);
 
 const size = () => gulp.src([
 	'dist/browser/assets/*.js',
